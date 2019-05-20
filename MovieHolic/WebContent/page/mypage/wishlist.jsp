@@ -127,4 +127,12 @@
 
 		</div>
 		<!-- Main 끝-->
+		
+<!-- 커스텀 툴팁 추가위해 필요 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script>
+	$(document).ready(function() {
+	$('[data-toggle="tooltip"]').tooltip();
+	});
+</script>
 <%@ include file="/template/footer.jsp" %>

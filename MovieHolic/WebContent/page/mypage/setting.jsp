@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/template/header.jsp" %>
+<%@ include file="/template/boot_400.jsp" %>
 <%@ include file="/template/nav.jsp" %>
 
 		<!-- Main 시작 -->
@@ -27,7 +28,7 @@
 						
 							<div align="center">
 								<img src="/MovieHolic/images/user.png" width="100%" alt="user icon" /><br>
-								<button class="btn btn-primary">Edit</button>
+								<label class="btn btn-primary">Edit<input type="file" style="display: none;"></label>
 							</div>
 							
 						</div>
@@ -58,17 +59,36 @@
 						<div class="col-5 col-12-mobile">
 						
 							<div class="form-group">
-								<label for="tel">전화번호</label>
-									<input type="text"
-										class="form-control" id="tel" name="tel" value="010-1234-5678">
+									<label for="tel">전화번호</label>
+									<div id="tel" class="custom-control-inline">
+										<select class="form-control" id="tel1" name="tel1" style="height:52px">
+											<option value="010">010</option>
+											<option value="02">02</option>
+											<option value="031">031</option>
+											<option value="032">032</option>
+											<option value="041">041</option>
+											<option value="051">051</option>
+											<option value="061">061</option>
+										</select> _
+										<input type="text" class="form-control" id="tel2" name="tel2" placeholder="1234"> _
+										<input type="text" class="form-control" id="tel3" name="tel3" placeholder="5678">
+									</div>
 							</div>
+									<div class="form-group">
+									<label for="birth">생년월일</label>
+									<input type="date" class="form-control" id="birth" value="1995-01-01">
+    						    </div>
+    						    
 								<div class="form-group">
-									<label for="email">Email</label> <input type="email"
-										class="form-control" id="email" value="abc1234@naver.com">
-								</div>
-								<div class="form-group">
-									<label for="bio">자기소개</label>
-									<textarea class="form-control" rows="1" readonly id="bio">안녕하세요. 반갑습니다.</textarea>
+									<label for="birth">성별</label>
+									<div class="custom-control custom-radio">
+										<input type="radio" name="jb-radio" id="jb-radio-1" class="custom-control-input" checked>
+										<label class="custom-control-label" for="jb-radio-1">여</label>
+									</div>
+									<div class="custom-control custom-radio">
+										<input type="radio" name="jb-radio" id="jb-radio-2" class="custom-control-input">
+										<label class="custom-control-label" for="jb-radio-2">남</label>
+									</div>
 								</div>
 								
 							</div>
