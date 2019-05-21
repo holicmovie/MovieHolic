@@ -147,19 +147,6 @@
 		<!-- Main -->
 		<div class="wrapper style1">
 		
-			<!-- 관리테이블 메뉴 -->
-		
-			<section id="banner">
-				<header>
-					<nav id="nav2">
-						<ul>
-							<li><a href="/MovieHolic/admin/management.html">Management Table</a></li>
-							<li><a href="#">Statistical Chart</a></li>
-						</ul>		
-					</nav>
-				</header>
-			</section><br><br>
-			
 			
 			<!-- 그래프  -->
 			
