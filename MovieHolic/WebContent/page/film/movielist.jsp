@@ -169,21 +169,12 @@
 </section>
 
 
-<!-- 총 추천리스트 -->
-
-<!-- Banner -->
-<section id="banner">
-	<header>
-		<h2>
-			<strong>총 추천리스트</strong>
-		</h2>
-	</header>
-</section>
+<!-- 최신 유저 리스트 -->
 
 <!-- user movie list -->
-<section class="carousel">
+<section class="carousel" style="padding:1.5em 0 0 0;margin:0 0 0 0;">
 	<div class="reel">
-
+		<h2><strong>New list</strong></h2>
 		<article>
 			<a href="#" class="image featured"><img
 				src="/MovieHolic/images/brother.jpg" alt="" /></a>
@@ -298,21 +289,9 @@
 	</div>
 </section>
 
-<!-- 최신 게시물 -->
-
-<!-- Banner -->
-<section id="banner">
-	<header>
-		<h2>
-			<strong>유저 최신게시물</strong>
-		</h2>
-	</header>
-</section>
-
 <!-- user movie list -->
-<section class="carousel">
+<section class="carousel" style="padding:0 0 0 0;">
 	<div class="reel">
-
 		<article>
 			<a href="#" class="image featured"><img
 				src="/MovieHolic/images/brother.jpg" alt="" /></a>
