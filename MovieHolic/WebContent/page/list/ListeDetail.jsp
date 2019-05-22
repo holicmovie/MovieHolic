@@ -35,15 +35,12 @@
 	<!-- 글 제목 밑 상태 바 -->
 	<div class = "col-lg-2"></div>
 	<div class = "col-lg-8" id = "listdetail-title">
-	<h2 style = "bold">우울할 때 보는 영화 10선</h2>
-	<div style="width: 100%; border-bottom: 0px; border-top: thin solid gray; margin-top: 1%;"></div>
-	<div class = "col-lg-7"></div>
-	<div class = "col-lg-1"><span>2019.05.21</span></div>
-	<div class = "col-lg-2"></div>
-	<div class = "col-lg-2"></div>
-	<div style="width: 100%; border-bottom: 0px; border-top: thin solid gray; margin-top: 1%;"></div>
+		<h2 style = "bold">우울할 때 보는 영화 10선</h2>
+		<div style="width: 100%; border-bottom: 0px; border-top: thin solid gray; margin-top: 1%;"></div>
+		<div align = "right"><span><h3>2019.05.21</h3></span></div>
+		<div align = "right"><button class = "btn btn-danger btn-sm" type="button" >신고</button></div>
+		<div style="width: 100%; border-bottom: 0px; border-top: thin solid gray; margin-top: 1%;"></div>
 	</div>
-
 	<div class = "col-lg-2"></div>
 	</div>
 	
@@ -91,7 +88,7 @@
 	</div>
 	</div>	
 	<div class = "col-lg-5"></div>		
-	</div>
+</div>
 
 	<div class = "row">
 	<!-- 리스트 상세 내용  포스터 + 글 내용 -->
