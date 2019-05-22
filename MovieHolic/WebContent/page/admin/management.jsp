@@ -267,30 +267,40 @@
 
 			<div class="col-lg-12">
 				<div class="col-lg-12">
-						<div class="dropdown">
-					    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-					      Dropdown button
-					    </button>
-					    <div class="dropdown-menu">
-					     <h5 class="dropdown-header">Dropdown header</h5>
-					      <a class="dropdown-item" href="#">Link 1</a>
-					      <a class="dropdown-item" href="#">Link 2</a>
-					      <a class="dropdown-item" href="#">Link 3</a>
-					      <h5 class="dropdown-header">Dropdown header</h5>
-					      <a class="dropdown-item" href="#">Another link</a>
-					    </div>
-					    </div>
 					<h2 align="left">Declaration Management Table</h2>
-					<p align="left">This table is a Declaration Management Table : </p>
+					<p align="left">This table is a Declaration Management Table :
+					</p>
 				</div>
 				<div class="col-lg-12">
-					<div class="input-group mb-3">
+
+
+					<div class="input-group lg-12">
+
+
+						<div class="col-lg-2">
+							<div class="dropdown">
+								<button type="button" class="btn btn-primary dropdown-toggle"
+									data-toggle="dropdown">Dropdown button</button>
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="#">이름</a> <a
+										class="dropdown-item" href="#">아이디</a> <a
+										class="dropdown-item" href="#">제목</a>
+								</div>
+							</div>
+						</div>
 						<input type="text" class="form-control" placeholder="moive name"
 							id="name" name="name">
 						<div class="input-group-append">
 							<button type="submit" class="btn btn-primary">Search</button>
 						</div>
-					</div>
+
+
+					</div><br>
+
+
+
+
+
 					<div class="col-lg-12">
 						<div class="float-right">
 							<span
@@ -300,7 +310,9 @@
 								style="color: #D4D4D4; font-weight: 900; font-size: 17px; opacity: 1;">Now
 								Date:</span> <input class="datepicker" />
 						</div>
-					</div>
+					</div><br><br>
+					
+					
 				</div>
 			</div>
 		</div>
@@ -309,47 +321,47 @@
 
 
 		<table class="table table-bordered">
-				<thead>
-					<tr>
-						<th>번호</th>
-						<th>이름</th>
-						<th>아이디</th>
-						<th>게시물 제목</th>
-						<th>게시물 내용</th>
-						<th>작성일</th>
-						<th>분류</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>1</td>
-						<td>임꺽정</td>
-						<td>Rjrwjd</td>
-						<td>으아아아아</td>
-						<td>안녕하세요 신고 게시물입니다...</td>
-						<td>2019-05-21</td>
-						<td>분류1</td>
-					</tr>
-					<tr>
-						<td>2</td>
-						<td>임춘자</td>
-						<td>cnswk</td>
-						<td>으아아아아</td>
-						<td>신고합니다아아아아아...</td>
-						<td>2019-05-21</td>
-						<td>분류1</td>
-					</tr>
-					<tr>
-						<td>3</td>
-						<td>dygks</td>
-						<td>Rjrwjd</td>
-						<td>으아아아아</td>
-						<td>신고한다아아아아아ㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄴㅇㄹㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ글자제한하기...</td>
-						<td>2019-04-44</td>
-						<td>분류2</td>
-					</tr>
-				</tbody>
-			</table>
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>이름</th>
+					<th>아이디</th>
+					<th>게시물 제목</th>
+					<th>게시물 내용</th>
+					<th>작성일</th>
+					<th>분류</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>1</td>
+					<td>임꺽정</td>
+					<td>Rjrwjd</td>
+					<td>으아아아아</td>
+					<td>안녕하세요 신고 게시물입니다...</td>
+					<td>2019-05-21</td>
+					<td>분류1</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td>임춘자</td>
+					<td>cnswk</td>
+					<td>으아아아아</td>
+					<td>신고합니다아아아아아...</td>
+					<td>2019-05-21</td>
+					<td>분류1</td>
+				</tr>
+				<tr>
+					<td>3</td>
+					<td>dygks</td>
+					<td>Rjrwjd</td>
+					<td>으아아아아</td>
+					<td>신고한다아아아아아ㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄴㅇㄹㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ글자제한하기...</td>
+					<td>2019-04-44</td>
+					<td>분류2</td>
+				</tr>
+			</tbody>
+		</table>
 
 		<!-- 테이블 하단 -->
 		<div class="row">
@@ -377,8 +389,8 @@
 	</div>
 
 
-	</div>
+</div>
 
 
 
-	<%@ include file="/template/footer.jsp"%>
+<%@ include file="/template/footer.jsp"%>

@@ -6,6 +6,16 @@
 <!-- 그래프 -->
 
 <script type="text/javascript">
+
+$(window).resize(function(){
+	
+	drawVisualization();
+	drawChart2();
+	drawChart1();
+	
+});
+
+
 	google.charts.load('current', {
 		'packages' : [ 'corechart' ]
 	});
@@ -81,9 +91,9 @@
 	google.charts.load('current', {
 		'packages' : [ 'corechart' ]
 	});
-	google.charts.setOnLoadCallback(drawChart);
+	google.charts.setOnLoadCallback(drawChart1);
 
-	function drawChart() {
+	function drawChart1() {
 
 		var data = google.visualization.arrayToDataTable([
 				[ 'Task', 'Hours per Day' ], [ '남', 110 ], [ '여', 200 ], ]);
@@ -104,8 +114,8 @@
 	google.charts.load("current", {
 		packages : [ 'corechart' ]
 	});
-	google.charts.setOnLoadCallback(drawChart);
-	function drawChart() {
+	google.charts.setOnLoadCallback(drawChart2);
+	function drawChart2() {
 		var data = google.visualization.arrayToDataTable([
 				[ "Element", "Density", {
 					role : "style"
