@@ -18,7 +18,7 @@
 
 				<article>
 					<a href="/MovieHolic/page/film/moviedetail.jsp" class="image featured"><img
-						src="/MovieHolic/images/avengers.png" alt=""></a>
+						src="/MovieHolic/images/avengers4.jpg" alt=""></a>
 					<header>
 						<h3>
 							<a href="/MovieHolic/page/film/moviedetail.jsp">어벤져스 : 엔드게임</a>
@@ -29,7 +29,7 @@
 
 				<article>
 					<a href="#" class="image featured"><img
-						src="/MovieHolic/images/나의특별한형제.jpg" alt="" /></a>
+						src="/MovieHolic/images/brother.jpg" alt="" /></a>
 					<header>
 						<h3>
 							<a href="#">나의 특별한 형제</a>
@@ -39,7 +39,7 @@
 				</article>
 
 				<article>
-					<a href="#" class="image featured"><img src="/MovieHolic/images/캡틴마블.jpg"
+					<a href="#" class="image featured"><img src="/MovieHolic/images/capma.jpg"
 						alt="" /></a>
 					<header>
 						<h3>
@@ -50,7 +50,7 @@
 				</article>
 
 				<article>
-					<a href="#" class="image featured"><img src="/MovieHolic/images/pic04.jpg"
+					<a href="#" class="image featured"><img src="/MovieHolic/images/watching.jpg"
 						alt="" /></a>
 					<header>
 						<h3>
@@ -61,7 +61,7 @@
 				</article>
 
 				<article>
-					<a href="#" class="image featured"><img src="/MovieHolic/images/pic05.jpg"
+					<a href="#" class="image featured"><img src="/MovieHolic/images/money.jpg"
 						alt="" /></a>
 					<header>
 						<h3>
@@ -130,7 +130,7 @@
 			</div>
 		</section>
 
-		<!-- Banner -->
+		<!-- category -->
 		<section id="banner">
 			<header>
 				<h2>
@@ -155,7 +155,7 @@
 			<div class="reel" id="romance">
 				<article>
 					<a href="#" class="image featured"><img
-						src="/MovieHolic/images/나의특별한형제.jpg" alt="" /></a>
+						src="/MovieHolic/images/brother.jpg" alt="" /></a>
 					<header>
 						<h3>
 							<a href="#">나의 특별한 형제</a>
@@ -165,7 +165,7 @@
 				</article>
 				<article>
 					<a href="#" class="image featured"><img
-						src="/MovieHolic/images/avengers.png" alt="" /></a>
+						src="/MovieHolic/images/avengers4.jpg" alt="" /></a>
 					<header>
 						<h3>
 							<a href="#">어벤져스 : 엔드게임</a>
@@ -175,7 +175,7 @@
 				</article>
 
 				<article>
-					<a href="#" class="image featured"><img src="/MovieHolic/images/캡틴마블.jpg"
+					<a href="#" class="image featured"><img src="/MovieHolic/images/capma.jpg"
 						alt="" /></a>
 					<header>
 						<h3>
@@ -186,7 +186,7 @@
 				</article>
 
 				<article>
-					<a href="#" class="image featured"><img src="/MovieHolic/images/pic04.jpg"
+					<a href="#" class="image featured"><img src="/MovieHolic/images/watching.jpg"
 						alt="" /></a>
 					<header>
 						<h3>
@@ -197,7 +197,7 @@
 				</article>
 
 				<article>
-					<a href="#" class="image featured"><img src="/MovieHolic/images/pic05.jpg"
+					<a href="#" class="image featured"><img src="/MovieHolic/images/money.jpg"
 						alt="" /></a>
 					<header>
 						<h3>
@@ -286,7 +286,7 @@
 
 				<article>
 					<a href="#" class="image featured"><img
-						src="/MovieHolic/images/나의특별한형제.jpg" alt="" /></a>
+						src="/MovieHolic/images/brother.jpg" alt="" /></a>
 					<header>
 						<h3>
 							<a href="#">나의 특별한 형제</a>
@@ -297,7 +297,7 @@
 
 				<article>
 					<a href="#" class="image featured"><img
-						src="/MovieHolic/images/avengers.png" alt="" /></a>
+						src="/MovieHolic/images/avengers4.jpg" alt="" /></a>
 					<header>
 						<h3>
 							<a href="#">어벤져스 : 엔드게임</a>
@@ -307,7 +307,7 @@
 				</article>
 
 				<article>
-					<a href="#" class="image featured"><img src="/MovieHolic/images/캡틴마블.jpg"
+					<a href="#" class="image featured"><img src="/MovieHolic/images/capma.jpg"
 						alt="" /></a>
 					<header>
 						<h3>
@@ -318,7 +318,7 @@
 				</article>
 
 				<article>
-					<a href="#" class="image featured"><img src="/MovieHolic/images/pic04.jpg"
+					<a href="#" class="image featured"><img src="/MovieHolic/images/watching.jpg"
 						alt="" /></a>
 					<header>
 						<h3>
@@ -329,7 +329,7 @@
 				</article>
 
 				<article>
-					<a href="#" class="image featured"><img src="/MovieHolic/images/pic05.jpg"
+					<a href="#" class="image featured"><img src="/MovieHolic/images/money.jpg"
 						alt="" /></a>
 					<header>
 						<h3>
@@ -415,7 +415,7 @@
 
 				<article>
 					<a href="#" class="image featured"><img
-						src="/MovieHolic/images/나의특별한형제.jpg" alt="" /></a>
+						src="/MovieHolic/images/brother.jpg" alt="" /></a>
 					<header>
 						<h3>
 							<a href="#">나의 특별한 형제</a>
@@ -426,7 +426,7 @@
 
 				<article>
 					<a href="#" class="image featured"><img
-						src="/MovieHolic/images/avengers.png" alt="" /></a>
+						src="/MovieHolic/images/avengers4.jpg" alt="" /></a>
 					<header>
 						<h3>
 							<a href="#">어벤져스 : 엔드게임</a>
@@ -436,7 +436,7 @@
 				</article>
 
 				<article>
-					<a href="#" class="image featured"><img src="/MovieHolic/images/캡틴마블.jpg"
+					<a href="#" class="image featured"><img src="/MovieHolic/images/capma.jpg"
 						alt="" /></a>
 					<header>
 						<h3>
@@ -447,7 +447,7 @@
 				</article>
 
 				<article>
-					<a href="#" class="image featured"><img src="/MovieHolic/images/pic04.jpg"
+					<a href="#" class="image featured"><img src="/MovieHolic/images/watching.jpg"
 						alt="" /></a>
 					<header>
 						<h3>
@@ -458,7 +458,7 @@
 				</article>
 
 				<article>
-					<a href="#" class="image featured"><img src="/MovieHolic/images/pic05.jpg"
+					<a href="#" class="image featured"><img src="/MovieHolic/images/money.jpg"
 						alt="" /></a>
 					<header>
 						<h3>
