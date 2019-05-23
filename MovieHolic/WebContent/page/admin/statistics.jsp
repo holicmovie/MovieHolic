@@ -3,9 +3,34 @@
 <%@ include file="/template/header.jsp" %>
 <%@ include file="/template/boot_431.jsp" %>
 <script type="text/javascript"	src="https:/www.gstatic.com/charts/loader.js"></script>
+<link id="themecss" rel="stylesheet" type="text/css" href="//www.shieldui.com/shared/components/latest/css/light/all.min.css" />
+<script type="text/javascript" src="//www.shieldui.com/shared/components/latest/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="//www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
+
+
+
+
 <!-- 그래프 -->
 
 <script type="text/javascript">
+
+$(window).resize(function(){
+	
+	drawVisualization();
+	drawChart1();
+	reviewChart();
+	
+});
+
+</script>
+
+
+
+<%-- 연령대별 회원 변동 --%>
+<script type="text/javascript">
+
+
+
 	google.charts.load('current', {
 		'packages' : [ 'corechart' ]
 	});
@@ -77,13 +102,18 @@
 	}
 </script>
 
+
+
+<%-- 남녀 가입 비율 현황 --%>
+
 <script type="text/javascript">
+	
 	google.charts.load('current', {
 		'packages' : [ 'corechart' ]
 	});
-	google.charts.setOnLoadCallback(drawChart);
+	google.charts.setOnLoadCallback(drawChart1);
 
-	function drawChart() {
+	function drawChart1() {
 
 		var data = google.visualization.arrayToDataTable([
 				[ 'Task', 'Hours per Day' ], [ '남', 110 ], [ '여', 200 ], ]);
@@ -100,42 +130,43 @@
 </script>
 
 
+
+
+
+
+<%-- 리뷰 수 순위 --%>
+
 <script type="text/javascript">
-	google.charts.load("current", {
-		packages : [ 'corechart' ]
-	});
-	google.charts.setOnLoadCallback(drawChart);
-	function drawChart() {
-		var data = google.visualization.arrayToDataTable([
-				[ "Element", "Density", {
-					role : "style"
-				} ], [ "Copper", 8.94, "gold" ],
-				[ "Silver", 10.49, "gold" ], [ "Gold", 19.30, "gold" ],
-				[ "Platinum", 21.45, "color: gold" ] ]);
 
-		var view = new google.visualization.DataView(data);
-		view.setColumns([ 0, 1, {
-			calc : "stringify",
-			sourceColumn : 1,
-			type : "string",
-			role : "annotation"
-		}, 2 ]);
 
-		var options = {
-			title : "Density of Precious Metals, in g/cm^3",
-			width : 600,
-			height : 400,
-			bar : {
-				groupWidth : "95%"
-			},
-			legend : {
-				position : "none"
-			},
-		};
-		var chart = new google.visualization.ColumnChart(document
-				.getElementById("columnchart_values"));
-		chart.draw(view, options);
-	}
+    $(document).ready(function reviewChart() {
+        $("#chart").shieldChart({
+            theme: "light",
+            primaryHeader: {
+                text: "Budget overview"
+            },
+            exportOptions: {
+                image: false,
+                print: false
+            },
+            axisX: {
+                categoricalValues: ["2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014"]
+            },
+            tooltipSettings: {
+                chartBound: true,
+                axisMarkers: {
+                    enabled: true,
+                    mode: 'xy'
+                }                    
+            },
+            dataSeries: [{
+                seriesType: 'area',
+                collectionAlias: "Budget in Thousands",
+                data: [100, 320, 453, 234, 553, 665, 345, 123, 432, 545, 654, 345, 332, 456, 234]
+            }]
+        });
+    });
+    
 </script>
 
 <%@ include file="/template/nav.jsp" %>
@@ -147,19 +178,6 @@
 		<!-- Main -->
 		<div class="wrapper style1">
 		
-			<!-- 관리테이블 메뉴 -->
-		
-			<section id="banner">
-				<header>
-					<nav id="nav2">
-						<ul>
-							<li><a href="/MovieHolic/admin/management.html">Management Table</a></li>
-							<li><a href="#">Statistical Chart</a></li>
-						</ul>		
-					</nav>
-				</header>
-			</section><br><br>
-			
 			
 			<!-- 그래프  -->
 			
@@ -183,7 +201,7 @@
 				<div class="container">
 					<div class="card">		
 						<div align="center">
-							<div id="columnchart_values" style="width: 45vw; height: 30vw;"></div>
+							<div id="chart" style="width: 45vw; height: 30vw;"></div>
 						</div>
 					</div>
 				</div>

@@ -35,7 +35,6 @@
 						<a href="/MovieHolic/page/admin/management.jsp">Management</a>
 						<ul>
 							<li><a href="/MovieHolic/page/admin/management.jsp">Management</a></li>
-							<li><a href="/MovieHolic/page/admin/edit-movie.jsp">Modify</a></li>
 							<li><a href="/MovieHolic/page/admin/statistics.jsp">Statistics</a></li>
 						</ul>
 					</li>
