@@ -6,6 +6,7 @@
 	<link rel="stylesheet" href="assets/css/noscript.css" />
 </noscript>
 </head>
+
 <body class="homepage is-preload">
 	<div id="page-wrapper">
 
