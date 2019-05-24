@@ -209,7 +209,7 @@
 			<div class="reel" id="romance">
 				<article>
 					<a href="#" class="image featured"><img
-						src="images/나의특별한형제.jpg" alt="" /></a>
+						src="images/brother.jpg" alt="" /></a>
 					<header>
 						<h3>
 							<a href="#">나의 특별한 형제</a>
@@ -219,7 +219,7 @@
 				</article>
 				<article>
 					<a href="#" class="image featured"><img
-						src="images/avengers.png" alt="" /></a>
+						src="images/avengers4.jpg" alt="" /></a>
 					<header>
 						<h3>
 							<a href="#">어벤져스 : 엔드게임</a>
@@ -229,7 +229,7 @@
 				</article>
 
 				<article>
-					<a href="#" class="image featured"><img src="images/캡틴마블.jpg"
+					<a href="#" class="image featured"><img src="images/capma.jpg"
 						alt="" /></a>
 					<header>
 						<h3>
@@ -240,7 +240,7 @@
 				</article>
 
 				<article>
-					<a href="#" class="image featured"><img src="images/pic04.jpg"
+					<a href="#" class="image featured"><img src="images/watching.jpg"
 						alt="" /></a>
 					<header>
 						<h3>
@@ -251,7 +251,7 @@
 				</article>
 
 				<article>
-					<a href="#" class="image featured"><img src="images/pic05.jpg"
+					<a href="#" class="image featured"><img src="images/money.jpg"
 						alt="" /></a>
 					<header>
 						<h3>
@@ -340,7 +340,7 @@
 
 				<article>
 					<a href="#" class="image featured"><img
-						src="images/나의특별한형제.jpg" alt="" /></a>
+						src="images/brother.jpg" alt="" /></a>
 					<header>
 						<h3>
 							<a href="#">나의 특별한 형제</a>
@@ -351,7 +351,7 @@
 
 				<article>
 					<a href="#" class="image featured"><img
-						src="images/avengers.png" alt="" /></a>
+						src="images/avengers4.jpg" alt="" /></a>
 					<header>
 						<h3>
 							<a href="#">어벤져스 : 엔드게임</a>
@@ -361,7 +361,7 @@
 				</article>
 
 				<article>
-					<a href="#" class="image featured"><img src="images/캡틴마블.jpg"
+					<a href="#" class="image featured"><img src="images/capma.jpg"
 						alt="" /></a>
 					<header>
 						<h3>
@@ -372,7 +372,7 @@
 				</article>
 
 				<article>
-					<a href="#" class="image featured"><img src="images/pic04.jpg"
+					<a href="#" class="image featured"><img src="images/watching.jpg"
 						alt="" /></a>
 					<header>
 						<h3>
@@ -383,7 +383,7 @@
 				</article>
 
 				<article>
-					<a href="#" class="image featured"><img src="images/pic05.jpg"
+					<a href="#" class="image featured"><img src="images/money.jpg"
 						alt="" /></a>
 					<header>
 						<h3>
