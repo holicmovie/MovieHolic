@@ -19,7 +19,17 @@
 			<nav id="nav">
 				<ul>
 					<li><a href="/MovieHolic/index.jsp">HOME</a></li>
-					<li><a href="/MovieHolic/page/film/moviefilm.jsp">Films</a></li>
+					<li><a href="/MovieHolic/page/film/moviefilm.jsp">Films</a>
+						<ul>
+							<li><a href="/MovieHolic/page/film/moviefilm.jsp">로맨스</a></li>
+							<li><a href="/MovieHolic/page/film/moviefilm.jsp">느와르</a></li>
+							<li><a href="/MovieHolic/page/film/moviefilm.jsp">미스터리</a></li>
+							<li><a href="/MovieHolic/page/film/moviefilm.jsp">공포</a></li>
+							<li><a href="/MovieHolic/page/film/moviefilm.jsp">스릴러</a></li>
+							<li><a href="/MovieHolic/page/film/moviefilm.jsp">액션</a></li>
+							<li><a href="/MovieHolic/page/film/moviefilm.jsp">코미디</a></li>
+						</ul>
+					</li>
 					<li><a href="/MovieHolic/page/film/movielist.jsp">Lists</a></li>
 					<li>
 						<a href="/MovieHolic/page/mypage/mypage.jsp">My page</a>
