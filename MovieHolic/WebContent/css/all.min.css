@@ -1517,7 +1517,7 @@ to {
 
 .sui-grid-core tr td:first-child, .sui-grid-core tr th:first-child {
 	border-left-style: none;
-	border-left-width: 0
+	border-left-width: 0;
 }
 
 .sui-grid-core .sui-cell {
