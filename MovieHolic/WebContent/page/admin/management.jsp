@@ -35,7 +35,12 @@
 </style>
 
 </head>
+<body class="left-sidebar is-preload">
+<div id="page-wrapper">
+<!-- Header -->
+	<div id="header" style="background-image: none;">
 <%@ include file="/template/nav.jsp"%>
+	</div>
 <!-- Main -->
 <div class="wrapper style1">
 	<%-- 영화 관리 테이블 --%>
