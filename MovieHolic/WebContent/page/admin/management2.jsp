@@ -1,28 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/template/header.jsp"%>
+<%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
-<%@ include file="/template/nav.jsp"%>
-
-<!-- Main -->
-<div class="wrapper style1">
-
-	<!-- 날짜 -->
-
-	<link id="themecss" rel="stylesheet" type="text/css" 
-		href="//www.shieldui.com/shared/components/latest/css/light/all.min.css" />
-	<script type="text/javascript"
-		src="//www.shieldui.com/shared/components/latest/js/jquery-1.11.1.min.js"></script>
-	<script type="text/javascript"
-		src="//www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
 
 
-	<script type="text/javascript">
-		jQuery(function($) {
-			$(".datepicker").shieldDatePicker();
-		});
-	</script>
-	<style>
+<!-- 날짜 -->
+<link id="themecss" rel="stylesheet" type="text/css" href="//www.shieldui.com/shared/components/latest/css/light/all.min.css" />
+<script type="text/javascript"	src="//www.shieldui.com/shared/components/latest/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript"	src="//www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
+<link  rel="stylesheet" type="text/css" href="/MovieHolic/css/template.css" />
+
+<script type="text/javascript">
+	jQuery(function($) {
+		$(".datepicker").shieldDatePicker();
+	});
+</script>
+
+
+<style>
 .container {
 	background-image: url("/Content/img/datepicker/s4.png");
 	background-position: center;
@@ -30,11 +26,9 @@
 	height: 740px;
 	text-align: center;
 }
-
 .top {
 	padding-top: 290px;
 }
-
 #field {
 	width: 200px;
 	line-height: 37px;
@@ -46,11 +40,119 @@
 }
 </style>
 
+</head>
+
+<body id ="left-sidebar is-preload">
 
 
+<div id="page-wrapper">
 
 
+<!-- Header -->
+
+	<div id="header" style="background-image: none;">
+<%@ include file="/template/nav.jsp"%>
+	</div>
 	
+	
+<!-- Main -->
+
+<div class="wrapper style1">
+
+	<%-- 영화 관리 테이블 --%>
+	<div class="container">
+		<div class="row">
+
+			<div class="col-lg-4">
+				<img src="/MovieHolic/images/endgame.jpg" class="img-thumbnail"
+					alt="Cinque Terre" width="170" height="220">
+			</div>
+
+			<div class="col-lg-8">
+				<div class="col-lg-12">
+					<h2 align="left">Movie Management Table</h2>
+					<p align="left">This table is a movie management table :</p>
+				</div>
+				<div class="col-lg-12">
+					<div class="input-group mb-3">
+						<input type="text" class="form-control" placeholder="movie name"
+							id="name" name="name">
+						<div class="input-group-append">
+							<button type="submit" class="btn btn-primary">Search</button>
+						</div>
+					</div>
+					<div class="col-lg-12">
+						<div class="float-right">
+							<span
+								style="color: #D4D4D4; font-weight: 900; font-size: 17px; opacity: 1;">Old
+								Date:</span> <input class="datepicker" /> &nbsp;<strong>~</strong>&nbsp;
+							<span
+								style="color: #D4D4D4; font-weight: 900; font-size: 17px; opacity: 1;">Now
+								Date:</span> <input class="datepicker" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>영화제목</th>
+					<th>감독</th>
+					<th>개봉시기</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>1</td>
+					<td>엔드게임</td>
+					<td>엔소니 루소</td>
+					<td>2019-04-25</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td>두번째영화</td>
+					<td>감독2</td>
+					<td>2019-02-22</td>
+				</tr>
+				<tr>
+					<td>3</td>
+					<td>세번째영화</td>
+					<td>감독3</td>
+					<td>1994-06-18</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<!-- 테이블 하단 -->
+		<div class="row">
+			<div class="col-lg-3"></div>
+			<div class="col-lg-4">
+				<ul class="pagination">
+					<li class="page-item"><a class="page-link" href="#">Previous</a></li>
+					<li class="page-item"><a class="page-link" href="#">1</a></li>
+					<li class="page-item"><a class="page-link" href="#">2</a></li>
+					<li class="page-item"><a class="page-link" href="#">3</a></li>
+					<li class="page-item"><a class="page-link" href="#">4</a></li>
+					<li class="page-item"><a class="page-link" href="#">5</a></li>
+					<li class="page-item"><a class="page-link" href="#">Next</a></li>
+				</ul>
+			</div>
+			<div class="col-lg-2"></div>
+			<div class="col-lg-1"></div>
+			<div class="col-lg-2">
+				<div class="btn-group btn-group-lg">
+					<button type="button" class="btn btn-primary">삭제</button>
+				</div>
+			</div>
+		</div>
+
+	</div>
 
 
 
@@ -296,7 +398,5 @@
 
 
 </div>
-
-
 
 <%@ include file="/template/footer.jsp"%>

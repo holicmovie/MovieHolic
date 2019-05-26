@@ -18,6 +18,7 @@ tfoot, thead, tr, th, td, article, aside,
 canvas, details, embed, figure, figcaption,
 footer, header, hgroup, menu, nav, output, ruby,
 section, summary, time, mark, audio, video {
+	
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -2148,7 +2149,7 @@ input, select, textarea {
 /* Wrapper */
 
 	.wrapper {
-		background: #fff;
+		background: black;
 		margin: 0 0 2em 0;
 		padding: 6em 0 6em 0;
 	}
@@ -2161,6 +2162,7 @@ input, select, textarea {
 
 	#header {
 		position: relative;
+		background: black;
 		background-image: url("../../images/mainimage.png");
 		background-size: cover;
 		background-position: center center;
@@ -2464,7 +2466,7 @@ input, select, textarea {
 /* Banner */
 
 	#banner {
-		background: #fff;
+		background: rgb(3, 39, 49);
 		text-align: center;
 		padding: 4.5em 0 4.5em 0;
 		margin-bottom: 0;
@@ -2591,6 +2593,7 @@ input, select, textarea {
 /* Carousel */
 
 	.carousel {
+		background-color : black;
 		position: relative;
 		overflow: hidden;
 		padding: 2em 0 2em 0;
