@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/template/header.jsp" %>
-<%@ include file="/template/boot_431.jsp" %>
+<%@ include file="/template/header.jsp"%>
+
+
  <link id="themecss" rel="stylesheet" type="text/css" href="//www.shieldui.com/shared/components/latest/css/light/all.min.css" />
     <script type="text/javascript" src="//www.shieldui.com/shared/components/latest/js/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="//www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
@@ -81,7 +82,10 @@
             });
         });
     </script>
-<%@ include file="/template/nav.jsp" %>
+<%@ include file="/template/nav_style.jsp"%>
+<%@ include file="/template/boot_431.jsp"%>
+</head>
+<%@ include file="/template/nav.jsp"%>
 
 		<!-- Main -->
 	

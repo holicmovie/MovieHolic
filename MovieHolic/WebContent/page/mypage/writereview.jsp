@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/template/header.jsp" %>
-<%@ include file="/template/boot_431.jsp" %>
+<%@ include file="/template/header.jsp"%>
+<%@ include file="/template/nav_style.jsp"%>
+<%@ include file="/template/boot_431.jsp"%>
 <%-- 별점의 별 icon을 사용하기 위해 필요 --%>
 <style type="text/css">
 	.starrating > input {display: none;}  <%--  Remove radio buttons --%>
@@ -76,7 +77,8 @@ $(document).ready(function() {
 	
 });
 </script>
-<%@ include file="/template/nav.jsp" %>
+</head>
+<%@ include file="/template/nav.jsp"%>
 
 
 

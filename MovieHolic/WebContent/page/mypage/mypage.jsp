@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-<%@ include file="/template/header.jsp" %>
+<%@ include file="/template/header.jsp"%>
 <%@ include file="/template/boot_340.jsp" %>
-<%@ include file="/template/nav.jsp" %>
+<%@ include file="/template/nav_style.jsp"%>
+<%@ include file="/template/boot_431.jsp"%>
+</head>
+<%@ include file="/template/nav.jsp"%>
 
 
 
