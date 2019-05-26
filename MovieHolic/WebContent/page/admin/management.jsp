@@ -3,27 +3,15 @@
 <%@ include file="/template/header.jsp"%>
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
-</head>
-<%@ include file="/template/nav.jsp"%>
-
-<!-- Main -->
-<div class="wrapper style1">
-
-	<!-- 날짜 -->
-
-	<link id="themecss" rel="stylesheet" type="text/css" 
-		href="//www.shieldui.com/shared/components/latest/css/light/all.min.css" />
-	<script type="text/javascript"
-		src="//www.shieldui.com/shared/components/latest/js/jquery-1.11.1.min.js"></script>
-	<script type="text/javascript"
-		src="//www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
-
-
-	<script type="text/javascript">
-		jQuery(function($) {
-			$(".datepicker").shieldDatePicker();
-		});
-	</script>
+<!-- 날짜 -->
+<link id="themecss" rel="stylesheet" type="text/css" href="//www.shieldui.com/shared/components/latest/css/light/all.min.css" />
+<script type="text/javascript"	src="//www.shieldui.com/shared/components/latest/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript"	src="//www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
+<script type="text/javascript">
+	jQuery(function($) {
+		$(".datepicker").shieldDatePicker();
+	});
+</script>
 <style>
 .container {
 	background-image: url("/Content/img/datepicker/s4.png");
@@ -32,11 +20,9 @@
 	height: 740px;
 	text-align: center;
 }
-
 .top {
 	padding-top: 290px;
 }
-
 #field {
 	width: 200px;
 	line-height: 37px;
@@ -48,11 +34,10 @@
 }
 </style>
 
-
-
-
-
-
+</head>
+<%@ include file="/template/nav.jsp"%>
+<!-- Main -->
+<div class="wrapper style1">
 	<%-- 영화 관리 테이블 --%>
 	<div class="container">
 		<div class="row">
@@ -392,7 +377,5 @@
 
 
 </div>
-
-
 
 <%@ include file="/template/footer.jsp"%>
