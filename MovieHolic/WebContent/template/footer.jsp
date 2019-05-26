@@ -33,8 +33,6 @@
 			</div>
 		</div>
 
-</div>
-
 		<!-- Scripts -->
 			<%-- jquery v3.3.1 다운로드 파일임. 해당 파일을 참조할 경우, jquery 구문이 오작동함.. 
 			<script src="/MovieHolic/assets/js/jquery.min.js"></script> --%>
@@ -45,6 +43,8 @@
 			<script src="/MovieHolic/assets/js/breakpoints.min.js"></script>
 			<script src="/MovieHolic/assets/js/util.js"></script>
 			<script src="/MovieHolic/assets/js/main.js"></script>
+</div>
+
 
 	</body>
 </html>
