@@ -39,10 +39,17 @@
 
 			<div class="container">
 			
+			<div class="row" style="margin-bottom:30px; color:white">
+					<div class="col-lg-12 col-12-mobile">
+						<span>· My Page</span>
+						<span class=""> > Social</span>
+					</div>
+				</div>
+			
 				<!-- **첫번째 행 시작 -->
 				<div class="row" style="margin-bottom: 5%">
 					
-					<div class="col-12 col-12-mobile">
+					<div class="col-lg-12 col-12-mobile">
 					<!-- 탭 메뉴 시작-->
 						<!-- 탭 2개 선언 -->
 						<ul class="nav nav-tabs" role="tablist">
@@ -161,6 +168,14 @@
 					</div>
 				</div>
 				<!-- **첫번째 행 끝 -->
+				
+				<!-- **두 번째 행 시작 -->
+				<div class="row">
+					<div class="col-lg-12">
+						<button class="btn btn-success" style="float: right">다 음</button>
+					</div>
+				</div>
+				<!-- **두 번째 행 끝 -->
 				
 			</div>
 

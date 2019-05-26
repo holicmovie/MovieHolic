@@ -1,9 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/template/header.jsp"%>
-<%@ include file="/template/boot_400.jsp" %>
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
+
+<!-- 생년월일의 datepicker용 -->
+<link href="/MovieHolic/assets/css/datepicker.min.css" rel="stylesheet" type="text/css">
+<script src="/MovieHolic/assets/js/datepicker.min.js"></script>
+<!-- Include 한글버전 -->
+<script src="/MovieHolic/assets/js/datepicker.kr.js"></script>
+<!-- 생년월일의 datepicker용 -->
+
 </head>
 <body class="left-sidebar is-preload">
 <div id="page-wrapper">
@@ -19,9 +26,16 @@
 
 			<div class="container">
 			
+			<div class="row" style="margin-bottom:30px; color:white">
+					<div class="col-lg-12 col-12-mobile">
+						<span>· My Page</span>
+						<span class=""> > Setting</span>
+					</div>
+				</div>
+			
 				<!-- **첫번째 행 시작 -->
 				<div class="row" style="margin-bottom: 5%">
-					<div class="col-12 col-12-mobile">
+					<div class="col-lg-12 col-12-mobile">
 						<h2>Account Setting</h2>
 					</div>
 				</div>
@@ -34,17 +48,17 @@
 					<div class="row">
 										
 						<!-- 프로필 사진 -->
-						<div class="col-2 col-12-mobile" id="content">
+						<div class="col-lg-2 col-12-mobile" id="content">
 						
 							<div align="center">
 								<img src="/MovieHolic/images/user.png" width="100%" alt="user icon" /><br>
-								<label class="btn btn-primary">Edit<input type="file" style="display: none;"></label>
+								<label class="btn btn-dark">Search<input type="file" style="display: none;"></label>
 							</div>
 							
 						</div>
 
 						<!-- id, 닉네임, 비번, 비번확인 -->
-						<div class="col-5 col-12-mobile">
+						<div class="col-lg-5 col-12-mobile">
 
 							<div class="form-group">
 								<label for="id">ID</label> <input type="text"
@@ -66,7 +80,7 @@
 						</div>
 
 						<!-- 전화번호, email, 자기소개 -->
-						<div class="col-5 col-12-mobile">
+						<div class="col-lg-5 col-12-mobile">
 						
 							<div class="form-group">
 									<label for="tel">전화번호</label>
@@ -86,7 +100,7 @@
 							</div>
 									<div class="form-group">
 									<label for="birth">생년월일</label>
-									<input type="date" class="form-control" id="birth" value="1995-01-01">
+									<input type="text" class="datepicker-here" data-language='kr' id="birth" value="1995-01-01">
     						    </div>
     						    
 								<div class="form-group">
@@ -110,7 +124,7 @@
 						<div class="row">
 						
 							<!-- 간격 띄움 용 실선 -->
-							<div class="col-12 col-12-mobile">
+							<div class="col-lg-12 col-12-mobile">
 								<hr></hr>
 							</div>
 						
@@ -121,9 +135,9 @@
 						<div class="row">
 						
 							<!-- 저장, 탈퇴 버튼 -->
-							<div class="col-12 col-12-mobile" align="center">
-								<button type="submit" class="btn btn-primary" style="margin-right:5%">저장</button>
-								<button type="submit" class="btn btn-primary">탈퇴</button>
+							<div class="col-lg-12 col-12-mobile" align="center">
+								<button type="submit" class="btn btn-dark" style="margin-right:5%">저장</button>
+								<button type="submit" class="btn btn-danger">탈퇴</button>
 							</div>
 							
 						</div>
