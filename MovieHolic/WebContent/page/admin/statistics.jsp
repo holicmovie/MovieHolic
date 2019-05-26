@@ -4,10 +4,11 @@
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
 <script type="text/javascript"	src="https:/www.gstatic.com/charts/loader.js"></script>
-<link id="themecss" rel="stylesheet" type="text/css" href="//www.shieldui.com/shared/components/latest/css/light/all.min.css" />
-<script type="text/javascript" src="//www.shieldui.com/shared/components/latest/js/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src="//www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
 
+<link id="themecss" rel="stylesheet" type="text/css"
+	href="/MovieHolic/css/all.min.css">
+<script src="/MovieHolic/js/jquery-1.11.1.min.js"></script>
+<script src="/MovieHolic/js/shieldui-all.min.js"></script>
 
 <!-- 그래프 -->
 
