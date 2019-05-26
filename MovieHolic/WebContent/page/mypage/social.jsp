@@ -2,10 +2,9 @@
     pageEncoding="UTF-8"%>
     
 <%@ include file="/template/header.jsp"%>
-<%@ include file="/template/boot_340.jsp" %>
-<%@ include file="/template/boot_400.jsp" %><!-- 4.3.1과 충돌 발생함 -->
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
+
 <style>
 <!-- 좋아요 둥근 버튼을 위해 필요 -->
 .btn-circle.btn-xl {
@@ -40,16 +39,19 @@
 					<div class="col-12 col-12-mobile">
 					<!-- 탭 메뉴 시작-->
 						<!-- 탭 2개 선언 -->
-						<ul class="nav nav-tabs">
- 						    <li class="active"><a data-toggle="tab" href="#followings">Followings</a></li>
-						    <li><a data-toggle="tab" href="#followers">Followers</a></li>
+						<ul class="nav nav-tabs" role="tablist">
+ 						    <li class="nav-item">
+ 						    	<a class="nav-link active"  data-toggle="tab" href="#followings">Followings</a>
+ 						    </li>
+						    <li class="nav-item">
+						    	<a class="nav-link" data-toggle="tab" href="#followers">Followers</a></li>
 					  	</ul>
 					  
 					  <!-- 탭 페이지 2개 구성 -->
 					  <div class="tab-content">
 					  
 						  <!-- 첫번째 탭 페이지 -->
-							<div id="followings" class="tab-pane fade in active">
+							<div id="followings" class="container tab-pane active">
 							<br>
 								<table class="table table-hover table-dark">
 								  <thead>
@@ -94,7 +96,7 @@
   					   		</div>
   					   		
   					   		 <!-- 두번째 탭 페이지 -->
-							<div id="followers" class="tab-pane fade">
+							<div id="followers" class="container tab-pane fade">
 							<br>
 								<table class="table table-hover table-dark">
 								  <thead>
@@ -113,7 +115,7 @@
 								      <td><i class="fa fa-list" style="color:gold;"></i> 100</td>
 								      <td><i class="fa fa-heart" style="color:tomato;"></i> 300</td>
 								      <td>
-								      	<button type="button" class="btn btn-default btn-circle btn-xl"><i class="fa fa-plus"></i></button>
+								      	<button type="button" class="btn btn-secondary btn-circle btn-xl"><i class="fa fa-plus"></i></button>
 								      </td>
 								    </tr>
 								    <tr>
@@ -122,7 +124,7 @@
 								      <td><i class="fa fa-list" style="color:gold;"></i> 200</td>
 								      <td><i class="fa fa-heart" style="color:tomato;"></i> 150</td>
 								      <td>
-								      	<button type="button" class="btn btn-default btn-circle btn-xl"><i class="fa fa-plus"></i></button>
+								      	<button type="button" class="btn btn-secondary btn-circle btn-xl"><i class="fa fa-plus"></i></button>
 								      </td>
 								    </tr>
 								    <tr>
@@ -131,7 +133,7 @@
 								      <td><i class="fa fa-list" style="color:gold;"></i> 400</td>
 								      <td><i class="fa fa-heart" style="color:tomato;"></i> 342</td>
 								      <td>
-								      	<button type="button" class="btn btn-default btn-circle btn-xl"><i class="fa fa-plus"></i></button>
+								      	<button type="button" class="btn btn-secondary btn-circle btn-xl"><i class="fa fa-plus"></i></button>
 								      </td>
 								    </tr>
 								    <tr>
