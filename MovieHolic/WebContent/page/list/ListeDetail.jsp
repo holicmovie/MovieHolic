@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/template/header.jsp" %>
+<%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp" %>
+
 <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css'>
 <style>
 <!-- 좋아요 둥근 버튼을 위해 필요 -->
@@ -27,7 +29,8 @@
 	border-right-style: solid;
 }
 </style>
-<%@ include file="/template/nav.jsp" %>
+</head>
+<%@ include file="/template/nav.jsp"%>
 
 <!-- Main -->
 <div class="wrapper style1">

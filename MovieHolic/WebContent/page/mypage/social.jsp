@@ -1,8 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/template/header.jsp" %>
+    
+<%@ include file="/template/header.jsp"%>
 <%@ include file="/template/boot_340.jsp" %>
-<%@ include file="/template/boot_400.jsp" %>
+<%@ include file="/template/boot_400.jsp" %><!-- 4.3.1과 충돌 발생함 -->
+<%@ include file="/template/nav_style.jsp"%>
+<%@ include file="/template/boot_431.jsp"%>
 <style>
 <!-- 좋아요 둥근 버튼을 위해 필요 -->
 .btn-circle.btn-xl {
@@ -23,7 +26,8 @@
     line-height: 1.42857;
 }
 </style>
-<%@ include file="/template/nav.jsp" %>
+</head>
+<%@ include file="/template/nav.jsp"%>
 
 		<!-- Main 시작-->
 		<div class="wrapper style1">

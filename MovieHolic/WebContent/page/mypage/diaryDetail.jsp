@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/template/header.jsp" %>
+<%@ include file="/template/header.jsp"%>
+
+
 <!-- 별점의 별 icon을 사용하기 위해 필요 -->
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 <style>
@@ -39,7 +41,10 @@
     line-height: 1.42857;
 }
 </style>
-<%@ include file="/template/nav.jsp" %>
+<%@ include file="/template/nav_style.jsp"%>
+<%@ include file="/template/boot_431.jsp"%>
+</head>
+<%@ include file="/template/nav.jsp"%>
 
 
 		<!-- Main 시작 -->
