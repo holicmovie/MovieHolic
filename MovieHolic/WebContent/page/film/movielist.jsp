@@ -4,8 +4,13 @@
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
 </head>
-<%@ include file="/template/nav.jsp"%>
+<body class="left-sidebar is-preload">
+<div id="page-wrapper">
 
+<!-- Header -->
+	<div id="header" style="background-image: none;">
+<%@ include file="/template/nav.jsp"%>
+	</div>
 <!-- boxoffice -->
 <section class="carousel">
 	<div class="reel">

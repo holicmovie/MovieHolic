@@ -9,9 +9,6 @@
 <script type="text/javascript" src="//www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
 
 
-
-
-
 <!-- 그래프 -->
 
 <script type="text/javascript">
@@ -172,8 +169,13 @@ $(window).resize(function(){
 </script>
 
 </head>
-<%@ include file="/template/nav.jsp"%>
+<body class="left-sidebar is-preload">
+<div id="page-wrapper">
 
+<!-- Header -->
+	<div id="header" style="background-image: none;">
+<%@ include file="/template/nav.jsp"%>
+	</div>
 
 
 

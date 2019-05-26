@@ -4,7 +4,6 @@
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
 </head>
-
 <body class="homepage is-preload">
 	<div id="page-wrapper">
 
@@ -25,8 +24,8 @@
 				</footer>
 			</div>
 
-			<%@ include file="/template/nav.jsp"%>
-	</div>
+<%@ include file="/template/nav.jsp"%>
+		</div>
 
 		<!-- Banner -->
 		<section id="banner">

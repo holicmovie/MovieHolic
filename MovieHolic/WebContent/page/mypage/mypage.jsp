@@ -1,26 +1,44 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/template/header.jsp"%>
-<%@ include file="/template/boot_340.jsp" %>
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
 </head>
+<body class="left-sidebar is-preload">
+<div id="page-wrapper">
+
+<!-- Header -->
+	<div id="header" style="background-image: none;">
 <%@ include file="/template/nav.jsp"%>
+	</div>
 
 
+<%-- Main --%>
+<div class="wrapper style1" >
 
-<!-- Main -->
-		<div class="wrapper style1" >
-
-			<div class="container">
-			
-				<div class="row" style="margin-bottom: 5%" >
-					<div class="col-12 col-12-mobile">
-						<h3><a href="#">following&nbsp;&nbsp;</a> | <a href="#">&nbsp;&nbsp;mine</a></h3>
-					</div>
-				</div>
-
+	<div class="container">
+	
+	<%-- 탭 메뉴 시작--%>
+		<!-- 탭 2개 선언 -->
+		<ul class="nav nav-tabs" role="tablist">
+			<li class="nav-item"><a class="nav-link active"  data-toggle="tab" href="#mine">Mine</a></li>
+		    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#following">Following</a></li>
+	  	</ul>
+	
+	
+		<%-- 탭 페이지 2개 구성 --%>
+		<div class="tab-content">
+	  
+			<%-- 첫번째 탭 페이지 --%>
+			<div id="mine" class="container tab-pane active"><br>
 				
+			
+			</div>
+			   		
+			<!-- 두번째 탭 페이지 -->
+			<div id="following" class="container tab-pane fade"><br>
+
+		
 				<!-- 리뷰 목록 -->
 				<hr class="first" style="margin-bottom: 7em;"/>
 				<div class="row" >
@@ -108,8 +126,14 @@
 				</div>
 
 			</div>
-
+					   		
 		</div>
+		<!-- 탭 메뉴 끝 -->
+			
+			
+	</div>
+
+</div>
 <%@ include file="/template/footer.jsp" %>
 
 

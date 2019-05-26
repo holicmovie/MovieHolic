@@ -1,11 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/template/header.jsp"%>
-<%@ include file="/template/boot_340.jsp" %>
+
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
 </head>
+<body class="left-sidebar is-preload">
+<div id="page-wrapper">
+
+<!-- Header -->
+	<div id="header" style="background-image: none;">
 <%@ include file="/template/nav.jsp"%>
+	</div>
 
 
 		<!-- Main 시작-->
