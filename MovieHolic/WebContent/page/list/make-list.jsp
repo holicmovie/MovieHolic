@@ -18,7 +18,7 @@
 	<div class="container bgcolor-yellow">
 		<div class="row">
 		<div class = "col-lg-1"></div>
-		<div class="col-lg-4" id="list-search">
+		<div class="col-lg-5" id="list-search">
 			<h3><label>YOUR LIST</label></h3>
 			<div class="col-lg-12">
 				<input type="text" class="form-control form-control-lg" placeholder="당신의  추천 리스트 이름을 입력하세요" name="list-name">
