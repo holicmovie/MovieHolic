@@ -8,7 +8,28 @@
 margin:0;
 padding:0;
 }
+hr.line_bold {
+	background-color: white;
+	height: 2px;
+    position: static;
+}
 
+/* 구분선 얇은 것 (흰색) */
+hr.line_light_w {
+	background-color: white;
+	position: static;
+	margin:0;
+}
+
+/* 구분선 얇은 것 (회색) */
+hr.line_light_g {
+	background-color: gray;
+	position: static;
+}
+.list-movie{
+	background-color: rgb(20,20,20);
+	color: white;
+}
 </style>
 </head>
 <body class="left-sidebar is-preload">
@@ -25,11 +46,13 @@ padding:0;
 		<div class="row">
 		<div class = "col-lg-1"></div>
 		<div class="col-lg-5" id="list-search">
+		<%--리스트 이름 작성 --%>
 			<h3><label>YOUR LIST</label></h3>
 			<div class="col-lg-12">
 				<input type="text" class="form-control form-control-lg" placeholder="당신의  추천 리스트 이름을 입력하세요" name="list-name">
 			</div>
 			<br>
+		<%-- 관련 해시태그 작성 --%>
 			<h3><label>#HASHTAG</label></h3>
 			<div class="col-lg-12">
 				<input type="text" class="form-control form-control-lg"
@@ -37,10 +60,9 @@ padding:0;
 				<font color = "gray" size ="4px">최대 10개의 HASHTAG를 입력하실 수 있습니다.</font>
 			</div>
 			<br>
+		<%-- 영화 이름 검색--%>
 			<h3><label for = "title_search">TITLE OF MOVIE</label></h3>
 			<div class = "col-lg-12">		
-			<!--  <input type="text" class="form-control form-control-lg mr-lg-2" placeholder="영화 제목 입력" name="title-search">
-			<button type = "button" class= "btn btn-lg btn-primary">SEARCH</button>-->
 			<div class="input-group mb-3">
                 <input type="text" class="form-control form-control-lg" placeholder="영화제목을 입력해주세요" id="name" name="name">
                 <div class="input-group-append">
@@ -50,6 +72,8 @@ padding:0;
 			</div>
 			</div>
 			<br>
+			
+			<%-- 영화 리스트 상세 정보 입력 --%>
 			<div class="col-lg-5" id="list-description">
 				<h3>
 					<label for="list-detail-description">ABOUT YOUR FAVORITE MOVIE</label>
@@ -62,73 +86,35 @@ padding:0;
 			</div>
 		</div>
 		<br><br>
+		
+		<%--리스트 영화 목록 추가  --%>
 		<div class = "row">
 		<div class="col-lg-1"></div>
 		<div class="col-lg-10" id="poster-list">
 	<h3><label>YOUR MOVIE LIST</label></h3>
+	<hr class = "line_bold">
 	<div class="list-group" style="background-color: black;">
-	<ul class="list-group list-group-horizontal">
-	  <li class="list-group-item"><div>
-	   엔드게임<button class = "btn btn-sm" style ="position : absolute;">x</button><br>
-	   <img src = "/MovieHolic/images/avengers.png" onmouseover = "">
-	  </div>
-	  </li>
-	  <li class="list-group-item"><div>
-	   엔드게임<button class = "btn btn-sm" style ="position : absolute;">x</button><br>
-	   <img src = "/MovieHolic/images/avengers.png" onmouseover = "">
-	  </div>
-	  </li>
-	  <li class="list-group-item"><div>
-	   엔드게임<button class = "btn btn-sm" style ="position : absolute;">x</button><br>
-	   <img src = "/MovieHolic/images/avengers.png" onmouseover = "">
-	  </div>
-	  </li>
-	  <li class="list-group-item"><div>
-	   엔드게임<button class = "btn btn-sm" style ="position : absolute;">x</button><br>
-	   <img src = "/MovieHolic/images/avengers.png" onmouseover = "">
-	  </div>
-	  </li>
-	  <li class="list-group-item"><div>
-	   엔드게임<button class = "btn btn-sm" style ="position : absolute;">x</button><br>
-	   <img src = "/MovieHolic/images/avengers.png" onmouseover = "">
-	  </div>
-	  </li>
-			 
-	</ul>
-	<ul class="list-group list-group-horizontal">
-	  <li class="list-group-item">
-	  <div>엔드게임<button class = "btn btn-sm" style ="position : absolute;">x</button><br>
-	   <img src = "/MovieHolic/images/avengers.png" onmouseover = "">
-	  </div>
-	  </li>
-	  <li class="list-group-item">
-	  <div>엔드게임<button class = "btn btn-sm" style ="position : absolute;">x</button><br>
-	   <img src = "/MovieHolic/images/avengers.png" onmouseover = "">
-	  </div>
-	  </li>
-	  <li class="list-group-item">
-	  <div>엔드게임<button class = "btn btn-sm" style ="position : absolute;">x</button><br>
-	  <img src = "/MovieHolic/images/avengers.png" onmouseover = "">
-	  </div>
-	  </li>
-	  <li class="list-group-item">
-	  <div>엔드게임<button class = "btn btn-sm" style ="position : absolute;">x</button><br>
-	   <img src = "/MovieHolic/images/avengers.png" onmouseover = "">
-	  </div>
-	  </li>
-	  <li class="list-group-item">
-	  <div>엔드게임<button class = "btn btn-sm" style ="position : absolute;">x</button><br>
-	   <img src = "/MovieHolic/images/avengers.png" onmouseover = "">
-	  </div>
-	  </li>
-	</ul>
-			<!-- <a href="#" class="list-group-item list-group-item-action">엔드게임</a>
-	<a href="#" class="list-group-item list-group-item-action">인피니티 워</a>
-			<a href="#" class="list-group-item list-group-item-action">토르</a> -->
+	  <%--리스트에 추가된 영화  --%>
+	  <a href="#" class = "list-movie"><div class = "list-movie"><img src ="/MovieHolic/images/endgame.jpg"  style="float: left" width="50px">엔드게임:2019
+	  <button type="button" id="replydelete" class="close" style="color: white">&times;</button>
+		</div></a>
+	  <hr class = "line_light_w">
+	 <%--리스트에 추가된 영화  --%>
+	  <div class = "list-movie"><a href="#" class = "list-movie"><img src ="/MovieHolic/images/endgame.jpg"  style="float: left" width="50px">엔드게임:2019
+	  <button type="button" id="replydelete" class="close" style="color: white">&times;</button>
+		</a></div>
+	  <hr class = "line_light_w">
+	<%--리스트에 추가된 영화  --%>
+	  <div class = "list-movie"><a href="#" class = "list-movie"><img src ="/MovieHolic/images/endgame.jpg"  style="float: left" width="50px">엔드게임:2019
+	  <button type="button" id="replydelete" class="close" style="color: white">&times;</button>
+		</a></div>
+
 	</div>
-		</div>
+	</div>
+	
 	<div class = "col-lg-1"></div>	
 		</div>
+		
 <br><br><br>
 	</div>
 </div>

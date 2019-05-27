@@ -113,15 +113,7 @@ hr.line_light_g {
 			</ul>
 		</section>
 	
-	<%-- <span>
-		<button type="button" class="btn btn-danger btn-circle btn-lg">
-		<i class="far fa-thumbs-up"></i></button>
-		<span style="margin-left:10px; font-size:20px; font-weight:bold;">200</span>
-		<button type="button" class="btn btn-danger btn-circle btn-lg" style="background:skyblue; border-color:skyblue; margin-left:15px;">
-		<i class="far fa-thumbs-down"></i></button>
-		<span style="margin-left:10px; font-size:20px; font-weight:bold;">21</span>
-	</span>
-	--%>
+	
 	</div>
 	<div class = "col-lg-5"></div>		
 	</div>	

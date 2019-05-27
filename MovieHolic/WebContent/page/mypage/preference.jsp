@@ -14,11 +14,21 @@ hr.line_bold {
 	height: 2px;
     position: static;
 }
+<<<<<<< HEAD
 /* 구분선 얇은 것 (흰색) */
 hr.line_light_w {
 	background-color: white;
 	position: static;
 }
+=======
+
+/* 구분선 얇은 것 (흰색) */
+hr.line_light_w {
+	background-color: white;
+	position: static;
+}
+
+>>>>>>> branch 'master' of https://github.com/holicmovie/MovieHolic.git
 /* 구분선 얇은 것 (회색) */
 hr.line_light_g {
 	background-color: gray;
@@ -163,6 +173,7 @@ series.hiddenState.properties.endAngle = -90;
   width: 100%;
   height: 500px;
 }
+<<<<<<< HEAD
 </style>
 
 <!-- Resources -->
@@ -228,6 +239,87 @@ chart.cursor = new am4charts.XYCursor();
 series.columns.template.adapter.add("fill", (fill, target) => {
   return chart.colors.getIndex(target.dataItem.index);
 });
+=======
+
+</style>
+
+<!-- Resources -->
+<script src="https://www.amcharts.com/lib/4/core.js"></script>
+<script src="https://www.amcharts.com/lib/4/charts.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+
+<!-- Chart code -->
+<script>
+am4core.ready(function() {
+
+// Themes begin
+am4core.useTheme(am4themes_animated);
+// Themes end
+
+var chart = am4core.create("chartdiv2", am4charts.XYChart);
+chart.hiddenState.properties.opacity = 0; // this makes initial fade in effect
+
+chart.data = [ {
+  "country": "half",
+  "value": 4
+}, {
+  "country": "one",
+  "value": 12
+}, {
+  "country": "one-half",
+  "value": 8
+}, {
+  "country": "two",
+  "value": 11
+}, {
+  "country": "two-half",
+  "value": 14
+}, {
+  "country": "three",
+  "value": 28
+}, {
+  "country": "three-half",
+  "value": 19
+}, {
+  "country": "four",
+  "value": 18
+}, {
+  "country": "four-half",
+  "value": 15
+}, {
+  "country": "five",
+  "value": 10
+} ];
+
+
+var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+categoryAxis.renderer.grid.template.location = 0;
+categoryAxis.dataFields.category = "country";
+categoryAxis.renderer.minGridDistance = 40;
+
+var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+
+var series = chart.series.push(new am4charts.CurvedColumnSeries());
+series.dataFields.categoryX = "country";
+series.dataFields.valueY = "value";
+series.tooltipText = "{valueY.value}"
+series.columns.template.strokeOpacity = 0;
+
+series.columns.template.fillOpacity = 0.75;
+
+var hoverState = series.columns.template.states.create("hover");
+hoverState.properties.fillOpacity = 1;
+hoverState.properties.tension = 0.4;
+
+chart.cursor = new am4charts.XYCursor();
+
+// Add distinctive colors for each column using adapter
+series.columns.template.adapter.add("fill", (fill, target) => {
+  return chart.colors.getIndex(target.dataItem.index);
+});
+
+
+>>>>>>> branch 'master' of https://github.com/holicmovie/MovieHolic.git
 }); // end am4core.ready()
 </script>
 
