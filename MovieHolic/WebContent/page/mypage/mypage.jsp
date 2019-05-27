@@ -24,8 +24,8 @@
 <body class="left-sidebar is-preload">
 <div id="page-wrapper">
 
-<!-- Header -->
-	<div id="header" style="background-image: none;">
+<%-- Header --%>
+	<div id="header" style="background-image: none; margin-bottom: 0px; padding-bottom:0; height: 10px;">
 <%@ include file="/template/nav.jsp"%>
 	</div>
 
@@ -34,11 +34,20 @@
 <div class="wrapper style1">
 
 	<div class="container">
-	<!-- **첫번째 행 시작 -->
-		<div class="row" style="margin-bottom: 5%">
+	
+	<%-- 페이지 이동경로 --%>
+		<div class="row" style="margin-bottom:30px;">
+			<div class="col-lg-12 col-12-mobile font_light_small">
+				<span>✱&nbsp;&nbsp;</span>
+				<a href="/MovieHolic/page/mypage/mypage.jsp" style="color:white;">My Page</a>
+			</div>
+		</div>
+	
+	<%-- **첫번째 행 시작 --%>
+		<div class="row" style="margin-bottom: 5%; margin-top: 10px;">
 			<div class="aaa col-lg-12 col-mobile-12">
 			<%-- 탭 메뉴 시작--%>
-				<!-- 탭 2개 선언 -->
+				<%-- 탭 2개 선언 --%>
 				<ul class="nav nav-tabs" role="tablist">
 					<li class="nav-item"><a class="nav-link active"  data-toggle="tab" href="#mine">Mine</a></li>
 				    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#following">Following</a></li>
@@ -235,7 +244,7 @@
 						   		
 						   		
 						   		
-					<!-- 두번째 탭 페이지 -->
+					<%-- 두번째 탭 페이지 --%>
 					<div id="following" class="container tab-pane fade"><br>
 						<%-- 친구들이 '좋아요'한 영화 --%>
 						<div class="row" style="margin-top: 1em;">
@@ -298,7 +307,7 @@
 						</div>
 				
 		
-						<!-- 활동 목록 -->
+						<%-- 활동 목록 --%>
 						<div class="row" style="margin-top: 10em;">
 							<div class="font_bold_mid" style="width:100%; border-bottom: 2.5px solid #fff; margin-bottom: 0; padding-bottom: 0.8em;">
 								<div style="float: left;">Activity Log</div>
@@ -402,7 +411,7 @@
 					</div>
 							   		
 				</div>
-				<!-- 탭 메뉴 끝 -->
+				<%-- 탭 메뉴 끝 --%>
 				
 				
 			</div>

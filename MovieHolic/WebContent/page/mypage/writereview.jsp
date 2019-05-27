@@ -3,8 +3,23 @@
 <%@ include file="/template/header.jsp"%>
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
+<%-- datepicker --%>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+<style>
+<%--영화 포스터 --%>
+	.movieImg {
+		border: solid 2px white;
+	}
+<%-- 버튼 크기 --%>
+	.btn.btn-success{
+		width : 90px;
+		background-color: #034741;
+		color: #ffcd07;
+	}
 <%-- 별점의 별 icon을 사용하기 위해 필요 --%>
-<style type="text/css">
 	.starrating > input {display: none;}  <%--  Remove radio buttons --%>
 	.starrating > label:before { 
 	  content: "\f005"; <%-- Star  --%>
@@ -21,153 +36,119 @@
 	{ color: #ffca08 ; } <%-- Set yellow color when star checked  --%>
 	.starrating > input:hover ~ label
 	{ color: #ffca08 ;  } <%-- Set yellow color when star hover  --%>
-	<%-- 체크박스  --%>
-	.checks {
+<%-- 체크박스 --%>
+	.form-check-input {
+		-ms-transform: scale(2); /* IE */
+		-moz-transform: scale(2); /* FF */
+		-webkit-transform: scale(2); /* Safari and Chrome */
+		-o-transform: scale(2); /* Opera */
 		position: relative;
-	}
-	.checks input[type="checkbox"] {
-		<%--  실제 체크박스는 화면에서 숨김 --%>
-		position: absolute;
-		width: 1px; height: 1px; padding: 0; margin: -1px;
-		overflow: hidden;
-		clip:rect(0,0,0,0);
-		border: 0
-	}
-	.checks input[type="checkbox"] + label {
-		display: inline-block;
-		position: relative;
-		cursor: pointer;
-		-webkit-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
-	}
-	.checks input[type="checkbox"] + label:before {
-		<%-- 가짜 체크박스  --%>
-		content: ' ';
-		display: inline-block;
-		width: 21px; <%-- 체크박스의 너비를 지정 --%>
-		height: 21px; <%-- 체크박스의 높이를 지정 --%>
-		line-height: 21px; <%-- 세로정렬을 위해 높이값과 일치 --%>
-		margin: -2px 8px 0 0;
-		text-align: center;
-		vertical-align: middle;
-		background: #fafafa;
-		border: 1px solid #cacece;
-		border-radius : 3px;
-		box-shadow: 0px 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
-	} .checks input[type="checkbox"] + label:active:before, .checks input[type="checkbox"]:checked + label:active:before {
-		box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
-	} .checks input[type="checkbox"]:checked + label:before {
-		<%-- 체크박스를 체크했을때 --%>
-		content: '\2714';
-		<%-- 체크표시 유니코드 사용 --%>
-		color: #99a1a7;
-		text-shadow: 1px 1px #fff;
-		background: #e9ecee;
-		border-color: #adb8c0;
-		box-shadow: 0px 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1);
+		margin: 1.5em 1em 0em 0.6em;
 	}
 </style>
 <script>
-$(document).ready(function() {
-	 
-	$('#srchMovie').focusin(function() {
-		$('#movieModal').modal();
+<%-- 영화검색 모달 --%>
+	$(document).ready(function() {
+		 
+		$('#srchMovie').focusin(function() {
+			$('#movieModal').modal();
+		});
+		
 	});
-	
-});
+<%-- datepicker --%>
+	$(function(){
+		$('#datepicker').datepicker({
+		    uiLibrary: 'bootstrap4'
+		});
+	});
 </script>
 </head>
 <body class="left-sidebar is-preload">
 <div id="page-wrapper">
 
 <!-- Header -->
-	<div id="header" style="background-image: none;">
+	<div id="header" style="background-image: none; margin-bottom: 0px; padding-bottom:0; height: 10px;">
 <%@ include file="/template/nav.jsp"%>
 	</div>
 
 
 
 <!-- Main -->
-		<div class="wrapper style1">
-			<div class="container">
-			
-			<%--  페이지 제목 --%>
-				<div class="row" style="margin-bottom: 5%">
-					<div class="col-12 col-12-mobile">
-						<h3><a >리뷰작성</a></h3>
-					</div>
+<div class="wrapper style1">
+	<div class="container">
+	
+	<%--  페이지 제목 --%>
+		<div class="row" style="margin-top: 0; margin-top: 10px;">
+			<div style="width:100%; border-bottom: 2.5px solid #fff; margin-bottom: 2em; padding-top: 0; padding-bottom: 0.8em;">
+				<div class="font_bold_lg" style="float: left;">New Review</div>
+				<div style="float: right; margin-right: 15px;">
+					 <input id="datepicker" width="150"/>
+				</div>
+				<div style="clear: both;"></div>
+			</div>
+		</div>
+		
+		<div class="row">
+
+			<!-- 왼쪽 내용 start -->
+			<div class="col-lg-3 col-12-mobile top_margin">
+
+				<!-- 포스터, 좋아요싫어요 -->
+				<div style="width: 100%; text-align: center;">
+					<a href="#"><img class="movieImg" src="/MovieHolic/images/getposter.png" width="235vh"></a>
 				</div>
 
-			<%-- 작성일 설정--%>		
-				<div class="row" style="margin-bottom: 5%">
-					<div class="col-xl-9 col-lg-9 col-md-6 col-sm-6 col-2-mobile"></div>
-					<div class="col-xl-1 col-lg-1 col-md-2 col-sm-2 col-3-mobile">
-						<input type="text" class="form-control" placeholder="년">
-					</div>
-					<div class="col-xl-1 col-lg-1 col-md-2 col-sm-2 col-3-mobile">
-						<select class="form-control">
-							<option>1월</option>
-							<option>2월</option>
-							<option>3월</option>
-							<option>4월</option>
-							<option>5월</option>
-							<option>6월</option>
-							<option>7월</option>
-							<option>8월</option>
-							<option>9월</option>
-							<option>10월</option>
-							<option>11월</option>
-							<option>12월</option>
-						</select>
-					</div>
-					<div class="col-xl-1 col-lg-1 col-md-2 col-sm-2 col-3-mobile">
-						<input type="text" class="form-control" placeholder="일">
-					</div>
+				<div id="likeunlike" class="rounded-lg" style="background-color: #555; margin-top: 20px; height: 100px; padding-top: 8px; text-align: center;">
+					<span class="font_light_small">영화를 평가해주세요.</span>
+					<div class="starrating risingstar d-flex justify-content-center flex-row-reverse" style="font-size: 1.3em;">
+						<input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 star"></label>
+	          			<input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 star"></label>
+	          			<input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 star"></label>
+	          			<input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 star"></label>
+	          			<input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 star"></label>
+	          		</div>
 				</div>
 				
-				
-			<%-- 영화 선택--%>
-				<div id="srchMovie" class="row" style="margin-bottom: 5%" align="center">
-					<div class="col-xl-2 col-lg-2 col-md-4 col-sm-12" style="float: left">
-						<div >
-							<a href="" ><img src="/MovieHolic/images/getposter.png" width="200vh" /></a>
-						</div>
-						
-			<%-- 별점--%>
-						<div class="starrating risingstar d-flex justify-content-center flex-row-reverse" >
-		          			<input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 star"></label>
-		          			<input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 star"></label>
-		          			<input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 star"></label>
-		          			<input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 star"></label>
-		          			<input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 star"></label>
-						</div>
-					</div>
-					
-			<%--  내용입력--%>	
-					<div class="col-xl-10 col-lg-8 col-md-8 col-sm-12" align="right" style="float: left">
-						<textarea class="form-control" rows="20" ></textarea>
-					</div>
+				<div id="likeunlike" class="rounded-lg" style="background-color: #555; margin-top: 10px; height: 60px; text-align: center;">
+					<input type="checkbox" class="form-check-input" id="public"><label for="public" class="font_light_small">이 리뷰를 공개합니다.</label>
 				</div>
 
+			</div>
+			<!-- 왼쪽 내용 end -->
 
-				<div class="row" style="margin-bottom: 5%">
-					<div class="col-xl-2 col-lg-2 col-md-4 col-sm-12"></div>
+			<!-- 오른쪽 내용 start -->
+			<div class="col-lg-9 col-12-mobile top_margin">
 
-					<div class="col-xl-7 col-lg-4 col-md-4 col-sm-12">
-						<div class="checks"> <input type="checkbox" id="ex_chk"> <label for="ex_chk">이 리뷰를 공개합니다</label> </div>
-					</div>
-			<%--  버튼--%>
-					<div class="col-xl-3 col-lg-5 col-md-4 col-sm-12" align="right">
-						<button type="button" class="btn btn-primary active" style="width:10vh; margin-right: 1em">저장</button>
-						<button type="button" class="btn btn-primary" style="width:10vh">취소</button>
-					</div>
+				<!-- 작성 내용 -->
+				<div style="width: 100%; padding: 0;">
+					<textarea class="form-control" rows="22"></textarea>
 				</div>
-
 
 
 			</div>
+			<!-- 오른쪽 내용 end -->
+
 		</div>
+		
+		
+		<div class="row" style="margin-top: 40px; border-top: 2.5px solid #fff;">
+			<div class="col-12">
+				<div style="float: right;">
+					<button class="btn btn-success font_bold_small">저&nbsp;&nbsp;&nbsp;장</button>
+				</div>
+				<div style="float: right; margin-right: 20px;">
+					<button class="btn btn-success font_bold_small">취&nbsp;&nbsp;&nbsp;소</button>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+		
+		
+		
+		
+		
 		
 <%-- The Modal --%>
 <div id="movieModal" class="modal fade" id="myModal" style="top: 100px; height: 700px;">
@@ -237,4 +218,5 @@ $(document).ready(function() {
 		</div>
 	</div>
 </div>
+
 <%@ include file="/template/footer.jsp" %>

@@ -4,6 +4,12 @@
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
 <style>
+<%-- 버튼 크기 --%>
+	.btn.btn-success{
+		width : 90px;
+		background-color: #034741;
+		color: #ffcd07;
+	}
 <%-- 체크박스 --%>
 	.form-check-input {
 		-ms-transform: scale(2); /* IE */
@@ -40,7 +46,7 @@
 <div id="page-wrapper">
 
 <%-- Header --%>
-	<div id="header" style="background-image: none;">
+	<div id="header" style="background-image: none; margin-bottom: 0px; padding-bottom:0; height: 10px;">
 <%@ include file="/template/nav.jsp"%>
 	</div>
 
@@ -49,17 +55,33 @@
 <div class="wrapper style1">
 
 	<div class="container">
-			
+
+	<%-- 페이지 이동경로 --%>		
+		<div class="row" style="margin-bottom:30px;">
+			<div class="col-lg-12 col-12-mobile font_light_small">
+				<span>✱&nbsp;&nbsp;</span>
+				<a href="/MovieHolic/page/mypage/mypage.jsp" style="color:white;">My Page</a>
+				<span>&nbsp;&nbsp;❱❱&nbsp;&nbsp;</span>
+				<a href="/MovieHolic/page/mypage/diary.jsp" class="font_bold_small" ">Diary</a>
+			</div>
+		</div>
+		
 		<%-- **첫번째 행 시작 --%>
-		<div class="row" style="margin-bottom: 5%">
-			<div class="aaa col-lg-12 col-mobile-12">
+		<div class="row" style="margin-bottom: 5%; margin-top: 10px;">
+			<div class="col-lg-12 col-mobile-12" style="padding-top: 0px;">
+				<div class="col-lg-12" style="margin-bottom: 50px; margin-top: 0;">		
+					<div style="float: right;">
+						<button class="btn btn-success font_bold_small" style="width: 120px;">New Review</button>
+					</div>
+				</div>
 			<%-- 탭 메뉴 시작--%>
 				<%-- 탭 2개 선언 --%>
-				<ul class="nav nav-tabs" role="tablist">
-					<li class="nav-item"><a class="nav-link active"  data-toggle="tab" href="#calendar">달력</a></li>
-				    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#list">목록</a></li>
-			  	</ul>
-	
+				<div>
+					<ul class="nav nav-tabs" role="tablist">
+						<li class="nav-item"><a class="nav-link active"  data-toggle="tab" href="#calendar">달력</a></li>
+					    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#list">목록</a></li>
+				  	</ul>
+				</div>
 	
 				<%-- 탭 페이지 2개 구성 --%>
 				<div class="tab-content">
@@ -77,10 +99,10 @@
 						<div class="row" style="margin-top: 0;">
 							<div class="col-lg-12 col-12-mobile">
 								<div style="float: left">
-									<button class="btn btn-success font_bold_small">삭 제</button>
+									<button class="btn btn-success font_bold_small">삭&nbsp;&nbsp;&nbsp;제</button>
 								</div>
 								<div style="float: right">
-									<button class="btn btn-success font_bold_small">검 색</button>
+									<button class="btn btn-success font_bold_small">검&nbsp;&nbsp;&nbsp;색</button>
 								</div>
 								<div style="float: right; width: 20px; height: 1px;"></div>
 								<div style="float: right">
@@ -186,10 +208,10 @@
 						  	</div>
 						  	<div class="col-12">
 						  		<div style="float: left">
-									<button class="btn btn-success font_bold_small">이 전</button>
+									<button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button>
 								</div>
 						  		<div style="float: right;">
-									<button class="btn btn-success font_bold_small">다 음</button>
+									<button class="btn btn-success font_bold_small">다&nbsp;&nbsp;&nbsp;음</button>
 								</div>
 							  	<ul class="pagination justify-content-center">
 								    <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
