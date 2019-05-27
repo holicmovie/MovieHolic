@@ -85,71 +85,14 @@ hr.line_light_g {
 	height: 350px;
 }
 
-/* 프로필 사진 */
-.profile_icon {
-	width: 45px;
-	height: 45px;
-	border-radius: 25px; /* 이미지 반크기만큼 반경을 잡기*/
-	border: 2px solid white;
-}
-
-/* 해시태그 */
-.hashtag {
-	font-style: italic;
-	margin-right: 10px;
-	color: white;
-}
-
 /* 신고버튼 */
 .report {
 	color: white;
 	text-decoration: underline;
 }
-
-/* 폰트 */
-.font_bold_small {
-	font-family: 'Noto Sans KR', sans-serif;
-	font-weight: bold;
-	font-size: 17px;
-}
-
-.font_bold_mid {
-	font-family: 'Noto Sans KR', sans-serif;
-	font-weight: bold;
-	font-size: 25px;
-}
-
-.font_bold_lg {
-	font-family: 'Noto Sans KR', sans-serif;
-	font-weight: bold;
-	font-size: 30px;
-}
-
-.font_light_small {
-	font-family: 'Noto Sans KR', sans-serif;
-	font-weight: 100;
-	font-size: 17px;
-}
-
-.font_light_mid {
-	font-family: 'Noto Sans KR', sans-serif;
-	font-weight: 100;
-	font-size: 25px;
-}
-
-.font_light_lg {
-	font-family: 'Noto Sans KR', sans-serif;
-	font-weight: 100;
-	font-size: 30px;
-}
 </style>
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
-
-<!-- 구글 웹 폰트 -->
-<link
-	href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,500,700,900&display=swap&subset=korean"
-	rel="stylesheet">
 
 </head>
 <body class="left-sidebar is-preload">
@@ -290,11 +233,8 @@ hr.line_light_g {
 							</p>
 						</div>
 
-						<!-- 해시태그, 신고하기 -->
+						<!--신고하기 -->
 						<div class="top_margin_lg">
-							<div class="font_bold_small" style="float: left">
-								<a class="hashtag" href="#">#액션</a><a class="hashtag" href="#">#재밌음</a>
-							</div>
 							<div class="font_light_small" style="float: right">
 								<a class="report" href="#">신고하기</a>
 							</div>
