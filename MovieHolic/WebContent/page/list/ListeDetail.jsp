@@ -6,6 +6,12 @@
 
 <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css'>
 <style>
+p, span, a{
+	color: white;
+}
+div{
+padding: 0;
+}
 <!-- 좋아요 둥근 버튼을 위해 필요 -->
 .btn-circle.btn-xl {
     width: 50px;
@@ -28,10 +34,29 @@
 	border-right-color: lightgray;
 	border-right-style: solid;
 }
+
+/* 구분선 굵은 것 */
+hr.line_bold {
+	background-color: white;
+	height: 2px;
+    position: static;
+}
+
+/* 구분선 얇은 것 (흰색) */
+hr.line_light_w {
+	background-color: white;
+	position: static;
+}
+
+/* 구분선 얇은 것 (회색) */
+hr.line_light_g {
+	background-color: gray;
+	position: static;
+}
+
 </style>
 </head>
 <body class="left-sidebar is-preload">
-<div id="page-wrapper">
 
 <!-- Header -->
 	<div id="header" style="background-image: none;">
@@ -45,7 +70,7 @@
 	<div class = "col-lg-2"></div>
 	<div class = "col-lg-8" id = "listdetail-title">
 		<div class = "col-lg-12"><h2 style = "bold">우울할 때 보는 영화 10선</h2></div>
-		<div align ="right" style="width: 100%; border-top: thin solid gray; border-bottom:thin solid gray;">
+		<div align ="right" style="width: 100%; border-top: thin solid white; border-bottom:thin solid white;">
 		<h3>2019.05.21</h3>
 		</div>
 	</div>
@@ -56,8 +81,8 @@
 	<!-- 리스트 상세 내용  포스터 + 글 내용 -->
 	<div class = "col-lg-2"></div>	
 	<div class = "col-lg-8">
-	<div style="float:right;"><a href = "">신고하기</a></div><br>
-	<div>
+	<div style="float:right;"><a href = "">신고하기</a></div>
+	<div style="clear:both;">
 	<p><font>지극히 주관적으로 선정한 우울할 때 보면 좋은 영화 10선 입니다. 
 	주인공들의 대사가 개인적으로 너무 마음에 들었구요,
 	감독들이 의도를 가지고 표현한 각 장면이 너무 감명 깊었습니다.</font></p>
@@ -74,9 +99,21 @@
 
 	<div class = "row">
 	<!--가운데에 좋아요 누르는 기능 -->
-	<div class = "col-lg-5"></div>	
+	<div class = "col-lg-5"></div>
 	<div class = "col-lg-2">
-	<span>
+		<section id="likeunlike">
+			<ul style="list-style: none; padding: 0px;">
+				<li style="float: left; position: relative; text-align: center; margin-right: 50px;">
+					<a href="#"><img alt="좋아요 아이콘" src="/MovieHolic/images/like.png"></a> <span style="display: block;">1000</span>
+				</li>
+				<li style="float: left; text-align: center;"><a href="#"><img alt="싫어요 아이콘" src="/MovieHolic/images/unlike.png"></a>
+				<span style="display: block;">1000</span></li>
+			<!-- float clear용 빈 li -->
+			<li style="clear: both;"></li>
+			</ul>
+		</section>
+	
+	<%-- <span>
 		<button type="button" class="btn btn-danger btn-circle btn-lg">
 		<i class="far fa-thumbs-up"></i></button>
 		<span style="margin-left:10px; font-size:20px; font-weight:bold;">200</span>
@@ -84,25 +121,27 @@
 		<i class="far fa-thumbs-down"></i></button>
 		<span style="margin-left:10px; font-size:20px; font-weight:bold;">21</span>
 	</span>
+	--%>
 	</div>
 	<div class = "col-lg-5"></div>		
 	</div>	
-</div>
-
-	
-<div class = "row">
+	<br><br>
+	<div class = "row">
 	<!-- 댓글 보기 -->
 	<div class = "col-lg-2"></div>	
-	<div class = "col-lg-8" style="width: 100%; border-bottom: 0px; border-top: thin solid gray; margin-top:0;">
+	<div class = "col-lg-8">
+	<hr class = "line_bold">
 		<span class = "comment"><img src="/MovieHolic/images/song.jpg" alt="배우 사진" class="mr-3 mt-3 rounded-circle" style="width:30px;"/> 
 		 song11</span> 
 		<span>와 ㅠㅠ 완전 공감해요.... 제대로 새벽 한시 반 감성 ㅠㅠ</span>
 	</div>
 	<div class = "col-lg-2"></div>	
 
-	<!-- 댓글 보기 -->
+
+	<!-- 댓글 보기 -->	
 	<div class = "col-lg-2"></div>	
-	<div class = "col-lg-8" style="width: 100%; border-bottom: 0px; border-top: thin solid gray;">
+	<div class = "col-lg-8"">
+	<hr class = "line_light_w">
 		<span class = "comment"><img src="/MovieHolic/images/song.jpg" alt="배우 사진" class="mr-3 mt-3 rounded-circle" style="width:30px;"/> 
 		 song11</span> 
 		<span>와 ㅠㅠ 완전 공감해요.... 제대로 새벽 한시 반 감성 ㅠㅠ</span>
@@ -114,15 +153,13 @@
 	
 	<%--댓글 작성 textarea --%>
 	<div class = "col-lg-8">
-	<label for="comment">Comment</label>
+	<label for="comment" style="color:white">Comment</label>
   	<textarea class="form-control" rows="5" id="comment" style="resize : none;" placeholder = "댓글을 입력해주세요"></textarea>
 	<button type = "button" class = "btn btn-sm btn-primary float-right">등록</button>
 	</div>
 	<div class = "col-lg-2"></div>
+	</div>
 </div>
-	
-	
-	
 
 <br><br><br>
 <%@ include file="/template/footer.jsp" %>
