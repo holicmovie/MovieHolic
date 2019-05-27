@@ -56,7 +56,7 @@ hr.line_light_g {
 
 </style>
 </head>
-<body class="left-sidebar is-preload">
+<body class="left-sidebar is-preload" style="margin: 0; padding: 0;">
 
 <!-- Header -->
 	<div id="header" style="background-image: none;">
@@ -64,7 +64,7 @@ hr.line_light_g {
 	</div>
 
 <!-- Main -->
-<div class="wrapper style1">
+<div class="wrapper style1" style = "margin: 0;padding: 0;">
 	<div class = "row">
 	<!-- 글 제목 밑 상태 바 -->
 	<div class = "col-lg-2"></div>
@@ -126,40 +126,104 @@ hr.line_light_g {
 	<div class = "col-lg-5"></div>		
 	</div>	
 	<br><br>
+	
+	
 	<div class = "row">
 	<!-- 댓글 보기 -->
 	<div class = "col-lg-2"></div>	
 	<div class = "col-lg-8">
-	<hr class = "line_bold">
-		<span class = "comment"><img src="/MovieHolic/images/song.jpg" alt="배우 사진" class="mr-3 mt-3 rounded-circle" style="width:30px;"/> 
-		 song11</span> 
-		<span>와 ㅠㅠ 완전 공감해요.... 제대로 새벽 한시 반 감성 ㅠㅠ</span>
-	</div>
-	<div class = "col-lg-2"></div>	
+	<!-- 구분선 -->
+	<div class="top_margin_lg">
+							<div class="font_light_small" style="float: right">
+								<a class="report" href="#">신고하기</a>
+							</div>
+							<!-- float clear용 빈 div -->
+							<div style="clear: both;"></div>
+						</div>
+						<hr class="line_bold">
 
+						<!-- 댓글 start -->
+						<div class="font_bold_small top_margin_lg">
+							<span>COMMENTS</span>(<span id="commentcount">2</span>)
+						</div>
 
-	<!-- 댓글 보기 -->	
+						<!-- 구분선 -->
+						<hr class="line_light_w">
+
+						<!-- 댓글 한 개 -->
+						<div class="font_light_small">
+							<div style="float: left">
+								<a href="#"><img id="replywriter" class="profile_icon"
+									alt="댓글작성자 프로필 사진" src="/MovieHolic/images/user2.jpg"></a>
+								&nbsp;&nbsp;
+							</div>
+							<div style="float: left">
+								<a id="replywriterId" class="font_bold_small" href="#"
+									style="color: white">abc123</a><br> <span>3시간 전</span>
+							</div>
+							<div style="float: left; margin-left: 20px;">
+								<p id="replycontent">리뷰에서 오랜 팬심이 느껴져서 공감가네요. ㅎㅎ 좋아요 누르고 갑니다!
+								</p>
+							</div>
+							<div style="float: right">
+								<button type="button" id="replydelete" class="close"
+									style="color: white">&times;</button>
+							</div>
+
+							<!-- float clear용 빈 div -->
+							<div style="clear: both;"></div>
+							<!-- 구분선 -->
+							<hr class="line_light_g">
+
+						</div>
+
+						<!-- 댓글 한 개 -->
+						<div class="font_light_small">
+							<div style="float: left">
+								<a href="#"><img id="replywriter" class="profile_icon"
+									alt="댓글작성자 프로필 사진" src="/MovieHolic/images/user2.jpg"></a>
+								&nbsp;&nbsp;
+							</div>
+							<div style="float: left">
+								<a id="replywriterId" class="font_bold_small" href="#"
+									style="color: white">abc123</a><br> <span>3시간 전</span>
+							</div>
+							<div style="float: left; margin-left: 20px;">
+								<p id="replycontent">리뷰에서 오랜 팬심이 느껴져서 공감가네요. ㅎㅎ 좋아요 누르고 갑니다!
+								</p>
+							</div>
+							<div style="float: right">
+								<button type="button" id="replydelete" class="close"
+									style="color: white">&times;</button>
+							</div>
+
+							<!-- float clear용 빈 div -->
+							<div style="clear: both;"></div>
+							<!-- 구분선 -->
+							<hr class="line_light_g">
+
+						</div>
+
+						<!-- 댓글 입력칸 -->
+						<div class="font_light_small top_margin_lg">
+							<textarea class="form-control" rows="4" id="mycomment"
+								placeholder="댓글을 입력해주세요." style="resize: none;"></textarea>
+							<button class="btn btn-success font_bold_small top_margin"
+								style="float: right">등 록</button>
+							<!-- float clear용 빈 div -->
+							<div style="clear: both;"></div>
+							<br><br><br><br>
+						</div>
+
+						<!-- 댓글 end -->
+
+					</div>
+					<!-- 오른쪽 내용 end -->
 	<div class = "col-lg-2"></div>	
-	<div class = "col-lg-8"">
-	<hr class = "line_light_w">
-		<span class = "comment"><img src="/MovieHolic/images/song.jpg" alt="배우 사진" class="mr-3 mt-3 rounded-circle" style="width:30px;"/> 
-		 song11</span> 
-		<span>와 ㅠㅠ 완전 공감해요.... 제대로 새벽 한시 반 감성 ㅠㅠ</span>
-	</div>
-	<div class = "col-lg-2"></div>
 	
 	<%--댓글 작성 row--%>	
-	<div class = "col-lg-2"></div>
-	
-	<%--댓글 작성 textarea --%>
-	<div class = "col-lg-8">
-	<label for="comment" style="color:white">Comment</label>
-  	<textarea class="form-control" rows="5" id="comment" style="resize : none;" placeholder = "댓글을 입력해주세요"></textarea>
-	<button type = "button" class = "btn btn-sm btn-primary float-right">등록</button>
-	</div>
-	<div class = "col-lg-2"></div>
+
 	</div>
 </div>
 
-<br><br><br>
 <%@ include file="/template/footer.jsp" %>
