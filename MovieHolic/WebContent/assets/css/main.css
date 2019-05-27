@@ -209,7 +209,6 @@ input, select, textarea {
 			position: absolute;
 			top: -8px;
 			display: block;
-			width: 1px;
 			height: 21px;
 			background: rgba(128, 128, 128, 0.2);
 		}
