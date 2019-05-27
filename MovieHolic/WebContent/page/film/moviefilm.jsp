@@ -22,7 +22,7 @@
 			
 		</section>
 		</div>
-		<section class="carousel" style="background-color: rgb(3,39,49);">
+		<section class="carousel" style="background-color: rgb(3,39,49); padding:1.5em 0 0 0;">
 			<div class="reel">
 				<article style="background-color: rgb(3,39,49); color:white;">
 					<a href="/MovieHolic/page/film/moviedetail.jsp" class="image featured"><img
