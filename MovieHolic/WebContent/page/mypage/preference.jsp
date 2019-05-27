@@ -8,6 +8,24 @@
   height: 500px;
   color: white;
 }
+/* 구분선 굵은 것 */
+hr.line_bold {
+	background-color: white;
+	height: 2px;
+    position: static;
+}
+
+/* 구분선 얇은 것 (흰색) */
+hr.line_light_w {
+	background-color: white;
+	position: static;
+}
+
+/* 구분선 얇은 것 (회색) */
+hr.line_light_g {
+	background-color: gray;
+	position: static;
+}
 </style>
 
 <link id="themecss" rel="stylesheet" type="text/css" href="//www.shieldui.com/shared/components/latest/css/light/all.min.css" />
@@ -97,6 +115,8 @@
             });
         });
     </script>
+    
+ <%--장르 그래프  --%>
     <script>
 am4core.ready(function() {
 
@@ -145,6 +165,96 @@ series.hiddenState.properties.endAngle = -90;
 
 }); // end am4core.ready()
 </script>
+ <%--장르 그래프 끝 --%>
+ 
+<style>
+#chartdiv2 {
+  width: 100%;
+  height: 500px;
+}
+
+</style>
+
+<!-- Resources -->
+<script src="https://www.amcharts.com/lib/4/core.js"></script>
+<script src="https://www.amcharts.com/lib/4/charts.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+
+<!-- Chart code -->
+<script>
+am4core.ready(function() {
+
+// Themes begin
+am4core.useTheme(am4themes_animated);
+// Themes end
+
+var chart = am4core.create("chartdiv2", am4charts.XYChart);
+chart.hiddenState.properties.opacity = 0; // this makes initial fade in effect
+
+chart.data = [ {
+  "country": "half",
+  "value": 4
+}, {
+  "country": "one",
+  "value": 12
+}, {
+  "country": "one-half",
+  "value": 8
+}, {
+  "country": "two",
+  "value": 11
+}, {
+  "country": "two-half",
+  "value": 14
+}, {
+  "country": "three",
+  "value": 28
+}, {
+  "country": "three-half",
+  "value": 19
+}, {
+  "country": "four",
+  "value": 18
+}, {
+  "country": "four-half",
+  "value": 15
+}, {
+  "country": "five",
+  "value": 10
+} ];
+
+
+var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+categoryAxis.renderer.grid.template.location = 0;
+categoryAxis.dataFields.category = "country";
+categoryAxis.renderer.minGridDistance = 40;
+
+var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+
+var series = chart.series.push(new am4charts.CurvedColumnSeries());
+series.dataFields.categoryX = "country";
+series.dataFields.valueY = "value";
+series.tooltipText = "{valueY.value}"
+series.columns.template.strokeOpacity = 0;
+
+series.columns.template.fillOpacity = 0.75;
+
+var hoverState = series.columns.template.states.create("hover");
+hoverState.properties.fillOpacity = 1;
+hoverState.properties.tension = 0.4;
+
+chart.cursor = new am4charts.XYCursor();
+
+// Add distinctive colors for each column using adapter
+series.columns.template.adapter.add("fill", (fill, target) => {
+  return chart.colors.getIndex(target.dataItem.index);
+});
+
+
+}); // end am4core.ready()
+</script>
+
+
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
 </head>
@@ -180,13 +290,13 @@ series.hiddenState.properties.endAngle = -90;
 			<div class = "col-lg-1"></div>
 			
 			<div class = "col-lg-1"></div>
-			<div class = "col-lg-10" id="chartdiv" style="color: white;"></div>
-			<div class = "col-lg-1" style="clear: both;"></div>
-			<div class = "col-lg-1"></div>
 			<div class = "col-lg-10">
-				<span><i class='fas fa-medal' style='font-size:40px;color: white;'>스릴러</i><h2>로맨스 <%="\t"%>공포</h2></span>
+				<span><i class='fas fa-medal' style='font-size:40px;color: white;'>스릴러</i><h2>로맨스 공포</h2></span>
 			</div>
 			<div class = "col-lg-1"></div>
+			<div class = "col-lg-1"></div>
+			<div class = "col-lg-10" id="chartdiv" style="color: white;"></div>
+			<div class = "col-lg-1" style="clear: both;"></div>
 			
 				
 		<%--선호 배우  --%>
@@ -199,15 +309,15 @@ series.hiddenState.properties.endAngle = -90;
 			<div class = "col-lg-10">
 			<div class="list-group">
 			<button type="button" class="btn btn-light">previous</button>
-		  	<a href="#" class="list-group-item list-group-item-action">
+		  	<a href="#" class="list-group-item list-group-item-action list-group-item-dark" style="background-color: rgb(40,40,40)">
 			  <img src="/MovieHolic/images/song.jpg" alt="배우 사진" class="mr-3 mt-3 rounded-circle" style="width:60px;"/> 
-			  송강호</a>
-			  <a href="#" class="list-group-item list-group-item-action">
+			 <font class = "font_light_small"> 송강호</font></a>
+			  <a href="#" class="list-group-item list-group-item-action list-group-item-dark" style="background-color: rgb(40,40,40)">
 			 <img src="/MovieHolic/images/anne.jpg" alt="배우 사진" class="mr-3 mt-3 rounded-circle" style="width:60px;"/> 
-			  앤 해서웨이</a>
-			  <a href="#" class="list-group-item list-group-item-action">
+			<font class = "font_light_small">  앤 해서웨이</font></a>
+			  <a href="#" class="list-group-item list-group-item-action list-group-item-dark" style="background-color: rgb(40,40,40)">
 			 <img src="/MovieHolic/images/lee.jpg" alt="배우 사진" class="mr-3 mt-3 rounded-circle" style="width:60px;"/>  
-			  이병헌</a>
+			 <font class = "font_light_small"> 이병헌</font></a>
 			  <button type="button" class="btn btn-light">next</button>
 			  </div>
 				</div>	
@@ -225,33 +335,37 @@ series.hiddenState.properties.endAngle = -90;
 			<div class = "col-lg-10">
 			<div class="list-group">
 			<button type="button" class="btn btn-light">previous</button>
-			  <a href="#" class="list-group-item list-group-item-action">
+			 
+			  <a href="#" class="list-group-item list-group-item-action " style="background-color: rgb(40,40,40)">
 			  <img src="/MovieHolic/images/nhj.jpg" alt="감독사진" class="mr-3 mt-3 rounded-circle" style="width:60px;"> 
-			  나홍진</a>
-			  <a href="#" class="list-group-item list-group-item-action">
+			  <font class = "font_light_small">나홍진 :곡성	5편</font></a>
+			  <a href="#" class="list-group-item list-group-item-action list-group-item-dark" style="background-color: rgb(40,40,40)">
 			 <img src="/MovieHolic/images/christ.jpg" alt="감독사진" class="mr-3 mt-3 rounded-circle" style="width:60px;"/> 
-			  크리스토퍼 놀란</a>
-			  <a href="#" class="list-group-item list-group-item-action">
+			 <font class = "font_light_small"> 크리스토퍼 놀란</font></a>
+			  <a href="#" class="list-group-item list-group-item-action list-group-item-dark" style="background-color: rgb(40,40,40)">
 			 <img src="/MovieHolic/images/john.jpg" alt="감독 사진" class="mr-3 mt-3 rounded-circle" style="width:60px;"/> 
-			  존 카니</a>
+			  <font class = "font_light_small">존 카니</font></a>
+			  
 			<button type="button" class="btn btn-light">next</button> 
 			</div>
 			</div>
 			<div class = "col-lg-1"></div>
 			
+			
+			<%--평균 별점 --%>
 			<div class = "col-lg-1"></div>
 			<div class = "col-lg-10"style="border-bottom: thin solid gray;"><h3>평균 별점</h3></div>
 			<div class = "col-lg-1"></div>
-			<div class = "col-lg-1"></div>
-			<div class = "col-lg-10" id="chart-rating">
 			
-			<div align = "center">
-			<div id="columnchart_values" style="width: 50%; height: 20%;"></div>
-			</div>
+			
+			<div class = "col-lg-1"></div>
+			<div class = "col-lg-10" id="chartdiv2"></div>
+			<div class = "col-lg-1"></div>
+			
+			
 			</div>
 		</div>
 	
 	</div>
-</div>
 
 <%@ include file="/template/footer.jsp"%>
