@@ -314,7 +314,7 @@ hr.line_light_g {
 						<!-- 댓글 입력칸 -->
 						<div class="font_light_small top_margin_lg">
 							<textarea class="form-control" rows="4" id="mycomment"
-								placeholder="댓글을 입력해주세요."></textarea>
+								placeholder="댓글을 입력해주세요." style="resize: none;"></textarea>
 							<button class="btn btn-success font_bold_small top_margin"
 								style="float: right">등 록</button>
 							<!-- float clear용 빈 div -->
