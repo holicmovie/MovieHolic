@@ -5,32 +5,35 @@
 <%@ include file="/template/boot_431.jsp"%>
 <style>
 <%-- 체크박스 --%>
-.form-check-input {
-	-ms-transform: scale(2); /* IE */
-	-moz-transform: scale(2); /* FF */
-	-webkit-transform: scale(2); /* Safari and Chrome */
-	-o-transform: scale(2); /* Opera */
-	position: relative;
-	margin: 3em 2em 2em;
-}
-.fas {
-	font-style:normal;
-	font-family: FontAwesome;
-	font-size: 3em;
-}
-<%-- 모바일사이즈에서 이미지&별점 숨기기 --%>
-@media screen and (max-width: 990px) {
-	.hide1 { display: none; }
-	.fas { font-size: 1.8em;}
-} 
-@media screen and (max-width: 765px) {
-	.hide2 { display: none;}
+	.form-check-input {
+		-ms-transform: scale(2); /* IE */
+		-moz-transform: scale(2); /* FF */
+		-webkit-transform: scale(2); /* Safari and Chrome */
+		-o-transform: scale(2); /* Opera */
+		position: relative;
+		margin: 3em 2em 2em;
+	}
+<%-- 영화제목 --%>
 	.title {font-size: 18px;}
-} 
-.page-link {
-	background-color: black;
-	color: white;
-}
+<%-- 별모양 --%>
+	.fas {
+		font-style:normal;
+		font-family: FontAwesome;
+		font-size: 2.5em;
+	}
+<%-- 모바일사이즈에서 이미지&별점 숨기기 --%>
+	@media screen and (max-width: 990px) {
+		.hide1 { display: none; }
+		.fas { font-size: 1.8em;}
+	} 
+	@media screen and (max-width: 765px) {
+		.hide2 { display: none;}
+	} 
+<%-- 페이지 버튼 --%>
+	.page-link {
+		background-color: black;
+		color: white;
+	}
 </style>
 </head>
 <body class="left-sidebar is-preload">
@@ -70,8 +73,8 @@
 						   		
 						   		
 					<%-- 두번째 탭 페이지 --%>
-					<div id="list" class="container tab-pane fade"><br>
-						<div class="row" style="margin-top: 0.2em;">
+					<div id="list" class="container tab-pane fade" style="margin-bottom: 0; padding-top: 1px;"><br>
+						<div class="row" style="margin-top: 0;">
 							<div class="col-lg-12 col-12-mobile">
 								<div style="float: left">
 									<button class="btn btn-success font_bold_small">삭 제</button>

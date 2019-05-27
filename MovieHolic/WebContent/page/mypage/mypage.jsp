@@ -15,7 +15,10 @@
 } 
 @media screen and (max-width: 765px) {
 	.hide3 { display: none; }
-} 
+}
+.table-hover > tbody > tr:hover {
+  background-color: #3a3a3a;
+}
 </style>
 </head>
 <body class="left-sidebar is-preload">
@@ -50,8 +53,9 @@
 					
 						<%-- 최근 '좋아요'한 영화 --%>
 						<div class="row" style="margin-top: 1em;">
-							<div style="width:100%; border-bottom: 0.2em solid #fff; margin-bottom: 1em;"><h4 class="font_bold_mid">최근 '좋아요'한 영화</h4></div>
-							
+							<div class="font_bold_mid" style="width:100%; border-bottom: 2.5px solid #fff; margin-bottom: 0; padding-bottom: 0.8em;">
+								<div style="float: left;">최근 '좋아요'한 영화</div>
+							</div>
 							<section class="carousel">
 								<div class="reel">
 									<article>
@@ -108,8 +112,11 @@
 						
 						<%-- 나의 최근 리뷰 --%>
 						<div class="row" style="margin-top: 10em;">
-							<div style="width:100%; border-bottom: 0.2em solid #fff; margin-bottom: 2em;"><h4 class="font_bold_mid">나의 최근 리뷰</h4></div>
-							<table class="table table-hover col-lg-12 col-mobile-12" style="margin-top: 2em;">
+							<div class="font_bold_mid" style="width:100%; border-bottom: 2.5px solid #fff; margin-bottom: 0; padding-bottom: 0.8em;">
+								<div style="float: left;">나의 최근 리뷰</div>
+								<div style="float: right;" class="font_light_small">더보기</div>
+							</div>
+							<table class="table table-hover col-lg-12 col-mobile-12" style="margin-top: 0;">
 								<col style="width:10%;">
 								<col style="width:20%;">
 								<tr>
@@ -150,8 +157,11 @@
 						
 						<%-- 나의 최근 리스트 --%>
 						<div class="row" style="margin-top: 10em;">
-							<div style="width:100%; border-bottom: 0.2em solid #fff; margin-bottom: 2em;"><h4 class="font_bold_mid">나의 최근 리스트</h4></div>
-							<table class="table table-hover col-lg-12 col-mobile-12" style="margin-top: 2em;">
+							<div class="font_bold_mid" style="width:100%; border-bottom: 2.5px solid #fff; margin-bottom: 0; padding-bottom: 0.8em;">
+								<div style="float: left;">나의 최근 리스트</div>
+								<div style="float: right;" class="font_light_small">더보기</div>
+							</div>
+							<table class="table table-hover col-lg-12 col-mobile-12" style="margin-top: 0;">
 								<col style="width:40%;">
 								<tr>
 									<td>
@@ -181,10 +191,40 @@
 							        	<h4 class="font_bold_small">우울할 때 보는 영화 10선</h4>
 							        </td>
 								</tr>
+								<tr>
+									<td>
+										<div>
+											<img width="100vh" src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)"  style="position: absolute; z-index: 0;"/>
+											<img width="100vh" src="/MovieHolic/images/tempimg/frozen.jpg" title="엔드게임 (2019)" style="position: relative; left: 70px; z-index: 0;"/>
+											<img class="hide3" width="100vh" src="/MovieHolic/images/tempimg/coco.jpg" title="엔드게임 (2019)" style="position: relative; left: 40px; z-index: 0;"/>
+											<img class="hide2"  width="100vh" src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)" style="position: relative; left: 5px; z-index: 0;"/>
+											<img class="hide1"  width="100vh" src="/MovieHolic/images/tempimg/frozen.jpg" title="엔드게임 (2019)" style="position: relative; left: -30px; z-index: 0;"/>
+										</div>
+									</td>
+							        <td style="vertical-align: middle; padding-left: 2em;">
+							        	<h4 class="font_bold_small">우울할 때 보는 영화 10선</h4>
+							        </td>
+								</tr>
+								<tr>
+									<td>
+										<div>
+											<img width="100vh" src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)"  style="position: absolute; z-index: 0;"/>
+											<img width="100vh" src="/MovieHolic/images/tempimg/frozen.jpg" title="엔드게임 (2019)" style="position: relative; left: 70px; z-index: 0;"/>
+											<img class="hide3" width="100vh" src="/MovieHolic/images/tempimg/coco.jpg" title="엔드게임 (2019)" style="position: relative; left: 40px; z-index: 0;"/>
+											<img class="hide2"  width="100vh" src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)" style="position: relative; left: 5px; z-index: 0;"/>
+											<img class="hide1"  width="100vh" src="/MovieHolic/images/tempimg/frozen.jpg" title="엔드게임 (2019)" style="position: relative; left: -30px; z-index: 0;"/>
+										</div>
+									</td>
+							        <td style="vertical-align: middle; padding-left: 2em;">
+							        	<h4 class="font_bold_small">우울할 때 보는 영화 10선</h4>
+							        </td>
+								</tr>
 							</table>
-						
-						
 						</div>
+						
+						
+						
+						
 					</div>
 						
 						
@@ -199,8 +239,10 @@
 					<div id="following" class="container tab-pane fade"><br>
 						<%-- 친구들이 '좋아요'한 영화 --%>
 						<div class="row" style="margin-top: 1em;">
-							<div style="width:100%; border-bottom: 0.2em solid #fff; margin-bottom: 1em;"><h4>친구들이 '좋아요'한 영화</h4></div>
-							
+							<div class="font_bold_mid" style="width:100%; border-bottom: 2.5px solid #fff; margin-bottom: 2em; padding-bottom: 0.8em;">
+								<div style="float: left;">친구들이 '좋아요'한 영화</div>
+								<div style="float: right;" class="font_light_small">더보기</div>
+							</div>
 							<section class="carousel">
 								<div class="reel">
 									<article>
@@ -258,8 +300,11 @@
 		
 						<!-- 활동 목록 -->
 						<div class="row" style="margin-top: 10em;">
-							<div style="width:100%; border-bottom: 0.2em solid #fff; margin-bottom: 2em;"><h4>Activity Log</h4></div>
-							<table class="table table-hover col-lg-12 col-mobile-12" style="margin-top: 2em;">
+							<div class="font_bold_mid" style="width:100%; border-bottom: 2.5px solid #fff; margin-bottom: 0; padding-bottom: 0.8em;">
+								<div style="float: left;">Activity Log</div>
+								<div style="float: right;" class="font_light_small">더보기</div>
+							</div>
+							<table class="table table-hover col-lg-12 col-mobile-12" style="border-top: 0px thin;">
 								<col style="width:10%;">
 								<col style="width:80%;">
 								<tr>
@@ -267,7 +312,7 @@
 										<img alt="" src="/MovieHolic/images/user.png" width="70vh">
 									</td>
 							        <td style="vertical-align: middle;">
-							        	<h5 class="font_light_small"><a class="font_bold_small">Abc123</a>님이 <a class="font_bold_small">'라라랜드'</a>에 좋아요❤ 했습니다.</h5>
+							        	<h5 class="font_light_small"><a class="font_bold_small">Abc123</a>님이 <a class="font_bold_small">'라라랜드'</a>에 좋아요&#x1f496; 했습니다.</h5>
 							        </td>
 							        <td style="vertical-align: middle;">
 							        	<h5 class="font_light_small" style="color: gray;">2시간 전</h5>
@@ -278,7 +323,7 @@
 										<img alt="" src="/MovieHolic/images/user.png" width="70vh">
 									</td>
 							        <td style="vertical-align: middle;">
-							        	<h5 class="font_light_small"><a class="font_bold_small">Abc123</a>님이 <a class="font_bold_small">'라라랜드'</a>의 리뷰 by <a class="font_bold_small">bbb443</a>에 좋아요❤ 했습니다.</h5>
+							        	<h5 class="font_light_small"><a class="font_bold_small">Abc123</a>님이 <a class="font_bold_small">'라라랜드'</a>의 리뷰 by <a class="font_bold_small">bbb443</a>에 좋아요&#x1f496; 했습니다.</h5>
 							        </td>
 							        <td style="vertical-align: middle;">
 							        	<h5 class="font_light_small" style="color: gray;">2시간 전</h5>
@@ -312,7 +357,7 @@
 										<img alt="" src="/MovieHolic/images/user.png" width="70vh">
 									</td>
 							        <td style="vertical-align: middle;">
-							        	<h5 class="font_light_small"><a class="font_bold_small">Abc123</a>님이 <a class="font_bold_small">'라라랜드'</a>에 좋아요❤ 했습니다.</h5>
+							        	<h5 class="font_light_small"><a class="font_bold_small">Abc123</a>님이 <a class="font_bold_small">'라라랜드'</a>에 좋아요&#x1f496; 했습니다.</h5>
 							        </td>
 							        <td style="vertical-align: middle;">
 							        	<h5 class="font_light_small" style="color: gray;">2시간 전</h5>
@@ -323,7 +368,7 @@
 										<img alt="" src="/MovieHolic/images/user.png" width="70vh">
 									</td>
 							        <td style="vertical-align: middle;">
-							        	<h5 class="font_light_small"><a class="font_bold_small">Abc123</a>님이 <a class="font_bold_small">'라라랜드'</a>의 리뷰 by <a class="font_bold_small">bbb443</a>에 좋아요❤ 했습니다.</h5>
+							        	<h5 class="font_light_small"><a class="font_bold_small">Abc123</a>님이 <a class="font_bold_small">'라라랜드'</a>의 리뷰 by <a class="font_bold_small">bbb443</a>에 좋아요&#x1f496; 했습니다.</h5>
 							        </td>
 							        <td style="vertical-align: middle;">
 							        	<h5 class="font_light_small" style="color: gray;">2시간 전</h5>
