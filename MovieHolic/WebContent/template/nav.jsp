@@ -26,7 +26,7 @@
 					<a href="/MovieHolic/page/mypage/mypage.jsp">MY PAGE</a>
 					<ul>
 						<li><a href="/MovieHolic/page/mypage/mypage.jsp">MY PAGE</a></li>
-						<li><a href="/MovieHolic/page/mypage/Preference.jsp">MY MOVIE CHART</a></li>
+						<li><a href="/MovieHolic/page/mypage/preference.jsp">MY MOVIE CHART</a></li>
 						<li><a href="/MovieHolic/page/mypage/wishlist.jsp">WISH LIST</a></li>
 						<li><a href="/MovieHolic/page/mypage/diary.jsp">DIARY</a></li>
 						<li><a href="/MovieHolic/page/mypage/social.jsp">SOCIAL</a></li>
