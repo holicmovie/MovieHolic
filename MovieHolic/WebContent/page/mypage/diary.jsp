@@ -3,74 +3,215 @@
 <%@ include file="/template/header.jsp"%>
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
+<style>
+<%-- 체크박스 --%>
+.form-check-input {
+	-ms-transform: scale(2); /* IE */
+	-moz-transform: scale(2); /* FF */
+	-webkit-transform: scale(2); /* Safari and Chrome */
+	-o-transform: scale(2); /* Opera */
+	position: relative;
+	margin: 3em 2em 2em;
+}
+.fas {
+	font-style:normal;
+	font-family: FontAwesome;
+	font-size: 3em;
+}
+<%-- 모바일사이즈에서 이미지&별점 숨기기 --%>
+@media screen and (max-width: 990px) {
+	.hide1 { display: none; }
+	.fas { font-size: 1.8em;}
+} 
+@media screen and (max-width: 765px) {
+	.hide2 { display: none;}
+	.title {font-size: 18px;}
+} 
+.page-link {
+	background-color: black;
+	color: white;
+}
+</style>
 </head>
 <body class="left-sidebar is-preload">
 <div id="page-wrapper">
 
-<!-- Header -->
+<%-- Header --%>
 	<div id="header" style="background-image: none;">
 <%@ include file="/template/nav.jsp"%>
 	</div>
 
 
-<!-- Main -->
-		<div class="wrapper style1">
+<%-- Main --%>
+<div class="wrapper style1">
 
-			<div class="container">
+	<div class="container">
 			
-				<div class="row" style="margin-bottom: 5%">
-					<div class="col-12 col-12-mobile">
-						<h3><a href="#">달력&nbsp;&nbsp;</a> | <a href="#">&nbsp;&nbsp;목록</a></h3>
+		<%-- **첫번째 행 시작 --%>
+		<div class="row" style="margin-bottom: 5%">
+			<div class="aaa col-lg-12 col-mobile-12">
+			<%-- 탭 메뉴 시작--%>
+				<%-- 탭 2개 선언 --%>
+				<ul class="nav nav-tabs" role="tablist">
+					<li class="nav-item"><a class="nav-link active"  data-toggle="tab" href="#calendar">달력</a></li>
+				    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#list">목록</a></li>
+			  	</ul>
+	
+	
+				<%-- 탭 페이지 2개 구성 --%>
+				<div class="tab-content">
+			  
+					<%-- 첫번째 탭 페이지 --%>
+					<div id="calendar" class="container tab-pane active"><br>
+					
+						
 					</div>
-				</div>
-
+						
+						   		
+						   		
+					<%-- 두번째 탭 페이지 --%>
+					<div id="list" class="container tab-pane fade"><br>
+						<div class="row" style="margin-top: 0.2em;">
+							<div class="col-lg-12 col-12-mobile">
+								<div style="float: left">
+									<button class="btn btn-success font_bold_small">삭 제</button>
+								</div>
+								<div style="float: right">
+									<button class="btn btn-success font_bold_small">검 색</button>
+								</div>
+								<div style="float: right; width: 20px; height: 1px;"></div>
+								<div style="float: right">
+									<input type="text"  class="form-control">
+								</div>
+								<%-- float clear용 빈 div --%>
+								<div style="clear: both;"></div>
+							</div>
+							<div class="col-12"  style="margin-bottom: 3em;">
+								<table class="table table-hover" style="text-align: center; margin-top: 1em;">
+								    <thead>
+								      <tr class="font_light_small">
+								        <th style="width: 5%; "></th>
+								        <th style="width: 13%; text-align: center;" class="hide1" >영화</th>
+								        <th style="width: 14%;; text-align: center;">작성일</th>
+								        <th style="width: 34%; text-align: center;" class="hide2">별점</th>
+								        <th style="text-align: center;">영화제목</th>
+								      </tr>
+								    </thead>
+								    <tbody>
+								      <tr>
+								      	<td style="vertical-align: middle;"><input type="checkbox" class="form-check-input"></td>
+								        <td class="hide1" style="vertical-align: middle;">
+											<a href="#"><img width="90vh" src="/MovieHolic/images/tempimg/coco.jpg" title="코코 (2017)" /></a>
+										</td>
+								        <td style="vertical-align: middle;">
+								        	<div class="font_light_small">2019</div>
+								        	<div class="font_bold_mid" style="font-size: 2em;">5/6</div>
+								        </td>
+								        <td class="hide2" style="vertical-align: middle;">
+									        <span style="font-size: 1em;">
+											  <i class="fas fa-star" style="color: #ffca08;"></i>
+											  <i class="fas fa-star" style="color: #ffca08;"></i>
+											  <i class="fas fa-star" style="color: #ffca08;"></i>
+											  <i class="fas fa-star" style="color: #ffca08;"></i>
+											  <i class="fas fa-star" style="color: #222222;"></i>
+											</span>
+								        </td>
+								        <td class="font_bold_mid" style="vertical-align: middle;"><span class="title">코코</span></td>
+								      </tr>
+								      <tr>
+								      	<td style="vertical-align: middle;"><input type="checkbox" class="form-check-input"></td>
+								        <td  class="hide1" style="vertical-align: middle;">
+											<a href="#"><img width="90vh" src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)" /></a>
+										</td>
+								        <td style="vertical-align: middle;">
+								        	<div class="font_light_small">2019</div>
+								        	<div class="font_bold_mid" style="font-size: 2em;">5/6</div>
+								        </td>
+								        <td class="hide2" style="vertical-align: middle;">
+									        <span style="font-size: 1em;">
+											  <i class="fas fa-star" style="color: #ffca08;"></i>
+											  <i class="fas fa-star" style="color: #ffca08;"></i>
+											  <i class="fas fa-star" style="color: #ffca08;"></i>
+											  <i class="fas fa-star" style="color: #ffca08;"></i>
+											  <i class="fas fa-star" style="color: #222222;"></i>
+											</span>
+								        </td>
+								        <td class="font_bold_mid" style="vertical-align: middle;"><span class="title">어벤져스:엔드게임</span></td>
+								      </tr>
+								      <tr>
+								      	<td style="vertical-align: middle;"><input type="checkbox" class="form-check-input"></td>
+								        <td class="hide1" style="vertical-align: middle;">
+											<a href="#"><img width="90vh" src="/MovieHolic/images/tempimg/coco.jpg" title="코코 (2017)" /></a>
+										</td>
+								        <td style="vertical-align: middle;">
+								        	<div class="font_light_small">2019</div>
+								        	<div class="font_bold_mid" style="font-size: 2em;">5/6</div>
+								        </td>
+								        <td class="hide2" style="vertical-align: middle;">
+									        <span style="font-size: 1em;">
+											  <i class="fas fa-star" style="color: #ffca08;"></i>
+											  <i class="fas fa-star" style="color: #ffca08;"></i>
+											  <i class="fas fa-star" style="color: #ffca08;"></i>
+											  <i class="fas fa-star" style="color: #ffca08;"></i>
+											  <i class="fas fa-star" style="color: #222222;"></i>
+											</span>
+								        </td>
+								        <td class="font_bold_mid" style="vertical-align: middle;"><span class="title">코코</span></td>
+								      </tr>
+								      <tr>
+								      	<td style="vertical-align: middle;"><input type="checkbox" class="form-check-input"></td>
+								        <td  class="hide1" style="vertical-align: middle;">
+											<a href="#"><img width="90vh" src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)" /></a>
+										</td>
+								        <td style="vertical-align: middle;">
+								        	<div class="font_light_small">2019</div>
+								        	<div class="font_bold_mid" style="font-size: 2em;">5/6</div>
+								        </td>
+								        <td class="hide2" style="vertical-align: middle;">
+									        <span style="font-size: 1em;">
+											  <i class="fas fa-star" style="color: #ffca08;"></i>
+											  <i class="fas fa-star" style="color: #ffca08;"></i>
+											  <i class="fas fa-star" style="color: #ffca08;"></i>
+											  <i class="fas fa-star" style="color: #ffca08;"></i>
+											  <i class="fas fa-star" style="color: #222222;"></i>
+											</span>
+								        </td>
+								        <td class="font_bold_mid" style="vertical-align: middle;"><span class="title">어벤져스:엔드게임</span></td>
+								      </tr>
+								    </tbody>
+						  		</table>
+						  	</div>
+						  	<div class="col-12">
+						  		<div style="float: left">
+									<button class="btn btn-success font_bold_small">이 전</button>
+								</div>
+						  		<div style="float: right;">
+									<button class="btn btn-success font_bold_small">다 음</button>
+								</div>
+							  	<ul class="pagination justify-content-center">
+								    <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
+								    <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+								    <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+								    <li class="page-item"><a class="page-link" href="javascript:void(0);">4</a></li>
+								    <li class="page-item"><a class="page-link" href="javascript:void(0);">5</a></li>
+							 	 </ul>
+								<%-- float clear용 빈 div --%>
+								<div style="clear: both;"></div>
+						 	</div>
+						</div>
 				
-				<!-- 리뷰 목록 -->
-				<div class="row" style="margin-top: 3em;">
-					<table class="table table-hover">
-					    <thead>
-					      <tr>
-					        <th style="width: 10%">영화</th>
-					        <th style="width: 10%">날짜</th>
-					        <th >리뷰</th>
-					      </tr>
-					    </thead>
-					    <tbody>
-					      
-					      <tr>
-					        <td>
-								<a href="#"><img width="70vh" src="/MovieHolic/images/tempimg/coco.jpg" alt="endgame poster" data-toggle="tooltip" data-placement="top" title="코코 (2017)" /></a>
-							</td>
-					        <td>
-					        	<div>2019</div>
-					        	<div><font size="10em">3/4</font></div>
-					        </td>
-					        <td>
-					        	<span>
-					        	개인적으로 음악을 소재로 하는 영화를 정말 좋아하는데 아름다운 OST도 인상적이고, 마음을 울리는 기타소리와 부드러운 음색의 노래는 영화를 보고 나서도 한동안 자리에서 일어나지 못하게 만들었던것 같네요. 연초에 가족들과 함께 보기에는 더없이 좋은 작품이지 않나라고 생각이 들어요. 
-					        	</span>
-					        </td>
-					      </tr>
-					      <tr>
-					        <td>
-								<a href="#"><img width="70vh" src="/MovieHolic/images/tempimg/endgame.jpg" alt="endgame poster" data-toggle="tooltip" data-placement="top" title="엔드게임 (2019)" /></a>
-							</td>
-					        <td>
-					        	<div>2019</div>
-					        	<div><font size="10em">5/6</font></div>
-					        </td>
-					        <td>
-					        	<span>
-					        	어벤져스 인피니티 워에서 타노스에게 패배하고 난 후 마블 영웅들의 좌절감과 헤어 나올 수 없는 죄책감의 시달리고 모든 것을 포기한 그들의 모습을 표현한 부분은 인상적이었고 그와 더불어 소소하지만 재미를 주면서 관객들에게 웃음을 주어 재미를 주기도 했습니다.
-					        	</span>
-					        </td>
-					      </tr>
-					    </tbody>
-					  </table>
+		
+					</div>
+							   		
 				</div>
+				<%-- 탭 메뉴 끝 --%>
 				
-
+				
 			</div>
-
 		</div>
+
+				
+	</div>
+
+</div>
 <%@ include file="/template/footer.jsp" %>
