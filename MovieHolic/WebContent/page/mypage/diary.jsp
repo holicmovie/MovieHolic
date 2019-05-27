@@ -41,6 +41,15 @@
 		color: white;
 	}
 </style>
+
+<script>
+<%-- new review 클릭시 페이지 이동 --%>
+$(function(){
+	$("#newReview").click(function(){
+		location.href='/MovieHolic/page/mypage/writereview.jsp';
+	});
+});
+</script>
 </head>
 <body class="left-sidebar is-preload">
 <div id="page-wrapper">
@@ -71,7 +80,7 @@
 			<div class="col-lg-12 col-mobile-12" style="padding-top: 0px;">
 				<div class="col-lg-12" style="margin-bottom: 50px; margin-top: 0;">		
 					<div style="float: right;">
-						<button class="btn btn-success font_bold_small" style="width: 120px;">New Review</button>
+						<button class="btn btn-success font_bold_small" style="width: 120px;" id="newReview">New Review</button>
 					</div>
 				</div>
 			<%-- 탭 메뉴 시작--%>
