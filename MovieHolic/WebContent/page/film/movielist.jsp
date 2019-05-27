@@ -4,15 +4,15 @@
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
 </head>
-<body class="left-sidebar is-preload">
+<body class="left-sidebar is-preload"  style="background-color: black;">
 <div id="page-wrapper">
 
 <!-- Header -->
-	<div id="header" style="background-image: none;">
+	<div id="header" style="background-image: none; padding:4em 0 0 0;"">
 <%@ include file="/template/nav.jsp"%>
 	</div>
 <!-- boxoffice -->
-<section class="carousel">
+<section class="carousel" style="background-color: rgb(3,39,49);">
 	<div class="reel">
 		<h2>
 			<strong>Best List</strong>

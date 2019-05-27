@@ -8,12 +8,12 @@
 <div id="page-wrapper">
 
 <!-- Header -->
-	<div id="header" style="background-image: none;">
+	<div id="header" style="background-image: none; padding: 5em 0 0 0;" >
 <%@ include file="/template/nav.jsp"%>
 	</div>
 
 		<!-- Main -->
-		<div class="wrapper style1">
+		<div class="wrapper style1" style="padding:3em 0 6em 0;">
 
 			<div class="container">
 				<div class="row gtr-200">
@@ -26,8 +26,18 @@
 								<p>Avengers: Endgame, 2019</p>
 							</header>
 							
-							<a href="#" class="image featured"><img	src="/MovieHolic/images/avengers2.jpg" alt="" /></a><br>
-								
+							<a href="#" class="image featured" style="margin:0;"><img	src="/MovieHolic/images/avengers2.jpg" alt="" /></a><br>
+							<div>
+								<ul style="list-style-type:none;">
+									<li>
+										<strong>상영관 : </strong><a href="https://www.cgv.co.kr">CGV</a> , <a href="https://www.lottecinema.co.kr">롯데시네마</a>
+									</li>
+									<li>
+										<a href="https://www.youtube.com" class="button">예고편 영상</a>
+										<a href="/MovieHolic/page/mypage/writereview.jsp" class="button">리뷰 쓰기</a>
+									</li>
+								</ul>
+							</div>	
 
 							<h3>
 								<Strong>줄거리</Strong>
@@ -181,12 +191,10 @@
 								짓기도 해 더욱 한국 팬들과 관객들에게 뭉클한 감동을 전하였다. 어벤져스 원년멤버 호크아이의 제레미 레너도
 								한국에서의 좋은 기억을 아시아 프레스 컨퍼런스에서 언급했다. “한국의 벚꽃도 아름다웠고, 한국 음식도 먹었다. 특히
 								소주가 맛있었다”라며 유쾌한 답변을 전하기도 하였다.</p>
-							<footer>
-								<a href="/MovieHolic/page/mypage/writereview.jsp" class="button">리뷰 쓰기</a>
-							</footer>
+							
 						</section>
 						<hr />
-						<section>
+						<%-- <section>
 							<header>
 								<h3>
 									<a href="#">Sed lorem etiam consequat</a>
@@ -244,50 +252,155 @@
 							<footer>
 								<a href="#" class="button">Magna Adipiscing</a>
 							</footer>
-						</section>
+						</section>	--%>
 					</div>
 				</div>
 				<hr />
 				<div class="row">
-					<article class="col-4 col-12-mobile special">
-						<a href="#" class="image featured"><img src="/MovieHolic/images/pic07.jpg"
+					<%-- <article class="col-4 col-12-mobile special">
+						<a href="#" class="image featured"><img src="/MovieHolic/images/watching.jpg"
 							alt="" /></a>
-						<header>
-							<h3>
-								<a href="#">Gravida aliquam penatibus</a>
-							</h3>
-						</header>
+						
 						<p>Amet nullam fringilla nibh nulla convallis tique ante proin
 							sociis accumsan lobortis. Auctor etiam porttitor phasellus tempus
 							cubilia ultrices tempor sagittis. Nisl fermentum consequat
 							integer interdum.</p>
 					</article>
 					<article class="col-4 col-12-mobile special">
-						<a href="#" class="image featured"><img src="/MovieHolic/images/pic08.jpg"
+						<a href="#" class="image featured"><img src="/MovieHolic/images/money.jpg"
 							alt="" /></a>
-						<header>
-							<h3>
-								<a href="#">Sed quis rhoncus placerat</a>
-							</h3>
-						</header>
+						
 						<p>Amet nullam fringilla nibh nulla convallis tique ante proin
 							sociis accumsan lobortis. Auctor etiam porttitor phasellus tempus
 							cubilia ultrices tempor sagittis. Nisl fermentum consequat
 							integer interdum.</p>
 					</article>
 					<article class="col-4 col-12-mobile special">
-						<a href="#" class="image featured"><img src="/MovieHolic/images/pic09.jpg"
+						<a href="#" class="image featured"><img src="/MovieHolic/images/capma.jpg"
 							alt="" /></a>
-						<header>
-							<h3>
-								<a href="#">Magna laoreet et aliquam</a>
-							</h3>
+						
 						</header>
 						<p>Amet nullam fringilla nibh nulla convallis tique ante proin
 							sociis accumsan lobortis. Auctor etiam porttitor phasellus tempus
 							cubilia ultrices tempor sagittis. Nisl fermentum consequat
 							integer interdum.</p>
-					</article>
+					</article>--%>
+					<section class="carousel">
+			<div class="reel" id="romance">
+				<article>
+					<a href="#" class="image featured"><img
+						src="/MovieHolic/images/brother.jpg" alt="" /></a>
+					<header>
+						<h6>
+							<a href="#"><strong>나의 특별한 형제</strong></a>
+						</h6>
+					</header>
+					<p>머리 좀 쓰는 형 x 몸 좀 쓰는 동생! 세상엔 이런 형제도 있다!</p>
+				</article>
+				<article>
+					<a href="#" class="image featured"><img
+						src="/MovieHolic/images/avengers4.jpg" alt="" /></a>
+					<header>
+						<h6>
+							<a href="#">어벤져스 : 엔드게임</a>
+						</h6>
+					</header>
+					<p>인피니티 워 이후 절반만 살아남은 지구 마지막 희망이...</p>
+				</article>
+
+				<article>
+					<a href="#" class="image featured"><img src="/MovieHolic/images/capma.jpg"
+						alt="" /></a>
+					<header>
+						<h6>
+							<a href="#">캡틴 마블</a>
+						</h6>
+					</header>
+					<p>위기에 빠진 어벤져스의 희망! 1995년, 공군 파일럿 시절의 기억을 잃고</p>
+				</article>
+
+				<article>
+					<a href="#" class="image featured"><img src="/MovieHolic/images/watching.jpg"
+						alt="" /></a>
+					<header>
+						<h6>
+							<a href="#">왓칭</a>
+						</h6>
+					</header>
+					<p>회사 주차장에서 납치 당한 여자(강예원)가 자신을 조여오는 감...</p>
+				</article>
+
+				<article>
+					<a href="#" class="image featured"><img src="/MovieHolic/images/money.jpg"
+						alt="" /></a>
+					<header>
+						<h6>
+							<a href="#">돈</a>
+						</h6>
+					</header>
+					<p>오직 부자가 되고 싶은 꿈을 품고 여의도 증권가에 입성한 신입 주식...</p>
+				</article>
+
+				<article>
+					<a href="#" class="image featured"><img src="/MovieHolic/images/pic01.jpg"
+						alt="" /></a>
+					<header>
+						<h6>
+							<a href="#">뽀로로 극장판 보물섬 대모험</a>
+						</h6>
+					</header>
+					<p>떠나자, 보물섬으로~!뽀로로와 친구들의 스펙터클 보물찾기 어드벤처!</p>
+				</article>
+
+				<article>
+					<a href="#" class="image featured"><img src="/MovieHolic/images/pic02.jpg"
+						alt="" /></a>
+					<header>
+						<h6>
+							<a href="#">명탐정 피카츄</a>
+						</h6>
+					</header>
+					<p>“탐정이 아냐, 명탐정이지!”세상을 구할 번쩍이는 추리가 시작된다!</p>
+				</article>
+
+				<article>
+					<a href="#" class="image featured"><img src="/MovieHolic/images/pic03.jpg"
+						alt="" /></a>
+					<header>
+						<h6>
+							<a href="#">어글리 돌</a>
+						</h6>
+					</header>
+					<p>못생겨서 더 사랑스러운 ‘어글리 돌’의 씽~나는 무한도전이 시작된다!</p>
+				</article>
+
+				<article>
+					<a href="#" class="image featured"><img src="/MovieHolic/images/pic04.jpg"
+						alt="" /></a>
+					<header>
+						<h6>
+							<a href="#">헬보이</a>
+						</h6>
+					</header>
+					<p>헬보이' 자신이 소속된 B.P.R.D의 임무로 영국의 한 비밀 단체의 괴수 사냥을 도우러 갔지만 되려 공격을
+						당하고,</p>
+				</article>
+
+				<article>
+					<a href="#" class="image featured"><img src="/MovieHolic/images/pic05.jpg"
+						alt="" /></a>
+					<header>
+						<h6>
+							<a href="#">안도 타다오</a>
+						</h6>
+					</header>
+					<p>“빛의 교회, 지중미술관, 푼타 델라 도가나 미술관 등 세계를 사로잡은 건축가!”</p>
+				</article>
+
+			</div>
+			
+			
+		</section>
 				</div>
 			</div>
 
