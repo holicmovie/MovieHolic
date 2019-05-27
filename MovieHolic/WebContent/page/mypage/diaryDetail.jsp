@@ -56,18 +56,21 @@ hr.line_bold {
 	background-color: white;
 	height: 2px;
     position: static;
+    top:1em;
 }
 
 /* 구분선 얇은 것 (흰색) */
 hr.line_light_w {
 	background-color: white;
 	position: static;
+	top:1em;
 }
 
 /* 구분선 얇은 것 (회색) */
 hr.line_light_g {
 	background-color: gray;
 	position: static;
+	top:1em;
 }
 
 /* 위의 공간 띄울 때 */
@@ -111,8 +114,8 @@ hr.line_light_g {
 
 				<div class="row" style="margin-bottom:30px;">
 					<div class="col-lg-12 col-12-mobile font_light_small">
-						<span>· My Page</span>
-						<span class="font_bold_small"> > Diary</span>
+						· <a href="/MovieHolic/page/mypage/mypage.jsp" style="color:white;">My Page</a>
+						 > <a href="/MovieHolic/page/mypage/diary.jsp" style="color:white;" class="font_bold_small">Diary</a>
 					</div>
 				</div>
 
@@ -192,11 +195,11 @@ hr.line_light_g {
 
 						<!-- 별점, 작성자 -->
 						<div class="starrating risingstar d-flex justify-content-center flex-row-reverse" style="float: left">
-							<input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 star"></label>
-							<input type="radio" id="star4" name="rating" value="4" checked/><label for="star4" title="4 star"></label>
-							<input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 star"></label>
-							<input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 star"></label>
-							<input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 star"></label>
+							<input type="radio" id="star5" name="rating" value="5" disabled/><label for="star5" title="5 star"></label>
+							<input type="radio" id="star4" name="rating" value="4" checked disabled/><label for="star4" title="4 star"></label>
+							<input type="radio" id="star3" name="rating" value="3" disabled/><label for="star3" title="3 star"></label>
+							<input type="radio" id="star2" name="rating" value="2" disabled/><label for="star2" title="2 star"></label>
+							<input type="radio" id="star1" name="rating" value="1" disabled/><label for="star1" title="1 star"></label>
 						</div>
 
 						<!-- 작성자 프사, 아이디 -->

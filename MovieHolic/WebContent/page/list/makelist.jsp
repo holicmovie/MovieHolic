@@ -3,9 +3,15 @@
 <%@ include file="/template/header.jsp"%>
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
+<style>
+.wrapper{
+margin:0;
+padding:0;
+}
+
+</style>
 </head>
 <body class="left-sidebar is-preload">
-<div id="page-wrapper">
 
 <!-- Header -->
 	<div id="header" style="background-image: none;">
@@ -60,7 +66,7 @@
 		<div class="col-lg-1"></div>
 		<div class="col-lg-10" id="poster-list">
 	<h3><label>YOUR MOVIE LIST</label></h3>
-	<div class="list-group">
+	<div class="list-group" style="background-color: black;">
 	<ul class="list-group list-group-horizontal">
 	  <li class="list-group-item"><div>
 	   엔드게임<button class = "btn btn-sm" style ="position : absolute;">x</button><br>
@@ -121,8 +127,9 @@
 			<a href="#" class="list-group-item list-group-item-action">토르</a> -->
 	</div>
 		</div>
+	<div class = "col-lg-1"></div>	
 		</div>
+<br><br><br>
 	</div>
 </div>
-
 <%@ include file="/template/footer.jsp" %>

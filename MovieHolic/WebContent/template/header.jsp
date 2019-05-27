@@ -22,18 +22,21 @@ String root = request.getContextPath();
 	font-family: 'Noto Sans KR', sans-serif;
 	font-weight: bold;
 	font-size: 17px;
+	color: white;
 }
 
 .font_bold_mid {
 	font-family: 'Noto Sans KR', sans-serif;
 	font-weight: bold;
 	font-size: 25px;
+	color: white;
 }
 
 .font_bold_lg {
 	font-family: 'Noto Sans KR', sans-serif;
 	font-weight: bold;
 	font-size: 30px;
+	color: white;
 }
 
 /* 얇은 글씨 대 중 소 */
@@ -41,18 +44,21 @@ String root = request.getContextPath();
 	font-family: 'Noto Sans KR', sans-serif;
 	font-weight: 100;
 	font-size: 17px;
+	color: white;
 }
 
 .font_light_mid {
 	font-family: 'Noto Sans KR', sans-serif;
 	font-weight: 100;
 	font-size: 25px;
+	color: white;
 }
 
 .font_light_lg {
 	font-family: 'Noto Sans KR', sans-serif;
 	font-weight: 100;
 	font-size: 30px;
+	color: white;
 }
 
 /* 프로필 사진 */
