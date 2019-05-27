@@ -38,9 +38,9 @@
 						<div class="row" style="margin-top: 1em;">
 							<div style="width:100%; border-bottom: 0.2em solid #fff; margin-bottom: 1em;"><h4>최근 '좋아요'한 영화</h4></div>
 							
-							<section class="carousel">
+							<sectiwon class="carousel">
 								<div class="reel">
-									<article>
+									<article style="background-color: black;">
 										<a href="#" class="image featured"><img src="/MovieHolic/images/brother.jpg" alt="" /></a>
 									</article>
 									<article>
