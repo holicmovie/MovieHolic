@@ -68,4 +68,15 @@ String root = request.getContextPath();
 	border-radius: 25px; /* 이미지 반크기만큼 반경을 잡기*/
 	border: 2px solid white;
 }
+<%-- 버튼 디자인 --%>
+.btn.btn-success {
+	width : 90px;
+	background-color: #034741;
+	color: #ffcd07;
+}
+<%-- 페이지 버튼 --%>
+	.page-link {
+		background-color: black;
+		color: white;
+	}
 </style>

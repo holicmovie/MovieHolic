@@ -13,12 +13,6 @@
 	.movieImg {
 		border: solid 2px white;
 	}
-<%-- 버튼 크기 --%>
-	.btn.btn-success{
-		width : 90px;
-		background-color: #034741;
-		color: #ffcd07;
-	}
 <%-- 별점의 별 icon을 사용하기 위해 필요 --%>
 	.starrating > input {display: none;}  <%--  Remove radio buttons --%>
 	.starrating > label:before { 

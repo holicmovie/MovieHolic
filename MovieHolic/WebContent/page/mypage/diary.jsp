@@ -4,12 +4,6 @@
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
 <style>
-<%-- 버튼 크기 --%>
-	.btn.btn-success{
-		width : 90px;
-		background-color: #034741;
-		color: #ffcd07;
-	}
 <%-- 체크박스 --%>
 	.form-check-input {
 		-ms-transform: scale(2); /* IE */
@@ -35,11 +29,6 @@
 	@media screen and (max-width: 765px) {
 		.hide2 { display: none;}
 	} 
-<%-- 페이지 버튼 --%>
-	.page-link {
-		background-color: black;
-		color: white;
-	}
 </style>
 
 <script>

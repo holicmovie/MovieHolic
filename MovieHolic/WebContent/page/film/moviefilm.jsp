@@ -10,7 +10,7 @@
 		<!-- ALL Movie -->
 		
 		<!-- Banner -->
-		<div id="header" style="background-image: none; padding:4em 0 0 0;">
+		<div id="header"  style="background-image: none; padding:4em 0 0 0;">
 		<section id="banner" style="padding:0;margin:0 auto; background-color: black;">
 			<hr style="top:0; border-top:1px solid rgba(255,255,255);">
 			<header>

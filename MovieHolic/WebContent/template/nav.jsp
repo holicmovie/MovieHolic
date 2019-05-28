@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 	<!-- Nav -->
-		<nav id="nav">
+		<nav id="nav" style="z-index: 200000;">
 			<ul>
 				<li><a href="/MovieHolic/index.jsp"><img src="/MovieHolic/images/movieholic.png" width="20em">&nbsp;&nbsp;MOVIEHOLIC</a></li>
 				<li class="none"><a href="#"></a></li>

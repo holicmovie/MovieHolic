@@ -8,7 +8,7 @@
 <div id="page-wrapper">
 
 <!-- Header -->
-	<div id="header" style="background-image: none; padding: 5em 0 0 0;" >
+	<div id="header"  style="background-image: none; padding: 5em 0 0 0;" >
 <%@ include file="/template/nav.jsp"%>
 	</div>
 
