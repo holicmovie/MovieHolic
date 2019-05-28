@@ -91,12 +91,15 @@ hr.line_light_g {
 
 			<div class="container">
 
-				<div class="row" style="margin-bottom:30px;">
-					<div class="col-lg-12 col-12-mobile font_light_small">
-						· <a href="/MovieHolic/page/mypage/mypage.jsp" style="color:white;">My Page</a>
-						 > <a href="/MovieHolic/page/mypage/diary.jsp" style="color:white;" class="font_bold_small">Diary</a>
+					<%-- 페이지 이동경로 --%>		
+					<div class="row" style="margin-bottom:30px;">
+						<div class="col-lg-12 col-12-mobile font_light_small">
+							<span>✱&nbsp;&nbsp;</span>
+							<a href="/MovieHolic/page/mypage/mypage.jsp" style="color:white;">My Page</a>
+							<span>&nbsp;&nbsp;❱❱&nbsp;&nbsp;</span>
+							<a href="/MovieHolic/page/mypage/diary.jsp" class="font_bold_small" ">Diary</a>
+						</div>
 					</div>
-				</div>
 
 				<div class="row">
 					<div class="col-lg-12 col-12-mobile">

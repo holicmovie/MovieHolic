@@ -78,7 +78,7 @@ String root = request.getContextPath();
 	font-size: 15px;
 }
 <%-- 페이지 버튼 --%>
-	.page-link {
+	.page-link.a {
 		background-color: black;
 		color: white;
 	}

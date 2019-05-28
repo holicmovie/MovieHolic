@@ -8,8 +8,8 @@
 <link href="/MovieHolic/assets/css/datepicker.min.css" rel="stylesheet" type="text/css">
 <script src="/MovieHolic/assets/js/datepicker.min.js"></script>
 <!-- Include 한글버전 -->
-<script src="/MovieHolic/assets/js/datepicker.kr.js"></script>
-<!-- 생년월일의 datepicker용 -->
+<!-- <script src="/MovieHolic/assets/js/datepicker.kr.js"></script>
+생년월일의 datepicker용 -->
 
 <style>
 .btn_red{
@@ -22,6 +22,15 @@
 	font-size: 15px;
 }
 </style>
+
+<script>
+<%-- datepicker --%>
+$(function(){
+	$('#datepicker').datepicker({
+	    uiLibrary: 'bootstrap4'
+	});
+});
+</script>
 
 </head>
 <body class="left-sidebar is-preload">
@@ -38,12 +47,15 @@
 
 			<div class="container">
 			
-			<div class="row" style="margin-bottom:30px; color:white">
-					<div class="col-lg-12 col-12-mobile">
-						<span>· My Page</span>
-						<span class=""> > Setting</span>
+			<%-- 페이지 이동경로 --%>		
+					<div class="row" style="margin-bottom:30px;">
+						<div class="col-lg-12 col-12-mobile font_light_small">
+							<span>✱&nbsp;&nbsp;</span>
+							<a href="/MovieHolic/page/mypage/mypage.jsp" style="color:white;">My Page</a>
+							<span>&nbsp;&nbsp;❱❱&nbsp;&nbsp;</span>
+							<a href="/MovieHolic/page/mypage/setting.jsp" class="font_bold_small" ">Setting</a>
+						</div>
 					</div>
-				</div>
 			
 				<!-- **첫번째 행 시작 -->
 				<div class="row" style="margin-bottom: 5%">
@@ -112,7 +124,7 @@
 							</div>
 									<div class="form-group">
 									<label for="birth">생년월일</label>
-									<input type="text" class="datepicker-here" data-language='kr' id="birth" value="1995-01-01">
+									<input id="datepicker" width="150" name="birth" value="01/01/1995"/>
     						    </div>
     						    
 								<div class="form-group">
