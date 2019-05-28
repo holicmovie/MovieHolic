@@ -2,35 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/template/header.jsp"%>
 
-
-<!-- 별점의 별 icon을 사용하기 위해 필요 -->
-<link
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
-	crossorigin="anonymous">
 <style>
-.starrating>input {
-	display: none;
-} /* Remove radio buttons */
-.starrating>label:before {
-	content: "\f005"; /* Star */
-	margin: 2px;
-	font-size: 2em;
-	font-family: FontAwesome;
-	display: inline-block;
-}
-
-.starrating>label {
-	color: #222222; /* Start color when not clicked */
-}
-
-.starrating>input:checked ~ label {
-	color: #ffca08;
-} /* Set yellow color when star checked */
-.starrating>input:hover ~ label {
-	color: #ffca08;
-} /* Set yellow color when star hover */
 /* 좋아요 둥근 버튼을 위해 필요 */
 .btn-circle.btn-xl {
 	width: 70px;
@@ -88,6 +60,13 @@ hr.line_light_g {
 	height: 350px;
 }
 
+/* 별모양 */
+.fas {
+	font-style:normal;
+	font-family: FontAwesome;
+	font-size: 2.5em;
+}
+
 /* 신고버튼 */
 .report {
 	color: white;
@@ -122,14 +101,14 @@ hr.line_light_g {
 				<div class="row">
 					<div class="col-lg-12 col-12-mobile">
 						<div style="float: left">
-							<button class="btn btn-success font_bold_small">이 전</button>
+							<button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button>
 						</div>
 						<div style="float: right">
-							<button class="btn btn-success font_bold_small">삭 제</button>
+							<button class="btn btn-success font_bold_small">삭&nbsp;&nbsp;&nbsp;제</button>
 						</div>
 						<div style="float: right; width: 20px; height: 1px;"></div>
 						<div style="float: right">
-							<button class="btn btn-success font_bold_small">수 정</button>
+							<button class="btn btn-success font_bold_small">수&nbsp;&nbsp;&nbsp;정</button>
 						</div>
 						<!-- float clear용 빈 div -->
 						<div style="clear: both;"></div>
@@ -139,7 +118,7 @@ hr.line_light_g {
 				<div class="row">
 
 					<!-- 왼쪽 내용 start -->
-					<div class="col-lg-3 col-12-mobile top_margin">
+					<div class="col-lg-3 col-12-mobile top_margin" align="center">
 
 						<!-- 포스터, 좋아요싫어요 -->
 						<section class="movieImg-wrap">
@@ -194,12 +173,14 @@ hr.line_light_g {
 
 
 						<!-- 별점, 작성자 -->
-						<div class="starrating risingstar d-flex justify-content-center flex-row-reverse" style="float: left">
-							<input type="radio" id="star5" name="rating" value="5" disabled/><label for="star5" title="5 star"></label>
-							<input type="radio" id="star4" name="rating" value="4" checked disabled/><label for="star4" title="4 star"></label>
-							<input type="radio" id="star3" name="rating" value="3" disabled/><label for="star3" title="3 star"></label>
-							<input type="radio" id="star2" name="rating" value="2" disabled/><label for="star2" title="2 star"></label>
-							<input type="radio" id="star1" name="rating" value="1" disabled/><label for="star1" title="1 star"></label>
+						<div style="float: left">
+							<span style="font-size: 1em;">
+								<i class="fas fa-star" style="color: #ffca08;"></i>
+								<i class="fas fa-star" style="color: #ffca08;"></i>
+								<i class="fas fa-star" style="color: #ffca08;"></i>
+								<i class="fas fa-star" style="color: #ffca08;"></i>
+								<i class="fas fa-star" style="color: #222222;"></i>
+							</span>
 						</div>
 
 						<!-- 작성자 프사, 아이디 -->
@@ -316,7 +297,7 @@ hr.line_light_g {
 							<textarea class="form-control" rows="4" id="mycomment"
 								placeholder="댓글을 입력해주세요." style="resize: none;"></textarea>
 							<button class="btn btn-success font_bold_small top_margin"
-								style="float: right">등 록</button>
+								style="float: right">등&nbsp;&nbsp;&nbsp;록</button>
 							<!-- float clear용 빈 div -->
 							<div style="clear: both;"></div>
 						</div>

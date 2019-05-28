@@ -11,6 +11,18 @@
 <script src="/MovieHolic/assets/js/datepicker.kr.js"></script>
 <!-- 생년월일의 datepicker용 -->
 
+<style>
+.btn_red{
+	border: 1px solid red;
+	width : 90px;
+	background-color: #bf151d;
+	color: #ffffff;
+	font-family: 'Noto Sans KR', sans-serif;
+	font-weight: bold;
+	font-size: 15px;
+}
+</style>
+
 </head>
 <body class="left-sidebar is-preload">
 <div id="page-wrapper">
@@ -51,8 +63,8 @@
 						<div class="col-lg-2 col-12-mobile" id="content">
 						
 							<div align="center">
-								<img src="/MovieHolic/images/user.png" width="100%" alt="user icon" /><br>
-								<label class="btn btn-dark">Search<input type="file" style="display: none;"></label>
+								<img src="/MovieHolic/images/user.png" width="100%" alt="user icon" style="margin-bottom:10px;" /><br>
+								<label class="btn btn-success">수&nbsp;&nbsp;&nbsp;정<input type="file" style="display: none;"></label>
 							</div>
 							
 						</div>
@@ -136,8 +148,8 @@
 						
 							<!-- 저장, 탈퇴 버튼 -->
 							<div class="col-lg-12 col-12-mobile" align="center">
-								<button type="submit" class="btn btn-dark" style="margin-right:5%">저장</button>
-								<button type="submit" class="btn btn-danger">탈퇴</button>
+								<button class="btn btn-success" style="margin-right:5%">저&nbsp;&nbsp;&nbsp;장</button>
+								<button class="btn btn_red">탈&nbsp;&nbsp;&nbsp;퇴</button>
 							</div>
 							
 						</div>
