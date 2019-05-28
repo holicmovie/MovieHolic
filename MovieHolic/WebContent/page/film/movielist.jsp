@@ -21,7 +21,7 @@
 						</h2>
 					</div>
 					<div style="float: right; margin-right: 15em;">
-						<a class="button" href="/MovieHolic/page/mypage/listdetail.jsp">New
+						<a class="button" href="/MovieHolic/page/list/listdetail.jsp">New
 							List</a>
 					</div>
 					<div style="clear: both;"></div>
