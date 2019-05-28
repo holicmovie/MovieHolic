@@ -35,7 +35,7 @@ hr.line_light_g {
 <body class="left-sidebar is-preload">
 
 <!-- Header -->
-	<div id="header" style="background-image: none;">
+	<div id="header"  style="background-image: none;">
 <%@ include file="/template/nav.jsp"%>
 	</div>
 

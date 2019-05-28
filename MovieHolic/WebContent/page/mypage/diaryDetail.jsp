@@ -102,7 +102,7 @@ hr.line_light_g {
 	<div id="page-wrapper">
 
 		<!-- Header -->
-		<div id="header" style="background-image: none;">
+		<div id="header"  style="background-image: none; margin-bottom: 0px; padding-bottom:0; height: 10px;">
 			<%@ include file="/template/nav.jsp"%>
 		</div>
 
