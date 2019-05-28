@@ -212,11 +212,11 @@ $(function(){
 									<button class="btn btn-success font_bold_small">다&nbsp;&nbsp;&nbsp;음</button>
 								</div>
 							  	<ul class="pagination justify-content-center">
-								    <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
-								    <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-								    <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
-								    <li class="page-item"><a class="page-link" href="javascript:void(0);">4</a></li>
-								    <li class="page-item"><a class="page-link" href="javascript:void(0);">5</a></li>
+								    <li class="page-item"><a class="page-link a" href="javascript:void(0);">1</a></li>
+								    <li class="page-item"><a class="page-link a" href="javascript:void(0);">2</a></li>
+								    <li class="page-item"><a class="page-link a" href="javascript:void(0);">3</a></li>
+								    <li class="page-item"><a class="page-link a" href="javascript:void(0);">4</a></li>
+								    <li class="page-item"><a class="page-link a" href="javascript:void(0);">5</a></li>
 							 	 </ul>
 								<%-- float clear용 빈 div --%>
 								<div style="clear: both;"></div>

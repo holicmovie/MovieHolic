@@ -29,12 +29,15 @@ hr.line_bold {
 
 			<div class="container">
 
-				<div class="row" style="margin-bottom:30px; color:white">
-					<div class="col-lg-12 col-12-mobile">
-						<span>· My Page</span>
-						<span class=""> > Wish List</span>
+				<%-- 페이지 이동경로 --%>		
+					<div class="row" style="margin-bottom:30px;">
+						<div class="col-lg-12 col-12-mobile font_light_small">
+							<span>✱&nbsp;&nbsp;</span>
+							<a href="/MovieHolic/page/mypage/mypage.jsp" style="color:white;">My Page</a>
+							<span>&nbsp;&nbsp;❱❱&nbsp;&nbsp;</span>
+							<a href="/MovieHolic/page/mypage/wishlist.jsp" class="font_bold_small" ">Wish List</a>
+						</div>
 					</div>
-				</div>
 
 				<!-- **첫번째 행 시작 -->
 				<div class="row" style="margin-bottom: 5%">
@@ -135,21 +138,23 @@ hr.line_bold {
 				<!-- **네번째 행 시작 -->
 				<div class="row">
 				
-					<div class="col-lg-12 col-12-moblile" align="center">
-						<!-- 페이지 번호 -->
-						<nav aria-label="...">
-							<ul class="pagination">
-								<li class="page-item disabled"><a class="page-link"
-									href="#" tabindex="-1">Previous</a></li>
-								<li class="page-item active"><a class="page-link" href="#">1</a>
-								</li>
-								<li class="page-item"><a class="page-link" href="#">2</a></li>
-								<li class="page-item"><a class="page-link" href="#">3</a></li>
-								<li class="page-item"><a class="page-link" href="#">Next</a>
-								</li>
-							</ul>
-						</nav>
-					</div>
+					<div class="col-lg-12 col-12-mobile">
+						  		<div style="float: left">
+									<button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button>
+								</div>
+						  		<div style="float: right;">
+									<button class="btn btn-success font_bold_small">다&nbsp;&nbsp;&nbsp;음</button>
+								</div>
+							  	<ul class="pagination justify-content-center">
+								    <li class="page-item"><a class="page-link a" href="javascript:void(0);">1</a></li>
+								    <li class="page-item"><a class="page-link a" href="javascript:void(0);">2</a></li>
+								    <li class="page-item"><a class="page-link a" href="javascript:void(0);">3</a></li>
+								    <li class="page-item"><a class="page-link a" href="javascript:void(0);">4</a></li>
+								    <li class="page-item"><a class="page-link a" href="javascript:void(0);">5</a></li>
+							 	 </ul>
+								<%-- float clear용 빈 div --%>
+								<div style="clear: both;"></div>
+						 	</div>
 					
 				</div>
 				<!-- **네번째 행 끝 -->

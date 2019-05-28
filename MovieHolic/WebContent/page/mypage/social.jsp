@@ -24,6 +24,11 @@
     font-size: 12px;
     line-height: 1.42857;
 }
+.btn_green{
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
 </style>
 </head>
 <body class="left-sidebar is-preload">
@@ -39,12 +44,15 @@
 
 			<div class="container">
 			
-			<div class="row" style="margin-bottom:30px; color:white">
-					<div class="col-lg-12 col-12-mobile">
-						<span>· My Page</span>
-						<span class=""> > Social</span>
+			<%-- 페이지 이동경로 --%>		
+					<div class="row" style="margin-bottom:30px;">
+						<div class="col-lg-12 col-12-mobile font_light_small">
+							<span>✱&nbsp;&nbsp;</span>
+							<a href="/MovieHolic/page/mypage/mypage.jsp" style="color:white;">My Page</a>
+							<span>&nbsp;&nbsp;❱❱&nbsp;&nbsp;</span>
+							<a href="/MovieHolic/page/mypage/social.jsp" class="font_bold_small" ">Social</a>
+						</div>
 					</div>
-				</div>
 			
 				<!-- **첫번째 행 시작 -->
 				<div class="row" style="margin-bottom: 5%">
@@ -92,7 +100,7 @@
 								      <td><i class="fa fa-list" style="color:gold;"></i> 200</td>
 								      <td><i class="fa fa-heart" style="color:tomato;"></i> 150</td>
 								      <td>
-								      	<button type="button" class="btn btn-success btn-circle btn-xl"><i class="fa fa-check"></i></button>
+								      	<button type="button" class="btn btn_green btn-circle btn-xl"><i class="fa fa-check"></i></button>
 								      </td>
 								    </tr>
 								    <tr>
@@ -101,11 +109,32 @@
 								      <td><i class="fa fa-list" style="color:gold;"></i> 400</td>
 								      <td><i class="fa fa-heart" style="color:tomato;"></i> 342</td>
 								      <td>
-								      	<button type="button" class="btn btn-success btn-circle btn-xl"><i class="fa fa-check"></i></button>
+								      	<button type="button" class="btn btn_green btn-circle btn-xl"><i class="fa fa-check"></i></button>
 								      </td>
 								    </tr>
 								  </tbody>
 								</table>
+								
+								<!-- 페이지 처리 -->
+								<div class="row">
+									<div class="col-lg-12 col-12-mobile">
+						  		<div style="float: left">
+									<button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button>
+								</div>
+						  		<div style="float: right;">
+									<button class="btn btn-success font_bold_small">다&nbsp;&nbsp;&nbsp;음</button>
+								</div>
+							  	<ul class="pagination justify-content-center">
+								    <li class="page-item"><a class="page-link a" href="javascript:void(0);">1</a></li>
+								    <li class="page-item"><a class="page-link a" href="javascript:void(0);">2</a></li>
+								    <li class="page-item"><a class="page-link a" href="javascript:void(0);">3</a></li>
+								    <li class="page-item"><a class="page-link a" href="javascript:void(0);">4</a></li>
+								    <li class="page-item"><a class="page-link a" href="javascript:void(0);">5</a></li>
+							 	 </ul>
+								<%-- float clear용 빈 div --%>
+								<div style="clear: both;"></div>
+						 		</div>
+								</div>
   					   		</div>
   					   		
   					   		 <!-- 두번째 탭 페이지 -->
@@ -155,11 +184,33 @@
 								      <td><i class="fa fa-list" style="color:gold;"></i> 500</td>
 								      <td><i class="fa fa-heart" style="color:tomato;"></i> 342</td>
 								      <td>
-								       	<button type="button" class="btn btn-success btn-circle btn-xl"><i class="fa fa-check"></i></button>
+								       	<button type="button" class="btn btn_green btn-circle btn-xl"><i class="fa fa-check"></i></button>
 								      </td>
 								    </tr>
 								  </tbody>
 								</table>
+								
+								<!-- 페이지 처리 -->
+								<div class="row">
+									<div class="col-lg-12 col-12-mobile">
+						  		<div style="float: left">
+									<button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button>
+								</div>
+						  		<div style="float: right;">
+									<button class="btn btn-success font_bold_small">다&nbsp;&nbsp;&nbsp;음</button>
+								</div>
+							  	<ul class="pagination justify-content-center">
+								    <li class="page-item"><a class="page-link a" href="javascript:void(0);">1</a></li>
+								    <li class="page-item"><a class="page-link a" href="javascript:void(0);">2</a></li>
+								    <li class="page-item"><a class="page-link a" href="javascript:void(0);">3</a></li>
+								    <li class="page-item"><a class="page-link a" href="javascript:void(0);">4</a></li>
+								    <li class="page-item"><a class="page-link a" href="javascript:void(0);">5</a></li>
+							 	 </ul>
+								<%-- float clear용 빈 div --%>
+								<div style="clear: both;"></div>
+						 		</div>
+								</div>
+								
   					   		</div>
   					   		
 					  </div>
@@ -168,14 +219,6 @@
 					</div>
 				</div>
 				<!-- **첫번째 행 끝 -->
-				
-				<!-- **두 번째 행 시작 -->
-				<div class="row">
-					<div class="col-lg-12">
-						<button class="btn btn-success" style="float: right">다 음</button>
-					</div>
-				</div>
-				<!-- **두 번째 행 끝 -->
 				
 			</div>
 

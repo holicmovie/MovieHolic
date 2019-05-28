@@ -8,8 +8,29 @@
 <link href="/MovieHolic/assets/css/datepicker.min.css" rel="stylesheet" type="text/css">
 <script src="/MovieHolic/assets/js/datepicker.min.js"></script>
 <!-- Include 한글버전 -->
-<script src="/MovieHolic/assets/js/datepicker.kr.js"></script>
-<!-- 생년월일의 datepicker용 -->
+<!-- <script src="/MovieHolic/assets/js/datepicker.kr.js"></script>
+생년월일의 datepicker용 -->
+
+<style>
+.btn_red{
+	border: 1px solid red;
+	width : 90px;
+	background-color: #bf151d;
+	color: #ffffff;
+	font-family: 'Noto Sans KR', sans-serif;
+	font-weight: bold;
+	font-size: 15px;
+}
+</style>
+
+<script>
+<%-- datepicker --%>
+$(function(){
+	$('#datepicker').datepicker({
+	    uiLibrary: 'bootstrap4'
+	});
+});
+</script>
 
 </head>
 <body class="left-sidebar is-preload">
@@ -26,12 +47,15 @@
 
 			<div class="container">
 			
-			<div class="row" style="margin-bottom:30px; color:white">
-					<div class="col-lg-12 col-12-mobile">
-						<span>· My Page</span>
-						<span class=""> > Setting</span>
+			<%-- 페이지 이동경로 --%>		
+					<div class="row" style="margin-bottom:30px;">
+						<div class="col-lg-12 col-12-mobile font_light_small">
+							<span>✱&nbsp;&nbsp;</span>
+							<a href="/MovieHolic/page/mypage/mypage.jsp" style="color:white;">My Page</a>
+							<span>&nbsp;&nbsp;❱❱&nbsp;&nbsp;</span>
+							<a href="/MovieHolic/page/mypage/setting.jsp" class="font_bold_small" ">Setting</a>
+						</div>
 					</div>
-				</div>
 			
 				<!-- **첫번째 행 시작 -->
 				<div class="row" style="margin-bottom: 5%">
@@ -51,8 +75,8 @@
 						<div class="col-lg-2 col-12-mobile" id="content">
 						
 							<div align="center">
-								<img src="/MovieHolic/images/user.png" width="100%" alt="user icon" /><br>
-								<label class="btn btn-dark">Search<input type="file" style="display: none;"></label>
+								<img src="/MovieHolic/images/user.png" width="100%" alt="user icon" style="margin-bottom:10px;" /><br>
+								<label class="btn btn-success">수&nbsp;&nbsp;&nbsp;정<input type="file" style="display: none;"></label>
 							</div>
 							
 						</div>
@@ -100,7 +124,7 @@
 							</div>
 									<div class="form-group">
 									<label for="birth">생년월일</label>
-									<input type="text" class="datepicker-here" data-language='kr' id="birth" value="1995-01-01">
+									<input id="datepicker" width="150" name="birth" value="01/01/1995"/>
     						    </div>
     						    
 								<div class="form-group">
@@ -136,8 +160,8 @@
 						
 							<!-- 저장, 탈퇴 버튼 -->
 							<div class="col-lg-12 col-12-mobile" align="center">
-								<button type="submit" class="btn btn-dark" style="margin-right:5%">저장</button>
-								<button type="submit" class="btn btn-danger">탈퇴</button>
+								<button class="btn btn-success" style="margin-right:5%">저&nbsp;&nbsp;&nbsp;장</button>
+								<button class="btn btn_red">탈&nbsp;&nbsp;&nbsp;퇴</button>
 							</div>
 							
 						</div>
