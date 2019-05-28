@@ -66,13 +66,14 @@ input::-moz-focus-inner {
 	padding: 0;
 }
 
+/* 체크박스 표시를 위해 주석처리함
 input, select, textarea {
 	-moz-appearance: none;
 	-webkit-appearance: none;
 	-ms-appearance: none;
 	appearance: none;
 }
-
+ */
 /* Basic */
 
 	html {
