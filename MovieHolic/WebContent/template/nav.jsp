@@ -42,7 +42,7 @@
 				</li>
 				<li class="none"><a href="#"></a></li>
 				<li><a href="#" style="color: rgb(240, 195, 15)">LOGIN</a></li>
-				<li><a href="#" style="color: rgb(240, 195, 15)">REGISTER</a></li>
+				<li><a href="#" style="color: rgb(240, 195, 15)">JOIN</a></li>
 				<li>
 						<input type="text" class="form-control" id="usr" style="background-image:/MovieHolic/images/searchb.png" placeholder="제목으로 검색">
 				</li>
