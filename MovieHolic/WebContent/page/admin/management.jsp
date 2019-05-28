@@ -10,6 +10,7 @@
 
 
 
+
 <script type="text/javascript">
 	jQuery(function($) {
 		$(".datepicker").shieldDatePicker();
@@ -18,6 +19,18 @@
 
 
 <style>
+
+
+tr>td>input {
+		-ms-transform: scale(2); /* IE */
+		-moz-transform: scale(2); /* FF */
+		-webkit-transform: scale(2); /* Safari and Chrome */
+		-o-transform: scale(2); /* Opera */
+}
+	
+
+
+
 .container {
 	background-image: url("/Content/img/datepicker/s4.png");
 	background-position: center;
@@ -25,6 +38,8 @@
 	height: 740px;
 	text-align: center;
 }
+
+
 
 .top {
 	padding-top: 290px;
@@ -122,25 +137,27 @@ hr.line_light_w {
 					<br>
 					<thead>
 						<tr>
-							<th>번호</th>
+							<th></th>
+							<th>회원ID</th>
 							<th>이름</th>
-							<th>아이디</th>
-							<th>연령</th>
+							<th>주민번호 앞자리</th>
 							<th>연락처</th>
 							<th>성별</th>
-							<th>이메일</th>
+							<th>가입일</th>
+							<th>탈퇴일</th>
 							<td>휴면 여부</td>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
 							<td>1</td>
-							<td>임꺽정</td>
-							<td>Rjrwjd</td>
-							<td>130</td>
+							<td>abc123@naver.com</td>
+							<td>김무비</td>
+							<td>940618</td>
 							<td>111-1111-1111</td>
 							<td>남</td>
-							<td>Rjrwjd@naver.com</td>
+							<td>2019.01.01</td>
+							<td>-</td>
 							<td>
 								<div>
 									<button type="button" class="btn btn-success dropdown-toggle"
@@ -153,30 +170,13 @@ hr.line_light_w {
 						</tr>
 						<tr>
 							<td>2</td>
-							<td>임춘자</td>
-							<td>cnswk</td>
-							<td>110</td>
-							<td>111-1234-1111</td>
-							<td>여</td>
-							<td>cnswk@naver.com</td>
-							<td>
-								<div>
-									<button type="button" class="btn btn-success dropdown-toggle"
-										data-toggle="dropdown">활동</button>
-									<div class="dropdown-menu">
-										<a class="dropdown-item" href="#">휴면</a>
-									</div>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>dygks</td>
-							<td>Rjrwjd</td>
-							<td>30</td>
-							<td>111-1111-1234</td>
+							<td>abc123@naver.com</td>
+							<td>김무비</td>
+							<td>940618</td>
+							<td>111-1111-1111</td>
 							<td>남</td>
-							<td>dygks@naver.com</td>
+							<td>2019.01.01</td>
+							<td>-</td>
 							<td>
 								<div>
 									<button type="button" class="btn btn-success dropdown-toggle"
@@ -189,12 +189,32 @@ hr.line_light_w {
 						</tr>
 						<tr>
 							<td>3</td>
-							<td>dygks</td>
-							<td>123123</td>
-							<td>11</td>
-							<td>124-4444-1234</td>
-							<td>여</td>
-							<td>asdge@naver.com</td>
+							<td>abc123@naver.com</td>
+							<td>김무비</td>
+							<td>940618</td>
+							<td>111-1111-1111</td>
+							<td>남</td>
+							<td>2019.01.01</td>
+							<td>-</td>
+							<td>
+								<div>
+									<button type="button" class="btn btn-success dropdown-toggle"
+										data-toggle="dropdown">활동</button>
+									<div class="dropdown-menu">
+										<a class="dropdown-item" href="#">휴면</a>
+									</div>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td>abc123@naver.com</td>
+							<td>김무비</td>
+							<td>940618</td>
+							<td>111-1111-1111</td>
+							<td>남</td>
+							<td>2019.01.01</td>
+							<td>-</td>
 							<td>
 								<div>
 									<button type="button" class="btn btn-success dropdown-toggle"
@@ -207,12 +227,13 @@ hr.line_light_w {
 						</tr>
 						<tr>
 							<td>4</td>
-							<td>asdasd</td>
-							<td>sdsd</td>
-							<td>154</td>
-							<td>123-123-123</td>
+							<td>abc123@naver.com</td>
+							<td>김무비</td>
+							<td>940618</td>
+							<td>111-1111-1111</td>
 							<td>남</td>
-							<td>sdfsdf@naver.com</td>
+							<td>2019.01.01</td>
+							<td>2019.01.13</td>
 							<td>
 								<div>
 									<button type="button" class="btn btn-success dropdown-toggle"

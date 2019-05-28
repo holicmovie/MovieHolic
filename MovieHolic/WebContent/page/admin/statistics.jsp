@@ -21,6 +21,18 @@
 
 <style>
 
+/* tspan{
+
+fill : #FFFFFF;
+color : #FFFFFF;
+background-color: #FFFFFF;
+
+} */
+
+/* text>tspan{
+	display: none;
+} */
+
 div {
 	color: black;
 	margin: 0;
