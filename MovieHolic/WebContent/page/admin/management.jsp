@@ -19,17 +19,12 @@
 
 
 <style>
-
-
 tr>td>input {
-		-ms-transform: scale(2); /* IE */
-		-moz-transform: scale(2); /* FF */
-		-webkit-transform: scale(2); /* Safari and Chrome */
-		-o-transform: scale(2); /* Opera */
+	-ms-transform: scale(2); /* IE */
+	-moz-transform: scale(2); /* FF */
+	-webkit-transform: scale(2); /* Safari and Chrome */
+	-o-transform: scale(2); /* Opera */
 }
-	
-
-
 
 .container {
 	background-image: url("/Content/img/datepicker/s4.png");
@@ -38,8 +33,6 @@ tr>td>input {
 	height: 740px;
 	text-align: center;
 }
-
-
 
 .top {
 	padding-top: 290px;
@@ -128,7 +121,17 @@ hr.line_light_w {
 				<hr class="line_light_w">
 
 				<div align="right">
-					<button type="submit" class="btn btn-success" style="z-index: 0">검색</button>
+					<span class="dropdown">
+						<button type="button" class="btn btn-success dropdown-toggle"
+							data-toggle="dropdown">목록</button>
+						<span class="dropdown-menu">
+							<a class="dropdown-item" href="#">전체목록</a>
+							<a class="dropdown-item" href="#">휴면목록</a>
+							<a class="dropdown-item" href="#">탈퇴목록</a>
+						</span>
+					</span>
+					<button type="submit" class="btn btn-success" style="z-index: 0">탈퇴</button>
+					<button type="submit" class="btn btn-success" style="z-index: 0">휴면</button>
 				</div>
 				<!-- <button type="submit" class="btn btn-success">검색</button> -->
 
@@ -137,7 +140,12 @@ hr.line_light_w {
 					<br>
 					<thead>
 						<tr>
-							<th></th>
+							<th>
+								<div>
+									<button type="submit" class="btn btn-success"
+										style="z-index: 0;">전체선택</button>
+								</div>
+							</th>
 							<th>회원ID</th>
 							<th>이름</th>
 							<th>주민번호 앞자리</th>
@@ -145,12 +153,11 @@ hr.line_light_w {
 							<th>성별</th>
 							<th>가입일</th>
 							<th>탈퇴일</th>
-							<td>휴면 여부</td>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td>1</td>
+							<td><input type="checkbox" /></td>
 							<td>abc123@naver.com</td>
 							<td>김무비</td>
 							<td>940618</td>
@@ -158,18 +165,9 @@ hr.line_light_w {
 							<td>남</td>
 							<td>2019.01.01</td>
 							<td>-</td>
-							<td>
-								<div>
-									<button type="button" class="btn btn-success dropdown-toggle"
-										data-toggle="dropdown">활동</button>
-									<div class="dropdown-menu">
-										<a class="dropdown-item" href="#">휴면</a>
-									</div>
-								</div>
-							</td>
 						</tr>
 						<tr>
-							<td>2</td>
+							<td><input type="checkbox" /></td>
 							<td>abc123@naver.com</td>
 							<td>김무비</td>
 							<td>940618</td>
@@ -177,18 +175,9 @@ hr.line_light_w {
 							<td>남</td>
 							<td>2019.01.01</td>
 							<td>-</td>
-							<td>
-								<div>
-									<button type="button" class="btn btn-success dropdown-toggle"
-										data-toggle="dropdown">활동</button>
-									<div class="dropdown-menu">
-										<a class="dropdown-item" href="#">휴면</a>
-									</div>
-								</div>
-							</td>
 						</tr>
 						<tr>
-							<td>3</td>
+							<td><input type="checkbox" /></td>
 							<td>abc123@naver.com</td>
 							<td>김무비</td>
 							<td>940618</td>
@@ -196,18 +185,9 @@ hr.line_light_w {
 							<td>남</td>
 							<td>2019.01.01</td>
 							<td>-</td>
-							<td>
-								<div>
-									<button type="button" class="btn btn-success dropdown-toggle"
-										data-toggle="dropdown">활동</button>
-									<div class="dropdown-menu">
-										<a class="dropdown-item" href="#">휴면</a>
-									</div>
-								</div>
-							</td>
 						</tr>
 						<tr>
-							<td>3</td>
+							<td><input type="checkbox" /></td>
 							<td>abc123@naver.com</td>
 							<td>김무비</td>
 							<td>940618</td>
@@ -215,18 +195,9 @@ hr.line_light_w {
 							<td>남</td>
 							<td>2019.01.01</td>
 							<td>-</td>
-							<td>
-								<div>
-									<button type="button" class="btn btn-success dropdown-toggle"
-										data-toggle="dropdown">활동</button>
-									<div class="dropdown-menu">
-										<a class="dropdown-item" href="#">휴면</a>
-									</div>
-								</div>
-							</td>
 						</tr>
 						<tr>
-							<td>4</td>
+							<td><input type="checkbox" /></td>
 							<td>abc123@naver.com</td>
 							<td>김무비</td>
 							<td>940618</td>
@@ -234,15 +205,6 @@ hr.line_light_w {
 							<td>남</td>
 							<td>2019.01.01</td>
 							<td>2019.01.13</td>
-							<td>
-								<div>
-									<button type="button" class="btn btn-success dropdown-toggle"
-										data-toggle="dropdown">활동</button>
-									<div class="dropdown-menu">
-										<a class="dropdown-item" href="#">휴면</a>
-									</div>
-								</div>
-							</td>
 						</tr>
 					</tbody>
 				</table>
@@ -410,11 +372,11 @@ hr.line_light_w {
 
 
 		</div>
-	</div>
-</body>
 
 
 
 
 
-<%@ include file="/template/footer.jsp"%>
+
+
+		<%@ include file="/template/footer.jsp"%>
