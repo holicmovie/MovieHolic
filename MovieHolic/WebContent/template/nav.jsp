@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 	<!-- Nav -->
-		<nav id="nav" style="z-index: 200000;">
+		<nav id="nav" style="z-index: 999;">
 			<ul>
 				<li><a href="/MovieHolic/index.jsp"><img src="/MovieHolic/images/movieholic.png" width="20em">&nbsp;&nbsp;MOVIEHOLIC</a></li>
-				<li class="none"><a href="#"></a></li>
-				<li class="none"><a href="#"></a></li>
-				<li class="none"><a href="#"></a></li>
-				<li class="none"><a href="#"></a></li>
-				<li class="none"><a href="#"></a></li>
+				<li class="none"><a></a></li>
+				<li class="none"><a></a></li>
+				<li class="none"><a></a></li>
+				<li class="none"><a></a></li>
+				<li class="none"><a></a></li>
 				<li><a href="/MovieHolic/index.jsp">HOME</a></li>
 				<li><a href="/MovieHolic/page/film/moviefilm.jsp">FILMS</a>
 					<ul>
