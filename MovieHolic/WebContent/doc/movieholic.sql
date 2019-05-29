@@ -143,17 +143,17 @@ CREATE TABLE holic_board (
 	userId VARCHAR2(100) NOT NULL, /* 회원ID */
 	boardCode NUMBER NOT NULL, /* 게시판코드 */
 	subject VARCHAR2(100), /* 제목 */
-	date DATE, /* 작성일 */
+	postDate DATE, /* 작성일 */
 	content CLOB, /* 내용 */
 	starPoint NUMBER, /* 별점 */
 	movieName VARCHAR2(200), /* 영화명 */
-	movieCodeNaver VARCHAR2(4000), /* 영화코드(네이버) */
-	movieCodeYoung VARCHAR2(4000), /* 영화코드(진흥원) */
+	movieCodeNaver VARCHAR2(500), /* 영화코드(네이버) */
+	movieCodeYoung VARCHAR2(500), /* 영화코드(진흥원) */
 	cotegory VARCHAR2(24), /* 장르 */
 	best NUMBER, /* 추천 */
 	worst NUMBER, /* 비추천 */
 	notify NUMBER, /* 신고 */
-	enable VARCHAR2(), /* 공개여부 */
+	enable VARCHAR2(8), /* 공개여부 */
 	viewCount NUMBER /* 조회수 */
 );
 
@@ -167,7 +167,7 @@ COMMENT ON COLUMN holic_board.boardCode IS '게시판코드';
 
 COMMENT ON COLUMN holic_board.subject IS '제목';
 
-COMMENT ON COLUMN holic_board.date IS '작성일';
+COMMENT ON COLUMN holic_board.postDate IS '작성일';
 
 COMMENT ON COLUMN holic_board.content IS '내용';
 
@@ -206,7 +206,7 @@ ALTER TABLE holic_board
 
 /* holic_review */
 CREATE TABLE holic_coment (
-	date DATE NOT NULL, /* 작성일 */
+	postDate DATE NOT NULL, /* 작성일 */
 	userId VARCHAR2(100) NOT NULL, /* 회원ID */
 	seq NUMBER NOT NULL, /* 글번호 */
 	content VARCHAR2(1000) /* 내용 */
@@ -214,7 +214,7 @@ CREATE TABLE holic_coment (
 
 COMMENT ON TABLE holic_coment IS 'holic_review';
 
-COMMENT ON COLUMN holic_coment.date IS '작성일';
+COMMENT ON COLUMN holic_coment.postDate IS '작성일';
 
 COMMENT ON COLUMN holic_coment.userId IS '회원ID';
 
@@ -224,14 +224,14 @@ COMMENT ON COLUMN holic_coment.content IS '내용';
 
 CREATE UNIQUE INDEX PK_holic_coment
 	ON holic_coment (
-		date ASC
+		postDate ASC
 	);
 
 ALTER TABLE holic_coment
 	ADD
 		CONSTRAINT PK_holic_coment
 		PRIMARY KEY (
-			date
+			postDate
 		);
 
 /* holic_social */
@@ -239,7 +239,7 @@ CREATE TABLE holic_social (
 	userId VARCHAR2(100) NOT NULL, /* 회원ID */
 	followingId VARCHAR2(100), /* 팔로잉ID */
 	followerId <지정 되지 않음>, /* 팔로워ID */
-	date DATE /* 작성일 */
+	postDate DATE /* 작성일 */
 );
 
 COMMENT ON TABLE holic_social IS 'holic_social';
@@ -250,7 +250,7 @@ COMMENT ON COLUMN holic_social.followingId IS '팔로잉ID';
 
 COMMENT ON COLUMN holic_social.followerId IS '팔로워ID';
 
-COMMENT ON COLUMN holic_social.date IS '작성일';
+COMMENT ON COLUMN holic_social.postDate IS '작성일';
 
 /* holic_user */
 CREATE TABLE holic_user (
@@ -334,8 +334,8 @@ ALTER TABLE holic_category
 CREATE TABLE holic_wishlist (
 	userId VARCHAR2(100) NOT NULL, /* 회원ID */
 	code NUMBER NOT NULL, /* 코드 */
-	movieCode VARCHAR2(4000), /* 영화코드 */
-	date DATE /* 작성일 */
+	movieCodeNaver VARCHAR2(500), /* 영화코드(네이버) */
+	postDate DATE /* 작성일 */
 );
 
 COMMENT ON TABLE holic_wishlist IS 'holic_wishlist';
@@ -344,9 +344,9 @@ COMMENT ON COLUMN holic_wishlist.userId IS '회원ID';
 
 COMMENT ON COLUMN holic_wishlist.code IS '코드';
 
-COMMENT ON COLUMN holic_wishlist.movieCode IS '영화코드';
+COMMENT ON COLUMN holic_wishlist.movieCodeNaver IS '영화코드(네이버)';
 
-COMMENT ON COLUMN holic_wishlist.date IS '작성일';
+COMMENT ON COLUMN holic_wishlist.postDate IS '작성일';
 
 /* holic_wishlistcate */
 CREATE TABLE holic_boardcate (
