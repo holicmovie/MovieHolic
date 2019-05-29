@@ -3,17 +3,13 @@
 <%@ include file="/template/header.jsp"%>
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
+
 <%-- datepicker --%>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
 <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 
-<!-- 생년월일의 datepicker용 -->
-<!-- <link href="/MovieHolic/assets/css/datepicker.min.css" rel="stylesheet" type="text/css">
-<script src="/MovieHolic/assets/js/datepicker.min.js"></script> -->
-<!-- Include 한글버전 -->
-<script src="/MovieHolic/assets/js/datepicker.kr.js"></script>
 
 <style>
 .btn_red{
@@ -24,6 +20,23 @@
 	font-family: 'Noto Sans KR', sans-serif;
 	font-weight: bold;
 	font-size: 15px;
+}
+
+/* 프로필 사진 큰 버전 */
+.profile_edit_icon {
+	width: 170px;
+	height: 170px;
+	border-radius: 85px; /* 이미지 반크기만큼 반경을 잡기*/
+	border: 5px solid white;
+	margin-bottom:20px;
+}
+
+/* 구분선 굵은 것 */
+hr.line_bold {
+	background-color: white;
+	height: 2px;
+    position: static;
+    top:1em;
 }
 </style>
 
@@ -64,7 +77,8 @@ $(function(){
 				<!-- **첫번째 행 시작 -->
 				<div class="row" style="margin-bottom: 5%">
 					<div class="col-lg-12 col-12-mobile">
-						<h2>Account Setting</h2>
+						<h2>나의 정보 수정</h2>
+						<hr class="line_bold">
 					</div>
 				</div>
 				<!-- **첫번째 행 끝 -->
@@ -79,18 +93,18 @@ $(function(){
 						<div class="col-lg-2 col-12-mobile" id="content">
 						
 							<div align="center">
-								<img src="/MovieHolic/images/user.png" width="100%" alt="user icon" style="margin-bottom:10px;" /><br>
+								<img src="/MovieHolic/images/profile.jpg" class="profile_edit_icon" alt="user icon"/><br>
 								<label class="btn btn-success">수&nbsp;&nbsp;&nbsp;정<input type="file" style="display: none;"></label>
 							</div>
 							
 						</div>
 
 						<!-- id, 닉네임, 비번, 비번확인 -->
-						<div class="col-lg-5 col-12-mobile">
+						<div class="col-lg-5 col-12-mobile font_light_small">
 
 							<div class="form-group">
 								<label for="id">ID</label> <input type="text"
-									class="form-control" id="id" value="shzy232" disabled="disabled">
+									class="form-control" id="id" value="shzy232@naver.com" disabled="disabled">
 							</div>
 							<div class="form-group">
 								<label for="name">User Name</label> <input type="text"
@@ -108,7 +122,7 @@ $(function(){
 						</div>
 
 						<!-- 전화번호, 생년월일, 성별 -->
-						<div class="col-lg-5 col-12-mobile">
+						<div class="col-lg-5 col-12-mobile font_light_small">
 						
 							<div class="form-group">
 									<label for="tel">전화번호</label>
@@ -122,8 +136,8 @@ $(function(){
 											<option value="051">051</option>
 											<option value="061">061</option>
 										</select> _
-										<input type="text" class="form-control" id="tel2" name="tel2" placeholder="1234"> _
-										<input type="text" class="form-control" id="tel3" name="tel3" placeholder="5678">
+										<input type="text" class="form-control" id="tel2" name="tel2" value="1234"> _
+										<input type="text" class="form-control" id="tel3" name="tel3" value="5678">
 									</div>
 							</div>
 									<div class="form-group">
@@ -131,16 +145,18 @@ $(function(){
 									<input id="datepicker" width="150" name="birth" value="01/01/1995"/>
     						    </div>
     						    
-								<div class="form-group">
+    						    <div class="form-group">
 									<label for="birth">성별</label>
-									<div class="custom-control custom-radio">
-										<input type="radio" name="jb-radio" id="jb-radio-1" class="custom-control-input" checked>
-										<label class="custom-control-label" for="jb-radio-1">여</label>
-									</div>
-									<div class="custom-control custom-radio">
-										<input type="radio" name="jb-radio" id="jb-radio-2" class="custom-control-input">
-										<label class="custom-control-label" for="jb-radio-2">남</label>
-									</div>
+    						    <div class="form-check">
+								  <label class="form-check-label">
+								    <input type="radio" class="form-check-input" name="optradio" checked>여
+								  </label>
+								</div>
+								<div class="form-check">
+								  <label class="form-check-label">
+								    <input type="radio" class="form-check-input" name="optradio">남
+								  </label>
+								</div>
 								</div>
 								
 							</div>
