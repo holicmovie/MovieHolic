@@ -1,0 +1,75 @@
+MyPage
+	1) mypage.jsp
+		[Mine 탭]
+		<화면 변경>
+		-영화 포스터 출력(클릭 시 영화 상세 페이지로 이동): 클릭이벤트, <a href>
+			-저장 시간을 기준으로 화면에 출력(date)
+			-추천(best)활용
+			
+		-화면 이동(<a href>)
+			-포스터: 영화 상세 페이지
+			-리뷰 : 영화 상세 페이지
+			-리스트: 리스트 상세 페이지
+		
+		-page 처리
+			-더보기 링크 클릭시 : 리뷰, 리스트 출력 필요 (추가로 몇장인지?)
+		
+		<DB사용>
+		-더보기 링크 클릭(리뷰, 리스트)
+			-리뷰
+				-subject, content(단순 화면 출력)
+				-movie code(API활용 필요)
+			-리스트
+				-subject, content
+				-movie code(API활용 필요)
+		
+		[Following 탭]
+		쿼리문: following_id = user_id /self join --> self join 사용
+		<화면변경>
+		-영화 포스터 출력(클릭 시 영화 상세 페이지로 이동): 클릭이벤트, <a href>
+			-저장 시간을 기준으로 화면에 출력(date)
+			-추천(best)활용
+			
+		-화면 이동(<a href>)
+			-포스터: 영화 상세 페이지
+			-리뷰 : 영화 상세 페이지
+			-리스트: 리스트 상세 페이지
+		<DB>
+		-더보기 클릭시 
+			-date 기준 best, boardcode이용(any 쿼리)
+			-following_id 의 사진, user_id 출력
+			-현재시간 sysdate-작성시간 date 활용 출력
+
+	2) social.jsp
+		공통: page처리(page당 5명, page group 5)
+		[followings]
+		-following_id sequence생성
+		-following_id
+		-following삭제 버튼(onmouseover사용 이벤트 버튼 바뀌기)
+		-list의 boardcode(list에 부과된 것)활용하여 찾기-->erd구조 확인 필요!
+		-likes기능? 무엇에 대한 likes 할 수 있는 부분 필요! like추가 어디서 ?
+		[followers]
+		-follower sequence생성
+		-list(boardcode) count
+		-likes
+		-맞팔로우 버튼
+	
+	3) whishlist.jsp 
+		
+		-Paging 처리
+			-영화 목록 3X6 (포스터 몇장이나 출력할 것인지)
+			-각 포스터 <a href=” ”>로 클릭시 movieDetail.jsp 
+		
+		<DB>
+		DB 저장된 whishlist-moviecode 
+		-영화진흥원 API  NAVER API(포스터) 출력
+		
+		-위시리스트에 출력된 poster 마우스 onmouse 시 ‘X’표 뜨는 event 등록!!
+			-Ajax 사용 controllerDB 
+		-Select box 선택시 쿼리문 where 조건에 장르추가하기
+				검색 기능?
+		-검색시 ‘like %’쿼리 활용 영화제목, 감독명, 배우
+		??
+		위시리스트에서 보면 사라진다 영화 평점을 매기는 순간 사라지는 건가?
+		
+		 

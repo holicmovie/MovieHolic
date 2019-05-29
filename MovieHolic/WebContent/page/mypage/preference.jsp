@@ -47,82 +47,8 @@ hr.line_light_g {
 <script src="https://www.amcharts.com/lib/4/themes/material.js"></script>
 <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#chart-rating").shieldChart({
-            theme: "light",
-            primaryHeader: {
-                text: "영화 평균 평점"
-            },
-            exportOptions: {
-                image: false,
-                print: false
-            },
-            axisX: {
-                categoricalValues: ["0", "0.5", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5"]
-            },
-            tooltipSettings: {
-                chartBound: true,
-                axisMarkers: {
-                    enabled: true,
-                    mode: 'x'
-                }                    
-            },
-            dataSeries: [{
-                seriesType: 'bar',
-                collectionAlias: "나의 평점 분포",
-                data: [10, 32, 45, 23, 55, 66, 34, 12, 43, 54, 65]
-            }]
-        });
-    });
-</script>
 
-    <script type="text/javascript">
-        $(function () {
-            $("#chart-genre").shieldChart({
-                theme: "light",
-                seriesSettings: {
-                    pie: {
-                        enablePointSelection: true,
-                        addToLegend: true,
-                        dataPointText: {
-                            enabled: true,
-                            borderRadius: 4,
-                            borderWidth: 2,
-                            borderColor: "red"
-                        }
-                    }
-                },
-                chartLegend: {
-                    align: "center",
-                    borderRadius: 2,
-                    borderWidth: 2,
-                    verticalAlign: "top"
-                },               
-                tooltipSettings: {
-                    customPointText: "{point.collectionAlias}: {point.y}"
-                },
-                exportOptions: {
-                    image: false,
-                    print: false
-                },
-                primaryHeader: {
-                    text: "박광규님의 선호 장르"
-                },
-                dataSeries: [{
-                    seriesType: "pie",
-                    collectionAlias: "Usage",
-                    data: [
-                        ["스릴러", 9.0],
-                        ["범죄", 26.8],
-                        ["로맨스", 55.8],
-                        ["느와르", 3.8],
-                        ["가족", 1.9]
-                    ]
-                }]
-            });
-        });
-    </script>
+    
     
  <%--장르 그래프  --%>
     <script>
@@ -168,160 +94,46 @@ series.hiddenState.properties.endAngle = -90;
 </script>
  <%--장르 그래프 끝 --%>
  
-<style>
-#chartdiv2 {
-  width: 100%;
-  height: 500px;
+<%-- 별점그래프 --%>
+<script>
+window.onload = function () {
+
+//Better to construct options first and then pass it as a parameter
+var options = {
+	title: {
+		text: "영화 평균 별점"              
+	},
+	data: [              
+	{
+		// Change type to "doughnut", "line", "splineArea", etc.
+		type: "column",
+		dataPoints: [
+			{ label: "0",  y: 10  },
+			{ label: "0.5", y: 15  },
+			{ label: "1", y: 25  },
+			{ label: "1.5",  y: 30  },
+			{ label: "2",  y: 28  },
+			{ label: "2.5",  y: 35  },
+			{ label: "3", y: 46  },
+			{ label: "3.5", y: 30  },
+			{ label: "4",  y: 30  },
+			{ label: "4.5",  y: 28  },
+			{ label: "5",  y: 5  }
+		]
+	}
+	]
+};
+
+$("#chartContainer").CanvasJSChart(options);
 }
-<<<<<<< HEAD
-</style>
-
-<!-- Resources -->
-<script src="https://www.amcharts.com/lib/4/core.js"></script>
-<script src="https://www.amcharts.com/lib/4/charts.js"></script>
-<script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
-
-<!-- Chart code -->
-<script>
-am4core.ready(function() {
-// Themes begin
-am4core.useTheme(am4themes_animated);
-// Themes end
-var chart = am4core.create("chartdiv2", am4charts.XYChart);
-chart.hiddenState.properties.opacity = 0; // this makes initial fade in effect
-chart.data = [ {
-  "country": "half",
-  "value": 4
-}, {
-  "country": "one",
-  "value": 12
-}, {
-  "country": "one-half",
-  "value": 8
-}, {
-  "country": "two",
-  "value": 11
-}, {
-  "country": "two-half",
-  "value": 14
-}, {
-  "country": "three",
-  "value": 28
-}, {
-  "country": "three-half",
-  "value": 19
-}, {
-  "country": "four",
-  "value": 18
-}, {
-  "country": "four-half",
-  "value": 15
-}, {
-  "country": "five",
-  "value": 10
-} ];
-var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-categoryAxis.renderer.grid.template.location = 0;
-categoryAxis.dataFields.category = "country";
-categoryAxis.renderer.minGridDistance = 40;
-var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-var series = chart.series.push(new am4charts.CurvedColumnSeries());
-series.dataFields.categoryX = "country";
-series.dataFields.valueY = "value";
-series.tooltipText = "{valueY.value}"
-series.columns.template.strokeOpacity = 0;
-series.columns.template.fillOpacity = 0.75;
-var hoverState = series.columns.template.states.create("hover");
-hoverState.properties.fillOpacity = 1;
-hoverState.properties.tension = 0.4;
-chart.cursor = new am4charts.XYCursor();
-// Add distinctive colors for each column using adapter
-series.columns.template.adapter.add("fill", (fill, target) => {
-  return chart.colors.getIndex(target.dataItem.index);
-});
-=======
-
-</style>
-
-<!-- Resources -->
-<script src="https://www.amcharts.com/lib/4/core.js"></script>
-<script src="https://www.amcharts.com/lib/4/charts.js"></script>
-<script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
-
-<!-- Chart code -->
-<script>
-am4core.ready(function() {
-
-// Themes begin
-am4core.useTheme(am4themes_animated);
-// Themes end
-
-var chart = am4core.create("chartdiv2", am4charts.XYChart);
-chart.hiddenState.properties.opacity = 0; // this makes initial fade in effect
-
-chart.data = [ {
-  "country": "half",
-  "value": 4
-}, {
-  "country": "one",
-  "value": 12
-}, {
-  "country": "one-half",
-  "value": 8
-}, {
-  "country": "two",
-  "value": 11
-}, {
-  "country": "two-half",
-  "value": 14
-}, {
-  "country": "three",
-  "value": 28
-}, {
-  "country": "three-half",
-  "value": 19
-}, {
-  "country": "four",
-  "value": 18
-}, {
-  "country": "four-half",
-  "value": 15
-}, {
-  "country": "five",
-  "value": 10
-} ];
-
-
-var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-categoryAxis.renderer.grid.template.location = 0;
-categoryAxis.dataFields.category = "country";
-categoryAxis.renderer.minGridDistance = 40;
-
-var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-
-var series = chart.series.push(new am4charts.CurvedColumnSeries());
-series.dataFields.categoryX = "country";
-series.dataFields.valueY = "value";
-series.tooltipText = "{valueY.value}"
-series.columns.template.strokeOpacity = 0;
-
-series.columns.template.fillOpacity = 0.75;
-
-var hoverState = series.columns.template.states.create("hover");
-hoverState.properties.fillOpacity = 1;
-hoverState.properties.tension = 0.4;
-
-chart.cursor = new am4charts.XYCursor();
-
-// Add distinctive colors for each column using adapter
-series.columns.template.adapter.add("fill", (fill, target) => {
-  return chart.colors.getIndex(target.dataItem.index);
-});
-
+</script>
+<%-- 별점그래프 끝 --%>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
 
 >>>>>>> branch 'master' of https://github.com/holicmovie/MovieHolic.git
-}); // end am4core.ready()
-</script>
+
+
 
 
 <%@ include file="/template/nav_style.jsp"%>
@@ -339,7 +151,7 @@ series.columns.template.adapter.add("fill", (fill, target) => {
 <div class="wrapper style1" id = "main-container">
 	<div class="container">
 	<%--Header 제목 --%>
-	<div align="center"><h1>[<font class = "bold_lg" style="color: orange;">박광규</font>]님의 취향분석</h1></div><br><br>
+	<div align="center"><h1>[<font class = "bold_lg" style="color: rgb(240, 195, 15)">박광규</font>]님의 취향분석</h1></div><br><br>
 		
 		<div class="row">
 			<%--리뷰수 --%>
@@ -360,7 +172,9 @@ series.columns.template.adapter.add("fill", (fill, target) => {
 			
 			<div class = "col-lg-1"></div>
 			<div class = "col-lg-10">
-				<span><i class='fas fa-medal' style='font-size:40px;color: white;'>스릴러</i><h2>로맨스 공포</h2></span>
+				<span ><i class='fas fa-medal' style='font-size:40px; color: rgb(240, 195, 15);'>스릴러</i></span><br>
+				<span><i class='fas fa-medal' style='font-size:30px;color: white;'>로맨스</i></span><span><i class='fas fa-medal' style='font-size:30px;color: white;'>공포</i></span>
+				<span><i class='fas fa-medal' style='font-size:30px;color: white;'>가족</i></span><span><i class='fas fa-medal' style='font-size:30px;color: white;'>애니메이션</i></span>
 			</div>
 			<div class = "col-lg-1"></div>
 			<div class = "col-lg-1"></div>
@@ -423,12 +237,12 @@ series.columns.template.adapter.add("fill", (fill, target) => {
 			
 			<%--평균 별점 --%>
 			<div class = "col-lg-1"></div>
-			<div class = "col-lg-10"style="border-bottom: thin solid gray;"><h3>평균 별점</h3></div>
+			<div class = "col-lg-10" ><h3>평균 별점</h3></div>
 			<div class = "col-lg-1"></div>
 			
 			
 			<div class = "col-lg-1"></div>
-			<div class = "col-lg-10" id="chartdiv2"></div>
+			<div class = "col-lg-10" id="chartContainer" style="height: 370px; width: 100%;"></div>
 			<div class = "col-lg-1"></div>
 			
 			
