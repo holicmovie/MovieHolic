@@ -5,23 +5,65 @@
 <%@ include file="/template/boot_431.jsp"%>
 </head>
 <style>
-<%-- 별점의 별 icon을 사용하기 위해 필요 --%>
-	.starrating > input {display: none;}  <%--  Remove radio buttons --%>
-	.starrating > label:before { 
-	  content: "\f005"; <%-- Star  --%>
-	  margin: 3px;
-	  font-size: 2em;
-	  font-family: FontAwesome;
-	  display: inline-block; 
-	}
-	.starrating > label
+<%--
+별점의 별 icon을 사용하기 위해 필요 --%> .starrating>input {
+	display: none;
+}
+
+<%--
+Remove radio buttons --%> .starrating>label:before {
+	content: "\f005"; <%-- Star --%> margin : 3px;
+	font-size: 2em;
+	font-family: FontAwesome;
+	display: inline-block;
+}
+
+.starrating>label {
+	color: #222222;
+	<%--
+	Start
+	color
+	when
+	not
+	clicked
+	--%>
+}
+
+.starrating>input:checked ~ label {
+	color: #ffca08;
+}
+
+<%--
+Set yellow color when star checked  --%> .starrating>input:hover ~ label
 	{
-	  color: #222222; <%-- Start color when not clicked --%>
-	}
-	.starrating > input:checked ~ label
-	{ color: #ffca08 ; } <%-- Set yellow color when star checked  --%>
-	.starrating > input:hover ~ label
-	{ color: #ffca08 ;  } <%-- Set yellow color when star hover  --%>
+	color: #ffca08;
+}
+<%--
+Set
+
+ 
+
+yellow
+
+ 
+
+color
+
+ 
+
+when
+
+ 
+
+star
+
+ 
+
+hover
+
+  
+
+--%>
 </style>
 <body class="left-sidebar is-preload">
 	<div id="page-wrapper">
@@ -43,51 +85,67 @@
 								<h2>
 									<a href="/MovieHolic/film/moviedetail.html">어벤져스 : 엔드게임</a>
 								</h2>
-								<p>Avengers: Endgame, 2019</p>
+								<p style="margin: 1em 0 0 0;">Avengers: Endgame, 2019</p>
+
 							</header>
-							<div style="float: left; margin-right: 20px;">
-								<a href="#" class="image featured"
-									style="margin: 0; width: 18em; "><img
-									src="/MovieHolic/images/avengers4.jpg" alt="" /></a><br>
-							</div>
-							<div style="float: left;">
-								<ul style="list-style-type: none;">
-									<li><strong>상영관 : </strong><a href="https://www.cgv.co.kr">CGV</a>
-										, <a href="https://www.lottecinema.co.kr">롯데시네마</a></li>
-									<li><a href="https://www.youtube.com" class="button">예고편
-											영상</a> <a href="/MovieHolic/page/mypage/writereview.jsp"
-										class="button">리뷰 쓰기</a></li>
-								</ul>
-								<div id="likeunlike" class="rounded-lg"
-									style="background-color: #555; margin: 20px 0 20px 0;  height: 100px;padding-top: 8px; text-align: center;">
-									<span class="font_light_small">영화를 평가해주세요.</span>
-									<div
-										class="starrating risingstar d-flex justify-content-center flex-row-reverse"
-										style="font-size: 1.3em;">
-										<input type="radio" id="star5" name="rating" value="5" /><label
-											for="star5" title="5 star"></label> <input type="radio"
-											id="star4" name="rating" value="4" /><label for="star4"
-											title="4 star"></label> <input type="radio" id="star3"
-											name="rating" value="3" /><label for="star3" title="3 star"></label>
-										<input type="radio" id="star2" name="rating" value="2" /><label
-											for="star2" title="2 star"></label> <input type="radio"
-											id="star1" name="rating" value="1" /><label for="star1"
-											title="1 star"></label>
-									</div>
+							<div class="col-12-moblie"
+								style="border-left: 2px solid; margin-bottom: 20px; border-right: 2px solid; ">
+								<div
+									style="float: left; margin-right: 20px; padding: 0 2em 0 2em;" >
+									<a href="#" class="image featured"
+										style="margin: 0; width: 18em;"><img
+										src="/MovieHolic/images/avengers4.jpg" alt="" /></a><br>
 								</div>
+								<div class="col-12-moblie"
+									style="float: left; border-left: 2px solid; padding: 0 2em 0 2em; width:65%">
+									<ul style="list-style-type: none;">
+										<li
+											style="margin-bottom: 10px; padding-left: 0px; font-size: 25px;"><strong>상영관
+												: </strong><a style="color: rgb(240, 195, 15);"
+											href="https://www.cgv.co.kr">CGV</a> , <a
+											style="color: rgb(240, 195, 15);"
+											href="https://www.lottecinema.co.kr">롯데시네마</a></li>
+										<li style="padding-left: 0px;"><a
+											href="https://www.youtube.com" class="button"
+											style="color: rgb(240, 195, 15); margin-right: 10px; background-color: rgb(2, 39, 49);">예고편
+												영상</a> <a
+											style="color: rgb(240, 195, 15); background-color: rgb(2, 39, 49);"
+											href="/MovieHolic/page/mypage/writereview.jsp" class="button">리뷰
+												쓰기</a></li>
+									</ul>
 
-								<h3>
-									<Strong>줄거리</Strong>
-								</h3>
-								<br>
-								<p>
-									인피니티 워 이후 절반만 살아남은 지구<br> 마지막 희망이 된 어벤져스<br> 먼저 떠난
-									그들을 위해 모든 것을 걸었다!<br> 위대한 어벤져스<br> 운명을 바꿀 최후의 전쟁이
-									펼쳐진다!
-								</p>
+									<h3>
+										<Strong>줄거리</Strong>
+									</h3>
+									<br>
+									<div class="col-lg-12 col-12-mobile">
+										인피니티 워 이후 절반만 살아남은 지구<br> 마지막 희망이 된 어벤져스<br> 먼저 떠난
+										그들을 위해 모든 것을 걸었다!<br> 위대한 어벤져스<br> 운명을 바꿀 최후의 전쟁이
+										펼쳐진다!
+									</div>
+									<div id="likeunlike" class="rounded-lg"
+										style="background-color: rgb(0, 0, 0); margin: 20px 0 20px 0; height: 100px; padding-top: 8px;">
+										<span style="color: rgb(240, 195, 15);"
+											class="font_light_small">영화를 평가해주세요.</span>
+										<div
+											class="starrating risingstar d-flex justify-content-center flex-row-reverse"
+											style="font-size: 1.3em; justify-content: left!important; flex-direction: unset!important;">
+											<input type="radio" id="star5" name="rating" value="5" /><label
+												for="star5" title="5 star"></label> <input type="radio"
+												id="star4" name="rating" value="4" /><label for="star4"
+												title="4 star"></label> <input type="radio" id="star3"
+												name="rating" value="3" /><label for="star3" title="3 star"></label>
+											<input type="radio" id="star2" name="rating" value="2" /><label
+												for="star2" title="2 star"></label> <input type="radio"
+												id="star1" name="rating" value="1" /><label for="star1"
+												title="1 star"></label>
+										</div>
+									</div>
+
+
+								</div>
+								<div style="clear: both;"></div>
 							</div>
-							<div style="clear: both;"></div>
-
 							<div>
 								<!-- 배우/출연진/감독 -->
 								<header>
