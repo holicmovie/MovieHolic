@@ -77,7 +77,7 @@ $(function(){
 				<div>
 					<ul class="nav nav-tabs" role="tablist">
 						<li class="nav-item"><a class="nav-link active"  data-toggle="tab" href="#calendar">달력</a></li>
-					    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#list">목록</a></li>
+					    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#list">목록</a>i</l>
 				  	</ul>
 				</div>
 	

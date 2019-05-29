@@ -4,11 +4,17 @@
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
 <%-- datepicker --%>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
 <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 <style>
+<%-- modal의 닫기 버튼 --%>
+	.close{
+		color: white;
+	}
+<%-- datepicker --%>
+	div[role="body"] div, div[role="body"] table, div[role="body"] i{
+		color: black;
+	}
 <%--영화 포스터 --%>
 	.movieImg {
 		border: solid 2px white;
@@ -41,13 +47,11 @@
 	}
 </style>
 <script>
-<%-- 영화검색 모달 --%>
-	$(document).ready(function() {
-		 
-		$('#srchMovie').focusin(function() {
+<%-- 영화검색 모달 띄우기 --%>
+	$(function() {
+		$('#srchMovie').focusin(function(){
 			$('#movieModal').modal();
 		});
-		
 	});
 <%-- datepicker --%>
 	$(function(){
@@ -84,12 +88,12 @@
 		
 		<div class="row">
 
-			<!-- 왼쪽 내용 start -->
+			<%-- 왼쪽 내용 start --%>
 			<div class="col-lg-3 col-12-mobile top_margin">
 
-				<!-- 포스터, 좋아요싫어요 -->
+				<%-- 포스터, 별점 --%>
 				<div style="width: 100%; text-align: center;">
-					<a href="#"><img class="movieImg" src="/MovieHolic/images/getposter.png" width="235vh"></a>
+					<a href="#" id="srchMovie"><img class="movieImg" src="/MovieHolic/images/getposter.png" width="235vh"></a>
 				</div>
 
 				<div id="likeunlike" class="rounded-lg" style="background-color: #555; margin-top: 20px; height: 100px; padding-top: 8px; text-align: center;">
@@ -108,19 +112,19 @@
 				</div>
 
 			</div>
-			<!-- 왼쪽 내용 end -->
+			<%-- 왼쪽 내용 end --%>
 
-			<!-- 오른쪽 내용 start -->
+			<%-- 오른쪽 내용 start --%>
 			<div class="col-lg-9 col-12-mobile top_margin">
 
-				<!-- 작성 내용 -->
+				<%-- 작성 내용 --%>
 				<div style="width: 100%; padding: 0;">
 					<textarea class="form-control" rows="22"></textarea>
 				</div>
 
 
 			</div>
-			<!-- 오른쪽 내용 end -->
+			<%-- 오른쪽 내용 end --%>
 
 		</div>
 		
@@ -145,59 +149,71 @@
 		
 		
 <%-- The Modal --%>
-<div id="movieModal" class="modal fade" id="myModal" style="top: 100px; height: 700px;">
-	<div class="modal-dialog modal-dialog-scrollable modal-lg">
-		<div class="modal-content">
+<div id="movieModal" class="modal fade" role="dialog" style="top: 100px; height: 700px; ">
+	<div class="modal-dialog modal-dialog-scrollable">
+		<div class="modal-content" style="background-color: #555;">
     
 			<!-- Modal Header -->
 			<div class="modal-header  text-center">
-				<h4 class="col-3 col-3-mobile" align="left">영화 검색</h4>
+				<input type="text" class="form-control col-8" placeholder="검색할 영화제목 입력" style="margin-left: 20px;">
 				<button type="button" class="close" data-dismiss="modal" style="width: 5vh;">&times;</button>
 			</div>
       
 			<!-- Modal body -->
 			<div class="modal-body" align="center">
-				<input type="text" class="form-control" placeholder="검색할 영화제목 입력" width="200px">
-				<table class="table table-hover">
+				<table class="table table-hover font_bold_small"">
+						<col width="10%">
+						<col width="65%">
+						<col width="25%">
 						<tr>
-							<td><img src="/MovieHolic/images/tempimg/coco.jpg" height="80vh"></td>
-							<td>코코</td>
-							<td>2017</td>
+							<td><img src="/MovieHolic/images/tempimg/endgame.jpg" height="100vh"></td>
+							<td style="vertical-align: middle;">어벤져스:엔드게임</td>
+							<td style="vertical-align: middle; text-align: center;">2017</td>
 						</tr>
 						<tr>
-							<td><img src="/MovieHolic/images/tempimg/coco.jpg" height="80vh"></td>
-							<td>코코</td>
-							<td>2017</td>
+							<td><img src="/MovieHolic/images/tempimg/coco.jpg" height="100vh"></td>
+							<td style="vertical-align: middle;">코코</td>
+							<td style="vertical-align: middle; text-align: center;">2017</td>
 						</tr>
 						<tr>
-							<td><img src="/MovieHolic/images/tempimg/coco.jpg" height="80vh"></td>
-							<td>코코</td>
-							<td>2017</td>
+							<td><img src="/MovieHolic/images/tempimg/endgame.jpg" height="100vh"></td>
+							<td style="vertical-align: middle;">어벤져스:엔드게임</td>
+							<td style="vertical-align: middle; text-align: center;">2017</td>
 						</tr>
 						<tr>
-							<td><img src="/MovieHolic/images/tempimg/coco.jpg" height="80vh"></td>
-							<td>코코</td>
-							<td>2017</td>
+							<td><img src="/MovieHolic/images/tempimg/coco.jpg" height="100vh"></td>
+							<td style="vertical-align: middle;">코코</td>
+							<td style="vertical-align: middle; text-align: center;">2017</td>
 						</tr>
 						<tr>
-							<td><img src="/MovieHolic/images/tempimg/coco.jpg" height="80vh"></td>
-							<td>코코</td>
-							<td>2017</td>
+							<td><img src="/MovieHolic/images/tempimg/endgame.jpg" height="100vh"></td>
+							<td style="vertical-align: middle;">어벤져스:엔드게임</td>
+							<td style="vertical-align: middle; text-align: center;">2017</td>
 						</tr>
 						<tr>
-							<td><img src="/MovieHolic/images/tempimg/coco.jpg" height="80vh"></td>
-							<td>코코</td>
-							<td>2017</td>
+							<td><img src="/MovieHolic/images/tempimg/coco.jpg" height="100vh"></td>
+							<td style="vertical-align: middle;">코코</td>
+							<td style="vertical-align: middle; text-align: center;">2017</td>
 						</tr>
 						<tr>
-							<td><img src="/MovieHolic/images/tempimg/coco.jpg" height="80vh"></td>
-							<td>코코</td>
-							<td>2017</td>
+							<td><img src="/MovieHolic/images/tempimg/endgame.jpg" height="100vh"></td>
+							<td style="vertical-align: middle;">어벤져스:엔드게임</td>
+							<td style="vertical-align: middle; text-align: center;">2017</td>
 						</tr>
 						<tr>
-							<td><img src="/MovieHolic/images/tempimg/coco.jpg" height="80vh"></td>
-							<td>코코</td>
-							<td>2017</td>
+							<td><img src="/MovieHolic/images/tempimg/coco.jpg" height="100vh"></td>
+							<td style="vertical-align: middle;">코코</td>
+							<td style="vertical-align: middle; text-align: center;">2017</td>
+						</tr>
+						<tr>
+							<td><img src="/MovieHolic/images/tempimg/endgame.jpg" height="100vh"></td>
+							<td style="vertical-align: middle;">어벤져스:엔드게임</td>
+							<td style="vertical-align: middle; text-align: center;">2017</td>
+						</tr>
+						<tr>
+							<td><img src="/MovieHolic/images/tempimg/coco.jpg" height="100vh"></td>
+							<td style="vertical-align: middle;">코코</td>
+							<td style="vertical-align: middle; text-align: center;">2017</td>
 						</tr>
 					</table>
 			</div>

@@ -4,11 +4,15 @@
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
 <style>
+<%-- 캐러셀 안의 포스터 공백제거 --%>
 .reel>article{
 	background-color: black;
 }
+<%-- 화면 크기 작아지면 가릴 요소들 --%>
 @media screen and (max-width: 1205px) {
 	.hide1 { display: none; }
+	.title { font-size: 20px;}
+	.time { display: none; }
 } 
 @media screen and (max-width: 990px) {
 	.hide2 { display: none; }
@@ -16,9 +20,10 @@
 @media screen and (max-width: 765px) {
 	.hide3 { display: none; }
 }
-.table-hover > tbody > tr:hover {
-  background-color: #3a3a3a;
-}
+<%-- 마우스 올린 행 배경색 변경 --%>
+	.table-hover > tbody > tr:hover {
+	  background-color: #3a3a3a;
+	}
 </style>
 </head>
 <body class="left-sidebar is-preload">
@@ -63,7 +68,7 @@
 						<%-- 최근 '좋아요'한 영화 --%>
 						<div class="row" style="margin-top: 1em;">
 							<div class="font_bold_mid" style="width:100%; border-bottom: 2.5px solid #fff; margin-bottom: 0; padding-bottom: 0.8em;">
-								<div style="float: left;">최근 '좋아요'한 영화</div>
+								<div style="float: left;">최근 '보고싶어요'한 영화</div>
 							</div>
 							<section class="carousel">
 								<div class="reel">
@@ -133,7 +138,7 @@
 										<a href="#"><img width="100vh" src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)" /></a>
 									</td>
 							        <td style="vertical-align: middle">
-							        	<h4 class="font_bold_mid"><a href="#">엔드게임</a></h4>
+							        	<h4 class="title font_bold_mid"><a href="#">엔드게임</a></h4>
 							        </td>
 							        <td style="vertical-align: middle; color: #fff;" class="font_light_small">
 							        어벤져스 인피니티 워에서 타노스에게 패배하고 난 후 마블 영웅들의 좌절감과 헤어 나올 수 없는 죄책감의 시달리고 모든 것을 포기한 그들의 모습을 표현한 부분은 인상적이었고 그와 더불어 소소하지만 재미를 주면서 관객들에게 웃음을 주어 재미를 주기도 했습니다.
@@ -144,7 +149,7 @@
 										<a href="#"><img width="100vh" src="/MovieHolic/images/tempimg/coco.jpg" title="엔드게임 (2019)" /></a>
 									</td>
 							        <td style="vertical-align: middle;">
-							        	<h4 class="font_bold_mid"><a href="#">코코</a></h4>
+							        	<h4 class="title font_bold_mid"><a href="#">코코</a></h4>
 							        </td>
 							        <td style="vertical-align: middle; color: #fff;" class="font_light_small">
 							        	어벤져스 인피니티 워에서 타노스에게 패배하고 난 후 마블 영웅들의 좌절감과 헤어 나올 수 없는 죄책감의 시달리고 모든 것을 포기한 그들의 모습을 표현한 부분은 인상적이었고 그와 더불어 소소하지만 재미를 주면서 관객들에게 웃음을 주어 재미를 주기도 했습니다.
@@ -155,7 +160,7 @@
 										<a href="#"><img width="100vh" src="/MovieHolic/images/tempimg/frozen.jpg" title="엔드게임 (2019)" /></a>
 									</td>
 							        <td style="vertical-align: middle;">
-							        	<h4 class="font_bold_mid"><a href="#">겨울왕국</a></h4>
+							        	<h4 class="title font_bold_mid"><a href="#">겨울왕국</a></h4>
 							        </td>
 							        <td style="vertical-align: middle; color: #fff;" class="font_light_small">
 							        	어벤져스 인피니티 워에서 타노스에게 패배하고 난 후 마블 영웅들의 좌절감과 헤어 나올 수 없는 죄책감의 시달리고 모든 것을 포기한 그들의 모습을 표현한 부분은 인상적이었고 그와 더불어 소소하지만 재미를 주면서 관객들에게 웃음을 주어 재미를 주기도 했습니다.
@@ -248,7 +253,7 @@
 					<div id="following" class="container tab-pane fade"><br>
 						<%-- 친구들이 '좋아요'한 영화 --%>
 						<div class="row" style="margin-top: 1em;">
-							<div class="font_bold_mid" style="width:100%; border-bottom: 2.5px solid #fff; margin-bottom: 2em; padding-bottom: 0.8em;">
+							<div class="font_bold_mid" style="width:100%; border-bottom: 2.5px solid #fff; margin-bottom: 0; padding-bottom: 0.8em;">
 								<div style="float: left;">친구들이 '좋아요'한 영화</div>
 								<div style="float: right;" class="font_light_small">더보기</div>
 							</div>
@@ -324,7 +329,7 @@
 							        	<h5 class="font_light_small"><a class="font_bold_small">Abc123</a>님이 <a class="font_bold_small">'라라랜드'</a>에 좋아요&#x1f496; 했습니다.</h5>
 							        </td>
 							        <td style="vertical-align: middle;">
-							        	<h5 class="font_light_small" style="color: gray;">2시간 전</h5>
+							        	<h5 class="time font_light_small" style="color: gray;">2시간 전</h5>
 							        </td>
 								</tr>
 								<tr>
@@ -335,7 +340,7 @@
 							        	<h5 class="font_light_small"><a class="font_bold_small">Abc123</a>님이 <a class="font_bold_small">'라라랜드'</a>의 리뷰 by <a class="font_bold_small">bbb443</a>에 좋아요&#x1f496; 했습니다.</h5>
 							        </td>
 							        <td style="vertical-align: middle;">
-							        	<h5 class="font_light_small" style="color: gray;">2시간 전</h5>
+							        	<h5 class="time font_light_small" style="color: gray;">2시간 전</h5>
 							        </td>
 								</tr>
 								<tr>
@@ -346,7 +351,7 @@
 							        	<h5 class="font_light_small"><a class="font_bold_small">Abc123</a>님이 <a class="font_bold_small">'어벤져스:엔드게임'</a>의 리뷰를 작성했습니다.</h5>
 							        </td>
 							        <td style="vertical-align: middle;">
-							        	<h5 class="font_light_small" style="color: gray;">2시간 전</h5>
+							        	<h5 class="time font_light_small" style="color: gray;">2시간 전</h5>
 							        </td>
 								</tr>
 								<tr>
@@ -358,7 +363,7 @@
 							        	<h6 class="font_light_small">|&nbsp;&nbsp;&nbsp;엔드게임 스포당하고 봐서 재미없었음</h6>
 							        </td>
 							        <td style="vertical-align: middle;">
-							        	<h5 class="font_light_small" style="color: gray;">2시간 전</h5>
+							        	<h5 class="time font_light_small" style="color: gray;">2시간 전</h5>
 							        </td>
 								</tr>
 								<tr>
@@ -369,7 +374,7 @@
 							        	<h5 class="font_light_small"><a class="font_bold_small">Abc123</a>님이 <a class="font_bold_small">'라라랜드'</a>에 좋아요&#x1f496; 했습니다.</h5>
 							        </td>
 							        <td style="vertical-align: middle;">
-							        	<h5 class="font_light_small" style="color: gray;">2시간 전</h5>
+							        	<h5 class="time font_light_small" style="color: gray;">2시간 전</h5>
 							        </td>
 								</tr>
 								<tr>
@@ -380,7 +385,7 @@
 							        	<h5 class="font_light_small"><a class="font_bold_small">Abc123</a>님이 <a class="font_bold_small">'라라랜드'</a>의 리뷰 by <a class="font_bold_small">bbb443</a>에 좋아요&#x1f496; 했습니다.</h5>
 							        </td>
 							        <td style="vertical-align: middle;">
-							        	<h5 class="font_light_small" style="color: gray;">2시간 전</h5>
+							        	<h5 class="time font_light_small" style="color: gray;">2시간 전</h5>
 							        </td>
 								</tr>
 								<tr>
@@ -391,7 +396,7 @@
 							        	<h5 class="font_light_small"><a class="font_bold_small">Abc123</a>님이 <a class="font_bold_small">'어벤져스:엔드게임'</a>의 리뷰를 작성했습니다.</h5>
 							        </td>
 							        <td style="vertical-align: middle;">
-							        	<h5 class="font_light_small" style="color: gray;">2시간 전</h5>
+							        	<h5 class="time font_light_small" style="color: gray;">2시간 전</h5>
 							        </td>
 								</tr>
 								<tr>
@@ -403,7 +408,7 @@
 							        	<h6 class="font_light_small">|&nbsp;&nbsp;&nbsp;엔드게임 스포당하고 봐서 재미없었음</h6>
 							        </td>
 							        <td style="vertical-align: middle;">
-							        	<h5 class="font_light_small" style="color: gray;">2시간 전</h5>
+							        	<h5 class="time font_light_small" style="color: gray;">2시간 전</h5>
 							        </td>
 								</tr>
 							</table>
