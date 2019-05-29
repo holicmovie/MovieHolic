@@ -1,25 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 	<!-- Nav -->
-		<nav id="nav" style="z-index: 200000;">
+		<nav id="nav" style="z-index: 999;">
 			<ul>
 				<li><a href="/MovieHolic/index.jsp"><img src="/MovieHolic/images/movieholic.png" width="20em">&nbsp;&nbsp;MOVIEHOLIC</a></li>
-				<li class="none"><a href="#"></a></li>
-				<li class="none"><a href="#"></a></li>
-				<li class="none"><a href="#"></a></li>
-				<li class="none"><a href="#"></a></li>
-				<li class="none"><a href="#"></a></li>
+				<li class="none"><a></a></li>
+				<li class="none"><a></a></li>
+				<li class="none"><a></a></li>
+				<li class="none"><a></a></li>
+				<li class="none"><a></a></li>
 				<li><a href="/MovieHolic/index.jsp">HOME</a></li>
 				<li><a href="/MovieHolic/page/film/moviefilm.jsp">FILMS</a>
-					<ul>
-						<li><a href="/MovieHolic/page/film/moviefilm.jsp">로맨스</a></li>
-						<li><a href="/MovieHolic/page/film/moviefilm.jsp">느와르</a></li>
-						<li><a href="/MovieHolic/page/film/moviefilm.jsp">미스터리</a></li>
-						<li><a href="/MovieHolic/page/film/moviefilm.jsp">공포</a></li>
-						<li><a href="/MovieHolic/page/film/moviefilm.jsp">스릴러</a></li>
-						<li><a href="/MovieHolic/page/film/moviefilm.jsp">액션</a></li>
-						<li><a href="/MovieHolic/page/film/moviefilm.jsp">코미디</a></li>
-					</ul>
 				</li>
 				<li><a href="/MovieHolic/page/film/movielist.jsp">LISTS</a></li>
 				<li>

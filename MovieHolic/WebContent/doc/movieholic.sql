@@ -8,14 +8,14 @@ ALTER TABLE holic_board
 		CONSTRAINT FK_holic_category_TO_holic_board
 		CASCADE;
 
-ALTER TABLE holic_review
+ALTER TABLE holic_coment
 	DROP
-		CONSTRAINT FK_holic_user_TO_holic_review
+		CONSTRAINT FK_holic_user_TO_holic_coment
 		CASCADE;
 
-ALTER TABLE holic_review
+ALTER TABLE holic_coment
 	DROP
-		CONSTRAINT FK_holic_board_TO_holic_review
+		CONSTRAINT FK_holic_board_TO_holic_coment
 		CASCADE;
 
 ALTER TABLE holic_social
@@ -45,7 +45,7 @@ ALTER TABLE TABLE2
 		CASCADE
 		KEEP INDEX;
 
-ALTER TABLE holic_review
+ALTER TABLE holic_coment
 	DROP
 		PRIMARY KEY
 		CASCADE
@@ -75,11 +75,17 @@ ALTER TABLE holic_visitor
 		CASCADE
 		KEEP INDEX;
 
+ALTER TABLE holic_log
+	DROP
+		PRIMARY KEY
+		CASCADE
+		KEEP INDEX;
+
 DROP INDEX PK_holic_board;
 
 DROP INDEX PK_TABLE2;
 
-DROP INDEX PK_holic_review;
+DROP INDEX PK_holic_coment;
 
 DROP INDEX PK_holic_user;
 
@@ -88,6 +94,8 @@ DROP INDEX PK_holic_category;
 DROP INDEX PK_holic_boardcate;
 
 DROP INDEX PK_holic_visitor;
+
+DROP INDEX PK_holic_log;
 
 /* holic_board */
 DROP TABLE holic_board 
@@ -98,7 +106,7 @@ DROP TABLE TABLE2
 	CASCADE CONSTRAINTS;
 
 /* holic_review */
-DROP TABLE holic_review 
+DROP TABLE holic_coment 
 	CASCADE CONSTRAINTS;
 
 /* holic_social */
@@ -117,12 +125,16 @@ DROP TABLE holic_category
 DROP TABLE holic_wishlist 
 	CASCADE CONSTRAINTS;
 
-/* 위시리스트&본 영화 분류 */
+/* holic_wishlistcate */
 DROP TABLE holic_boardcate 
 	CASCADE CONSTRAINTS;
 
 /* holic_visitor */
 DROP TABLE holic_visitor 
+	CASCADE CONSTRAINTS;
+
+/* holic_log */
+DROP TABLE holic_log 
 	CASCADE CONSTRAINTS;
 
 /* holic_board */
@@ -134,7 +146,9 @@ CREATE TABLE holic_board (
 	date DATE, /* 작성일 */
 	content CLOB, /* 내용 */
 	starPoint NUMBER, /* 별점 */
-	movieCode VARCHAR2(4000), /* 영화코드 */
+	movieName VARCHAR2(200), /* 영화명 */
+	movieCodeNaver VARCHAR2(4000), /* 영화코드(네이버) */
+	movieCodeYoung VARCHAR2(4000), /* 영화코드(진흥원) */
 	cotegory VARCHAR2(24), /* 장르 */
 	best NUMBER, /* 추천 */
 	worst NUMBER, /* 비추천 */
@@ -159,7 +173,11 @@ COMMENT ON COLUMN holic_board.content IS '내용';
 
 COMMENT ON COLUMN holic_board.starPoint IS '별점';
 
-COMMENT ON COLUMN holic_board.movieCode IS '영화코드';
+COMMENT ON COLUMN holic_board.movieName IS '영화명';
+
+COMMENT ON COLUMN holic_board.movieCodeNaver IS '영화코드(네이버)';
+
+COMMENT ON COLUMN holic_board.movieCodeYoung IS '영화코드(진흥원)';
 
 COMMENT ON COLUMN holic_board.cotegory IS '장르';
 
@@ -185,59 +203,33 @@ ALTER TABLE holic_board
 			seq
 		);
 
-/* 회원_위시리스트 */
-CREATE TABLE TABLE2 (
-	user_id VARCHAR2(32) NOT NULL, /* 회원ID */
-	movie_code VARCHAR2(32), /* 영화코드 */
-	regitdate <지정 되지 않음> /* 등록일자 */
-);
-
-COMMENT ON TABLE TABLE2 IS '회원_위시리스트';
-
-COMMENT ON COLUMN TABLE2.user_id IS '회원ID';
-
-COMMENT ON COLUMN TABLE2.movie_code IS '영화코드';
-
-COMMENT ON COLUMN TABLE2.regitdate IS '등록일자';
-
-CREATE UNIQUE INDEX PK_TABLE2
-	ON TABLE2 (
-		user_id ASC
-	);
-
-ALTER TABLE TABLE2
-	ADD
-		CONSTRAINT PK_TABLE2
-		PRIMARY KEY (
-			user_id
-		);
 
 /* holic_review */
-CREATE TABLE holic_review (
+CREATE TABLE holic_coment (
 	date DATE NOT NULL, /* 작성일 */
 	userId VARCHAR2(100) NOT NULL, /* 회원ID */
 	seq NUMBER NOT NULL, /* 글번호 */
 	content VARCHAR2(1000) /* 내용 */
 );
 
-COMMENT ON TABLE holic_review IS 'holic_review';
+COMMENT ON TABLE holic_coment IS 'holic_review';
 
-COMMENT ON COLUMN holic_review.date IS '작성일';
+COMMENT ON COLUMN holic_coment.date IS '작성일';
 
-COMMENT ON COLUMN holic_review.userId IS '회원ID';
+COMMENT ON COLUMN holic_coment.userId IS '회원ID';
 
-COMMENT ON COLUMN holic_review.seq IS '글번호';
+COMMENT ON COLUMN holic_coment.seq IS '글번호';
 
-COMMENT ON COLUMN holic_review.content IS '내용';
+COMMENT ON COLUMN holic_coment.content IS '내용';
 
-CREATE UNIQUE INDEX PK_holic_review
-	ON holic_review (
+CREATE UNIQUE INDEX PK_holic_coment
+	ON holic_coment (
 		date ASC
 	);
 
-ALTER TABLE holic_review
+ALTER TABLE holic_coment
 	ADD
-		CONSTRAINT PK_holic_review
+		CONSTRAINT PK_holic_coment
 		PRIMARY KEY (
 			date
 		);
@@ -272,7 +264,8 @@ CREATE TABLE holic_user (
 	gender VARCHAR2(2), /* 성별 */
 	joinDate DATE, /* 가입일 */
 	outDate DATE, /* 탈퇴일 */
-	profile CLOB /* 회원사진 */
+	profile CLOB, /* 회원사진 */
+	enable VARCHAR2(8) /* 활성화여부 */
 );
 
 COMMENT ON TABLE holic_user IS 'holic_user';
@@ -298,6 +291,8 @@ COMMENT ON COLUMN holic_user.joinDate IS '가입일';
 COMMENT ON COLUMN holic_user.outDate IS '탈퇴일';
 
 COMMENT ON COLUMN holic_user.profile IS '회원사진';
+
+COMMENT ON COLUMN holic_user.enable IS '활성화여부';
 
 CREATE UNIQUE INDEX PK_holic_user
 	ON holic_user (
@@ -353,13 +348,13 @@ COMMENT ON COLUMN holic_wishlist.movieCode IS '영화코드';
 
 COMMENT ON COLUMN holic_wishlist.date IS '작성일';
 
-/* 위시리스트&본 영화 분류 */
+/* holic_wishlistcate */
 CREATE TABLE holic_boardcate (
 	code NUMBER NOT NULL, /* 코드 */
 	category VARCHAR2(100) /* 분류명 */
 );
 
-COMMENT ON TABLE holic_boardcate IS '위시리스트&본 영화 분류';
+COMMENT ON TABLE holic_boardcate IS 'holic_wishlistcate';
 
 COMMENT ON COLUMN holic_boardcate.code IS '코드';
 
@@ -401,6 +396,39 @@ ALTER TABLE holic_visitor
 			connectDate
 		);
 
+/* holic_log */
+CREATE TABLE holic_log (
+	logDate DATE NOT NULL, /* 활동시간 */
+	userId VARCHAR2(100), /* 활동ID */
+	log NUMBER, /* 추천비추천 */
+	logCate NUMBER, /* 활동분류 */
+	subect VARCHAR2(100) /* 제목 */
+);
+
+COMMENT ON TABLE holic_log IS 'holic_log';
+
+COMMENT ON COLUMN holic_log.logDate IS '활동시간';
+
+COMMENT ON COLUMN holic_log.userId IS '활동ID';
+
+COMMENT ON COLUMN holic_log.log IS '추천비추천';
+
+COMMENT ON COLUMN holic_log.logCate IS '활동분류';
+
+COMMENT ON COLUMN holic_log.subect IS '제목';
+
+CREATE UNIQUE INDEX PK_holic_log
+	ON holic_log (
+		logDate ASC
+	);
+
+ALTER TABLE holic_log
+	ADD
+		CONSTRAINT PK_holic_log
+		PRIMARY KEY (
+			logDate
+		);
+
 ALTER TABLE holic_board
 	ADD
 		CONSTRAINT FK_holic_user_TO_holic_board
@@ -421,9 +449,9 @@ ALTER TABLE holic_board
 			boardCode
 		);
 
-ALTER TABLE holic_review
+ALTER TABLE holic_coment
 	ADD
-		CONSTRAINT FK_holic_user_TO_holic_review
+		CONSTRAINT FK_holic_user_TO_holic_coment
 		FOREIGN KEY (
 			userId
 		)
@@ -431,9 +459,9 @@ ALTER TABLE holic_review
 			userId
 		);
 
-ALTER TABLE holic_review
+ALTER TABLE holic_coment
 	ADD
-		CONSTRAINT FK_holic_board_TO_holic_review
+		CONSTRAINT FK_holic_board_TO_holic_coment
 		FOREIGN KEY (
 			seq
 		)
