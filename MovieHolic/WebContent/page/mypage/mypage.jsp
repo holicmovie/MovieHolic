@@ -253,7 +253,7 @@
 					<div id="following" class="container tab-pane fade"><br>
 						<%-- 친구들이 '좋아요'한 영화 --%>
 						<div class="row" style="margin-top: 1em;">
-							<div class="font_bold_mid" style="width:100%; border-bottom: 2.5px solid #fff; margin-bottom: 2em; padding-bottom: 0.8em;">
+							<div class="font_bold_mid" style="width:100%; border-bottom: 2.5px solid #fff; margin-bottom: 0; padding-bottom: 0.8em;">
 								<div style="float: left;">친구들이 '좋아요'한 영화</div>
 								<div style="float: right;" class="font_light_small">더보기</div>
 							</div>
