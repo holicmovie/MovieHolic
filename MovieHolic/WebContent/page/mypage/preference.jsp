@@ -3,24 +3,56 @@
 <%@ include file="/template/header.jsp"%>
 
 <style>
+/* 원형 차트 */
 #chartdiv {
   width: 100%;
   height: 500px;
-  color: white;
 }
+/* 차트 글씨  */
+text{
+fill:white;
+font-family: 'Noto Sans KR', sans-serif;
+font-weight: 500;
+font-size: 17px;
+}
+/* 별점 차트 */
+#chartdiv2{
+  width: 100%;
+  height: 500px;
+}
+
+/* xxx님의 취향분석 */
+.preference_title{
+font-family: 'Noto Sans KR', sans-serif;
+font-weight: bold;
+font-size: 50px;
+}
+
+/* xxx */
+.preference_title_name{
+font-family: 'Noto Sans KR', sans-serif;
+font-weight: bold;
+font-size: 45px;
+color: rgb(240, 195, 15);
+}
+
+/* 굵은 폰트만 */
+.preference_bold_font{
+font-family: 'Noto Sans KR', sans-serif;
+font-weight: bold;
+}
+
+/* 위의 공간 띄울 때 */
+.top_margin {
+	margin-top: 150px;
+}
+
 /* 구분선 굵은 것 */
 hr.line_bold {
 	background-color: white;
 	height: 2px;
     position: static;
 }
-<<<<<<< HEAD
-/* 구분선 얇은 것 (흰색) */
-hr.line_light_w {
-	background-color: white;
-	position: static;
-}
-=======
 
 /* 구분선 얇은 것 (흰색) */
 hr.line_light_w {
@@ -28,7 +60,6 @@ hr.line_light_w {
 	position: static;
 }
 
->>>>>>> branch 'master' of https://github.com/holicmovie/MovieHolic.git
 /* 구분선 얇은 것 (회색) */
 hr.line_light_g {
 	background-color: gray;
@@ -46,10 +77,7 @@ hr.line_light_g {
 <script src="https://www.amcharts.com/lib/4/charts.js"></script>
 <script src="https://www.amcharts.com/lib/4/themes/material.js"></script>
 <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
-
-
-    
-    
+   
  <%--장르 그래프  --%>
     <script>
 am4core.ready(function() {
@@ -89,51 +117,84 @@ series.dataFields.category = "genre";
 series.slices.template.cornerRadius = 5;
 series.colors.step = 5;
 series.hiddenState.properties.endAngle = -90;
-//chart.legend = new am4charts.Legend();
+chart.legend = new am4charts.Legend();
 }); // end am4core.ready()
 </script>
  <%--장르 그래프 끝 --%>
  
 <%-- 별점그래프 --%>
 <script>
-window.onload = function () {
+am4core.ready(function() {
+// Themes begin
+am4core.useTheme(am4themes_animated);
+// Themes end
+var chart = am4core.create("chartdiv2", am4charts.XYChart);
+chart.hiddenState.properties.opacity = 0; // this makes initial fade in effect
+chart.data = [ {
+  "country": "half",
+  "value": 4
+}, {
+  "country": "one",
+  "value": 12
+}, {
+  "country": "one-half",
+  "value": 8
+}, {
+  "country": "two",
+  "value": 11
+}, {
+  "country": "two-half",
+  "value": 14
+}, {
+  "country": "three",
+  "value": 28
+}, {
+  "country": "three-half",
+  "value": 19
+}, {
+  "country": "four",
+  "value": 18
+}, {
+  "country": "four-half",
+  "value": 15
+}, {
+  "country": "five",
+  "value": 10
+} ];
+var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+categoryAxis.renderer.grid.template.location = 0;
+categoryAxis.dataFields.category = "country";
+categoryAxis.renderer.minGridDistance = 40;
 
-//Better to construct options first and then pass it as a parameter
-var options = {
-	title: {
-		text: "영화 평균 별점"              
-	},
-	data: [              
-	{
-		// Change type to "doughnut", "line", "splineArea", etc.
-		type: "column",
-		dataPoints: [
-			{ label: "0",  y: 10  },
-			{ label: "0.5", y: 15  },
-			{ label: "1", y: 25  },
-			{ label: "1.5",  y: 30  },
-			{ label: "2",  y: 28  },
-			{ label: "2.5",  y: 35  },
-			{ label: "3", y: 46  },
-			{ label: "3.5", y: 30  },
-			{ label: "4",  y: 30  },
-			{ label: "4.5",  y: 28  },
-			{ label: "5",  y: 5  }
-		]
-	}
-	]
-};
+var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 
-$("#chartContainer").CanvasJSChart(options);
-}
+var series = chart.series.push(new am4charts.CurvedColumnSeries());
+series.dataFields.categoryX = "country";
+series.dataFields.valueY = "value";
+series.tooltipText = "{valueY.value}"
+series.columns.template.strokeOpacity = 0;
+
+series.columns.template.fillOpacity = 0.75;
+
+var hoverState = series.columns.template.states.create("hover");
+hoverState.properties.fillOpacity = 1;
+hoverState.properties.tension = 0.4;
+
+chart.cursor = new am4charts.XYCursor();
+
+// Add distinctive colors for each column using adapter
+series.columns.template.adapter.add("fill", (fill, target) => {
+  return chart.colors.getIndex(target.dataItem.index);
+});
+
+chart.scrollbarX = new am4core.Scrollbar();
+
+});
+
 </script>
 <%-- 별점그래프 끝 --%>
 <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
-
->>>>>>> branch 'master' of https://github.com/holicmovie/MovieHolic.git
-
-
 
 
 <%@ include file="/template/nav_style.jsp"%>
@@ -151,43 +212,37 @@ $("#chartContainer").CanvasJSChart(options);
 <div class="wrapper style1" id = "main-container">
 	<div class="container">
 	<%--Header 제목 --%>
-	<div align="center"><h1>[<font class = "bold_lg" style="color: rgb(240, 195, 15)">박광규</font>]님의 취향분석</h1></div><br><br>
+	<div class="preference_title" align="center"><h1>[ <span class="preference_title_name" id="username">박광규</span> ] 님의 취향분석</h1></div><br><br>
 		
-		<div class="row">
 			<%--리뷰수 --%>
+		<div class="row">
+			<div class = "col-lg-12 preference_bold_font" id = "review" style="font-size : 30px; border-bottom: thin solid gray;"><span>리뷰 수</span></div>
+		
+			<div class = "col-lg-1"><i class = "far fa-edit" style='font-size:40px; margin-top:9px;'></i></div>	
+			<div class = "col-lg-9 preference_bold_font" style="font-size:40px;"><span>250편</span></div>
 			<div class = "col-lg-1"></div>
-			<div class = "col-lg-10" id = "review" style="border-bottom: thin solid gray;"><h3>리뷰수</h3></div>
-			<div class = "col-lg-1"></div>
-			
-			<div class = "col-lg-1"></div>
-			<div class = "col-lg-1"><i class = "far fa-edit" style='font-size:40px'></i></div>	
-			<div class = "col-lg-9"><h2>250편</h2></div>
-			<div class = "col-lg-1"></div>
+		</div>
 			
 			
 			<%--선호장르 --%>
-			<div class = "col-lg-1"></div>
-			<div class = "col-lg-10" style="border-bottom: thin solid gray;"><h3>선호 장르</h3></div>
-			<div class = "col-lg-1"></div>
+		<div class="row">
+			<div class = "col-lg-12 top_margin preference_bold_font" style="font-size : 30px; border-bottom: thin solid gray;"><h3>선호 장르</h3></div>
 			
-			<div class = "col-lg-1"></div>
-			<div class = "col-lg-10">
-				<span ><i class='fas fa-medal' style='font-size:40px; color: rgb(240, 195, 15);'>스릴러</i></span><br>
-				<span><i class='fas fa-medal' style='font-size:30px;color: white;'>로맨스</i></span><span><i class='fas fa-medal' style='font-size:30px;color: white;'>공포</i></span>
-				<span><i class='fas fa-medal' style='font-size:30px;color: white;'>가족</i></span><span><i class='fas fa-medal' style='font-size:30px;color: white;'>애니메이션</i></span>
+			<div class = "col-lg-12">
+				<span><i class='fas fa-crown preference_title_name' style='margin-bottom:10px;'> 스릴러</i></span><br><br>
+				<span><i class='fas fa-medal preference_bold_font' style="font-size:28px;"> 로맨스&nbsp;&nbsp;&nbsp;</i></span>
+				<span><i class='fas fa-medal preference_bold_font' style="font-size:28px;"> 공포&nbsp;&nbsp;&nbsp;</i></span>
+				<span><i class='fas fa-medal preference_bold_font' style="font-size:28px;"> 가족&nbsp;&nbsp;&nbsp;</i></span>
+				<span><i class='fas fa-medal preference_bold_font' style="font-size:28px;"> 애니메이션</i></span>
 			</div>
-			<div class = "col-lg-1"></div>
-			<div class = "col-lg-1"></div>
-			<div class = "col-lg-10" id="chartdiv" style="color: white;"></div>
-			<div class = "col-lg-1" style="clear: both;"></div>
-			
+
+			<div class = "col-lg-12" id="chartdiv"></div>
+		</div>	
 				
 		<%--선호 배우  --%>
-			
-			<div class = "col-lg-1"></div>
-			<div class = "col-lg-10" style="border-bottom: thin solid gray;"><h3>선호 배우</h3></div>
-			<div class = "col-lg-1"></div>
-			
+		<div class="row">
+			<div class = "col-lg-12 top_margin preference_bold_font" style="font-size : 30px; border-bottom: thin solid gray;"><span>선호 배우</span></div>
+
 			<div class = "col-lg-1"></div>
 			<div class = "col-lg-10">
 			<div class="list-group">
@@ -205,13 +260,11 @@ $("#chartContainer").CanvasJSChart(options);
 			  </div>
 				</div>	
 				<div class = "col-lg-1"></div>
-				
+		</div>
 						
 		<%--선호감독 --%>
-		
-			<div class = "col-lg-1"></div>
-			<div class = "col-lg-10"style="border-bottom: thin solid gray;"><h3>선호감독</h3></div>
-			<div class = "col-lg-1"></div>
+		<div class="row">
+			<div class = "col-lg-12 top_margin preference_bold_font"style="font-size : 30px; border-bottom: thin solid gray;"><span>선호 감독</span></div>
 			
 			
 			<div class = "col-lg-1"></div>
@@ -233,20 +286,16 @@ $("#chartContainer").CanvasJSChart(options);
 			</div>
 			</div>
 			<div class = "col-lg-1"></div>
-			
+		</div>
 			
 			<%--평균 별점 --%>
-			<div class = "col-lg-1"></div>
-			<div class = "col-lg-10" ><h3>평균 별점</h3></div>
-			<div class = "col-lg-1"></div>
+		<div class="row">
+			<div class = "col-lg-12 top_margin preference_bold_font" style="font-size : 30px; border-bottom: thin solid gray;"><span>평균 별점</span></div>
 			
+			<div class = "col-lg-12" id="chartdiv2"></div>
 			
-			<div class = "col-lg-1"></div>
-			<div class = "col-lg-10" id="chartContainer" style="height: 370px; width: 100%;"></div>
-			<div class = "col-lg-1"></div>
-			
-			
-			</div>
+		</div>
+		
 		</div>
 	
 	</div>
