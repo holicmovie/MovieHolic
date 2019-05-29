@@ -4,118 +4,159 @@
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
 <style>
-.wrapper{
-margin:0;
-padding:0;
-}
-hr.line_bold {
-	background-color: white;
-	height: 2px;
-    position: static;
-}
-
-/* 구분선 얇은 것 (흰색) */
-hr.line_light_w {
-	background-color: white;
-	position: static;
-	margin:0;
-}
-
-/* 구분선 얇은 것 (회색) */
-hr.line_light_g {
-	background-color: gray;
-	position: static;
-}
-.list-movie{
-	background-color: rgb(20,20,20);
-	color: white;
+/* 영화 포스터 */
+.movieImg {
+	border: solid 1px white;
 }
 </style>
+<script>
+<%-- 영화검색 모달 띄우기 --%>
+	$(function() {
+		$('#srchMovie').focusin(function(){
+			$('#movieModal').modal();
+		});
+	});
+</script>
 </head>
 <body class="left-sidebar is-preload">
+<div id="page-wrapper">
 
 <!-- Header -->
-	<div id="header"  style="background-image: none;">
+	<div id="header"  style="background-image: none; margin-bottom: 0px; padding-bottom:0; height: 10px;">
 <%@ include file="/template/nav.jsp"%>
 	</div>
 
-		<!-- Main -->
+
+<%-- Main --%>
 <div class="wrapper style1">
 
-	<div class="container bgcolor-yellow">
-		<div class="row">
-		<div class = "col-lg-1"></div>
-		<div class="col-lg-5" id="list-search">
-		<%--리스트 이름 작성 --%>
-			<h3><label>YOUR LIST</label></h3>
-			<div class="col-lg-12">
-				<input type="text" class="form-control form-control-lg" placeholder="당신의  추천 리스트 이름을 입력하세요" name="list-name">
-			</div>
-			<br>
-		<%-- 관련 해시태그 작성 --%>
-			<h3><label>#HASHTAG</label></h3>
-			<div class="col-lg-12">
-				<input type="text" class="form-control form-control-lg"
-				placeholder="원하는 HASHTAG를 입력하세요" name="hashtag">
-				<font color = "gray" size ="4px">최대 10개의 HASHTAG를 입력하실 수 있습니다.</font>
-			</div>
-			<br>
-		<%-- 영화 이름 검색--%>
-			<h3><label for = "title_search">TITLE OF MOVIE</label></h3>
-			<div class = "col-lg-12">		
-			<div class="input-group mb-3">
-                <input type="text" class="form-control form-control-lg" placeholder="영화제목을 입력해주세요" id="name" name="name">
-                <div class="input-group-append">
-                <button type="submit" class="btn btn-primary">SEARCH</button>
-                </div>
-             </div>
-			</div>
-			</div>
-			<br>
-			
-			<%-- 영화 리스트 상세 정보 입력 --%>
-			<div class="col-lg-5" id="list-description">
-				<h3>
-					<label for="list-detail-description">ABOUT YOUR FAVORITE MOVIE</label>
-				</h3>
-				<textarea class="form-control" rows="9" cols="70" style="resize : none;"
-					id="list-detail-description">
-				</textarea><br>
-				<button type="button" class="btn btn-secondary float-right">CANCEL</button>
-				<button type="button" class="btn btn-primary float-right">SAVE</button>
-			</div>
-		</div>
-		<br><br>
-		
-		<%--리스트 영화 목록 추가  --%>
-		<div class = "row">
-		<div class="col-lg-1"></div>
-		<div class="col-lg-10" id="poster-list">
-	<h3><label>YOUR MOVIE LIST</label></h3>
-	<hr class = "line_bold">
-	<div class="list-group" style="background-color: black;">
-	  <%--리스트에 추가된 영화  --%>
-	  <a href="#" class = "list-movie"><div class = "list-movie"><img src ="/MovieHolic/images/endgame.jpg"  style="float: left" width="50px">엔드게임:2019
-	  <button type="button" id="replydelete" class="close" style="color: white">&times;</button>
-		</div></a>
-	  <hr class = "line_light_w">
-	 <%--리스트에 추가된 영화  --%>
-	  <div class = "list-movie"><a href="#" class = "list-movie"><img src ="/MovieHolic/images/endgame.jpg"  style="float: left" width="50px">엔드게임:2019
-	  <button type="button" id="replydelete" class="close" style="color: white">&times;</button>
-		</a></div>
-	  <hr class = "line_light_w">
-	<%--리스트에 추가된 영화  --%>
-	  <div class = "list-movie"><a href="#" class = "list-movie"><img src ="/MovieHolic/images/endgame.jpg"  style="float: left" width="50px">엔드게임:2019
-	  <button type="button" id="replydelete" class="close" style="color: white">&times;</button>
-		</a></div>
+	<div class="container">
 
-	</div>
-	</div>
-	
-	<div class = "col-lg-1"></div>	
+	<%-- 페이지 이동경로 --%>		
+		<div class="row" style="margin-bottom:30px;">
+			<div class="col-lg-12 col-12-mobile font_light_small">
+				<span>✱&nbsp;&nbsp;</span>
+				<a href="/MovieHolic/page/mypage/mypage.jsp" style="color:white;">My Page</a>
+				<span>&nbsp;&nbsp;❱❱&nbsp;&nbsp;</span>
+				<a href="/MovieHolic/page/mypage/diary.jsp" class="font_bold_small" ">Diary</a>
+			</div>
 		</div>
 		
-<br><br><br>
+	<%-- 페이지 제목 --%>
+		<div class="font_bold_mid" style="width:100%; border-bottom: 2.5px solid #fff; margin-bottom: 0; padding-bottom: 0.8em;">
+			<button class="btn btn-success font_bold_small" style="float: right;" id="save">저&nbsp;&nbsp;&nbsp;장</button>
+			<button class="btn btn-success font_bold_small" style="float: right; margin-right: 10px;" id="cancle">취&nbsp;&nbsp;&nbsp;소</button>
+			<div style="float: left;">나의 리뷰</div>
+			<div style="clear: both;"></div>
+		</div>
+						   		
+	<%-- 리스트 제목 및 내용입력 --%>
+		<div class="row" style="margin-top: 1em;">
+			<div class="col-lg-12">
+				<h3><label>YOUR LIST</label></h3>
+				<input type="text" class="form-control form-control-lg" style="width: 50%;" placeholder="당신의  추천 리스트 제목을 입력하세요" name="list-name">
+			</div>
+			<div class="col-lg-12" style="margin-top: 1em;">
+				<h3><label for="list-detail-description">ABOUT YOUR FAVORITE MOVIE</label></h3>
+				<textarea class="form-control" rows="15" style="resize : none;" id="list-detail-description" ></textarea>
+			</div>
+		</div>
+		
+	<%-- 영화 이미지 --%>
+		<div class="font_bold_mid" style="width:100%; border-top: 2.5px solid #fff; margin-top: 3em; padding-top: 1.5em; padding-bottom: 3em;">
+			<img class="movieImg" src="/MovieHolic/images/capma.jpg" width="200vh;" style="margin: 0.3em;">
+			<img class="movieImg" src="/MovieHolic/images/capma.jpg" width="200vh;" style="margin: 0.3em;">
+			<img class="movieImg" src="/MovieHolic/images/capma.jpg" width="200vh;" style="margin: 0.3em;">
+			<img class="movieImg" src="/MovieHolic/images/capma.jpg" width="200vh;" style="margin: 0.3em;">
+			<img class="movieImg" src="/MovieHolic/images/capma.jpg" width="200vh;" style="margin: 0.3em;">
+			<img class="movieImg" src="/MovieHolic/images/capma.jpg" width="200vh;" style="margin: 0.3em;">
+			<img class="movieImg" src="/MovieHolic/images/capma.jpg" width="200vh;" style="margin: 0.3em;">
+			<a id="srchMovie" href="#"><img class="movieImg" src="/MovieHolic/images/getposter.png" width="200vh;" style="margin: 0.3em;"></a>
+		</div>
+		
 	</div>
 </div>
+
+
+<%-- The Modal --%>
+<div id="movieModal" class="modal fade" role="dialog" style="top: 100px; height: 700px; ">
+	<div class="modal-dialog modal-dialog-scrollable">
+		<div class="modal-content" style="background-color: #555;">
+    
+			<!-- Modal Header -->
+			<div class="modal-header  text-center">
+				<input type="text" class="form-control col-8" placeholder="검색할 영화제목 입력" style="margin-left: 20px;">
+				<button type="button" class="close" data-dismiss="modal" style="width: 5vh;">&times;</button>
+			</div>
+      
+			<!-- Modal body -->
+			<div class="modal-body" align="center">
+				<table class="table table-hover font_bold_small"">
+						<col width="10%">
+						<col width="65%">
+						<col width="25%">
+						<tr>
+							<td><img src="/MovieHolic/images/tempimg/endgame.jpg" height="100vh"></td>
+							<td style="vertical-align: middle;">어벤져스:엔드게임</td>
+							<td style="vertical-align: middle; text-align: center;">2017</td>
+						</tr>
+						<tr>
+							<td><img src="/MovieHolic/images/tempimg/coco.jpg" height="100vh"></td>
+							<td style="vertical-align: middle;">코코</td>
+							<td style="vertical-align: middle; text-align: center;">2017</td>
+						</tr>
+						<tr>
+							<td><img src="/MovieHolic/images/tempimg/endgame.jpg" height="100vh"></td>
+							<td style="vertical-align: middle;">어벤져스:엔드게임</td>
+							<td style="vertical-align: middle; text-align: center;">2017</td>
+						</tr>
+						<tr>
+							<td><img src="/MovieHolic/images/tempimg/coco.jpg" height="100vh"></td>
+							<td style="vertical-align: middle;">코코</td>
+							<td style="vertical-align: middle; text-align: center;">2017</td>
+						</tr>
+						<tr>
+							<td><img src="/MovieHolic/images/tempimg/endgame.jpg" height="100vh"></td>
+							<td style="vertical-align: middle;">어벤져스:엔드게임</td>
+							<td style="vertical-align: middle; text-align: center;">2017</td>
+						</tr>
+						<tr>
+							<td><img src="/MovieHolic/images/tempimg/coco.jpg" height="100vh"></td>
+							<td style="vertical-align: middle;">코코</td>
+							<td style="vertical-align: middle; text-align: center;">2017</td>
+						</tr>
+						<tr>
+							<td><img src="/MovieHolic/images/tempimg/endgame.jpg" height="100vh"></td>
+							<td style="vertical-align: middle;">어벤져스:엔드게임</td>
+							<td style="vertical-align: middle; text-align: center;">2017</td>
+						</tr>
+						<tr>
+							<td><img src="/MovieHolic/images/tempimg/coco.jpg" height="100vh"></td>
+							<td style="vertical-align: middle;">코코</td>
+							<td style="vertical-align: middle; text-align: center;">2017</td>
+						</tr>
+						<tr>
+							<td><img src="/MovieHolic/images/tempimg/endgame.jpg" height="100vh"></td>
+							<td style="vertical-align: middle;">어벤져스:엔드게임</td>
+							<td style="vertical-align: middle; text-align: center;">2017</td>
+						</tr>
+						<tr>
+							<td><img src="/MovieHolic/images/tempimg/coco.jpg" height="100vh"></td>
+							<td style="vertical-align: middle;">코코</td>
+							<td style="vertical-align: middle; text-align: center;">2017</td>
+						</tr>
+					</table>
+			</div>
+      
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<div class="input-group" align="left" style="padding-left: 5px;">
+					
+				</div>
+			</div>
+      
+		</div>
+	</div>
+</div>
+
 <%@ include file="/template/footer.jsp" %>
