@@ -1,53 +1,93 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ include file="/template/header.jsp" %>
+	pageEncoding="UTF-8"%>
+<%@ include file="/template/header.jsp"%>
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
 </head>
+<style>
+<%-- 별점의 별 icon을 사용하기 위해 필요 --%>
+	.starrating > input {display: none;}  <%--  Remove radio buttons --%>
+	.starrating > label:before { 
+	  content: "\f005"; <%-- Star  --%>
+	  margin: 3px;
+	  font-size: 2em;
+	  font-family: FontAwesome;
+	  display: inline-block; 
+	}
+	.starrating > label
+	{
+	  color: #222222; <%-- Start color when not clicked --%>
+	}
+	.starrating > input:checked ~ label
+	{ color: #ffca08 ; } <%-- Set yellow color when star checked  --%>
+	.starrating > input:hover ~ label
+	{ color: #ffca08 ;  } <%-- Set yellow color when star hover  --%>
+</style>
 <body class="left-sidebar is-preload">
-<div id="page-wrapper">
+	<div id="page-wrapper">
 
-<!-- Header -->
-	<div id="header"  style="background-image: none; padding: 5em 0 0 0;" >
-<%@ include file="/template/nav.jsp"%>
-	</div>
+		<!-- Header -->
+		<div id="header" style="background-image: none; padding: 5em 0 0 0;">
+			<%@ include file="/template/nav.jsp"%>
+		</div>
 
 		<!-- Main -->
-		<div class="wrapper style1" style="padding:3em 0 6em 0; color: white;">
+		<div class="wrapper style1"
+			style="padding: 3em 0 6em 0; color: white;">
 
 			<div class="container">
 				<div class="row gtr-200">
-					<div class="col-8 col-12-mobile" id="content">
-						<article id="main" >
+					<div class="col-12 col-12-mobile" id="content">
+						<article id="main">
 							<header>
 								<h2>
 									<a href="/MovieHolic/film/moviedetail.html">어벤져스 : 엔드게임</a>
 								</h2>
 								<p>Avengers: Endgame, 2019</p>
 							</header>
-							
-							<a href="#" class="image featured" style="margin:0;"><img	src="/MovieHolic/images/avengers2.jpg" alt="" /></a><br>
-							<div>
-								<ul style="list-style-type:none;">
-									<li>
-										<strong>상영관 : </strong><a href="https://www.cgv.co.kr">CGV</a> , <a href="https://www.lottecinema.co.kr">롯데시네마</a>
-									</li>
-									<li>
-										<a href="https://www.youtube.com" class="button">예고편 영상</a>
-										<a href="/MovieHolic/page/mypage/writereview.jsp" class="button">리뷰 쓰기</a>
-									</li>
+							<div style="float: left; margin-right: 20px;">
+								<a href="#" class="image featured"
+									style="margin: 0; width: 18em; "><img
+									src="/MovieHolic/images/avengers4.jpg" alt="" /></a><br>
+							</div>
+							<div style="float: left;">
+								<ul style="list-style-type: none;">
+									<li><strong>상영관 : </strong><a href="https://www.cgv.co.kr">CGV</a>
+										, <a href="https://www.lottecinema.co.kr">롯데시네마</a></li>
+									<li><a href="https://www.youtube.com" class="button">예고편
+											영상</a> <a href="/MovieHolic/page/mypage/writereview.jsp"
+										class="button">리뷰 쓰기</a></li>
 								</ul>
-							</div>	
+								<div id="likeunlike" class="rounded-lg"
+									style="background-color: #555; margin: 20px 0 20px 0;  height: 100px;padding-top: 8px; text-align: center;">
+									<span class="font_light_small">영화를 평가해주세요.</span>
+									<div
+										class="starrating risingstar d-flex justify-content-center flex-row-reverse"
+										style="font-size: 1.3em;">
+										<input type="radio" id="star5" name="rating" value="5" /><label
+											for="star5" title="5 star"></label> <input type="radio"
+											id="star4" name="rating" value="4" /><label for="star4"
+											title="4 star"></label> <input type="radio" id="star3"
+											name="rating" value="3" /><label for="star3" title="3 star"></label>
+										<input type="radio" id="star2" name="rating" value="2" /><label
+											for="star2" title="2 star"></label> <input type="radio"
+											id="star1" name="rating" value="1" /><label for="star1"
+											title="1 star"></label>
+									</div>
+								</div>
 
-							<h3>
-								<Strong>줄거리</Strong>
-							</h3>
-							<br>
-							<p>
-								인피니티 워 이후 절반만 살아남은 지구<br> 마지막 희망이 된 어벤져스<br> 먼저 떠난 그들을
-								위해 모든 것을 걸었다!<br> 위대한 어벤져스<br> 운명을 바꿀 최후의 전쟁이 펼쳐진다!
-							</p>
-							
+								<h3>
+									<Strong>줄거리</Strong>
+								</h3>
+								<br>
+								<p>
+									인피니티 워 이후 절반만 살아남은 지구<br> 마지막 희망이 된 어벤져스<br> 먼저 떠난
+									그들을 위해 모든 것을 걸었다!<br> 위대한 어벤져스<br> 운명을 바꿀 최후의 전쟁이
+									펼쳐진다!
+								</p>
+							</div>
+							<div style="clear: both;"></div>
+
 							<div>
 								<!-- 배우/출연진/감독 -->
 								<header>
@@ -57,38 +97,42 @@
 								</header>
 								<div class="row gtr-50">
 									<div class="col-2">
-										<a href="#" class="image fit"><img src="/MovieHolic/images/ironman.jpg"
-											alt="" title="로버트다우니주니어"/></a>
+										<a href="#" class="image fit"><img
+											src="/MovieHolic/images/ironman.jpg" alt="" title="로버트다우니주니어" /></a>
 									</div>
 									<div class="col-4">
 										<h4>로버트 다우니 주니어</h4>
-										<p><font color="orange" size="3px">주연</font> : <font size="3px">토니스타크/아이언맨</font><br>
-										<font size="3px">I am Ironman</font>
-										</p>										
+										<p>
+											<font color="orange" size="3px">주연</font> : <font size="3px">토니스타크/아이언맨</font><br>
+											<font size="3px">I am Ironman</font>
+										</p>
 									</div>
 									<div class="col-2">
-										<a href="#" class="image fit"><img src="/MovieHolic/images/capamerica.jpg"
-											alt="" title="크리스 에반스" /></a>
+										<a href="#" class="image fit"><img
+											src="/MovieHolic/images/capamerica.jpg" alt=""
+											title="크리스 에반스" /></a>
 									</div>
 									<div class="col-4">
 										<h4>크리스 에반스</h4>
-										<p><font color="orange" size="3px">주연</font> : <font size="3px">스티븐 로져스/캡틴 아메리카</font><br>
-										<font size="3px"> 치즈버거</font>
+										<p>
+											<font color="orange" size="3px">주연</font> : <font size="3px">스티븐
+												로져스/캡틴 아메리카</font><br> <font size="3px"> 치즈버거</font>
 										</p>
 									</div>
 									<div class="col-2">
-										<a href="#" class="image fit"><img src="/MovieHolic/images/thor.jpg"
-											alt="" title="크리스 헴스워스"/></a>
+										<a href="#" class="image fit"><img
+											src="/MovieHolic/images/thor.jpg" alt="" title="크리스 헴스워스" /></a>
 									</div>
 									<div class="col-4">
 										<h4>크리스 헴스워스</h4>
-										<p><font color="orange" size="3px">주연</font> : <font size="3px">돼르</font><br>
-										<font size="3px">먹고싶다</font>
+										<p>
+											<font color="orange" size="3px">주연</font> : <font size="3px">돼르</font><br>
+											<font size="3px">먹고싶다</font>
 										</p>
 									</div>
 									<div class="col-2">
-										<a href="#" class="image fit"><img src="/MovieHolic/images/pic13.jpg"
-											alt="" /></a>
+										<a href="#" class="image fit"><img
+											src="/MovieHolic/images/pic13.jpg" alt="" /></a>
 									</div>
 									<div class="col-4">
 										<h4>Sed tempus fringilla</h4>
@@ -96,8 +140,8 @@
 											proin.</p>
 									</div>
 									<div class="col-2">
-										<a href="#" class="image fit"><img src="/MovieHolic/images/pic14.jpg"
-											alt="" /></a>
+										<a href="#" class="image fit"><img
+											src="/MovieHolic/images/pic14.jpg" alt="" /></a>
 									</div>
 									<div class="col-4">
 										<h4>Malesuada fermentum</h4>
@@ -114,18 +158,19 @@
 								</header>
 								<div class="row gtr-50">
 									<div class="col-2">
-										<a href="#" class="image fit"><img src="/MovieHolic/images/sony.jpg"
-											alt="" title="안소니 루소"/></a>
+										<a href="#" class="image fit"><img
+											src="/MovieHolic/images/sony.jpg" alt="" title="안소니 루소" /></a>
 									</div>
 									<div class="col-4">
 										<h4>안소니 루소</h4>
-										<p><font color="orange" size="3px">감독</font> : <font size="3px">안소니 루소</font><br>
-										<font size="3px"></font>
+										<p>
+											<font color="orange" size="3px">감독</font> : <font size="3px">안소니
+												루소</font><br> <font size="3px"></font>
 										</p>
 									</div>
 									<div class="col-2">
-										<a href="#" class="image fit"><img src="/MovieHolic/images/pic11.jpg"
-											alt="" /></a>
+										<a href="#" class="image fit"><img
+											src="/MovieHolic/images/pic11.jpg" alt="" /></a>
 									</div>
 									<div class="col-4">
 										<h4>Proin sed adipiscing</h4>
@@ -133,8 +178,8 @@
 											proin.</p>
 									</div>
 									<div class="col-2">
-										<a href="#" class="image fit"><img src="/MovieHolic/images/pic12.jpg"
-											alt="" /></a>
+										<a href="#" class="image fit"><img
+											src="/MovieHolic/images/pic12.jpg" alt="" /></a>
 									</div>
 									<div class="col-4">
 										<h4>Lorem feugiat magna</h4>
@@ -142,8 +187,8 @@
 											proin.</p>
 									</div>
 									<div class="col-2">
-										<a href="#" class="image fit"><img src="/MovieHolic/images/pic13.jpg"
-											alt="" /></a>
+										<a href="#" class="image fit"><img
+											src="/MovieHolic/images/pic13.jpg" alt="" /></a>
 									</div>
 									<div class="col-4">
 										<h4>Sed tempus fringilla</h4>
@@ -151,8 +196,8 @@
 											proin.</p>
 									</div>
 									<div class="col-2">
-										<a href="#" class="image fit"><img src="/MovieHolic/images/pic14.jpg"
-											alt="" /></a>
+										<a href="#" class="image fit"><img
+											src="/MovieHolic/images/pic14.jpg" alt="" /></a>
 									</div>
 									<div class="col-4">
 										<h4>Malesuada fermentum</h4>
@@ -165,7 +210,7 @@
 
 					</div>
 
-					<div class="col-4 col-12-mobile" id="sidebar">
+					<%-- <div class="col-4 col-12-mobile" id="sidebar">
 						<hr class="first" />
 						<section>
 							<header>
@@ -194,7 +239,7 @@
 							
 						</section>
 						<hr />
-						<%-- <section>
+						<section>
 							<header>
 								<h3>
 									<a href="#">Sed lorem etiam consequat</a>
@@ -252,8 +297,8 @@
 							<footer>
 								<a href="#" class="button">Magna Adipiscing</a>
 							</footer>
-						</section>	--%>
-					</div>
+						</section>	
+					</div> --%>
 				</div>
 				<hr />
 				<div class="row">
@@ -286,124 +331,124 @@
 							integer interdum.</p>
 					</article>--%>
 					<section class="carousel">
-			<div class="reel" id="romance">
-				<article style="background-color: rgb(3,39,49);">
-					<a href="#" class="image featured"><img
-						src="/MovieHolic/images/brother.jpg" alt="" /></a>
-					<header>
-						<h6>
-							<a href="#"><strong>나의 특별한 형제</strong></a>
-						</h6>
-					</header>
-					<p>머리 좀 쓰는 형 x 몸 좀 쓰는 동생! 세상엔 이런 형제도 있다!</p>
-				</article>
-				<article style="background-color: rgb(3,39,49);">
-					<a href="#" class="image featured"><img
-						src="/MovieHolic/images/avengers4.jpg" alt="" /></a>
-					<header>
-						<h6>
-							<a href="#">어벤져스 : 엔드게임</a>
-						</h6>
-					</header>
-					<p>인피니티 워 이후 절반만 살아남은 지구 마지막 희망이...</p>
-				</article>
+						<div class="reel" id="romance">
+							<article style="background-color: rgb(3, 39, 49);">
+								<a href="#" class="image featured"><img
+									src="/MovieHolic/images/brother.jpg" alt="" /></a>
+								<header>
+									<h6>
+										<a href="#"><strong>나의 특별한 형제</strong></a>
+									</h6>
+								</header>
+								<p>머리 좀 쓰는 형 x 몸 좀 쓰는 동생! 세상엔 이런 형제도 있다!</p>
+							</article>
+							<article style="background-color: rgb(3, 39, 49);">
+								<a href="#" class="image featured"><img
+									src="/MovieHolic/images/avengers4.jpg" alt="" /></a>
+								<header>
+									<h6>
+										<a href="#">어벤져스 : 엔드게임</a>
+									</h6>
+								</header>
+								<p>인피니티 워 이후 절반만 살아남은 지구 마지막 희망이...</p>
+							</article>
 
-				<article style="background-color: rgb(3,39,49);">
-					<a href="#" class="image featured"><img src="/MovieHolic/images/capma.jpg"
-						alt="" /></a>
-					<header>
-						<h6>
-							<a href="#">캡틴 마블</a>
-						</h6>
-					</header>
-					<p>위기에 빠진 어벤져스의 희망! 1995년, 공군 파일럿 시절의 기억을 잃고</p>
-				</article>
+							<article style="background-color: rgb(3, 39, 49);">
+								<a href="#" class="image featured"><img
+									src="/MovieHolic/images/capma.jpg" alt="" /></a>
+								<header>
+									<h6>
+										<a href="#">캡틴 마블</a>
+									</h6>
+								</header>
+								<p>위기에 빠진 어벤져스의 희망! 1995년, 공군 파일럿 시절의 기억을 잃고</p>
+							</article>
 
-				<article style="background-color: rgb(3,39,49);">
-					<a href="#" class="image featured"><img src="/MovieHolic/images/watching.jpg"
-						alt="" /></a>
-					<header>
-						<h6>
-							<a href="#">왓칭</a>
-						</h6>
-					</header>
-					<p>회사 주차장에서 납치 당한 여자(강예원)가 자신을 조여오는 감...</p>
-				</article >
+							<article style="background-color: rgb(3, 39, 49);">
+								<a href="#" class="image featured"><img
+									src="/MovieHolic/images/watching.jpg" alt="" /></a>
+								<header>
+									<h6>
+										<a href="#">왓칭</a>
+									</h6>
+								</header>
+								<p>회사 주차장에서 납치 당한 여자(강예원)가 자신을 조여오는 감...</p>
+							</article>
 
-				<article style="background-color: rgb(3,39,49);">
-					<a href="#" class="image featured"><img src="/MovieHolic/images/money.jpg"
-						alt="" /></a>
-					<header>
-						<h6>
-							<a href="#">돈</a>
-						</h6>
-					</header>
-					<p>오직 부자가 되고 싶은 꿈을 품고 여의도 증권가에 입성한 신입 주식...</p>
-				</article>
+							<article style="background-color: rgb(3, 39, 49);">
+								<a href="#" class="image featured"><img
+									src="/MovieHolic/images/money.jpg" alt="" /></a>
+								<header>
+									<h6>
+										<a href="#">돈</a>
+									</h6>
+								</header>
+								<p>오직 부자가 되고 싶은 꿈을 품고 여의도 증권가에 입성한 신입 주식...</p>
+							</article>
 
-				<article style="background-color: rgb(3,39,49);">
-					<a href="#" class="image featured"><img src="/MovieHolic/images/pic01.jpg"
-						alt="" /></a>
-					<header>
-						<h6>
-							<a href="#">뽀로로 극장판 보물섬 대모험</a>
-						</h6>
-					</header>
-					<p>떠나자, 보물섬으로~!뽀로로와 친구들의 스펙터클 보물찾기 어드벤처!</p>
-				</article>
+							<article style="background-color: rgb(3, 39, 49);">
+								<a href="#" class="image featured"><img
+									src="/MovieHolic/images/pic01.jpg" alt="" /></a>
+								<header>
+									<h6>
+										<a href="#">뽀로로 극장판 보물섬 대모험</a>
+									</h6>
+								</header>
+								<p>떠나자, 보물섬으로~!뽀로로와 친구들의 스펙터클 보물찾기 어드벤처!</p>
+							</article>
 
-				<article style="background-color: rgb(3,39,49);">
-					<a href="#" class="image featured"><img src="/MovieHolic/images/pic02.jpg"
-						alt="" /></a>
-					<header>
-						<h6>
-							<a href="#">명탐정 피카츄</a>
-						</h6>
-					</header>
-					<p>“탐정이 아냐, 명탐정이지!”세상을 구할 번쩍이는 추리가 시작된다!</p>
-				</article>
+							<article style="background-color: rgb(3, 39, 49);">
+								<a href="#" class="image featured"><img
+									src="/MovieHolic/images/pic02.jpg" alt="" /></a>
+								<header>
+									<h6>
+										<a href="#">명탐정 피카츄</a>
+									</h6>
+								</header>
+								<p>“탐정이 아냐, 명탐정이지!”세상을 구할 번쩍이는 추리가 시작된다!</p>
+							</article>
 
-				<article style="background-color: rgb(3,39,49);">
-					<a href="#" class="image featured"><img src="/MovieHolic/images/pic03.jpg"
-						alt="" /></a>
-					<header>
-						<h6>
-							<a href="#">어글리 돌</a>
-						</h6>
-					</header>
-					<p>못생겨서 더 사랑스러운 ‘어글리 돌’의 씽~나는 무한도전이 시작된다!</p>
-				</article>
+							<article style="background-color: rgb(3, 39, 49);">
+								<a href="#" class="image featured"><img
+									src="/MovieHolic/images/pic03.jpg" alt="" /></a>
+								<header>
+									<h6>
+										<a href="#">어글리 돌</a>
+									</h6>
+								</header>
+								<p>못생겨서 더 사랑스러운 ‘어글리 돌’의 씽~나는 무한도전이 시작된다!</p>
+							</article>
 
-				<article style="background-color: rgb(3,39,49);">
-					<a href="#" class="image featured"><img src="/MovieHolic/images/pic04.jpg"
-						alt="" /></a>
-					<header>
-						<h6>
-							<a href="#">헬보이</a>
-						</h6>
-					</header>
-					<p>헬보이' 자신이 소속된 B.P.R.D의 임무로 영국의 한 비밀 단체의 괴수 사냥을 도우러 갔지만 되려 공격을
-						당하고,</p>
-				</article>
+							<article style="background-color: rgb(3, 39, 49);">
+								<a href="#" class="image featured"><img
+									src="/MovieHolic/images/pic04.jpg" alt="" /></a>
+								<header>
+									<h6>
+										<a href="#">헬보이</a>
+									</h6>
+								</header>
+								<p>헬보이' 자신이 소속된 B.P.R.D의 임무로 영국의 한 비밀 단체의 괴수 사냥을 도우러 갔지만 되려
+									공격을 당하고,</p>
+							</article>
 
-				<article style="background-color: rgb(3,39,49);">
-					<a href="#" class="image featured"><img src="/MovieHolic/images/pic05.jpg"
-						alt="" /></a>
-					<header>
-						<h6>
-							<a href="#">안도 타다오</a>
-						</h6>
-					</header>
-					<p>“빛의 교회, 지중미술관, 푼타 델라 도가나 미술관 등 세계를 사로잡은 건축가!”</p>
-				</article>
+							<article style="background-color: rgb(3, 39, 49);">
+								<a href="#" class="image featured"><img
+									src="/MovieHolic/images/pic05.jpg" alt="" /></a>
+								<header>
+									<h6>
+										<a href="#">안도 타다오</a>
+									</h6>
+								</header>
+								<p>“빛의 교회, 지중미술관, 푼타 델라 도가나 미술관 등 세계를 사로잡은 건축가!”</p>
+							</article>
 
-			</div>
-			
-			
-		</section>
+						</div>
+
+
+					</section>
 				</div>
 			</div>
 
 		</div>
 
-<%@ include file="/template/footer.jsp" %>
+		<%@ include file="/template/footer.jsp"%>

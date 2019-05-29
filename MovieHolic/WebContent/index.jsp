@@ -1,10 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <%@ include file="/template/header.jsp"%>
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
 </head>
 <body class="homepage is-preload" style="background-color: black;">
+<script type="text/javascript">
+	$(function() {
+		var arr = $("div>div>nav.nav2>li>a");
+		$(arr).click(function() {
+		var vurl = $(this).attr("href");
+		$a.jax({
+			url : vurl,
+			success:function(result){
+				$("section#category").html(result);
+			}
+		});
+			
+		});
+	});
+</script>
 	<div id="page-wrapper">
 
 		<!-- Header -->
@@ -160,22 +176,15 @@
 				<h2>
 					<strong>취향 저격 리스트</strong>
 				</h2>
-				<nav id="nav2" class="tap-content">
-					<ul class="nav" role="tablist">
-						<li class="nav-item"><a data-toggle="tab"
-							class="nav-link active" href="#romance">로맨스</a></li>
-						<li class="nav-item"><a data-toggle="tab" class="nav-link"
-							href="#smdhkfm">느와르</a></li>
-						<li class="nav-item"><a data-toggle="tab" class="nav-link"
-							href="#altmxjfl">미스터리</a></li>
-						<li class="nav-item"><a data-toggle="tab" class="nav-link"
-							href="#horo">공포</a></li>
-						<li class="nav-item"><a data-toggle="tab" class="nav-link"
-							href="#tmflffj">스릴러</a></li>
-						<li class="nav-item"><a data-toggle="tab" class="nav-link"
-							href="#action">액션</a></li>
-						<li class="nav-item"><a data-toggle="tab" class="nav-link"
-							href="#zhalel">코미디</a></li>
+				<nav id="nav2">
+					<ul class="nav">
+						<li><a href="#romance">로맨스</a></li>
+						<li><a href="#smdhkfm">느와르</a></li>
+						<li><a href="#altmxjfl">미스터리</a></li>
+						<li><a href="#horo">공포</a></li>
+						<li><a href="#tmflffj">스릴러</a></li>
+						<li><a href="#action">액션</a></li>
+						<li><a href="#zhalel">코미디</a></li>
 					</ul>
 				</nav>
 			</header>
@@ -184,9 +193,9 @@
 		<!-- user movie list -->
 		<div class="tab-content">
 			<!-- 로맨스 -->
-			<div class="tab-pane active" id="romance">
-				<section class="carousel">
-					<div class="reel">
+			<div class="tab-pane active">
+				<section class="carousel" id="category">
+					<div class="reel" id="romance">
 						<article style="background-color: rgb(3, 39, 49);">
 							<a href="#" class="image featured"><img
 								src="images/brother.jpg" alt="" /></a>
@@ -301,9 +310,8 @@
 				</section>
 			</div>
 			<!-- 액션 -->
-			<div class="tab-pane fade" id="action">
-				<section class="carousel">
-					<div class="reel">
+				<section class="carousel tab-pane fade"id="smdhkfm">
+					<div class="reel" id="action">
 						<article style="background-color: rgb(3, 39, 49);">
 							<a href="#" class="image featured"><img
 								src="images/avengers4.jpg" alt="" /></a>
@@ -413,11 +421,10 @@
 
 					</div>
 				</section>
-			</div>
 			<!-- 느와르 -->
-			<div class="tab-pane fade" id="smdhkfm">
+			<div class="tab-pane fade">
 				<section class="carousel">
-					<div class="reel">
+					<div class="reel" id="smdhkfm">
 						<article style="background-color: rgb(3, 39, 49);">
 							<a href="#" class="image featured"><img
 								src="images/avengers4.jpg" alt="" /></a>
@@ -529,9 +536,9 @@
 				</section>
 			</div>
 			<!-- 미스터리 -->
-			<div class="tab-pane fade" id="altmxjfl">
+			<div class="tab-pane fade">
 				<section class="carousel">
-					<div class="reel">
+					<div class="reel"  id="altmxjfl">
 						<article style="background-color: rgb(3, 39, 49);">
 							<a href="#" class="image featured"><img
 								src="images/avengers4.jpg" alt="" /></a>
@@ -643,9 +650,9 @@
 				</section>
 			</div>
 			<!-- 공포 -->
-			<div class="tab-pane fade" id="horo">
+			<div class="tab-pane fade">
 				<section class="carousel">
-					<div class="reel">
+					<div class="reel" id="horo">
 						<article style="background-color: rgb(3, 39, 49);">
 							<a href="#" class="image featured"><img
 								src="images/avengers4.jpg" alt="" /></a>
@@ -757,9 +764,9 @@
 				</section>
 			</div>
 			<!-- 스릴러 -->
-			<div class="tab-pane fade" id="tmflffj">
+			<div class="tab-pane fade">
 				<section class="carousel">
-					<div class="reel">
+					<div class="reel" id="tmflffj">
 						<article style="background-color: rgb(3, 39, 49);">
 							<a href="#" class="image featured"><img
 								src="images/avengers4.jpg" alt="" /></a>
@@ -871,9 +878,9 @@
 				</section>
 			</div>
 			<!-- 코미디 -->
-			<div class="tab-pane fade" id="zhalel">
+			<div class="tab-pane fade">
 				<section class="carousel">
-					<div class="reel">
+					<div class="reel" id="zhalel">
 						<article style="background-color: rgb(3, 39, 49);">
 							<a href="#" class="image featured"><img
 								src="images/avengers4.jpg" alt="" /></a>
