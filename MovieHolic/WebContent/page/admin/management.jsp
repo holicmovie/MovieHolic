@@ -5,10 +5,10 @@
 <%@ include file="/template/boot_431.jsp"%>
 
 
-<!-- 날짜 -->
-<link id="themecss" rel="stylesheet" type="text/css" href="//www.shieldui.com/shared/components/latest/css/light/all.min.css" />
-<script type="text/javascript"	src="//www.shieldui.com/shared/components/latest/js/jquery-1.11.1.min.js"></script>
-<script type="text/javascript"	src="//www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
+<!--  style="width:100%; border-bottom: 0.3em solid #fff;" -->
+
+
+
 
 
 <script type="text/javascript">
@@ -19,6 +19,13 @@
 
 
 <style>
+tr>td>input {
+	-ms-transform: scale(2); /* IE */
+	-moz-transform: scale(2); /* FF */
+	-webkit-transform: scale(2); /* Safari and Chrome */
+	-o-transform: scale(2); /* Opera */
+}
+
 .container {
 	background-image: url("/Content/img/datepicker/s4.png");
 	background-position: center;
@@ -26,9 +33,11 @@
 	height: 740px;
 	text-align: center;
 }
+
 .top {
 	padding-top: 290px;
 }
+
 #field {
 	width: 200px;
 	line-height: 37px;
@@ -38,267 +47,336 @@
 	padding: 7px;
 	margin: 0 auto;
 }
+
+/* 구분선 굵은 것 */
+hr.line_bold {
+	background-color: white;
+	height: 2px;
+	position: static;
+}
+
+/* 구분선 얇은 것 (흰색) */
+hr.line_light_w {
+	background-color: white;
+	position: static;
+}
 </style>
+
+
 
 </head>
 
 <body class="left-sidebar is-preload">
 
 
-<div id="page-wrapper">
+	<div id="page-wrapper">
 
 
-<!-- Header -->
-	<div id="header"  style="background-image: none; margin-bottom: 0px; padding-bottom:0; height: 10px;">
-<%@ include file="/template/nav.jsp"%>
-	</div>
-<!-- Main -->
-
-<div class="wrapper style1">
-
-
-
-	<%-- 회원 관리 테이블 --%>
-	<div class="container">
-		<div class="row">
-
-			<div class="col-lg-4">
-				<img src="/MovieHolic/images/증명사진.PNG" class="img-thumbnail"
-					width="170" height="220">
-			</div>
-
-			<div class="col-lg-8">
-				<div class="col-lg-12">
-					<h2 align="left">Member Management Table</h2>
-					<p align="left">This table is a table to manage members :</p>
-				</div>
-				<div class="col-lg-12">
-					<div class="input-group mb-3">
-						<input type="text" class="form-control" placeholder="user name"
-							id="name" name="name">
-						<div class="input-group-append">
-							<button type="submit" class="btn btn-primary">Search</button>
-						</div>
-					</div>
-					<div class="col-lg-12">
-						<div class="float-right">
-							<span
-								style="color: #D4D4D4; font-weight: 900; font-size: 17px; opacity: 1;">Old
-								Date:</span> <input class="datepicker" /> &nbsp;<strong>~</strong>&nbsp;
-							<span
-								style="color: #D4D4D4; font-weight: 900; font-size: 17px; opacity: 1;">Now
-								Date:</span> <input class="datepicker" />
-						</div>
-					</div>
-				</div>
-			</div>
+		<!-- Header -->
+		<div id="header" style="background-image: none;">
+			<%@ include file="/template/nav.jsp"%>
 		</div>
 
 
 
-		<table class="table table-bordered">
-			<thead>
-				<tr>
-					<th>번호</th>
-					<th>이름</th>
-					<th>아이디</th>
-					<th>연령</th>
-					<th>연락처</th>
-					<th>성별</th>
-					<th>이메일</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>1</td>
-					<td>임꺽정</td>
-					<td>Rjrwjd</td>
-					<td>130</td>
-					<td>111-1111-1111</td>
-					<td>남</td>
-					<td>Rjrwjd@naver.com</td>
-				</tr>
-				<tr>
-					<td>2</td>
-					<td>임춘자</td>
-					<td>cnswk</td>
-					<td>110</td>
-					<td>111-1234-1111</td>
-					<td>여</td>
-					<td>cnswk@naver.com</td>
-				</tr>
-				<tr>
-					<td>3</td>
-					<td>dygks</td>
-					<td>Rjrwjd</td>
-					<td>30</td>
-					<td>111-1111-1234</td>
-					<td>남</td>
-					<td>dygks@naver.com</td>
-				</tr>
-			</tbody>
-		</table>
 
 
-		<!-- 테이블 하단 -->
-		<div class="row">
-			<div class="col-lg-3"></div>
-			<div class="col-lg-4">
-				<ul class="pagination">
-					<li class="page-item"><a class="page-link" href="#">Previous</a></li>
-					<li class="page-item"><a class="page-link" href="#">1</a></li>
-					<li class="page-item"><a class="page-link" href="#">2</a></li>
-					<li class="page-item"><a class="page-link" href="#">3</a></li>
-					<li class="page-item"><a class="page-link" href="#">4</a></li>
-					<li class="page-item"><a class="page-link" href="#">5</a></li>
-					<li class="page-item"><a class="page-link" href="#">Next</a></li>
-				</ul>
-			</div>
-			<div class="col-lg-2"></div>
-			<div class="col-lg-1"></div>
-			<div class="col-lg-2">
-				<div class="btn-group btn-group-lg">
-					<button type="button" class="btn btn-primary">삭제</button>
-				</div>
-			</div>
-		</div>
-	</div>
+		<!-- Main -->
 
+		<div class="wrapper style1">
 
+			<div class="container">
 
+				<!-- 회원 관리 -->
+				<div class="row" style="margin-bottom: -5em;">
 
+					<div class="col-lg-6">
+						<h2 align="left">회원 관리</h2>
+					</div>
 
-
-
-	<%-- 신고 관리 테이블 --%>
-	<div class="container">
-		<div class="row">
-
-
-			<div class="col-lg-12">
-				<div class="col-lg-12">
-					<h2 align="left">Declaration Management Table</h2>
-					<p align="left">This table is a Declaration Management Table :
-					</p>
-				</div>
-				<div class="col-lg-12">
-
-
-					<div class="input-group lg-12">
-
-
-						<div class="col-lg-2">
-							<div class="dropdown">
-								<button type="button" class="btn btn-primary dropdown-toggle"
-									data-toggle="dropdown">Dropdown button</button>
-								<div class="dropdown-menu">
-									<a class="dropdown-item" href="#">이름</a> <a
-										class="dropdown-item" href="#">아이디</a> <a
-										class="dropdown-item" href="#">제목</a>
-								</div>
+					<div class="col-lg-1">
+						<div class="dropdown">
+							<button type="button" class="btn btn-success dropdown-toggle"
+								data-toggle="dropdown">이름</button>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="#">아이디</a>
 							</div>
 						</div>
-						<input type="text" class="form-control" placeholder="moive name"
-							id="name" name="name">
-						<div class="input-group-append">
-							<button type="submit" class="btn btn-primary">Search</button>
+					</div>
+
+					<div class="col-lg-5">
+						<div class="input-group mb-3" align="right">
+							<input type="text" class="form-control" placeholder="검색"
+								id="name" name="name">
+							<div class="input-group-append">
+								<button type="submit" class="btn btn-success" style="z-index: 0">검색</button>
+							</div>
 						</div>
+					</div>
+
+					<hr style="color: #fff">
+				</div>
 
 
-					</div><br>
+				<hr class="line_light_w">
+
+				<div align="right">
+					<span class="dropdown">
+						<button type="button" class="btn btn-success dropdown-toggle"
+							data-toggle="dropdown">목록</button>
+						<span class="dropdown-menu">
+							<a class="dropdown-item" href="#">전체목록</a>
+							<a class="dropdown-item" href="#">휴면목록</a>
+							<a class="dropdown-item" href="#">탈퇴목록</a>
+						</span>
+					</span>
+					<button type="submit" class="btn btn-success" style="z-index: 0">탈퇴</button>
+					<button type="submit" class="btn btn-success" style="z-index: 0">휴면</button>
+				</div>
+				<!-- <button type="submit" class="btn btn-success">검색</button> -->
+
+
+				<table class="table" style="border-bottom: 0.2em solid #fff;">
+					<br>
+					<thead>
+						<tr>
+							<th>
+								<div>
+									<button type="submit" class="btn btn-success"
+										style="z-index: 0;">전체선택</button>
+								</div>
+							</th>
+							<th>회원ID</th>
+							<th>이름</th>
+							<th>주민번호 앞자리</th>
+							<th>연락처</th>
+							<th>성별</th>
+							<th>가입일</th>
+							<th>탈퇴일</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>abc123@naver.com</td>
+							<td>김무비</td>
+							<td>940618</td>
+							<td>111-1111-1111</td>
+							<td>남</td>
+							<td>2019.01.01</td>
+							<td>-</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>abc123@naver.com</td>
+							<td>김무비</td>
+							<td>940618</td>
+							<td>111-1111-1111</td>
+							<td>남</td>
+							<td>2019.01.01</td>
+							<td>-</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>abc123@naver.com</td>
+							<td>김무비</td>
+							<td>940618</td>
+							<td>111-1111-1111</td>
+							<td>남</td>
+							<td>2019.01.01</td>
+							<td>-</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>abc123@naver.com</td>
+							<td>김무비</td>
+							<td>940618</td>
+							<td>111-1111-1111</td>
+							<td>남</td>
+							<td>2019.01.01</td>
+							<td>-</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>abc123@naver.com</td>
+							<td>김무비</td>
+							<td>940618</td>
+							<td>111-1111-1111</td>
+							<td>남</td>
+							<td>2019.01.01</td>
+							<td>2019.01.13</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<div class="row">
+
+					<div class="col-lg-2">
+						<button type="submit" class="btn btn-success">이전</button>
+					</div>
+
+					<div class="col-lg-2"></div>
+
+					<div class="col-lg-4">
+						<ul class="pagination"
+							style="width: 240px; margin-left: auto; margin-right: auto;">
+							<li class="page-item"><a class="page-link" href="#">1</a></li>
+							<li class="page-item"><a class="page-link" href="#">2</a></li>
+							<li class="page-item"><a class="page-link" href="#">3</a></li>
+							<li class="page-item"><a class="page-link" href="#">4</a></li>
+							<li class="page-item"><a class="page-link" href="#">5</a></li>
+						</ul>
+					</div>
+
+					<div class="col-lg-2"></div>
+
+					<div class="col-lg-2">
+						<button type="submit" class="btn btn-success">다음</button>
+					</div>
+
+
+				</div>
+
+			</div>
+			<br> <br> <br>
 
 
 
 
 
-					<div class="col-lg-12">
-						<div class="float-right">
-							<span
-								style="color: #D4D4D4; font-weight: 900; font-size: 17px; opacity: 1;">Old
-								Date:</span> <input class="datepicker" /> &nbsp;<strong>~</strong>&nbsp;
-							<span
-								style="color: #D4D4D4; font-weight: 900; font-size: 17px; opacity: 1;">Now
-								Date:</span> <input class="datepicker" />
-						</div>
-					</div><br><br>
-					
-					
+
+
+
+
+
+
+
+			<!-- 신고 게시글 관리 -->
+			<div class="container">
+
+
+				<div class="row" style="margin-bottom: -5em;">
+					<div class="col-lg-4">
+						<h2 align="left">신고 게시글 관리</h2>
+					</div>
+					<div class="col-lg-4"></div>
+					<div class="col-lg-4"></div>
+
+					<hr style="color: #fff">
+				</div>
+
+
+				<hr class="line_light_w">
+
+				<div align="right">
+					<button type="submit" class="btn btn-success" style="z-index: 0">삭제</button>
+				</div>
+
+
+				<table class="table" style="border-bottom: 0.2em solid #fff;">
+					<br>
+					<thead>
+						<tr>
+							<th></th>
+							<th>번호</th>
+							<th>분류</th>
+							<th>작성자ID</th>
+							<th>제목</th>
+							<th>내용</th>
+							<th>작성일</th>
+							<th>신고수</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>1</td>
+							<td>List</td>
+							<td>abc123</td>
+							<td>으히히히</td>
+							<td>신고게시물이다. 스포내용담고있음</td>
+							<td>2019.05.25</td>
+							<td>20</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>2</td>
+							<td>Review</td>
+							<td>abc123</td>
+							<td>으히히히</td>
+							<td>신고게시물이다. 스포내용담고있음</td>
+							<td>2019.05.25</td>
+							<td>120</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>3</td>
+							<td>List</td>
+							<td>abc12223</td>
+							<td>으히히히</td>
+							<td>신고게시물이다. 스포내용담고있음</td>
+							<td>2019.05.25</td>
+							<td>45</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>4</td>
+							<td>Review</td>
+							<td>DDong</td>
+							<td>으히히히</td>
+							<td>신고게시물이다. 스포내용담고있음</td>
+							<td>2019.05.25</td>
+							<td>88</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /></td>
+							<td>5</td>
+							<td>List</td>
+							<td>abc123</td>
+							<td>으히히히</td>
+							<td>신고게시물이다. 스포내용담고있음</td>
+							<td>2019.05.25</td>
+							<td>1004</td>
+						</tr>
+					</tbody>
+				</table>
+
+
+				<div class="row">
+
+
+					<div class="col-lg-2">
+						<button type="submit" class="btn btn-success">이전</button>
+					</div>
+
+					<div class="col-lg-2"></div>
+
+					<div class="col-lg-4">
+						<ul class="pagination"
+							style="width: 240px; margin-left: auto; margin-right: auto;">
+							<li class="page-item"><a class="page-link" href="#">1</a></li>
+							<li class="page-item"><a class="page-link" href="#">2</a></li>
+							<li class="page-item"><a class="page-link" href="#">3</a></li>
+							<li class="page-item"><a class="page-link" href="#">4</a></li>
+							<li class="page-item"><a class="page-link" href="#">5</a></li>
+						</ul>
+					</div>
+
+					<div class="col-lg-2"></div>
+
+					<div class="col-lg-2">
+						<button type="submit" class="btn btn-success">다음</button>
+					</div>
 				</div>
 			</div>
+
+
 		</div>
 
 
 
 
-		<table class="table table-bordered">
-			<thead>
-				<tr>
-					<th>번호</th>
-					<th>이름</th>
-					<th>아이디</th>
-					<th>게시물 제목</th>
-					<th>게시물 내용</th>
-					<th>작성일</th>
-					<th>분류</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>1</td>
-					<td>임꺽정</td>
-					<td>Rjrwjd</td>
-					<td>으아아아아</td>
-					<td>안녕하세요 신고 게시물입니다...</td>
-					<td>2019-05-21</td>
-					<td>분류1</td>
-				</tr>
-				<tr>
-					<td>2</td>
-					<td>임춘자</td>
-					<td>cnswk</td>
-					<td>으아아아아</td>
-					<td>신고합니다아아아아아...</td>
-					<td>2019-05-21</td>
-					<td>분류1</td>
-				</tr>
-				<tr>
-					<td>3</td>
-					<td>dygks</td>
-					<td>Rjrwjd</td>
-					<td>으아아아아</td>
-					<td>신고한다아아아아아ㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄴㅇㄹㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ글자제한하기...</td>
-					<td>2019-04-44</td>
-					<td>분류2</td>
-				</tr>
-			</tbody>
-		</table>
-
-		<!-- 테이블 하단 -->
-		<div class="row">
-			<div class="col-lg-3"></div>
-			<div class="col-lg-4">
-				<ul class="pagination">
-					<li class="page-item"><a class="page-link" href="#">Previous</a></li>
-					<li class="page-item"><a class="page-link" href="#">1</a></li>
-					<li class="page-item"><a class="page-link" href="#">2</a></li>
-					<li class="page-item"><a class="page-link" href="#">3</a></li>
-					<li class="page-item"><a class="page-link" href="#">4</a></li>
-					<li class="page-item"><a class="page-link" href="#">5</a></li>
-					<li class="page-item"><a class="page-link" href="#">Next</a></li>
-				</ul>
-			</div>
-			<div class="col-lg-2"></div>
-			<div class="col-lg-1"></div>
-			<div class="col-lg-2">
-				<div class="btn-group btn-group-lg">
-					<button type="button" class="btn btn-primary">삭제</button>
-				</div>
-			</div>
-		</div>
-
-	</div>
 
 
-</div>
 
-<%@ include file="/template/footer.jsp"%>
+		<%@ include file="/template/footer.jsp"%>

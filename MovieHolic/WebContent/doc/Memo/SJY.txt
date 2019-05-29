@@ -1,0 +1,190 @@
+1. Film 기본 기능
+
+	1) Film
+		- 목록조회
+		- 내용조회
+		- Wish List 추가/해제
+		- 예고편 조회
+		- 스트리밍 사이트 이동
+
+	2) 리뷰
+		- 목록조회
+
+2. 관련 페이지
+
+	1) index.jsp
+		a. 기본화면
+			- 박스 오피스 순위
+				- API ① '영화진흥위원회 주간/주말 박스오피스 API'
+					- 호출 방식 : REST 방식 (GET)
+					- 출력 포맷 : XML, JSON
+					- 호출
+						+ key
+						+ 조회날짜(오늘날짜)
+						+ 주간/주말/주중 中 택1(주간)
+						+ 개수(10)
+					- 응답
+						+ 박스오피스 순위(rank)
+						+ 영화한글명(movieNm)
+
+				- API ② '네이버 영화 검색 API'
+					- 호출 방식 : REST 방식 (GET)
+					- 출력 포맷 : XML, JSON
+					- 호출
+						+ 검색어(영화한글명)
+						+ 결과개수(1)
+					- 응답
+						+ 영화 포스터 썸네일 이미지 url(image)
+						     -> 저화질이므로, 고화질 이미지로 변환 필요
+						     -> url에서 movieCode 파라미터값을 얻어, 네이버 영화의 고화질 포스터 기본 url에서 movieCode값만 바꾸어 얻어냄
+
+			- 사용자 맞춤형 영화 추천
+				- 내부 DB ① '게시판 Table'
+					- select 항목
+						+ 영화코드
+						+ 작성자 id
+					- select 조건
+						+ 작성자 id == 현재 session id
+						+ board code == 리뷰게시판 code
+
+				- API ① '영화진흥위원회 영화상세 API'
+					- 호출
+						+ key
+						+ 영화코드
+					- 응답
+						+ 장르(genreNm)
+						+ 감독명(directors>peopleNm)
+						+ 배우명(actors>peopleNm)
+					[*의논필요①*] 게시판 테이블에 영화 코드와 함께 (영화명, 장르, 감독명, 배우명)을 넣어두면 해당 작업 없어도 됨
+
+				- API ② '영화진흥위원회 영화목록 API'
+					- 호출
+						+ key
+						+ 감독명
+					- 응답
+						+ 영화한글명(movieNm)
+
+				- API ③ '영화진흥위원회 영화인목록 API'
+					- 호출
+						+ key
+						+ 결과개수(10)
+						+ 영화인명
+					- 응답
+						+ 필모리스트(filmoNames)
+						   -> EX ) 인질(가제)|사바하|치즈인더트랩|군함도|베테랑...
+				
+				- API ④ '네이버 영화 검색 API'
+					- 호출
+						+ 검색어(영화한글명)
+						+ 결과개수(1)
+					- 응답
+						+ 영화 포스터 썸네일 이미지 url(image)
+
+		
+		b. 페이지 이동
+			- 영화 포스터 이미지 : 영화 상세 페이지로 이동 (->movieDetail.jsp?moviecode=xxx)
+
+	2) moviefilm.jsp
+		a. 기본화면
+			- 주간 인기 영화
+				- 내부 DB ① '게시판 Table'
+					- select 항목
+						+ rownum
+						+ 영화코드
+						+ count(*)
+					- select 조건
+						+ board code == 리뷰게시판 code
+						+ group by 영화코드
+						+ order by count(*) desc
+						+ rownum <= 10
+
+				- API ① '영화진흥위원회 영화상세 API'
+					- 호출
+						+ key
+						+ 영화코드
+					- 응답
+						+ 영화한글명(movieNm)
+					[*의논필요①과 같음*]
+
+-				- API ② '네이버 영화 검색 API'
+					- 호출
+						+ 검색어(영화한글명)
+						+ 결과개수(1)
+					- 응답
+						+ 영화 포스터 썸네일 이미지 url(image)
+
+			- 장르별 영화 목록
+				- API ① '네이버 영화 검색 API'
+					- 호출
+						+검색어(가, 나, a, b, ...)
+						+ 결과수(15)
+						+ 장르(전체 시 지정x, 나머지는 장르코드)
+					- 응답
+						+ 영화한글명(title)
+						+ 영화 포스터 썸네일 이미지 url(image)
+
+		b. 페이지 이동
+			- 영화 포스터 이미지 : 영화 상세 페이지로 이동 (->movieDetail.jsp?moviecode=xxx)
+		
+		c. 페이징 처리
+			- 선택한 장르별 영화 목록
+			- '영화제목'으로 검색한 영화 목록
+
+	3) movieDetail.jsp
+		a. 기본화면
+			- 영화 상세 정보
+				- API ① '영화진흥위원회 영화상세 API'
+					- 호출
+						+ key
+						+ 영화코드
+					- 응답
+						+ 영화한글명(movieNm)
+						+ 영화영문명(movieNmEn)
+						+ 개봉날짜(openDt)
+						+ 장르(genreNm)
+						+ 제작국가(nations)
+						+ 상영시간(showTm)
+
+						+ 감독명(directors>peopleNm)  *배열
+
+						+ 배우명(actors>peopleNm)      *배열
+						+ 역할명(actor>cast)                *배열
+						+ 등급정보(audit>watchGradeNm)
+
+						+ 제작사명(companys>company>companyNm) *companyPartNm=='제작사'인 것만
+
+				- API ② '네이버 영화 검색 API'
+					- 호출
+						+ 검색어(영화한글명)
+						+ 결과개수(1)
+					- 응답
+						+ 영화 포스터 썸네일 이미지 url(image)
+
+-				- API ③ '네이버 기본 검색 API'
+-					- 호출
+						+ serviceid(검색대상-image)
+						+ 검색어(감독명, 배우명)
+						+ 결과수(1)
+						+ 정렬방식(sim-유사도순)
+					- 응답
+						+ 이미지 url(link)
+
+			- 리뷰 목록
+				- 내부 DB ① '게시판 Table'
+					- select 항목
+						+ 제목
+						+ 작성자 id
+						+ 작성일
+						+ 내용
+						+ 별점
+					- select 조건
+						+ boardCode == 리뷰 게시판 code
+						+ 공개여부 == true
+						+ order by 작성일 desc
+
+		b. 페이지 이동
+			- 스트리밍 사이트 버튼 : 해당 영화의 스트리밍 사이트로 이동 (-> ?)
+			- 리뷰 쓰기 버튼 : 리뷰 작성 페이지로 이동 (->writereview.jsp?moviecode=xxx)
+
+		c. 페이징 처리
+			- 리뷰 목록
