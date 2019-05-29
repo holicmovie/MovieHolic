@@ -187,8 +187,6 @@ series.columns.template.adapter.add("fill", (fill, target) => {
   return chart.colors.getIndex(target.dataItem.index);
 });
 
-chart.scrollbarX = new am4core.Scrollbar();
-
 });
 
 </script>
