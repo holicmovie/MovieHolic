@@ -3,13 +3,17 @@
 <%@ include file="/template/header.jsp"%>
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
+<%-- datepicker --%>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 
 <!-- 생년월일의 datepicker용 -->
-<link href="/MovieHolic/assets/css/datepicker.min.css" rel="stylesheet" type="text/css">
-<script src="/MovieHolic/assets/js/datepicker.min.js"></script>
+<!-- <link href="/MovieHolic/assets/css/datepicker.min.css" rel="stylesheet" type="text/css">
+<script src="/MovieHolic/assets/js/datepicker.min.js"></script> -->
 <!-- Include 한글버전 -->
-<!-- <script src="/MovieHolic/assets/js/datepicker.kr.js"></script>
-생년월일의 datepicker용 -->
+<script src="/MovieHolic/assets/js/datepicker.kr.js"></script>
 
 <style>
 .btn_red{
@@ -103,7 +107,7 @@ $(function(){
 
 						</div>
 
-						<!-- 전화번호, email, 자기소개 -->
+						<!-- 전화번호, 생년월일, 성별 -->
 						<div class="col-lg-5 col-12-mobile">
 						
 							<div class="form-group">
