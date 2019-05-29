@@ -68,7 +68,7 @@
 						<%-- 최근 '좋아요'한 영화 --%>
 						<div class="row" style="margin-top: 1em;">
 							<div class="font_bold_mid" style="width:100%; border-bottom: 2.5px solid #fff; margin-bottom: 0; padding-bottom: 0.8em;">
-								<div style="float: left;">최근 '좋아요'한 영화</div>
+								<div style="float: left;">최근 '보고싶어요'한 영화</div>
 							</div>
 							<section class="carousel">
 								<div class="reel">
