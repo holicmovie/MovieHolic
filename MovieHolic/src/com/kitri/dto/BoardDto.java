@@ -14,7 +14,7 @@ public class BoardDto { // 게시판
 	private String movieCodeNaver; // 영화코드(네이버)
 	private String movieName; // 영화명
 	private int starPoint; // 별점
-	private String cotegory; // 장르
+	private String category; // 장르
 	private int best; // 추천수
 	private int worst; // 비추천수
 	private int viewCount; // 조회수
@@ -112,12 +112,12 @@ public class BoardDto { // 게시판
 		this.starPoint = starPoint;
 	}
 
-	public String getCotegory() {
-		return cotegory;
+	public String getCategory() {
+		return category;
 	}
 
-	public void setCotegory(String cotegory) {
-		this.cotegory = cotegory;
+	public void setCategory(String cotegory) {
+		this.category = cotegory;
 	}
 
 	public int getBest() {
@@ -167,7 +167,7 @@ public class BoardDto { // 게시판
 		return "BoardDto [seq=" + seq + ", boardCode=" + boardCode + ", subject=" + subject + ", userId=" + userId
 				+ ", postDate=" + postDate + ", content=" + content + ", movieCodeYoung=" + movieCodeYoung
 				+ ", movieCodeNaver=" + movieCodeNaver + ", movieName=" + movieName + ", starPoint=" + starPoint
-				+ ", cotegory=" + cotegory + ", best=" + best + ", worst=" + worst + ", viewCount=" + viewCount
+				+ ", category=" + category + ", best=" + best + ", worst=" + worst + ", viewCount=" + viewCount
 				+ ", enable=" + enable + ", notify=" + notify + "]";
 	}
 

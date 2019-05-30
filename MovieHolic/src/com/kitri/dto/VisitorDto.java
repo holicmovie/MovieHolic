@@ -14,8 +14,6 @@ public class VisitorDto {	//접속기록
 		super();
 	}
 
-	
-	
 	///// getter & setter /////
 	
 	public Date getConnectDate() {

@@ -398,6 +398,31 @@
 						</header>
 					</div>
 				</div>
+				
+					<%-- float clear용 빈 div --%>
+					<div style="clear: both;"></div>
+				<div class="col-lg-12" style="padding: 0 0 0 0;">
+				<div style="float: left; padding-left: 1em;">
+					<button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button>
+				</div>
+				
+				<div style="float: right; padding-right: 11em;">
+					<button class="btn btn-success font_bold_small">다&nbsp;&nbsp;&nbsp;음</button>
+				</div>
+		
+				<ul class="pagination justify-content-center">
+					<li class="page-item"><a class="page-link a"
+						href="javascript:void(0);">1</a></li>
+					<li class="page-item"><a class="page-link a"
+						href="javascript:void(0);">2</a></li>
+					<li class="page-item"><a class="page-link a"
+						href="javascript:void(0);">3</a></li>
+					<li class="page-item"><a class="page-link a"
+						href="javascript:void(0);">4</a></li>
+					<li class="page-item"><a class="page-link a"
+						href="javascript:void(0);">5</a></li>
+				</ul>
+				</div>
 			</div>
 
 			<div class="col-lg-2 col-1-mobile"
@@ -422,6 +447,9 @@
 				</ul>
 			</div>
 		</div>
+		
+				
+		
 	</div>
 
 
