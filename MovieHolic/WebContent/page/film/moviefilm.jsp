@@ -130,10 +130,16 @@
 
 <div>	
 	<div  class="col-lg-9 col-2-mobile" style="float:right; margin-right: 2em; border-left: 5px solid; border-color: white;">
-	<div class="col-lg-12 col-2-mobile" style="margin-top: 1em;"><input type="text"
+
+<div class="row">
+	<div class="col-lg-8"></div>
+	<div class="col-lg-2 col-2-mobile" style="margin-top: 1em;"><input type="text"
 					class="form-control"
 					style="height: 40px; width: 13em; background-image: /MovieHolic/images/searchb.png"
-					placeholder="제목으로 검색"></div>
+					placeholder="제목으로 검색">
+	</div>
+	<div class="col-lg-2"></div>
+</div>
 		<div  class="col-lg-2 col-8-mobile"
 			style="float: left; margin: 0.5em 0.5em 0.5em 0.5em; padding: 2px; border: 2px solid; border-color: white;">
 			<a href="/MovieHolic/page/film/moviedetail.jsp"
