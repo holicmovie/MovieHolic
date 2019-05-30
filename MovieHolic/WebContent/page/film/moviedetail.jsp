@@ -66,6 +66,14 @@ hover
 --%>
 </style>
 <body class="left-sidebar is-preload">
+<script type="text/javascript">
+$(function() {
+	$("#wishlistAdd").click(function() {
+		alert("위시리스트에 추가되었습니다");
+		return false;
+	});
+});
+</script>
 	<div id="page-wrapper">
 
 		<!-- Header -->
@@ -109,9 +117,9 @@ hover
 											href="https://www.youtube.com" class="button"
 											style="color: rgb(240, 195, 15); margin-right: 10px; background-color: rgb(2, 39, 49);">예고편
 												영상</a> <a
-											style="color: rgb(240, 195, 15); background-color: rgb(2, 39, 49);"
+											style="color: rgb(240, 195, 15); background-color: rgb(2, 39, 49); margin-right: 10px;"
 											href="/MovieHolic/page/mypage/writereview.jsp" class="button">리뷰
-												쓰기</a></li>
+												쓰기</a><a id="wishlistAdd"class="button" style="color: rgb(240, 195, 15); background-color: rgb(2, 39, 49);">위시리스트 추가</a></li>
 									</ul>
 
 									<h3>
