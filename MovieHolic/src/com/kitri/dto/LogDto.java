@@ -4,13 +4,13 @@ public class LogDto { // 활동기록
 
 	private String logDate; // 활동시간
 	private int logCate; // 활동분류
-	private String userId; // 활동ID
+	private String logId; // 활동ID
 	private String sujbect; // 제목
-	private String writerId; // 작성자ID
+	private String userId; // 작성자ID
 
 	
 	///// 생성자 /////
-	
+
 	public LogDto() {
 		super();
 	}
@@ -35,12 +35,12 @@ public class LogDto { // 활동기록
 		this.logCate = logCate;
 	}
 
-	public String getUserId() {
-		return userId;
+	public String getLogId() {
+		return logId;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setLogId(String logId) {
+		this.logId = logId;
 	}
 
 	public String getSujbect() {
@@ -51,23 +51,22 @@ public class LogDto { // 활동기록
 		this.sujbect = sujbect;
 	}
 
-	public String getWriterId() {
-		return writerId;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setWriterId(String writerId) {
-		this.writerId = writerId;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 
 
 	@Override
 	public String toString() {
-		return "LogDto [logDate=" + logDate + ", logCate=" + logCate + ", userId=" + userId + ", sujbect=" + sujbect
-				+ ", writerId=" + writerId + "]";
+		return "LogDto [logDate=" + logDate + ", logCate=" + logCate + ", logId=" + logId + ", sujbect=" + sujbect
+				+ ", userId=" + userId + "]";
 	}
 
-	
 	
 
 }
