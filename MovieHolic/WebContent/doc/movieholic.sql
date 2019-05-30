@@ -140,11 +140,11 @@ CREATE TABLE holic_board (
 	movieCodeNaver VARCHAR2(500), /* 영화코드(네이버) */
 	movieCodeYoung VARCHAR2(500), /* 영화코드(진흥원) */
 	category VARCHAR2(24), /* 장르 */
-	best NUMBER, /* 추천 */
-	worst NUMBER, /* 비추천 */
-	notify NUMBER, /* 신고 */
+	best NUMBER default 0, /* 추천 */
+	worst NUMBER default 0, /* 비추천 */
+	notify NUMBER default 0, /* 신고 */
 	enable NUMBER, /* 공개여부 */
-	viewCount NUMBER /* 조회수 */
+	viewCount NUMBER default 0/* 조회수 */
 );
 
 COMMENT ON TABLE holic_board IS 'holic_board';
