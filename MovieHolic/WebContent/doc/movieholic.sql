@@ -8,14 +8,14 @@ ALTER TABLE holic_board
 		CONSTRAINT FK_holic_category_TO_holic_board
 		CASCADE;
 
-ALTER TABLE holic_coment
+ALTER TABLE holic_comment
 	DROP
-		CONSTRAINT FK_holic_user_TO_holic_coment
+		CONSTRAINT FK_holic_user_TO_holic_comment
 		CASCADE;
 
-ALTER TABLE holic_coment
+ALTER TABLE holic_comment
 	DROP
-		CONSTRAINT FK_holic_board_TO_holic_coment
+		CONSTRAINT FK_holic_board_TO_holic_comment
 		CASCADE;
 
 ALTER TABLE holic_social
@@ -39,13 +39,8 @@ ALTER TABLE holic_board
 		CASCADE
 		KEEP INDEX;
 
-ALTER TABLE TABLE2
-	DROP
-		PRIMARY KEY
-		CASCADE
-		KEEP INDEX;
 
-ALTER TABLE holic_coment
+ALTER TABLE holic_comment
 	DROP
 		PRIMARY KEY
 		CASCADE
@@ -83,9 +78,7 @@ ALTER TABLE holic_log
 
 DROP INDEX PK_holic_board;
 
-DROP INDEX PK_TABLE2;
-
-DROP INDEX PK_holic_coment;
+DROP INDEX PK_holic_comment;
 
 DROP INDEX PK_holic_user;
 
@@ -101,12 +94,9 @@ DROP INDEX PK_holic_log;
 DROP TABLE holic_board 
 	CASCADE CONSTRAINTS;
 
-/* 회원_위시리스트 */
-DROP TABLE TABLE2 
-	CASCADE CONSTRAINTS;
 
 /* holic_review */
-DROP TABLE holic_coment 
+DROP TABLE holic_comment 
 	CASCADE CONSTRAINTS;
 
 /* holic_social */
@@ -149,11 +139,11 @@ CREATE TABLE holic_board (
 	movieName VARCHAR2(200), /* 영화명 */
 	movieCodeNaver VARCHAR2(500), /* 영화코드(네이버) */
 	movieCodeYoung VARCHAR2(500), /* 영화코드(진흥원) */
-	cotegory VARCHAR2(24), /* 장르 */
+	category VARCHAR2(24), /* 장르 */
 	best NUMBER, /* 추천 */
 	worst NUMBER, /* 비추천 */
 	notify NUMBER, /* 신고 */
-	enable VARCHAR2(8), /* 공개여부 */
+	enable NUMBER, /* 공개여부 */
 	viewCount NUMBER /* 조회수 */
 );
 
@@ -179,7 +169,7 @@ COMMENT ON COLUMN holic_board.movieCodeNaver IS '영화코드(네이버)';
 
 COMMENT ON COLUMN holic_board.movieCodeYoung IS '영화코드(진흥원)';
 
-COMMENT ON COLUMN holic_board.cotegory IS '장르';
+COMMENT ON COLUMN holic_board.category IS '장르';
 
 COMMENT ON COLUMN holic_board.best IS '추천';
 
@@ -204,32 +194,33 @@ ALTER TABLE holic_board
 		);
 
 
+
 /* holic_review */
-CREATE TABLE holic_coment (
+CREATE TABLE holic_comment (
 	postDate DATE NOT NULL, /* 작성일 */
 	userId VARCHAR2(100) NOT NULL, /* 회원ID */
 	seq NUMBER NOT NULL, /* 글번호 */
-	content VARCHAR2(1000) /* 내용 */
+	content VARCHAR2(100) /* 내용 */
 );
 
-COMMENT ON TABLE holic_coment IS 'holic_review';
+COMMENT ON TABLE holic_comment IS 'holic_review';
 
-COMMENT ON COLUMN holic_coment.postDate IS '작성일';
+COMMENT ON COLUMN holic_comment.postDate IS '작성일';
 
-COMMENT ON COLUMN holic_coment.userId IS '회원ID';
+COMMENT ON COLUMN holic_comment.userId IS '회원ID';
 
-COMMENT ON COLUMN holic_coment.seq IS '글번호';
+COMMENT ON COLUMN holic_comment.seq IS '글번호';
 
-COMMENT ON COLUMN holic_coment.content IS '내용';
+COMMENT ON COLUMN holic_comment.content IS '내용';
 
-CREATE UNIQUE INDEX PK_holic_coment
-	ON holic_coment (
+CREATE UNIQUE INDEX PK_holic_comment
+	ON holic_comment (
 		postDate ASC
 	);
 
-ALTER TABLE holic_coment
+ALTER TABLE holic_comment
 	ADD
-		CONSTRAINT PK_holic_coment
+		CONSTRAINT PK_holic_comment
 		PRIMARY KEY (
 			postDate
 		);
@@ -238,7 +229,6 @@ ALTER TABLE holic_coment
 CREATE TABLE holic_social (
 	userId VARCHAR2(100) NOT NULL, /* 회원ID */
 	followingId VARCHAR2(100), /* 팔로잉ID */
-	followerId <지정 되지 않음>, /* 팔로워ID */
 	postDate DATE /* 작성일 */
 );
 
@@ -247,8 +237,6 @@ COMMENT ON TABLE holic_social IS 'holic_social';
 COMMENT ON COLUMN holic_social.userId IS '회원ID';
 
 COMMENT ON COLUMN holic_social.followingId IS '팔로잉ID';
-
-COMMENT ON COLUMN holic_social.followerId IS '팔로워ID';
 
 COMMENT ON COLUMN holic_social.postDate IS '작성일';
 
@@ -264,7 +252,7 @@ CREATE TABLE holic_user (
 	gender VARCHAR2(2), /* 성별 */
 	joinDate DATE, /* 가입일 */
 	outDate DATE, /* 탈퇴일 */
-	profile CLOB, /* 회원사진 */
+	profile VARCHAR2(200), /* 회원사진 */
 	enable VARCHAR2(8) /* 활성화여부 */
 );
 
@@ -399,23 +387,23 @@ ALTER TABLE holic_visitor
 /* holic_log */
 CREATE TABLE holic_log (
 	logDate DATE NOT NULL, /* 활동시간 */
-	userId VARCHAR2(100), /* 활동ID */
-	log NUMBER, /* 추천비추천 */
+	logId VARCHAR2(100), /* 활동한ID */
+	userId VARCHAR2(100), /* 작성자ID */
 	logCate NUMBER, /* 활동분류 */
-	subect VARCHAR2(100) /* 제목 */
+	subject VARCHAR2(100) /* 제목 */
 );
 
 COMMENT ON TABLE holic_log IS 'holic_log';
 
 COMMENT ON COLUMN holic_log.logDate IS '활동시간';
 
-COMMENT ON COLUMN holic_log.userId IS '활동ID';
+COMMENT ON COLUMN holic_log.logId IS '활동한ID';
 
-COMMENT ON COLUMN holic_log.log IS '추천비추천';
+COMMENT ON COLUMN holic_log.userId IS '작성자ID';
 
 COMMENT ON COLUMN holic_log.logCate IS '활동분류';
 
-COMMENT ON COLUMN holic_log.subect IS '제목';
+COMMENT ON COLUMN holic_log.subject IS '제목';
 
 CREATE UNIQUE INDEX PK_holic_log
 	ON holic_log (
@@ -449,9 +437,9 @@ ALTER TABLE holic_board
 			boardCode
 		);
 
-ALTER TABLE holic_coment
+ALTER TABLE holic_comment
 	ADD
-		CONSTRAINT FK_holic_user_TO_holic_coment
+		CONSTRAINT FK_holic_user_TO_holic_comment
 		FOREIGN KEY (
 			userId
 		)
@@ -459,9 +447,9 @@ ALTER TABLE holic_coment
 			userId
 		);
 
-ALTER TABLE holic_coment
+ALTER TABLE holic_comment
 	ADD
-		CONSTRAINT FK_holic_board_TO_holic_coment
+		CONSTRAINT FK_holic_board_TO_holic_comment
 		FOREIGN KEY (
 			seq
 		)
