@@ -128,7 +128,6 @@
 						<div class="row" style="margin-top: 10em;">
 							<div class="font_bold_mid" style="width:100%; border-bottom: 2.5px solid #fff; margin-bottom: 0; padding-bottom: 0.8em;">
 								<div style="float: left;">나의 최근 리뷰</div>
-								<div style="float: right;" class="font_light_small">더보기</div>
 							</div>
 							<table class="table table-hover col-lg-12 col-mobile-12" style="margin-top: 0;">
 								<col style="width:10%;">
@@ -167,13 +166,33 @@
 							        </td>
 								</tr>
 							</table>
+							
+				<%--pagination처리 --%>
+				<div class = "col-lg-12">
+				<div style="float: left">
+					<button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button>
+				</div>
+				
+		  		<div style="float: right">
+					<button class="btn btn-success font_bold_small">다&nbsp;&nbsp;&nbsp;음</button>
+				</div>
+				
+			  	<ul class="pagination justify-content-center">
+				    <li class="page-item"><a class="page-link a" href="javascript:void(0);">1</a></li>
+				    <li class="page-item"><a class="page-link a" href="javascript:void(0);">2</a></li>
+				    <li class="page-item"><a class="page-link a" href="javascript:void(0);">3</a></li>
+				    <li class="page-item"><a class="page-link a" href="javascript:void(0);">4</a></li>
+				    <li class="page-item"><a class="page-link a" href="javascript:void(0);">5</a></li>
+			 	 </ul>
+				<%-- float clear용 빈 div --%>
+				<div style="clear: both;"></div>
+				</div>
 						</div>
 						
 						<%-- 나의 최근 리스트 --%>
 						<div class="row" style="margin-top: 10em;">
 							<div class="font_bold_mid" style="width:100%; border-bottom: 2.5px solid #fff; margin-bottom: 0; padding-bottom: 0.8em;">
 								<div style="float: left;">나의 최근 리스트</div>
-								<div style="float: right;" class="font_light_small">더보기</div>
 							</div>
 							<table class="table table-hover col-lg-12 col-mobile-12" style="margin-top: 0;">
 								<col style="width:40%;">
@@ -234,17 +253,28 @@
 							        </td>
 								</tr>
 							</table>
+				<%--pagination 처리 --%>
+					<div class = "col-lg-12">
+				<div style="float: left">
+					<button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button>
+				</div>
+				
+		  		<div style="float: right">
+					<button class="btn btn-success font_bold_small">다&nbsp;&nbsp;&nbsp;음</button>
+				</div>
+				
+			  	<ul class="pagination justify-content-center">
+				    <li class="page-item"><a class="page-link a" href="javascript:void(0);">1</a></li>
+				    <li class="page-item"><a class="page-link a" href="javascript:void(0);">2</a></li>
+				    <li class="page-item"><a class="page-link a" href="javascript:void(0);">3</a></li>
+				    <li class="page-item"><a class="page-link a" href="javascript:void(0);">4</a></li>
+				    <li class="page-item"><a class="page-link a" href="javascript:void(0);">5</a></li>
+			 	 </ul>
+				<%-- float clear용 빈 div --%>
+				<div style="clear: both;"></div>
+				</div>
 						</div>
-						
-						
-						
-						
 					</div>
-						
-						
-						
-						
-						
 						
 						   		
 						   		
@@ -255,7 +285,6 @@
 						<div class="row" style="margin-top: 1em;">
 							<div class="font_bold_mid" style="width:100%; border-bottom: 2.5px solid #fff; margin-bottom: 0; padding-bottom: 0.8em;">
 								<div style="float: left;">친구들이 '좋아요'한 영화</div>
-								<div style="float: right;" class="font_light_small">더보기</div>
 							</div>
 							<section class="carousel">
 								<div class="reel">

@@ -66,22 +66,72 @@ hr.line_light_g {
 <!-- Main -->
 <div class="wrapper style1" style = "margin: 0;padding: 0;">
 	<div class = "row">
-	<!-- 글 제목 밑 상태 바 -->
+	
+	<!-- 버튼 -->
 	<div class = "col-lg-2"></div>
 	<div class = "col-lg-8" id = "listdetail-title">
-		<div class = "col-lg-12"><h2 style = "bold">우울할 때 보는 영화 10선</h2></div>
-		<div align ="right" style="width: 100%; border-top: thin solid white; border-bottom:thin solid white;">
-		<h3>2019.05.21</h3>
-		</div>
+		<div class="row" style="margin-bottom:30px;">
+						<div class="col-lg-12 col-12-mobile font_light_small">
+							<span>✱&nbsp;&nbsp;</span>
+							<a href="/MovieHolic/page/mypage/mypage.jsp" style="color:white;">LIST</a>
+						</div>
+					</div>
+		<div style="float: left">
+							<button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button>
+						</div>
+						<div style="float: right">
+							<button class="btn btn-success font_bold_small">삭&nbsp;&nbsp;&nbsp;제</button>
+						</div>
+						<div style="float: right; width: 20px; height: 1px;"></div>
+						<div style="float: right">
+							<button class="btn btn-success font_bold_small">수&nbsp;&nbsp;&nbsp;정</button>
+						</div>
+						<br><br>
+						
+						
+						<!-- float clear용 빈 div -->
+						<div style="clear: both;"></div>
+						<%--LIST 제목 --%>
+						<div class="movietitle">
+								<span class="font_bold_lg">우울할때 보면 좋은 영화 10선</span> 
+							</div>
+							<br>
+						<%--아이디, 조회수, LIST 등록 시간 --%>
+							<div class="movietitle" style="float: left;">
+							<div style="float: left">
+								<a href="#"><img id="replywriter" class="profile_icon"
+									alt="댓글작성자 프로필 사진" src="/MovieHolic/images/user2.jpg"></a>
+								&nbsp;&nbsp;
+							</div>
+							<div style="float: left">
+								<a id="replywriterId" class="font_bold_small" href="#"
+									style="color: white">abc123</a><br>
+							</div>
+							
+							
+							</div>
+							<div class="writeinfo" style="float: right;">
+								<span class="font_light_small">
+									<span class="font_bold_lg">&nbsp;</span>
+									조회수 : <span id="viewcount">22</span>
+									&nbsp;&nbsp;|&nbsp;&nbsp;
+									<span id="writedate">2019.05.25 &nbsp;오후 05:45</span>
+								</span>
+							</div>
+							
+							<!-- float clear용 빈 div -->
+							<div style="clear: both;"></div>
+							<hr class = "line_bold">
 	</div>
+	
 	<div class = "col-lg-2"></div>
 	</div>
+	<%--상태바 끝 --%>
 	
 	<div class = "row">
 	<!-- 리스트 상세 내용  포스터 + 글 내용 -->
 	<div class = "col-lg-2"></div>	
 	<div class = "col-lg-8">
-	<div style="float:right;"><a href = "">신고하기</a></div>
 	<div style="clear:both;">
 	<p><font>지극히 주관적으로 선정한 우울할 때 보면 좋은 영화 10선 입니다. 
 	주인공들의 대사가 개인적으로 너무 마음에 들었구요,
