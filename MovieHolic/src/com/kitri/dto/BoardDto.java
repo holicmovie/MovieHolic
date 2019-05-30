@@ -1,14 +1,12 @@
 package com.kitri.dto;
 
-import java.sql.Date;
-
 public class BoardDto { // 게시판
 
 	private int seq; // 글번호
 	private int boardCode; // boardCode
 	private String subject; // 제목
 	private String userId; // 작성자ID
-	private Date postDate; // 작성일
+	private String postDate; // 작성일
 	private String content; // 내용
 	private String movieCodeYoung; // 영화코드(영진원)
 	private String movieCodeNaver; // 영화코드(네이버)
@@ -64,11 +62,11 @@ public class BoardDto { // 게시판
 		this.userId = userId;
 	}
 
-	public Date getPostDate() {
+	public String getPostDate() {
 		return postDate;
 	}
 
-	public void setPostDate(Date postDate) {
+	public void setPostDate(String postDate) {
 		this.postDate = postDate;
 	}
 

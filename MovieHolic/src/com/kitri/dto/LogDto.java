@@ -1,10 +1,8 @@
 package com.kitri.dto;
 
-import java.sql.Date;
-
 public class LogDto { // 활동기록
 
-	private Date logDate; // 활동시간
+	private String logDate; // 활동시간
 	private int logCate; // 활동분류
 	private String userId; // 활동ID
 	private String sujbect; // 제목
@@ -21,11 +19,11 @@ public class LogDto { // 활동기록
 	
 	///// getter & setter /////
 	
-	public Date getLogDate() {
+	public String getLogDate() {
 		return logDate;
 	}
 
-	public void setLogDate(Date logDate) {
+	public void setLogDate(String logDate) {
 		this.logDate = logDate;
 	}
 

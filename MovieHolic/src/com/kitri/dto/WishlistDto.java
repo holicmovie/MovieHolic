@@ -1,12 +1,10 @@
 package com.kitri.dto;
 
-import java.sql.Date;
-
 public class WishlistDto {	//위시리스트
 
 	private String userId;	//ID
 	private int code;	//code
-	private Date postDate;	//등록일자
+	private String postDate;	//등록일자
 	private String movieCodeNaver;	//영화코드
 
 	
@@ -36,11 +34,11 @@ public class WishlistDto {	//위시리스트
 		this.code = code;
 	}
 
-	public Date getPostDate() {
+	public String getPostDate() {
 		return postDate;
 	}
 
-	public void setPostDate(Date postDate) {
+	public void setPostDate(String postDate) {
 		this.postDate = postDate;
 	}
 

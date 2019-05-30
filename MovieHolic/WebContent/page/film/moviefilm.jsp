@@ -131,7 +131,6 @@
 			</div>
 		</section>
 		<hr style="top: 1em; border-top: 5px solid rgba(255, 255, 255);">
-
 		<div>
 			<div class="col-lg-9 col-2-mobile"
 				style="float: right; margin-right: 2em; border-left: 5px solid; border-color: white;">
