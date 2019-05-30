@@ -117,12 +117,24 @@
 				style="margin-top: 2em;">
 				<col style="width: 40%;">
 				<tr style="border: 2px solid; border-color: white;">
-					<td style="text-align: center;"><img width="100vh"
-						src="/MovieHolic/images/avengers4.jpg" title="엔드게임 (2019)" />
-						<img width="100vh" src="/MovieHolic/images/tempimg/coco.jpg"
-						title="코코 (2019)" /> <img width="100vh"
-						src="/MovieHolic/images/tempimg/frozen.jpg" title="겨울왕국" /> <img
-						width="100vh" src="/MovieHolic/images/money.jpg" title="돈" /></td>
+					<td style="text-align: center;">
+						<div>
+							<img width="100vh" src="/MovieHolic/images/tempimg/endgame.jpg"
+								title="엔드게임 (2019)" style="position: absolute; z-index: 0;" />
+							<img width="100vh" src="/MovieHolic/images/tempimg/frozen.jpg"
+								title="엔드게임 (2019)"
+								style="position: relative; left: 70px; z-index: 0;" /> <img
+								class="hide3" width="100vh"
+								src="/MovieHolic/images/tempimg/coco.jpg" title="엔드게임 (2019)"
+								style="position: relative; left: 40px; z-index: 0;" /> <img
+								class="hide2" width="100vh"
+								src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)"
+								style="position: relative; left: 5px; z-index: 0;" /> <img
+								class="hide1" width="100vh"
+								src="/MovieHolic/images/tempimg/frozen.jpg" title="엔드게임 (2019)"
+								style="position: relative; left: -30px; z-index: 0;" />
+						</div>
+					</td>
 					<td style="vertical-align: middle; color: white;">
 						<div>
 							<h4>스트레스 풀고 싶을때 추천하고 싶은 영화</h4>
@@ -131,94 +143,102 @@
 					</td>
 				</tr>
 				<tr style="border: 2px solid; border-color: white;">
-					<td style="text-align: center;"><img width="100vh"
-						src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)" />
-						<img width="100vh" src="/MovieHolic/images/tempimg/coco.jpg"
-						title="코코 (2019)" /> <img width="100vh"
-						src="/MovieHolic/images/tempimg/frozen.jpg" title="겨울왕국" />
-						<img width="100vh" src="/MovieHolic/images/watching.jpg"
-						title="왓칭" /></td>
+					<td style="text-align: center;">
+						<div>
+							<img width="100vh" src="/MovieHolic/images/tempimg/endgame.jpg"
+								title="엔드게임 (2019)" style="position: absolute; z-index: 0;" />
+							<img width="100vh" src="/MovieHolic/images/tempimg/frozen.jpg"
+								title="엔드게임 (2019)"
+								style="position: relative; left: 70px; z-index: 0;" /> <img
+								class="hide3" width="100vh"
+								src="/MovieHolic/images/tempimg/coco.jpg" title="엔드게임 (2019)"
+								style="position: relative; left: 40px; z-index: 0;" /> <img
+								class="hide2" width="100vh"
+								src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)"
+								style="position: relative; left: 5px; z-index: 0;" /> <img
+								class="hide1" width="100vh"
+								src="/MovieHolic/images/tempimg/frozen.jpg" title="엔드게임 (2019)"
+								style="position: relative; left: -30px; z-index: 0;" />
+						</div>
+					</td>
 					<td style="vertical-align: middle; color: white;">
 						<h4>스트레스 풀고 싶을때 추천하고 싶은 영화</h4>
 						<p>by damm | 2019.04.15 | &#9829;16584 | &#128148;55</p>
 					</td>
 				</tr>
 				<tr style="border: 2px solid; border-color: white;">
-					<td style="text-align: center;"><img width="100vh"
-						src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)" />
-						<img width="100vh" src="/MovieHolic/images/tempimg/coco.jpg"
-						title="코코 (2019)" /> <img width="100vh"
-						src="/MovieHolic/images/tempimg/frozen.jpg" title="겨울왕국" />
-						<img width="100vh" src="/MovieHolic/images/watching.jpg"
-						title="왓칭" /></td>
+					<td style="text-align: center;">
+						<div>
+							<img width="100vh" src="/MovieHolic/images/tempimg/endgame.jpg"
+								title="엔드게임 (2019)" style="position: absolute; z-index: 0;" />
+							<img width="100vh" src="/MovieHolic/images/tempimg/frozen.jpg"
+								title="엔드게임 (2019)"
+								style="position: relative; left: 70px; z-index: 0;" /> <img
+								class="hide3" width="100vh"
+								src="/MovieHolic/images/tempimg/coco.jpg" title="엔드게임 (2019)"
+								style="position: relative; left: 40px; z-index: 0;" /> <img
+								class="hide2" width="100vh"
+								src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)"
+								style="position: relative; left: 5px; z-index: 0;" /> <img
+								class="hide1" width="100vh"
+								src="/MovieHolic/images/tempimg/frozen.jpg" title="엔드게임 (2019)"
+								style="position: relative; left: -30px; z-index: 0;" />
+						</div>
+					</td>
 					<td style="vertical-align: middle; color: white;">
 						<h4>스트레스 풀고 싶을때 추천하고 싶은 영화</h4>
 						<p>by damm | 2019.04.15 | &#9829;16584 | &#128148;55</p>
 					</td>
 				</tr>
 				<tr style="border: 2px solid; border-color: white;">
-					<td style="text-align: center;"><img width="100vh"
-						src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)" />
-						<img width="100vh" src="/MovieHolic/images/tempimg/coco.jpg"
-						title="코코 (2019)" /> <img width="100vh"
-						src="/MovieHolic/images/tempimg/frozen.jpg" title="겨울왕국" />
-						<img width="100vh" src="/MovieHolic/images/watching.jpg"
-						title="왓칭" /></td>
+					<td style="text-align: center;">
+						<div>
+							<img width="100vh" src="/MovieHolic/images/tempimg/endgame.jpg"
+								title="엔드게임 (2019)" style="position: absolute; z-index: 0;" />
+							<img width="100vh" src="/MovieHolic/images/tempimg/frozen.jpg"
+								title="엔드게임 (2019)"
+								style="position: relative; left: 70px; z-index: 0;" /> <img
+								class="hide3" width="100vh"
+								src="/MovieHolic/images/tempimg/coco.jpg" title="엔드게임 (2019)"
+								style="position: relative; left: 40px; z-index: 0;" /> <img
+								class="hide2" width="100vh"
+								src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)"
+								style="position: relative; left: 5px; z-index: 0;" /> <img
+								class="hide1" width="100vh"
+								src="/MovieHolic/images/tempimg/frozen.jpg" title="엔드게임 (2019)"
+								style="position: relative; left: -30px; z-index: 0;" />
+						</div>
+					</td>
 					<td style="vertical-align: middle; color: white;">
 						<h4>스트레스 풀고 싶을때 추천하고 싶은 영화</h4>
 						<p>by damm | 2019.04.15 | &#9829;16584 | &#128148;55</p>
 					</td>
 				</tr>
-				<tr style="border: 2px solid; border-color: white;">
-					<td style="text-align: center;"><img width="100vh"
-						src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)" />
-						<img width="100vh" src="/MovieHolic/images/tempimg/coco.jpg"
-						title="코코 (2019)" /> <img width="100vh"
-						src="/MovieHolic/images/tempimg/frozen.jpg" title="겨울왕국" />
-						<img width="100vh" src="/MovieHolic/images/watching.jpg"
-						title="왓칭" /></td>
-					<td style="vertical-align: middle; color: white;">
-						<h4>스트레스 풀고 싶을때 추천하고 싶은 영화</h4>
-						<p>by damm | 2019.04.15 | &#9829;16584 | &#128148;55</p>
-					</td>
-				</tr>
-				<tr style="border: 2px solid; border-color: white;">
-					<td style="text-align: center;"><img width="100vh"
-						src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)" />
-						<img width="100vh" src="/MovieHolic/images/tempimg/coco.jpg"
-						title="코코 (2019)" /> <img width="100vh"
-						src="/MovieHolic/images/tempimg/frozen.jpg" title="겨울왕국" />
-						<img width="100vh" src="/MovieHolic/images/watching.jpg"
-						title="왓칭" /></td>
-					<td style="vertical-align: middle; color: white;">
-						<h4>스트레스 풀고 싶을때 추천하고 싶은 영화</h4>
-						<p>by damm | 2019.04.15 | &#9829;16584 | &#128148;55</p>
-					</td>
-				</tr>
+
 			</table>
-			<div class="row" style="margin: 0 auto; padding: 0 0 0 40px;">
-				<div class="col-lg-12 col-12-mobile">
-					<div style="float: left">
-						<button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button>
-					</div>
-					<div style="float: right;">
-						<button class="btn btn-success font_bold_small">다&nbsp;&nbsp;&nbsp;음</button>
-					</div>
-					<ul class="pagination justify-content-center">
-						<li class="page-item"><a class="page-link a"
-							href="javascript:void(0);">1</a></li>
-						<li class="page-item"><a class="page-link a"
-							href="javascript:void(0);">2</a></li>
-						<li class="page-item"><a class="page-link a"
-							href="javascript:void(0);">3</a></li>
-						<li class="page-item"><a class="page-link a"
-							href="javascript:void(0);">4</a></li>
-						<li class="page-item"><a class="page-link a"
-							href="javascript:void(0);">5</a></li>
-					</ul>
-					<%-- float clear용 빈 div --%>
-					<div style="clear: both;"></div>
+			<div class="col-lg-12" style="padding: 0 0 0 0;">
+				<div style="float: left">
+					<button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button>
 				</div>
+
+				<div style="float: right">
+					<button class="btn btn-success font_bold_small">다&nbsp;&nbsp;&nbsp;음</button>
+				</div>
+
+				<ul class="pagination justify-content-center">
+					<li class="page-item"><a class="page-link a"
+						href="javascript:void(0);">1</a></li>
+					<li class="page-item"><a class="page-link a"
+						href="javascript:void(0);">2</a></li>
+					<li class="page-item"><a class="page-link a"
+						href="javascript:void(0);">3</a></li>
+					<li class="page-item"><a class="page-link a"
+						href="javascript:void(0);">4</a></li>
+					<li class="page-item"><a class="page-link a"
+						href="javascript:void(0);">5</a></li>
+				</ul>
+				<%-- float clear용 빈 div --%>
+				<div style="clear: both;"></div>
 			</div>
 		</div>
 
