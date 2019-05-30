@@ -1,10 +1,8 @@
 package com.kitri.dto;
 
-import java.sql.Date;
-
 public class CommentDto { // 댓글
 
-	private Date postDate; // 작성일
+	private String postDate; // 작성일
 	private int seq; // 글번호
 	private String userId; // 작성자ID
 	private String content; // 내용
@@ -21,11 +19,11 @@ public class CommentDto { // 댓글
 	
 	///// getter & setter /////
 	
-	public Date getPostDate() {
+	public String getPostDate() {
 		return postDate;
 	}
 
-	public void setPostDate(Date postDate) {
+	public void setPostDate(String postDate) {
 		this.postDate = postDate;
 	}
 

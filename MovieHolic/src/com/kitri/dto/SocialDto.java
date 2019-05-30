@@ -1,11 +1,9 @@
 package com.kitri.dto;
 
-import java.sql.Date;
-
 public class SocialDto { // 소셜
 
 	private String userId; // ID
-	private Date postDate; // 등록일자
+	private String postDate; // 등록일자
 	private String followingId; // followingID
 
 	
@@ -26,11 +24,11 @@ public class SocialDto { // 소셜
 		this.userId = userId;
 	}
 
-	public Date getPostDate() {
+	public String getPostDate() {
 		return postDate;
 	}
 
-	public void setPostDate(Date postDate) {
+	public void setPostDate(String postDate) {
 		this.postDate = postDate;
 	}
 

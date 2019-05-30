@@ -1,7 +1,5 @@
 package com.kitri.dto;
 
-import java.sql.Date;
-
 public class UserDto {	//회원정보
 
 	private String userId;	//ID
@@ -12,8 +10,8 @@ public class UserDto {	//회원정보
 	private String phoneFirst;	//폰1
 	private String phoneMid;	//폰2
 	private String phoneLast;	//폰3
-	private Date joinDate;	//가입일
-	private Date outDate;	//탈퇴일
+	private String joinDate;	//가입일
+	private String outDate;	//탈퇴일
 	private String enable;	//활성화 여부
 	private String profile;	//프로필 사진
 
@@ -92,19 +90,19 @@ public class UserDto {	//회원정보
 		this.phoneLast = phoneLast;
 	}
 
-	public Date getJoinDate() {
+	public String getJoinDate() {
 		return joinDate;
 	}
 
-	public void setJoinDate(Date joinDate) {
+	public void setJoinDate(String joinDate) {
 		this.joinDate = joinDate;
 	}
 
-	public Date getOutDate() {
+	public String getOutDate() {
 		return outDate;
 	}
 
-	public void setOutDate(Date outDate) {
+	public void setOutDate(String outDate) {
 		this.outDate = outDate;
 	}
 

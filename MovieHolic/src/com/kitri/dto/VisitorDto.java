@@ -1,10 +1,8 @@
 package com.kitri.dto;
 
-import java.sql.Date;
-
 public class VisitorDto {	//접속기록
 
-	private Date connectDate;	//접속날짜
+	private String connectDate;	//접속날짜
 	private int visitor;	//방문자수
 
 	
@@ -16,11 +14,11 @@ public class VisitorDto {	//접속기록
 
 	///// getter & setter /////
 	
-	public Date getConnectDate() {
+	public String getConnectDate() {
 		return connectDate;
 	}
 
-	public void setConnectDate(Date connectDate) {
+	public void setConnectDate(String connectDate) {
 		this.connectDate = connectDate;
 	}
 
