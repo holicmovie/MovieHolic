@@ -3,7 +3,8 @@
 <%@ include file="/template/header.jsp"%>
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
-
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 
 <!--  style="width:100%; border-bottom: 0.3em solid #fff;" -->
 
@@ -11,9 +12,24 @@
 
 
 
-<script type="text/javascript">
-	jQuery(function($) {
-		$(".datepicker").shieldDatePicker();
+
+
+<script>
+	$(function() {
+		$("span>a").click(function() {
+			$("section").empty();
+			var url = $(this).attr("href");
+			$.ajax({
+				url : url,
+				method : 'get',
+				/* 'alllist='+$(this).find('input[type=hidden]').val() */
+				/* $('.management').serialize(), */
+				success : function(result) {
+					$("section#section").html(result.trim());
+				}
+			});
+			return false;
+		});
 	});
 </script>
 
@@ -27,7 +43,7 @@ tr>td>input {
 }
 
 .container {
-	background-image: url("/Content/img/datepicker/s4.png");
+/*	background-image: url("/Content/img/datepicker/s4.png");  ???*/
 	background-position: center;
 	background-repeat: no-repeat;
 	height: 740px;
@@ -121,93 +137,141 @@ hr.line_light_w {
 				<hr class="line_light_w">
 
 				<div align="right">
+					<!-- <form> -->
 					<span class="dropdown">
 						<button type="button" class="btn btn-success dropdown-toggle"
-							data-toggle="dropdown">목록</button>
-						<span class="dropdown-menu">
-							<a class="dropdown-item" href="#">전체목록</a>
-							<a class="dropdown-item" href="#">휴면목록</a>
-							<a class="dropdown-item" href="#">탈퇴목록</a>
-						</span>
+							data-toggle="dropdown">목록</button> <span class="dropdown-menu">
+							<a class="dropdown-item" href="/MovieHolic/admin?act=alllist">전체목록</a>
+							<a class="dropdown-item" href="/MovieHolic/admin?act=inactiveList">휴면목록</a> 
+							<a class="dropdown-item" href="/MovieHolic/admin?act=unsubscribelist">탈퇴목록</a>
 					</span>
+					</span>
+					<!-- </form> -->
 					<button type="submit" class="btn btn-success" style="z-index: 0">탈퇴</button>
 					<button type="submit" class="btn btn-success" style="z-index: 0">휴면</button>
 				</div>
 				<!-- <button type="submit" class="btn btn-success">검색</button> -->
 
-
-				<table class="table" style="border-bottom: 0.2em solid #fff;">
-					<br>
-					<thead>
-						<tr>
-							<th>
-								<div>
-									<button type="submit" class="btn btn-success"
-										style="z-index: 0;">전체선택</button>
-								</div>
-							</th>
-							<th>회원ID</th>
-							<th>이름</th>
-							<th>주민번호 앞자리</th>
-							<th>연락처</th>
-							<th>성별</th>
-							<th>가입일</th>
-							<th>탈퇴일</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td><input type="checkbox" /></td>
-							<td>abc123@naver.com</td>
-							<td>김무비</td>
-							<td>940618</td>
-							<td>111-1111-1111</td>
-							<td>남</td>
-							<td>2019.01.01</td>
-							<td>-</td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" /></td>
-							<td>abc123@naver.com</td>
-							<td>김무비</td>
-							<td>940618</td>
-							<td>111-1111-1111</td>
-							<td>남</td>
-							<td>2019.01.01</td>
-							<td>-</td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" /></td>
-							<td>abc123@naver.com</td>
-							<td>김무비</td>
-							<td>940618</td>
-							<td>111-1111-1111</td>
-							<td>남</td>
-							<td>2019.01.01</td>
-							<td>-</td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" /></td>
-							<td>abc123@naver.com</td>
-							<td>김무비</td>
-							<td>940618</td>
-							<td>111-1111-1111</td>
-							<td>남</td>
-							<td>2019.01.01</td>
-							<td>-</td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" /></td>
-							<td>abc123@naver.com</td>
-							<td>김무비</td>
-							<td>940618</td>
-							<td>111-1111-1111</td>
-							<td>남</td>
-							<td>2019.01.01</td>
-							<td>2019.01.13</td>
-						</tr>
-					</tbody>
-				</table>
+				<section id="section">
+					<table class="table" style="border-bottom: 0.2em solid #fff;">
+						<br>
+						<thead>
+							<tr>
+								<th>
+									<div>
+										<button type="submit" class="btn btn-success"
+											style="z-index: 0;">전체선택</button>
+									</div>
+								</th>
+								<th>회원ID</th>
+								<th>이름</th>
+								<th>주민번호 앞자리</th>
+								<th>연락처</th>
+								<th>성별</th>
+								<th>가입일</th>
+								<th>탈퇴일</th>
+								<th>휴면여부</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input type="checkbox" /></td>
+								<td>abc123@naver.com</td>
+								<td>김무비</td>
+								<td>940618</td>
+								<td>111-1111-1111</td>
+								<td>남</td>
+								<td>2019.01.01</td>
+								<td>-</td>
+								<td>
+									<div>
+										<button type="button" class="btn btn-success dropdown-toggle"
+											data-toggle="dropdown">활동</button>
+										<div class="dropdown-menu">
+											<a class="dropdown-item" href="#">휴면</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" /></td>
+								<td>abc123@naver.com</td>
+								<td>김무비</td>
+								<td>940618</td>
+								<td>111-1111-1111</td>
+								<td>남</td>
+								<td>2019.01.01</td>
+								<td>-</td>
+								<td>
+									<div>
+										<button type="button" class="btn btn-success dropdown-toggle"
+											data-toggle="dropdown">활동</button>
+										<div class="dropdown-menu">
+											<a class="dropdown-item" href="#">휴면</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" /></td>
+								<td>abc123@naver.com</td>
+								<td>김무비</td>
+								<td>940618</td>
+								<td>111-1111-1111</td>
+								<td>남</td>
+								<td>2019.01.01</td>
+								<td>-</td>
+								<td>
+									<div>
+										<button type="button" class="btn btn-success dropdown-toggle"
+											data-toggle="dropdown">활동</button>
+										<div class="dropdown-menu">
+											<a class="dropdown-item" href="#">휴면</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" /></td>
+								<td>abc123@naver.com</td>
+								<td>김무비</td>
+								<td>940618</td>
+								<td>111-1111-1111</td>
+								<td>남</td>
+								<td>2019.01.01</td>
+								<td>-</td>
+								<td>
+									<div>
+										<button type="button" class="btn btn-success dropdown-toggle"
+											data-toggle="dropdown">활동</button>
+										<div class="dropdown-menu">
+											<a class="dropdown-item" href="#">휴면</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" /></td>
+								<td>abc123@naver.com</td>
+								<td>김무비</td>
+								<td>940618</td>
+								<td>111-1111-1111</td>
+								<td>남</td>
+								<td>2019.01.01</td>
+								<td>2019.01.13</td>
+								<td>
+									<div>
+										<button type="button" class="btn btn-success dropdown-toggle"
+											data-toggle="dropdown">활동</button>
+										<div class="dropdown-menu">
+											<a class="dropdown-item" href="#">휴면</a>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</section>
 
 				<div class="row">
 
