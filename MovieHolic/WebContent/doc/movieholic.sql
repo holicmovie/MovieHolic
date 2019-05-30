@@ -126,6 +126,13 @@ DROP TABLE holic_visitor
 /* holic_log */
 DROP TABLE holic_log 
 	CASCADE CONSTRAINTS;
+	
+	/* sequence1 */
+DROP SEQUENCE seq;
+
+/* sequence1 */
+CREATE SEQUENCE seq
+	START WITH 100;
 
 /* holic_board */
 CREATE TABLE holic_board (
@@ -253,7 +260,7 @@ CREATE TABLE holic_user (
 	joinDate DATE, /* 가입일 */
 	outDate DATE, /* 탈퇴일 */
 	profile VARCHAR2(200), /* 회원사진 */
-	enable VARCHAR2(8) /* 활성화여부 */
+	enable NUMBER /* 활성화여부 */
 );
 
 COMMENT ON TABLE holic_user IS 'holic_user';
