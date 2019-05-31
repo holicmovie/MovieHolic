@@ -132,9 +132,6 @@ public class AdminDto {
 				+ ", joinDate=" + joinDate + ", outdate=" + outdate + ", profile=" + profile + "]";
 	}
 	
-	public static void main(String[] args) {
-		AdminDto adminDto = new AdminDto();
-	}
 	
 	
 }

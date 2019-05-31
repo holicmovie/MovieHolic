@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kitri.admin.dao.AdminDao;
 import com.kitri.admin.dto.AdminDto;
 import com.kitri.admin.service.AdminService;
 
@@ -27,12 +28,15 @@ public class AdminController {
 	
 	
 	
+	//목록 처리
 	
-	public String selectByUserAll(HttpServletRequest request, HttpServletResponse response){
+	public String selectByUserAll(HttpServletRequest request, HttpServletResponse response, int cnt){
 		
 		List<AdminDto> list = new ArrayList<>();
 		
-		list = AdminService.getAdminService().selectByUserAll();
+		
+		
+		list = AdminService.getAdminService().selectByUserAll(cnt);
 		
 		
 		// request로 주소값을 가짐 거기다가 setting해줌.
@@ -42,6 +46,16 @@ public class AdminController {
 		String path = "/page/admin/managementAlllist.jsp"; //서버딴에서 움직이면 앞에 / =Webcontent 클라이언트에서 / =Movieholic부터.
 		
 		return path;
+	}
+	
+	
+	//페이징 처리
+	
+	public void getTotalCnt() {
+		
+		int cnt = AdminDao.getAdminDao().selectTotalCnt();
+		
+		
 	}
 	
 

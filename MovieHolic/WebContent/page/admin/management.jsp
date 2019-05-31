@@ -15,6 +15,8 @@
 
 
 <script>
+
+// 게시판 처리
 	$(function() {
 		$("span>a").click(function() {
 			$("section").empty();
@@ -31,6 +33,30 @@
 			return false;
 		});
 	});
+	
+</script>
+
+<script>
+
+/* 
+// 게시판 페이징처리
+$(function(){
+	$("nav>ul>li>a").click(function(){
+		$("section").empty();
+		var url = $(this).attr("href");
+		$.ajax({
+			url:url,
+			method:'get',
+			success:function(result){
+				$("section").html(result.trim());
+			}
+		});
+		return false;
+	});
+}); */
+
+
+
 </script>
 
 
@@ -43,7 +69,7 @@ tr>td>input {
 }
 
 .container {
-/*	background-image: url("/Content/img/datepicker/s4.png");  ???*/
+	background-image: url("/Content/img/datepicker/s4.png"); /* ???*/
 	background-position: center;
 	background-repeat: no-repeat;
 	height: 740px;
@@ -142,6 +168,7 @@ hr.line_light_w {
 						<button type="button" class="btn btn-success dropdown-toggle"
 							data-toggle="dropdown">목록</button> <span class="dropdown-menu">
 							<a class="dropdown-item" href="/MovieHolic/admin?act=alllist">전체목록</a>
+							<%-- DB number값이 1일때 휴면. --%>
 							<a class="dropdown-item" href="/MovieHolic/admin?act=inactiveList">휴면목록</a> 
 							<a class="dropdown-item" href="/MovieHolic/admin?act=unsubscribelist">탈퇴목록</a>
 					</span>
@@ -270,6 +297,7 @@ hr.line_light_w {
 								</td>
 							</tr>
 						</tbody>
+						
 					</table>
 				</section>
 

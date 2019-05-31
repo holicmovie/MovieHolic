@@ -24,8 +24,9 @@ public class AdminDao  {
 	}
 
 	
-
-	public List<AdminDto> selectByUserAll() {
+//	목록 조회 -----------------------------------------------------------
+	
+	public List<AdminDto> selectByUserAll(int cnt) {
 		
 
 		List<AdminDto> list = new ArrayList<AdminDto>();
@@ -49,11 +50,17 @@ public class AdminDao  {
 			sql.append(" phoneLast,");
 			sql.append(" gender,");
 			sql.append(" joinDate,");
-			sql.append(" outDate");
+			sql.append(" outDate,");
+			sql.append(" enable");
 			sql.append(" from holic_user");
-//			if (condition) {
-//				sql.append(" where outDate is null;");
-//			}
+			if (cnt == 2) {
+				sql.append(" where enable = 1");
+			}else if (cnt == 3) {
+				sql.append(" where outDate is not null");
+			}
+			
+			System.out.println(cnt);
+			
 
 			pstmt = conn.prepareStatement(sql.toString());
 			
@@ -86,13 +93,97 @@ public class AdminDao  {
 		return list;
 
 	}
+	
+	
+	
+	
+	
+//	페이징 처리 -----------------------------------------------------------
+	
+	
+	public List<AdminDto> selectByRows(int startRow, int endRow){
+		
+		List<AdminDto> list = new ArrayList<AdminDto>();
 
-//	public static void main(String[] args) {
-//		
-//		AdminDao adminDao = new AdminDao();
-//		System.out.println(adminDao.selectByUserAll().get(1));
-//		
-//	}
+			
+		
+		
+		
+		return null;
+	}
+	
+//	--------------------------------------------	
+	
+	public int selectTotalCnt() {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String selectTotalCntSQL = "select count(*) from holic_user";
+		
+		int totalCnt = -1;
+		
+		try {
+			
+			conn = DBConnection.makeConnection();
+			pstmt = conn.prepareStatement(selectTotalCntSQL);			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				totalCnt = rs.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		
+
+		return totalCnt;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	public static void main(String[] args) {
+		
+		AdminDao adminDao = new AdminDao();
+		int cnt = 1;
+		//System.out.println(adminDao.selectByUserAll(cnt).get(0));
+		
+		cnt = adminDao.selectTotalCnt();
+		System.out.println(cnt);
+		
+	}
 	
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+

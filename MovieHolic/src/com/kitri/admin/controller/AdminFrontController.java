@@ -19,40 +19,48 @@ public class AdminFrontController extends HttpServlet {
 
 
 		String act = request.getParameter("act");
-//		String inactiveList = request.getParameter("inactiveList");
-//		String unsubscribelist = request.getParameter("unsubscribelist");
 		
-		
+		System.out.println("메인에서 들어옴");
 		
 		String path = "/page/admin/management.jsp";
 
-//		  path = admin.getAdminController().register(request,response);
-//		  null값이뜸. 어디든 갈 수 있음. MoveUrl.forwared(request, response, path);
-		
 			
 			if ("alllist".equals(act)) {
 				
 				System.out.println("alllist");
 				
-				System.out.println("1");
-				path = AdminController.getAdminController().selectByUserAll(request, response);
-				System.out.println("2");
-				System.out.println(path);
+				int cnt = 1;
+				path = AdminController.getAdminController().selectByUserAll(request, response, cnt);
 				MoveUrl.forward(request, response, path);
 				
-				System.out.println("3");
 				
 				
 			}else if ("inactiveList".equals(act)) {
 				
-				System.out.println("inactiveList");
+//				System.out.println("inactiveList");
+				int cnt = 2;
+				path = AdminController.getAdminController().selectByUserAll(request, response, cnt);
+				MoveUrl.forward(request, response, path);
 				
 			}else if ("unsubscribelist".equals(act)) {
 				
-				
-			}else {
+//				System.out.println("unsubscribelist");
+				int cnt = 3;
+				path = AdminController.getAdminController().selectByUserAll(request, response, cnt);
+				MoveUrl.forward(request, response, path);
 				
 			}
+//			else if (condition) {
+//				
+//				
+//				
+//			}else if (){
+//				
+//			}else if () {
+//				
+//			}else {
+//				
+//			}
 			
 
 		

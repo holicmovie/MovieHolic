@@ -2,6 +2,9 @@ package com.kitri.admin.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.kitri.admin.controller.AdminController;
 import com.kitri.admin.dao.AdminDao;
 import com.kitri.admin.dto.AdminDto;
@@ -23,18 +26,36 @@ public class AdminService {
 		return adminService;
 	}
 	
-	
-	public List<AdminDto> selectByUserAll() {
+	// 목록
+	public List<AdminDto> selectByUserAll(int cnt) {
 
-		return AdminDao.getAdminDao().selectByUserAll();
+		return AdminDao.getAdminDao().selectByUserAll(cnt);
 	}
 	
-//	public static void main(String[] args) {
-//		
-//		AdminService adminService = new AdminService();
-//		
-//		System.out.println(adminService.selectByUserAll());
-//		
-//	}
+	
+	// 페이징처리
+	public List<AdminDto> findByRows(int startRow, int endRow){
+		
+		return AdminDao.getAdminDao().selectByRows(startRow, endRow);
+	}
+	
 
+	public int getTotalCnt() {
+		
+		return AdminDao.getAdminDao().selectTotalCnt();
+	}
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
