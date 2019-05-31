@@ -13,6 +13,7 @@
 		var vurl = $(this).attr("href");
 		$a.jax({
 			url : vurl,
+			method:'get',
 			success:function(result){
 				$("section#category").html(result);
 			}

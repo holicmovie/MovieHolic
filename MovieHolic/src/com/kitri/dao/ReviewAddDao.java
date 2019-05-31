@@ -1,13 +1,12 @@
 package com.kitri.dao;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.*;
 
 import com.kitri.dto.BoardDto;
 import com.kitri.util.DBClose;
 import com.kitri.util.DBConnection;
+import com.sun.xml.internal.ws.api.pipe.NextAction;
 
 public class ReviewAddDao{
 
@@ -42,12 +41,12 @@ public class ReviewAddDao{
 			pstmt.setString(++idx, boardDto.getUserId());
 			pstmt.setInt(++idx, boardDto.getBoardCode());
 			pstmt.setString(++idx,boardDto.getSubject());
-			pstmt.setDate(++idx, boardDto.getPostDate());
+			pstmt.setString(++idx, boardDto.getPostDate());
 			pstmt.setString(++idx, boardDto.getContent());
 			pstmt.setInt(++idx, boardDto.getStarPoint());
-			pstmt.setString(++idx, boardDto.getMovieName());
-			pstmt.setString(++idx, boardDto.getMovieCodeNaver());
-			pstmt.setString(++idx, boardDto.getMovieCodeYoung());
+			pstmt.setString(++idx, boardDto.getMovieName().toString());
+			pstmt.setString(++idx, boardDto.getDirector().toString());
+			pstmt.setString(++idx, boardDto.getMovieCodeYoung().toString());
 			pstmt.setString(++idx, boardDto.getCategory());
 			pstmt.setInt(++idx, boardDto.getEnable());
 			
@@ -76,10 +75,12 @@ public class ReviewAddDao{
 			pstmt = conn.prepareStatement(sql.toString());
 			pstmt.setString(1, movieName);
 			rs = pstmt.executeQuery();
+			
 			while(rs.next()) {
 				BoardDto boardDto = new BoardDto();
+
 				boardDto.setMovieCodeNaver(rs.getString("movieCodeNaver"));
-				boardDto.setPostDate(rs.getDate("postDate"));
+				boardDto.setPostDate(rs.getString("postDate"));
 				boardDto.setStarPoint(rs.getInt("starPoint"));
 				boardDto.setMovieName(rs.getString("movieName"));
 			

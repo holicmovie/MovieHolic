@@ -123,21 +123,22 @@ $(function() {
 									</ul>
 
 									<h3>
-										<Strong>줄거리</Strong>
+										<Strong>영화정보</Strong>
 									</h3>
 									<br>
 									<div class="col-lg-12 col-12-mobile">
-										인피니티 워 이후 절반만 살아남은 지구<br> 마지막 희망이 된 어벤져스<br> 먼저 떠난
-										그들을 위해 모든 것을 걸었다!<br> 위대한 어벤져스<br> 운명을 바꿀 최후의 전쟁이
-										펼쳐진다!
+										<p>개요 : 액션,SF | 미국 | 181분 | 2019.04.20 개봉 <br>
+										<p>감독 : 안소니 루소, 조 루소<br>
+										<p>등급 : 12세 관람가<br>
+										<p>제작 : 마블 스튜디오
 									</div>
 									<div id="likeunlike" class="rounded-lg"
 										style="background-color: rgb(0, 0, 0); margin: 20px 0 20px 0; height: 100px; padding-top: 8px;">
-										<span style="color: rgb(240, 195, 15);"
-											class="font_light_small">영화를 평가해주세요.</span>
+										<div style="color: rgb(240, 195, 15); text-align: center;"
+											class="font_light_small">영화를 평가해주세요.</div>
 										<div
 											class="starrating risingstar d-flex justify-content-center flex-row-reverse"
-											style="font-size: 1.3em; justify-content: left!important; flex-direction: unset!important;">
+											style="font-size: 1.3em;  align-items: ">
 											<input type="radio" id="star5" name="rating" value="5" /><label
 												for="star5" title="5 star"></label> <input type="radio"
 												id="star4" name="rating" value="4" /><label for="star4"

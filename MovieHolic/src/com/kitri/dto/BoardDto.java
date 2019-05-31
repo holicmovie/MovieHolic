@@ -11,7 +11,7 @@ public class BoardDto { // 게시판
 	private String postDate; // 작성일
 	private String content; // 내용
 	private List<String> movieCodeYoung; // 영화코드(영진원)
-	private List<String> movieCodeNaver; // 영화코드(네이버)
+	private List<String> director; // 감독명
 	private List<String> movieName; // 영화명
 	private int starPoint; // 별점
 	private String category; // 장르
@@ -101,13 +101,13 @@ public class BoardDto { // 게시판
 	}
 
 
-	public List<String> getMovieCodeNaver() {
-		return movieCodeNaver;
+	public List<String> getDirector() {
+		return director;
 	}
 
 
-	public void setMovieCodeNaver(List<String> movieCodeNaver) {
-		this.movieCodeNaver = movieCodeNaver;
+	public void setDirector(List<String> director) {
+		this.director = director;
 	}
 
 
@@ -195,10 +195,13 @@ public class BoardDto { // 게시판
 	public String toString() {
 		return "BoardDto [seq=" + seq + ", boardCode=" + boardCode + ", subject=" + subject + ", userId=" + userId
 				+ ", postDate=" + postDate + ", content=" + content + ", movieCodeYoung=" + movieCodeYoung
-				+ ", movieCodeNaver=" + movieCodeNaver + ", movieName=" + movieName + ", starPoint=" + starPoint
+				+ ", director=" + director + ", movieName=" + movieName + ", starPoint=" + starPoint
 				+ ", category=" + category + ", best=" + best + ", worst=" + worst + ", viewCount=" + viewCount
 				+ ", enable=" + enable + ", notify=" + notify + "]";
 	}
+
+
+
 
 	
 	
