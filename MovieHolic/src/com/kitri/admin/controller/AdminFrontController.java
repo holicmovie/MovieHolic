@@ -20,8 +20,6 @@ public class AdminFrontController extends HttpServlet {
 
 		String act = request.getParameter("act");
 		
-		System.out.println("메인에서 들어옴");
-		
 		String path = "/page/admin/management.jsp";
 
 			
@@ -50,17 +48,12 @@ public class AdminFrontController extends HttpServlet {
 				MoveUrl.forward(request, response, path);
 				
 			}
-//			else if (condition) {
-//				
-//				
-//				
-//			}else if (){
-//				
-//			}else if () {
-//				
-//			}else {
-//				
-//			}
+			
+			else {
+				int cnt = 1;
+				path = AdminController.getAdminController().mainSelectByUserAll(request, response, cnt);
+				MoveUrl.forward(request, response, path);
+			}
 			
 
 		

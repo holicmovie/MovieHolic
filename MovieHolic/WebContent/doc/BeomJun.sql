@@ -82,6 +82,47 @@ CREATE TABLE holic_user (
 	enable NUMBER /* 활성화여부 */
 );
 
-insert into holic_user values('qjawns0618@naver.com', '권범준', 'kitri', 010, 5419, 0583, 940618, '남', sysdate, sysdate, null);
+insert into holic_user values('qjawns0618@naver.com', '권범준', 'kitri', '010', '5419', '0583', '940618', '남', sysdate, null, null, 0);
+insert into holic_user values('guswjd@naver.com', '정현정', 'sss', '010', '1111', '1111', '111111', '여', sysdate, null, null, 0);
+insert into holic_user values('aaaa@naver.com', '이소담', 'sss', '010', '1111', '1111', '111111', '남', sysdate, null, null, 0);
+insert into holic_user values('ddddd@naver.com', '박광규', 'sss', '010', '1111', '1111', '111111', '남', sysdate, null, null, 0);
+insert into holic_user values('ffff@naver.com', '갓졍', 'fdsfe',  '010', '1111', '1111', '111111', '신', sysdate, sysdate, null, 1);
+insert into holic_user values('cced@naver.com', '홍길동', 'eqwd',  '010', '1111', '1111', '111111', '서', sysdate, sysdate, null, 1);
+insert into holic_user values('sdfsdf@naver.com', '성공이라니', 'cvds', '010', '1111', '1111', '111111', '남', sysdate, sysdate, null, 1);
+insert into holic_user values('gbaus@naver.com', '휴면파트', 'gbaus',  '010', '1111', '1111', '111111', '남', sysdate, null, null, 1);
+insert into holic_user values('xkfxhl@naver.com', '탈퇴파트', 'xkfxhl',  '010', '1111', '1111', '111111', '남', sysdate, sysdate, null, 0);
+insert into holic_user values('TKDTKD@naver.com', '휴면탈퇴파트', 'gbxkf', '010', '1111', '1111', '111111', '남', sysdate, sysdate, null, 1);
+
 
 select userId,name,birth,phoneFirst,phoneMid,phoneLast,gender,joinDate,outDate from holic_user;
+
+select userId,name,birth,phoneFirst,phoneMid,phoneLast,gender,joinDate,outDate from holic_user where outDate is null;
+
+sql.append(" userId,");
+			sql.append(" name,");
+			sql.append(" birth,");
+			sql.append(" phoneFirst,");
+			sql.append(" phoneMid,");
+			sql.append(" phoneLast,");
+			sql.append(" gender,");
+			sql.append(" joinDate,");
+			sql.append(" outDate,");
+			sql.append(" enable");
+
+
+-- 페이징 처리
+
+select rownum,userid,name,phoneFirst,phoneMid,phoneLast,gender,joinDate,outDate,enable
+from holic_user
+where rownum between 1 and 5;
+
+select userid,name,phoneFirst,phoneMid,phoneLast,gender,joinDate,outDate,enable
+from ( select rownum r,userid,name,phoneFirst,phoneMid,phoneLast,gender,joinDate,outDate,enable
+        from holic_user)
+where r between 6 and 10;
+
+
+-- 토탈 페이지 목록 수.
+select count(*) from holic_user;
+
+commit;
