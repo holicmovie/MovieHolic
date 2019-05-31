@@ -127,12 +127,12 @@ DROP TABLE holic_visitor
 DROP TABLE holic_log 
 	CASCADE CONSTRAINTS;
 	
-	/* sequence1 */
+/* sequence1 */
 DROP SEQUENCE seq;
 
 /* sequence1 */
-CREATE SEQUENCE seq
-	START WITH 100;
+CREATE SEQUENCE seq 
+	start with 100;	
 
 /* holic_board */
 CREATE TABLE holic_board (
@@ -143,9 +143,9 @@ CREATE TABLE holic_board (
 	postDate DATE, /* 작성일 */
 	content CLOB, /* 내용 */
 	starPoint NUMBER, /* 별점 */
-	movieName VARCHAR2(200), /* 영화명 */
-	movieCodeNaver VARCHAR2(500), /* 영화코드(네이버) */
-	movieCodeYoung VARCHAR2(500), /* 영화코드(진흥원) */
+	movieName CLOB, /* 영화명 */
+	director CLOB, /* 감독명 */
+	movieCodeYoung CLOB, /* 영화코드(진흥원) */
 	category VARCHAR2(24), /* 장르 */
 	best NUMBER default 0, /* 추천 */
 	worst NUMBER default 0, /* 비추천 */
@@ -172,7 +172,7 @@ COMMENT ON COLUMN holic_board.starPoint IS '별점';
 
 COMMENT ON COLUMN holic_board.movieName IS '영화명';
 
-COMMENT ON COLUMN holic_board.movieCodeNaver IS '영화코드(네이버)';
+COMMENT ON COLUMN holic_board.director IS '감독명';
 
 COMMENT ON COLUMN holic_board.movieCodeYoung IS '영화코드(진흥원)';
 
@@ -199,7 +199,6 @@ ALTER TABLE holic_board
 		PRIMARY KEY (
 			seq
 		);
-
 
 
 /* holic_review */
@@ -329,7 +328,8 @@ ALTER TABLE holic_category
 CREATE TABLE holic_wishlist (
 	userId VARCHAR2(100) NOT NULL, /* 회원ID */
 	code NUMBER NOT NULL, /* 코드 */
-	movieCodeNaver VARCHAR2(500), /* 영화코드(네이버) */
+	movieCodeNaver CLOB, /* 영화코드(네이버) */
+	movieCodeYoung CLOB, /* 영화코드(진흥원) */
 	postDate DATE /* 작성일 */
 );
 
@@ -340,6 +340,8 @@ COMMENT ON COLUMN holic_wishlist.userId IS '회원ID';
 COMMENT ON COLUMN holic_wishlist.code IS '코드';
 
 COMMENT ON COLUMN holic_wishlist.movieCodeNaver IS '영화코드(네이버)';
+
+COMMENT ON COLUMN holic_wishlist.movieCodeYoung IS '영화코드(진흥원)';
 
 COMMENT ON COLUMN holic_wishlist.postDate IS '작성일';
 

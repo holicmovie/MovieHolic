@@ -1,5 +1,5 @@
 package com.kitri.service;
 
-public interface UserService {
+public class UserService {
 
 }
