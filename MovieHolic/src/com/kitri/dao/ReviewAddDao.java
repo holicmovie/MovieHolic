@@ -45,7 +45,7 @@ public class ReviewAddDao{
 			pstmt.setString(++idx, boardDto.getContent());
 			pstmt.setInt(++idx, boardDto.getStarPoint());
 			pstmt.setString(++idx, boardDto.getMovieName().toString());
-			pstmt.setString(++idx, boardDto.getMovieCodeNaver().toString());
+			pstmt.setString(++idx, boardDto.getDirector().toString());
 			pstmt.setString(++idx, boardDto.getMovieCodeYoung().toString());
 			pstmt.setString(++idx, boardDto.getCategory());
 			pstmt.setInt(++idx, boardDto.getEnable());
@@ -78,9 +78,6 @@ public class ReviewAddDao{
 			
 			while(rs.next()) {
 				BoardDto boardDto = new BoardDto();
-				StringTokenizer a = new StringTokenizer(boardDto.setMovieCodeNaver(rs.getString("movieCodeNaver"), "||")); 
-				
-
 
 				boardDto.setMovieCodeNaver(rs.getString("movieCodeNaver"));
 				boardDto.setPostDate(rs.getString("postDate"));
