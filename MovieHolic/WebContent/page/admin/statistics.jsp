@@ -6,7 +6,9 @@
 <%@ include file="/template/boot_431.jsp"%>
 
 <script type="text/javascript"
-	src="https:/www.gstatic.com/charts/loader.js"></script>
+	src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
 
 <!-- 그래프 -->
 <link id="themecss" rel="stylesheet" type="text/css" href="/MovieHolic/css/all.min.css">
