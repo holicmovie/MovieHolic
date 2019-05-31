@@ -328,8 +328,8 @@ ALTER TABLE holic_category
 CREATE TABLE holic_wishlist (
 	userId VARCHAR2(100) NOT NULL, /* 회원ID */
 	code NUMBER NOT NULL, /* 코드 */
-	movieCodeNaver CLOB, /* 영화코드(네이버) */
-	movieCodeYoung CLOB, /* 영화코드(진흥원) */
+	movieCodeNaver VARCHAR2(500), /* 영화코드(네이버) */
+	movieCodeYoung VARCHAR2(500), /* 영화코드(진흥원) */
 	postDate DATE /* 작성일 */
 );
 
@@ -399,7 +399,8 @@ CREATE TABLE holic_log (
 	logId VARCHAR2(100), /* 활동한ID */
 	userId VARCHAR2(100), /* 작성자ID */
 	logCate NUMBER, /* 활동분류 */
-	subject VARCHAR2(100) /* 제목 */
+	subject VARCHAR2(100), /* 제목 */
+	movieCodeYoung VARCHAR2(500)	/* 영화코드(진흥원)*/
 );
 
 COMMENT ON TABLE holic_log IS 'holic_log';
@@ -413,6 +414,8 @@ COMMENT ON COLUMN holic_log.userId IS '작성자ID';
 COMMENT ON COLUMN holic_log.logCate IS '활동분류';
 
 COMMENT ON COLUMN holic_log.subject IS '제목';
+
+COMMENT ON COLUMN holic_log.movieCodeYoung IS '영화코드(진흥원)';
 
 CREATE UNIQUE INDEX PK_holic_log
 	ON holic_log (
