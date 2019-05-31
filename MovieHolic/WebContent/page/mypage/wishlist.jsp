@@ -4,7 +4,7 @@
 
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 <style>
 /* 구분선 굵은 것 */
 hr.line_bold {
