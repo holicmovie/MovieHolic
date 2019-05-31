@@ -25,7 +25,7 @@ ALTER TABLE holic_social
 
 ALTER TABLE holic_wishlist
 	DROP
-		CONSTRAINT FK_holic_boardcate_TO_holic_wishlist
+		CONSTRAINT FK_holic_wishlistcate_TO_holic_wishlist
 		CASCADE;
 
 ALTER TABLE holic_wishlist
@@ -58,7 +58,7 @@ ALTER TABLE holic_category
 		CASCADE
 		KEEP INDEX;
 
-ALTER TABLE holic_boardcate
+ALTER TABLE holic_wishlistcate
 	DROP
 		PRIMARY KEY
 		CASCADE
@@ -84,7 +84,7 @@ DROP INDEX PK_holic_user;
 
 DROP INDEX PK_holic_category;
 
-DROP INDEX PK_holic_boardcate;
+DROP INDEX PK_holic_wishlistcate;
 
 DROP INDEX PK_holic_visitor;
 
@@ -116,7 +116,7 @@ DROP TABLE holic_wishlist
 	CASCADE CONSTRAINTS;
 
 /* holic_wishlistcate */
-DROP TABLE holic_boardcate 
+DROP TABLE holic_wishlistcate 
 	CASCADE CONSTRAINTS;
 
 /* holic_visitor */
@@ -344,25 +344,25 @@ COMMENT ON COLUMN holic_wishlist.movieCodeNaver IS '영화코드(네이버)';
 COMMENT ON COLUMN holic_wishlist.postDate IS '작성일';
 
 /* holic_wishlistcate */
-CREATE TABLE holic_boardcate (
+CREATE TABLE holic_wishlistcate (
 	code NUMBER NOT NULL, /* 코드 */
 	category VARCHAR2(100) /* 분류명 */
 );
 
-COMMENT ON TABLE holic_boardcate IS 'holic_wishlistcate';
+COMMENT ON TABLE holic_wishlistcate IS 'holic_wishlistcate';
 
-COMMENT ON COLUMN holic_boardcate.code IS '코드';
+COMMENT ON COLUMN holic_wishlistcate.code IS '코드';
 
-COMMENT ON COLUMN holic_boardcate.category IS '분류명';
+COMMENT ON COLUMN holic_wishlistcate.category IS '분류명';
 
-CREATE UNIQUE INDEX PK_holic_boardcate
-	ON holic_boardcate (
+CREATE UNIQUE INDEX PK_holic_wishlistcate
+	ON holic_wishlistcate (
 		code ASC
 	);
 
-ALTER TABLE holic_boardcate
+ALTER TABLE holic_wishlistcate
 	ADD
-		CONSTRAINT PK_holic_boardcate
+		CONSTRAINT PK_holic_wishlistcate
 		PRIMARY KEY (
 			code
 		);
@@ -476,11 +476,11 @@ ALTER TABLE holic_social
 
 ALTER TABLE holic_wishlist
 	ADD
-		CONSTRAINT FK_holic_boardcate_TO_holic_wishlist
+		CONSTRAINT FK_holic_wishlistcate_TO_holic_wishlist
 		FOREIGN KEY (
 			code
 		)
-		REFERENCES holic_boardcate (
+		REFERENCES holic_wishlistcate (
 			code
 		);
 
