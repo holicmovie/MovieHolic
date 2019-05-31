@@ -4,14 +4,16 @@ import java.util.List;
 
 public class WishlistDto {	//위시리스트
 
-	private String userId;	//ID
-	private int code;	//code
-	private String postDate;	//등록일자
-	private List<String> movieCodeNaver;	//영화코드
+	private String userId;					//ID
+	private int code;						//code
+	private String postDate;				//등록일자
+	private String movieCodeNaver;	//영화코드(네이버)
+	private String movieCodeYoung;			//영화코드(영진원)
 
 	
 	///// 생성자 /////
-	
+
+
 	public WishlistDto() {
 		super();
 	}
@@ -49,19 +51,28 @@ public class WishlistDto {	//위시리스트
 	}
 
 
-	public List<String> getMovieCodeNaver() {
+	public String getMovieCodeNaver() {
 		return movieCodeNaver;
 	}
 
 
-	public void setMovieCodeNaver(List<String> movieCodeNaver) {
+	public void setMovieCodeNaver(String movieCodeNaver) {
 		this.movieCodeNaver = movieCodeNaver;
 	}
 
+	
+	public String getMovieCodeYoung() {
+		return movieCodeYoung;
+	}
+
+	
+	public void setMovieCodeYoung(String movieCodeYoung) {
+		this.movieCodeYoung = movieCodeYoung;
+	}
 
 	@Override
 	public String toString() {
-		return "WishlistDto [userId=" + userId + ", code=" + code + ", postDate=" + postDate + "]";
+		return "WishlistDto [userId=" + userId + ", code=" + code + ", postDate=" + postDate + ", movieCodeNaver=" + movieCodeNaver + ", movieCodeYoung=" + movieCodeYoung + "]";
 	}
 
 	

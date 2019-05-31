@@ -2,18 +2,18 @@ package com.kitri.dto;
 
 public class UserDto {	//회원정보
 
-	private String userId;	//ID
-	private String pass;	//PW
-	private String name;	//이름
-	private String birth;	//생년월일
-	private String gender;	//성별
+	private String userId;		//ID
+	private String pass;		//PW
+	private String name;		//이름
+	private String birth;		//생년월일
+	private String gender;		//성별
 	private String phoneFirst;	//폰1
 	private String phoneMid;	//폰2
 	private String phoneLast;	//폰3
 	private String joinDate;	//가입일
-	private String outDate;	//탈퇴일
-	private String enable;	//활성화 여부
-	private String profile;	//프로필 사진
+	private String outDate;		//탈퇴일
+	private int enable;			//활성화 여부
+	private String profile;		//프로필 사진
 
 	
 	///// 생성자 /////
@@ -106,11 +106,11 @@ public class UserDto {	//회원정보
 		this.outDate = outDate;
 	}
 
-	public String getEnable() {
+	public int getEnable() {
 		return enable;
 	}
 
-	public void setEnable(String enable) {
+	public void setEnable(int enable) {
 		this.enable = enable;
 	}
 
