@@ -5,6 +5,9 @@
 <%@ include file="/template/boot_431.jsp"%>
 </head>
 <body class="left-sidebar is-preload" style="background-color: black;">
+<script type="text/javascript">
+
+</script>
 	<div id="page-wrapper">
 
 		<!-- Header -->
@@ -13,14 +16,17 @@
 		</div>
 		<!-- boxoffice -->
 
-		<!-- good rank list -->
-		<section class="carousel">
-			<div class="reel" id="romance" style="text-align: center;">
+					
+			<div>		
 				<h2
-					style="border-top: 5px solid #fff; border-bottom: 5px solid #fff; padding: 10px 0 10px 0;">
-					<strong>주간 인기 리스트</strong>
+					style="text-align: center; border-top: 5px solid #fff; border-bottom: 5px solid #fff; padding: 10px 0 10px 0;">
+					<span><strong>주간 인기 리스트</strong></span>
 				</h2>
+				</div>
 				<br>
+		<!-- good rank list -->
+		<section class="carousel"style="padding:1.5em 0 0 0;">
+			<div class="reel" id="romance" >
 				<article style="background-color: rgb(3, 39, 49);">
 					<a href="#" class="image featured"><img
 						src="/MovieHolic/images/brother.jpg" alt="" /></a>
@@ -94,7 +100,8 @@
 
 
 			</div>
-
+		<div class="col-11 col-12-mobile"style="text-align:right; padding-right:4em;margin: 1em 0 10px 0;"><a href="/MovieHolic/page/list/makelist.jsp" class="btn-success" style="background:rgb(3, 39, 49); padding:5px 1em 5px 1em; border:1px solid #fff;">New List</a>
+		</div>
 
 		</section>
 
@@ -103,7 +110,7 @@
 
 		<!-- new list -->
 
-		<div class="row" style="margin: 3em 14em 3em 14em;">
+		<div class="row" style="margin: 0 14em 3em 14em;">
 			<div
 				style="width: 100%; border-bottom: 0.3em solid #fff; padding: 10px 0 10px 0; border-top: 0.3em solid #fff;">
 				<span style="font-size: 30px; padding: 10px 0 10px 0;"><strong>전체
