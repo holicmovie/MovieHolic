@@ -200,6 +200,9 @@ public class BoardDto { // 게시판
 				+ ", enable=" + enable + ", notify=" + notify + "]";
 	}
 
+
+
+
 	
 	
 	
