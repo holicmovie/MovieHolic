@@ -3,6 +3,7 @@
 <%@ include file="/template/header.jsp"%>
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <style>
 <%-- 캐러셀 안의 포스터 공백제거 --%>
 .reel>article{
@@ -27,6 +28,23 @@
 </style>
 </head>
 <body class="left-sidebar is-preload">
+
+<script type="text/javascript">
+$(function() {
+	var arr = $("table#lsd>tr>td>a");
+	$(arr).click(function() {
+	var vurl = $(this).attr("href");
+	$a.jax({
+		url : vurl,
+		method:'get',
+		success:function(result){
+			location.href="listdetail.jsp";
+		}
+	});
+		
+	});
+});
+</script>
 <div id="page-wrapper">
 
 <%-- Header --%>
@@ -194,7 +212,7 @@
 							<div class="font_bold_mid" style="width:100%; border-bottom: 2.5px solid #fff; margin-bottom: 0; padding-bottom: 0.8em;">
 								<div style="float: left;">나의 최근 리스트</div>
 							</div>
-							<table class="table table-hover col-lg-12 col-mobile-12" style="margin-top: 0;">
+							<table id="lsd"class="table table-hover col-lg-12 col-mobile-12" style="margin-top: 0;">
 								<col style="width:40%;">
 								<tr>
 									<td>
@@ -207,7 +225,7 @@
 										</div>
 									</td>
 							        <td style="vertical-align: middle; padding-left: 2em;">
-							        	<h4 class="font_bold_small">우울할 때 보는 영화 10선</h4>
+							        	<h4 class="font_bold_small"><a href="">우울할 때 보는 영화 10선</a></h4>
 							        </td>
 								</tr>
 								<tr>
