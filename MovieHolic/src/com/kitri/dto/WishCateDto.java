@@ -1,6 +1,6 @@
 package com.kitri.dto;
 
-public class WishlistCateDto {	//위시리스트 분류
+public class WishCateDto {	//위시리스트 분류
 
 	private int code;	//code
 	private String category;	//분류명
@@ -8,7 +8,7 @@ public class WishlistCateDto {	//위시리스트 분류
 	
 	///// 생성자 /////
 	
-	public WishlistCateDto() {
+	public WishCateDto() {
 		super();
 	}
 
