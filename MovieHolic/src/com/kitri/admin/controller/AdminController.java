@@ -1,13 +1,15 @@
 package com.kitri.admin.controller;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kitri.admin.dao.AdminDao;
 import com.kitri.admin.dto.AdminDto;
+import com.kitri.admin.dto.AdminPageDto;
 import com.kitri.admin.service.AdminService;
 
 public class AdminController {
@@ -26,42 +28,49 @@ public class AdminController {
 		return adminController;
 	}
 
-	// 목록 처리
+	public String selectByUserList(HttpServletRequest request, HttpServletResponse response, int cnt) {
 
-	public String selectByUserAll(HttpServletRequest request, HttpServletResponse response, int cnt) {
+		// 요청전달 데이터 없으면 1페이지
+		String cp = request.getParameter("currentPage");
 
-		List<AdminDto> list = new ArrayList<>();
+		int currentPage = 1; // 보여줄 현재 페이지.
+		
+		System.out.println("cp = " + cp);
+		
+		if (cp != null) {
+			currentPage = Integer.parseInt(cp);
+		}
+		
+		int cntPerPage = 5; // 페이지별 보여줄 목록수
 
-		list = AdminService.getAdminService().selectByUserAll(cnt);
+		int totalCnt = AdminService.getAdminService().getTotalCnt(cnt);
 
-		// request로 주소값을 가짐 거기다가 setting해줌.
-		request.setAttribute("AdminDto", list);
+		int cntPerPageGroup = 5;
+		String url = "/MovieHolic/admin";
 
-		String path = "/page/admin/managementAlllist.jsp"; // 서버딴에서 움직이면 앞에 / =Webcontent 클라이언트에서 / =Movieholic부터.
+		AdminPageDto ap = new AdminPageDto(cntPerPage, totalCnt, cntPerPageGroup, url, currentPage);
+
+		//System.out.println(ap.getStartRow() + "   end : " + ap.getEndRow());
+
+		List<AdminDto> list = AdminService.getAdminService().findByRows(ap.getStartRow(), ap.getEndRow(), cnt);
+
+		ap.setList(list);
+		request.setAttribute("ap", ap);
+
+		String path = "/page/admin/management.jsp";
+		
+		if (cnt == 1) {
+			path = "/page/admin/mgAlllist.jsp";
+		} else if (cnt == 2) {
+			path = "/page/admin/mgInactiveList.jsp";
+		} else if (cnt == 3) {
+			path = "/page/admin/mgUnsubscribelist.jsp";
+		}
 
 		return path;
+		
 	}
-
-	public String mainSelectByUserAll(HttpServletRequest request, HttpServletResponse response, int cnt) {
-
-		List<AdminDto> list = new ArrayList<>();
-
-		list = AdminService.getAdminService().selectByUserAll(cnt);
-
-		// request로 주소값을 가짐 거기다가 setting해줌.
-		request.setAttribute("AdminDto", list);
-
-		String path = "/page/admin/managementAlllist.jsp";
-
-		return path;
-	}
-
-	// 페이징 처리
-
-	public void getTotalCnt() {
-
-		int cnt = AdminDao.getAdminDao().selectTotalCnt();
-
-	}
-
+	
+	
+	
 }

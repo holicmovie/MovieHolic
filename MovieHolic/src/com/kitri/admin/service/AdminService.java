@@ -26,23 +26,21 @@ public class AdminService {
 		return adminService;
 	}
 	
-	// 목록
-	public List<AdminDto> selectByUserAll(int cnt) {
-
-		return AdminDao.getAdminDao().selectByUserAll(cnt);
-	}
+	
+	
+	
 	
 	
 	// 페이징처리
-	public List<AdminDto> findByRows(int startRow, int endRow){
+	public List<AdminDto> findByRows(int startRow, int endRow, int cnt){
 		
-		return AdminDao.getAdminDao().selectByRows(startRow, endRow);
+		return AdminDao.getAdminDao().selectByRows(startRow, endRow, cnt);
 	}
 	
 
-	public int getTotalCnt() {
-		
-		return AdminDao.getAdminDao().selectTotalCnt();
+	// 페이징처리
+	public int getTotalCnt(int cnt) {
+		return AdminDao.getAdminDao().selectTotalCnt(cnt);
 	}
 	
 	
