@@ -158,7 +158,6 @@ public class FilmService {
 								StringTokenizer st = new StringTokenizer(genreAlt, ",");
 								for(int j = 0; j < st.countTokens(); j ++)
 									genres.add(st.nextToken());
-								System.out.println("장르 여러 개 : " + genres.get(j));
 							} else {
 								// 장르가 하나일 경우,
 								genres.add(genreAlt);								
