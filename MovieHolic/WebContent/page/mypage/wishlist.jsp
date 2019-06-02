@@ -13,7 +13,19 @@ hr.line_bold {
     position: static;
 }
 </style>
+<%--JQUERY사용하기 위한 URL --%>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 
+<%--연도 셀렉트 박스 값 컨트롤러로 보내기 --%>
+<script>
+$(function(){
+	var wishlistyear = $("wishlistyear");
+	$(wishlistyear).click(function() {
+		var url = $(this).attr("")
+		
+	})
+});
+</script>
 </head>
 <body class="left-sidebar is-preload">
 <div id="page-wrapper">
@@ -58,11 +70,14 @@ hr.line_bold {
 				
 					<div class="col-lg-2 col-4-moblile">
 							<select class="form-control form-control-sm">
-								<option>기간별 - 전체</option>
-								<option>2019</option>
-								<option>2018</option>
-								<option>2017</option>
-								<option>2016</option>
+								<option>기간별-전체</option>
+								<option>2015~2019</option>
+								<option>2010~2014</option>
+								<option>2005~2009</option>
+								<option>2000~2004</option>
+								<option>1995~1999</option>
+								<option>1990~1995</option>
+								<option>before1990s</option>
 							</select>
 					</div>
 					
