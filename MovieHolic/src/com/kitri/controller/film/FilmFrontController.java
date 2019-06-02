@@ -29,9 +29,10 @@ public class FilmFrontController extends HttpServlet {
 		// Home 눌릴때 || localhost/MovieHolic/film 링크 검색 시(첫 화면)
 		if ("showBox".equals(act)||act==null) {
 			// 메인 페이지 띄우기
-			// 경로 get 				 		  		   	(C -> FC)
-			// request(setted 박스오피스) get    (C -> FC)
+			// 경로 get 				 		  		   							(C -> FC)
+			// request(setted 박스오피스 & 추천영화목록) get    (C -> FC)
 			path = FilmController.getUserController().getBoxOffice(request, response);
+			FilmController.getUserController().getFavoriteFilm(request, response);
 			
 			// 경로로 go (FC -> V)
 			MoveUrl.forward(request, response, path);

@@ -30,13 +30,13 @@ public class FilmService {
 		// [메소드]
 
 		// 1
-		// <일별 박스 오피스 영화 목록 출력> 메소드
+		// <일별 박스 오피스 영화 출력> 메소드
 		// : 영진원 일별 박스오피스 api + 네이버 이미지 검색 api
 		public List<FilmDto> getBoxOffice() {
 			
 			List<FilmDto> box = new ArrayList<>();
 			
-			// #1 API 호출 (HttpUrlConnection)
+			// #1 API 호출
 
 			// 1-1. 영진원 일별 박스오피스 API
 			// ① url + 파라미터 값 설정
@@ -55,10 +55,11 @@ public class FilmService {
 			String httpUrl = url + "?" + paramYoung1 + "&" + paramYoung2;
 
 			// ② API 호출 (GET)
-			String responseBoxOffice = CallAPI.APIHttpGet(httpUrl, null);
+			String responseBoxOffice = CallAPI.APIHttpGet(httpUrl, null);  		// HttpUrlConnection 사용
+			//String responseBoxOffice = CallAPI.APIHttpClientGet(httpUrl, null);  // HttpClient 라이브러리 사용
 
 			// ③ responseBoxOffice (JSON) 파싱
-			// *박스오피스 JSON 구조 : { {boxOfficeResult} - [dailyBoxOfficeList] 여러 개 - {key1 : "", key2 : "" , ...} }
+			// *박스오피스 JSON 구조 : { {boxOfficeResult} - [dailyBoxOfficeList] - {key1 : "", key2 : "" , ...} 여러 개 }
 			try {
 				
 					// JSON 파서 객체 생성
@@ -87,59 +88,114 @@ public class FilmService {
 						filmDto.setMovieNm(movieNm);
 						
 						
-			// 1-2. 네이버 영화 목록 검색 API
-						
-						// ① url + 파라미터 값 설정
-						String url2 = "https://openapi.naver.com/v1/search/movie.json";			// API 호출 URL
-						String search = URLEncoder.encode(movieNm, "UTF-8");				     	// 파라미터값 (UTF-8인코딩 필수)
-						String paramNaver = "query=" + search + "&display=1";
+						// 1-2. 네이버 영화 목록 검색 API + 크롤링
+					    String movieImage = CallAPI.getPoster(movieNm);
 
-						String httpUrl2 = url2 + "?" + paramNaver;									   // 최종 URL
+						// '포스터 이미지 주소'를 DTO에 세팅함
+						filmDto.setMovieImage(movieImage);
 						
-						// ② 헤더값 생성
-						HashMap<String, String> header = new HashMap<>();
-						header.put("X-Naver-Client-Id", "Fc4lGVGl3zDMtizzcZbx");
-						header.put("X-Naver-Client-Secret", "q3OgVCUh0y");
-						
-						// ③ API 호출 (GET)
-						String responseNaver = CallAPI.APIHttpGet(httpUrl2, header);
-						
-						// ④ responseNaver (JSON) 파싱
-						JSONParser jsonParser2 = new JSONParser();
-						
-						JSONObject jsonObject2 = (JSONObject) jsonParser.parse(responseNaver);
-				
-						JSONArray imageArray = (JSONArray) jsonObject2.get("items");
-						
-						int len2 = imageArray.size();
-						for (int j = 0; j < len2; j++) {
-							
-							JSONObject imageArrayItems = (JSONObject) imageArray.get(j);
-							
-							// movieImageUrl = 검색결과의 이미지 주소
-							String movieImageUrl = (String) imageArrayItems.get("link");   
-							
-							// HighImageUrl = 고화질 포스터 이미지 주소
-					        String HighImageUrl = CallAPI.getPoster(movieImageUrl);
-
-							// '포스터 이미지 주소'를 DTO에 세팅함
-							filmDto.setMovieImage(HighImageUrl);
-						}
-						
-	    // #2 API를 통해 얻은 값(영화명, 영화코드, 포스터 이미지 주소)을 box에 세팅
+			// #2 API를 통해 얻은 값(영화명, 영화코드, 포스터 이미지 주소)을 box에 세팅
 						box.add(filmDto);
 						
-					} // for문 end
+					} // for문 end			
 			
-			} catch (ParseException e) {  						// json 파싱 예외
+			} catch (ParseException e) {  	// json 파싱 예외
 				e.printStackTrace();
-			} catch (UnsupportedEncodingException e) { // naver 검색어 encoding 예외
-				e.printStackTrace();
+				
 			}   // try catch end
 
-			
 		// #3 box 리턴
 		return box;
-		}
+		
+		}  // getBoxOffice() end
 	
-}
+		
+		// 2
+		// <장르별 영화 목록 출력> 메소드
+		// : 영진원 영화 목록 api
+		public List<FilmDto> getFavoriteFilm(String genre) {
+				List<FilmDto> film = new ArrayList<>();
+			
+				// #1 API 호출
+
+				// 1. 영진원 영화 목록 API
+				// ① url + 파라미터 값 설정
+				String url = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieList.json";
+				String paramYoung1 = "key=d497cad784b01e0c354d04518c4ddfc7";
+				String paramYoung2 = "itemPerPage=100";	// 랜덤 영화 200개 호출
+				String paramYoung3 = "openStartDt=2019";	// 2019년 개봉작
+	
+				String httpUrl = url + "?" + paramYoung1 + "&" + paramYoung2 + "&" + paramYoung3;
+	
+				// ② API 호출 (GET)
+				String responseBoxOffice = CallAPI.APIHttpGet(httpUrl, null);
+				
+				// ③ responseBoxOffice (JSON) 파싱
+				// *박스오피스 JSON 구조 : { {movieListResult} - [movieList]  - {key1 : "", key2 : "" , ...} 여러 개 }
+				try {
+					
+						JSONParser jsonParser = new JSONParser();
+					
+						JSONObject jsonObject = (JSONObject) jsonParser.parse(responseBoxOffice.toString());
+				
+						JSONObject movieListObject = (JSONObject) jsonObject.get("movieListResult");
+						JSONArray movieListArray = (JSONArray) movieListObject.get("movieList");
+						
+						// movieListArray JSON배열의 값(JSON객체)들을 뽑아냄
+						int len = movieListArray.size();
+						for (int i = 0; i < len; i++) {
+							
+							JSONObject movieListItems = (JSONObject) movieListArray.get(i);
+							
+							String movieCdYoung = movieListItems.get("movieCd").toString(); 		// 영화코드(영진원)
+							String movieNm = movieListItems.get("movieNm").toString(); 				// 영화명
+							String genreAlt = movieListItems.get("genreAlt").toString();					// 장르 (ex: 범죄,스릴러)
+							
+							List genres = new ArrayList();
+							
+							// 장르가 여러 개일 경우,
+							if(genreAlt.contains(",")) {
+								StringTokenizer st = new StringTokenizer(genreAlt, ",");
+								for(int j = 0; j < st.countTokens(); j ++)
+									genres.add(st.nextToken());
+								System.out.println("장르 여러 개 : " + genres.get(j));
+							} else {
+								// 장르가 하나일 경우,
+								genres.add(genreAlt);								
+							}
+							
+							// 인자값의 장르와 일치하는 것만 film에 추가
+							int glen = genres.size();
+							for(int k = 0; k < glen; k++) {
+								
+								if(genre.equals(genres.get(k).toString())) {
+									
+									String movieImage = CallAPI.getPoster(movieNm);
+									
+									FilmDto filmDto = new FilmDto();
+									
+									// '영화코드(영진원)', '영화명', '첫번째장르'를 DTO에 세팅함
+									filmDto.setMovieCdYoung(movieCdYoung);
+									filmDto.setMovieNm(movieNm);
+									filmDto.setGenreNm(genres.get(k).toString());
+									filmDto.setMovieImage(movieImage);
+									
+									film.add(filmDto);
+								}
+
+							} // for문 end
+																	
+						} // for문 end
+				
+				
+				} catch (ParseException e) {  						// json 파싱 예외
+						e.printStackTrace();
+						
+				} // try catch end
+		
+				return film;
+
+		} //  getFavoriteFilm() end
+		
+		
+} // class end

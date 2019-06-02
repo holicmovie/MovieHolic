@@ -26,12 +26,12 @@ public class FilmController {
 	
 	// [메소드]
 	// 1
+	// 박스오피스 get
 	public String getBoxOffice(HttpServletRequest request, HttpServletResponse response) {
 		
 		String path = "/index.jsp";
 		
 		// 박스오피스 목록 get  (S -> C)
-		//List<FilmDto> list = FilmService.getFilmService().getBoxOffice();
 		List<FilmDto> list = FilmService.getFilmService().getBoxOffice();
 		
 		// 박스오피스 set 		(C -> FC)
@@ -39,6 +39,18 @@ public class FilmController {
 		
 		// 경로 return 				(C -> FC)
 		return path;
+	}
+	
+	// 2
+	// 선호 장르 영화 목록 get
+	public void getFavoriteFilm(HttpServletRequest request, HttpServletResponse response) {
+		
+		// 선호 장르 영화 목록 get
+		List<FilmDto> list = FilmService.getFilmService().getFavoriteFilm("액션");
+		
+		// 선호 장르 영화 목록 set
+		request.setAttribute("favoritefilm", list);
+		
 	}
 
 }
