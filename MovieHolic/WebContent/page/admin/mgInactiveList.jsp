@@ -11,7 +11,7 @@
 <script>
 	$(function() {
 		
-		$(".page").click(function() {
+		$(".page>a").click(function() {
 			var currentPage = $(this).attr("href");
 			$.ajax({
 				url : '/MovieHolic/admin?act=inactiveList&' + 'currentPage=' + currentPage ,
@@ -109,9 +109,11 @@
 
 
 		<c:if test="${ap.startPage > 1 }">
-			<button class="btn btn-success">
-				<span class="page"><a href="${ap.startPage - 1}">이전</a></span>
-			</button>
+			
+				<span class="page">
+					<button class="btn btn-success"><a href="${ap.startPage - 1}">이전</a></button>
+				</span>
+			
 		</c:if>
 
 
@@ -153,9 +155,11 @@
 	<div class="col-lg-2">
 
 		<c:if test="${ap.totalPage > ap.endPage }">
-			<button class="btn btn-success">
-				<span class="page"><a href="${ap.endPage+1}">다음</a></span>
-			</button>
+			
+				<span class="page">
+					<button class="btn btn-success"><a href="${ap.endPage+1}">다음</a></button>
+				</span>
+			
 		</c:if>
 
 	</div>

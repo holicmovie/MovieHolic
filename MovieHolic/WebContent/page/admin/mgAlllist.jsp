@@ -11,11 +11,10 @@
 <script>
 	$(function() {
 
-		$(".page>a").click(
-				function() {
+		$(".page>a").click(function() {
 					var currentPage = $(this).attr("href");
 					$.ajax({
-						url : '/MovieHolic/admin?act=alllis&' + 'currentPage='+ currentPage,
+						url : '/MovieHolic/admin?act=alllis&' + 'currentPage='+currentPage,
 						method : 'get',
 						/* data : 'alllist=' + alllist,  */
 						success : function(result) {
@@ -40,6 +39,23 @@
 		return false;
 
 	});
+	
+	
+	$(function() {
+
+		$(".enable").click(function() {
+					var currentPage = $(this).attr("href");
+					$.ajax({
+						url : '/MovieHolic/admin?act=enable',
+						method : 'get',
+						success : function(result) {
+							$("section").html(result.trim());
+						}
+					});
+					return false;
+				});
+	});
+	
 </script>
 
 
@@ -78,6 +94,7 @@
 
 
 					<div>
+					<span class="enable">
 						<button type="button" class="btn btn-success dropdown-toggle"
 							data-toggle="dropdown">
 
@@ -85,7 +102,7 @@
 							<c:if test="${ap.enable == 0}">활동</c:if>
 
 						</button>
-
+					</span>
 
 						<div class="dropdown-menu">
 							<a class="dropdown-item" href="#"> <c:if
@@ -109,9 +126,10 @@
 
 
 		<c:if test="${ap.startPage > 1 }">
-			<button class="btn btn-success">
-				<span class="page"><a href="${ap.startPage - 1}">이전</a></span>
-			</button>
+				<span class="page"> 
+					<a href="${ap.startPage - 1}"><button class="btn btn-success">이전</button></a>
+				</span>
+			
 		</c:if>
 
 
@@ -132,8 +150,8 @@
 					</c:when>
 
 					<c:otherwise>
-						<li class="page-item"><span class="page"><a class="page-link"
-								href="${i}">${i}</a></span></li>
+						<li class="page-item"><span class="page"><a
+								class="page-link" href="${i}">${i}</a></span></li>
 					</c:otherwise>
 
 				</c:choose>
@@ -153,9 +171,11 @@
 	<div class="col-lg-2">
 
 		<c:if test="${ap.totalPage > ap.endPage }">
-			<button class="btn btn-success">
-				<span class="page"><a href="${ap.endPage+1}">다음</a></span>
-			</button>
+			
+				<span class="page">
+					<a href="${ap.endPage+1}"><button class="btn btn-success">다음</button></a>
+				</span>
+			
 		</c:if>
 
 	</div>

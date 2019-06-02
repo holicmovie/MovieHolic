@@ -67,10 +67,32 @@ select count(*) from mh_user;
 commit;
 
 
+/* mh_board */
+CREATE TABLE mh_board (
+	seq NUMBER NOT NULL, /* 글번호 */
+	userId VARCHAR2(100) NOT NULL, /* 회원ID */
+	boardCode NUMBER NOT NULL, /* 게시판코드 */
+	subject VARCHAR2(100), /* 제목 */
+	postDate DATE, /* 작성일 */
+	content CLOB, /* 내용 */
+	starPoint NUMBER, /* 별점 */
+	movieName CLOB, /* 영화명 */
+	director CLOB, /* 감독명 */
+	movieCodeYoung CLOB, /* 영화코드(진흥원) */
+	category VARCHAR2(24), /* 장르 */
+	best NUMBER default 0, /* 추천 */
+	worst NUMBER default 0, /* 비추천 */
+	notify NUMBER default 0, /* 신고 */
+	enable NUMBER default 0, /* 공개여부 */
+	viewCount NUMBER default 0/* 조회수 */
+);
+
+CREATE TABLE mh_category (
+	boardCode NUMBER NOT NULL, /* 게시판코드 */
+	boardName VARCHAR2(100) /* 게시판명 */
+);
 
 
-
-
-
+--번호 분류 작성자id 제목 내용 작성일 신고수
 
 
