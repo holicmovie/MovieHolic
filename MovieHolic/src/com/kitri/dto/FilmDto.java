@@ -8,8 +8,8 @@ public class FilmDto {
 	private String movieImage; 		// 영화 포스터 이미지 주소
 	private String genreNm;			// 장르
 	private String prdtYear;		// 제작년도
+	private String starPointNaver;	// 네이버 별점 
 
-	
 	public String getMovieNm() {
 		return movieNm;
 	}
@@ -57,12 +57,22 @@ public class FilmDto {
 	public void setPrdtYear(String prdtYear) {
 		this.prdtYear = prdtYear;
 	}
+	
+	public String getStarPointNaver() {
+		return starPointNaver;
+	}
 
+	public void setStarPointNaver(String starPointNaver) {
+		this.starPointNaver = starPointNaver;
+	}
+
+	
 	@Override
 	public String toString() {
 		return "FilmDto [movieNm=" + movieNm + ", movieCdYoung=" + movieCdYoung + ", movieCdNaver=" + movieCdNaver
-				+ ", movieImage=" + movieImage + ", genreNm=" + genreNm + ", prdtYear=" + prdtYear + "]";
+				+ ", movieImage=" + movieImage + ", genreNm=" + genreNm + ", prdtYear=" + prdtYear + ", starPointNaver="
+				+ starPointNaver + "]";
 	}
-
+	
 	
 }
