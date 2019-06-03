@@ -20,6 +20,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import com.kitri.dto.FilmDto;
+
 public class CallAPI {
 	
 	/**
@@ -28,12 +30,12 @@ public class CallAPI {
 	 * 
 	 * [인자값]
 	 * - String httpUrl : 파라미터 포함 url
-	 * - HashMap header : 헤더(key-value)         *헤더 없으면 null 넣기
+	 * - Boolean header : 헤더		         *헤더 없으면 false 넣기
 	 * 
 	 * [return]
 	 * - API 응답결과 (JSON형식의 String 타입)
 	 */
-	public static String APIHttpGet(String httpUrl, HashMap<String, String> header) {
+	public static String APIHttpGet(String httpUrl, Boolean header) {
 
 		String response = ""; // 응답 결과 담을 String
 
@@ -49,12 +51,15 @@ public class CallAPI {
 
 			// 헤더가 있을 경우,
 			if (header != null) {
-				Iterator<String> keys = header.keySet().iterator();
-				while (keys.hasNext()) {
-					String key = keys.next();
-					String value = (String) header.get(key);
-					con.setRequestProperty(key, value); // Request 헤더 설정
-				}
+				/*
+				 * Iterator<String> keys = header.keySet().iterator(); while (keys.hasNext()) {
+				 * String key = keys.next(); String value = (String) header.get(key);
+				 * con.setRequestProperty(key, value); // Request 헤더 설정 }
+				 */
+				
+				con.setRequestProperty("X-Naver-Client-Id", "Fc4lGVGl3zDMtizzcZbx");
+				con.setRequestProperty("X-Naver-Client-Secret", "q3OgVCUh0y");
+				
 			}
 
 			int responseCode = con.getResponseCode(); // response의 status 코드 얻어옴
@@ -73,13 +78,17 @@ public class CallAPI {
 				in.close();
 
 				response = sr.toString(); // 응답결과 저장
-
+			} else {
+			
+				System.out.println("예외코드 : " + responseCode);
+				System.out.println("예외 결과 : " + con.getInputStream().toString());
 			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
+		System.out.println("APIHttpGet 최종 결과 : " + response);
 		return response;
 
 	} // APIHttpGet() end
@@ -88,7 +97,7 @@ public class CallAPI {
 
 	/**
 	 * ---------------------------------- 2 ---------------------------------- 
-	 * <고화질 포스터 이미지 주소 얻기> 메소드
+	 * <고화질 포스터 이미지 주소 + 네이버 코드 + 네이버 별점 얻기> 메소드
 	 * 네이버 영화 검색 api + 크롤링
 	 * 
 	 * [인자값]
@@ -96,12 +105,12 @@ public class CallAPI {
 	 * - String prdtYear : 제작년도    *제작년도 없으면 null로 주기!
 	 *
 	 * [return]
-	 * - 고화질 포스터의 이미지 주소 (Stirng 타입)
+	 * - 고화질 포스터 이미지 주소, 네이버 코드, 네이버 별점 (FilmDto 타입)
 	 */
-	public static String getPoster(String movieNm, String prdtYear) {
+	public static FilmDto getPoster(String movieNm, String prdtYear) {
 
 		// HighImageUrl = 고화질 포스터 이미지 주소
-		String HighImageUrl = "";
+		FilmDto HighImageUrl = new FilmDto();
 		
 		try {
 
@@ -112,7 +121,7 @@ public class CallAPI {
 			String paramNaver = "";
 			
 			if(prdtYear!=null) {
-				paramNaver = "query=" + search + "&display=1&yearfrom=" + prdtYear + "&yearto" + prdtYear;
+				paramNaver = "query=" + search + "&display=1&yearfrom=" + prdtYear + "&yearto=" + prdtYear;
 			} else {
 				paramNaver = "query=" + search + "&display=1";
 			}
@@ -124,15 +133,15 @@ public class CallAPI {
 			header.put("X-Naver-Client-Secret", "q3OgVCUh0y");
 			
 			// ③ API 호출 (GET)
-			String responseNaver = APIHttpGet(httpUrl, header);  // HttpUrlConnection 사용
+			String responseNaver = APIHttpGet(httpUrl, true);  // HttpUrlConnection 사용
 			
 			// ④ responseNaver (JSON) 파싱
 			JSONParser jsonParser = new JSONParser();
 			
 			System.out.println("responseNaver : " + responseNaver);
-			JSONObject jsonObject2 = (JSONObject) jsonParser.parse(responseNaver);
+			JSONObject jsonObject = (JSONObject) jsonParser.parse(responseNaver);
 	
-			JSONArray imageArray = (JSONArray) jsonObject2.get("items");
+			JSONArray imageArray = (JSONArray) jsonObject.get("items");
 			
 			// 2. 네이버 영화 포스터 url 크롤링
 			int len2 = imageArray.size();
@@ -141,11 +150,14 @@ public class CallAPI {
 				JSONObject imageArrayItems = (JSONObject) imageArray.get(j);
 				
 				// movieImageUrl = 검색결과의 이미지 주소
-				String movieImageUrl = (String) imageArrayItems.get("link");   
+				String movieImageUrl = (String) imageArrayItems.get("link");
 
 		        int beginIndex = movieImageUrl.lastIndexOf("=") + 1;
 		        String movieCdNaver = movieImageUrl.substring(beginIndex); // movieCdNaver = 영화코드(네이버)
 	
+		        HighImageUrl.setMovieCdNaver(movieCdNaver);	 								// 영화코드(네이버) set
+		        HighImageUrl.setStarPointNaver(imageArrayItems.get("userRating").toString());	// 네이버 별점 set
+		        
 		        // 네이버 영화의 고화질 포스터 주소를 크롤링
 		        String connUrl = "https://movie.naver.com/movie/bi/mi/photoViewPopup.nhn?movieCode=" + movieCdNaver;
 		        
@@ -153,11 +165,10 @@ public class CallAPI {
 				Element imgtag = doc.getElementById("targetImage");
 				
 				if(imgtag != null) {
-					HighImageUrl = imgtag.attr("src").toString(); // HighImageUrl = 고화질 포스터 이미지 주소
-					System.out.println(HighImageUrl);
+					HighImageUrl.setMovieImage(imgtag.attr("src").toString()); 			// 이미지 주소 set
 				} else {
 					// 네이버 제공 고화질 이미지 주소가 없는 경우, 기본 이미지로 나오게 함.
-					HighImageUrl = "/MovieHolic/images/noMovieImage.png";
+					HighImageUrl.setMovieImage("/MovieHolic/images/noMovieImage.png");
 				}
 
 	
@@ -175,9 +186,24 @@ public class CallAPI {
 	} // getPoster() end
 	
 	
-	////////////////////////////////////////사용 안 함(임시보류)//////////////////////////////////////////////
 	/**
 	 * ---------------------------------- 3 ---------------------------------- 
+	 * <1초 쉬기> 메소드
+	 */
+	public static void Sleep() {
+		
+		try {
+				Thread.sleep(1000); //1초 대기
+
+			}catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+	}
+	
+	
+	////////////////////////////////////////사용 안 함(임시보류)//////////////////////////////////////////////
+	/**
+	 * ---------------------------------- 4 ---------------------------------- 
 	 * <HTTP GET으로 API 호출하기> 메소드 - HttpClient 라이브러리 사용
 	 * 
 	 * [인자값]

@@ -89,7 +89,7 @@ public class FilmService {
 						
 						
 						// 1-2. 네이버 영화 목록 검색 API + 크롤링
-					    String movieImage = CallAPI.getPoster(movieNm, null);
+					    String movieImage = CallAPI.getPoster(movieNm, null).getMovieImage();
 
 						// '포스터 이미지 주소'를 DTO에 세팅함
 						filmDto.setMovieImage(movieImage);
@@ -128,15 +128,15 @@ public class FilmService {
 				String httpUrl = url + "?" + paramYoung1 + "&" + paramYoung2 + "&" + paramYoung3;
 	
 				// ② API 호출 (GET)
-				String responseBoxOffice = CallAPI.APIHttpGet(httpUrl, null);
+				String responseMovies = CallAPI.APIHttpGet(httpUrl, false);
 				
-				// ③ responseBoxOffice (JSON) 파싱
-				// *박스오피스 JSON 구조 : { {movieListResult} - [movieList]  - {key1 : "", key2 : "" , ...} 여러 개 }
+				// ③ responseMovies (JSON) 파싱
+				// *영화목록 JSON 구조 : { {movieListResult} - [movieList]  - {key1 : "", key2 : "" , ...} 여러 개 }
 				try {
 					
 						JSONParser jsonParser = new JSONParser();
 					
-						JSONObject jsonObject = (JSONObject) jsonParser.parse(responseBoxOffice.toString());
+						JSONObject jsonObject = (JSONObject) jsonParser.parse(responseMovies);
 				
 						JSONObject movieListObject = (JSONObject) jsonObject.get("movieListResult");
 						JSONArray movieListArray = (JSONArray) movieListObject.get("movieList");
@@ -170,7 +170,7 @@ public class FilmService {
 								
 								if(genre.equals(genres.get(k).toString())) {
 									
-									String movieImage = CallAPI.getPoster(movieNm, prdtYear);
+									String movieImage = CallAPI.getPoster(movieNm, prdtYear).getMovieImage();
 									
 									FilmDto filmDto = new FilmDto();
 									
@@ -188,7 +188,7 @@ public class FilmService {
 						} // for문 end
 				
 				
-				} catch (ParseException e) {  						// json 파싱 예외
+				} catch (ParseException e) {  // json 파싱 예외
 						e.printStackTrace();
 						
 				} // try catch end
