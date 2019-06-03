@@ -6,41 +6,31 @@ import java.util.Date;
 public class NotifyDto {
 
 	
-	private static NotifyDto notifyDto; // 2번째 전역변수 만들기
 	
-	static {
-		notifyDto = new NotifyDto(); // 3번째 자기 안에서 쓸 수 있게 만들기
-	}
-
-	private NotifyDto() {} // 1번째 외부에서 생성 못하게 만듬.
-	
-	public static NotifyDto getAdminDao () { // 4번째 getter 만들기.
-		return notifyDto;
-	}
-	
-	
-	private int seq = 1;		/* 글번호 */
+	private int seq = 1;			/* 글번호 */
 	private int boardCode;		/* 게시판코드 */
 	private int best; 			/* 추천 */
 	private int worst; 			/* 비추천 */
-	private int notify;  /* 신고 */
-	private int enable; /* 공개여부 */
-	private int viewCount; /* 조회수 */
-	private int starPoint; /* 별점 */
-	private Date postDate; /* 작성일 */
-	private String userId;  /* 회원ID */
-	private String subject; /* 제목 */
-	private String content; /* 내용 */
+	private int notify;  			/* 신고 */
+	private int enable; 			/* 공개여부 */
+	private int viewCount;		/* 조회수 */
+	private int starPoint; 		/* 별점 */
+	private Date postDate; 	/* 작성일 */
+	private String userId;  	/* 회원ID */
+	private String subject; 	/* 제목 */
+	private String content; 	/* 내용 */
 	private String movieName; /* 영화명 */
-	private String director; /* 감독명 */
-	private String movieCodeYoung; /* 영화코드(진흥원) */
-	private String category; /* 장르 */
+	private String director; 	/* 감독명 */
+	private String movieCodeYoung; 	/* 영화코드(진흥원) */
+	private String category; 	/* 장르 */
+	private String boardName; /* 분류 */
+	private int row;
 	
-	
+	public NotifyDto(){}
 	
 	public NotifyDto(int seq, int boardCode, int best, int worst, int notify, int enable, int viewCount, int starPoint,
 			Date postDate, String userId, String subject, String content, String movieName, String director,
-			String movieCodeYoung, String category) {
+			String movieCodeYoung, String category, String boardName, int row) {
 		super();
 		this.seq = seq;
 		this.boardCode = boardCode;
@@ -58,6 +48,8 @@ public class NotifyDto {
 		this.director = director;
 		this.movieCodeYoung = movieCodeYoung;
 		this.category = category;
+		this.boardName = boardName;
+		this.row = row;
 	}
 
 	public int getSeq() {
@@ -187,8 +179,22 @@ public class NotifyDto {
 	public void setCategory(String category) {
 		this.category = category;
 	}
+
+	public String getBoardName() {
+		return boardName;
+	}
+
+	public void setBoardName(String boardName) {
+		this.boardName = boardName;
+	}
 	
-	
+	public int getRow() {
+		return row;
+	}
+
+	public void setRow(int row) {
+		this.row = row;
+	}
 
 	@Override
 	public String toString() {
@@ -196,8 +202,15 @@ public class NotifyDto {
 				+ ", notify=" + notify + ", enable=" + enable + ", viewCount=" + viewCount + ", starPoint=" + starPoint
 				+ ", postDate=" + postDate + ", userId=" + userId + ", subject=" + subject + ", content=" + content
 				+ ", movieName=" + movieName + ", director=" + director + ", movieCodeYoung=" + movieCodeYoung
-				+ ", category=" + category + "]";
+				+ ", category=" + category + ", boardName=" + boardName + ", row=" + row + "]";
 	}
+
+
+	
+	
+	
+	
+
 	
 	
 	

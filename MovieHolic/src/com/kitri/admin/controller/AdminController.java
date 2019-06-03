@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kitri.admin.dto.AdminDto;
+import com.kitri.admin.dto.AdminNotifyPageDto;
 import com.kitri.admin.dto.AdminPageDto;
+import com.kitri.admin.dto.NotifyDto;
 import com.kitri.admin.service.AdminService;
 
 public class AdminController {
@@ -28,6 +30,8 @@ public class AdminController {
 		return adminController;
 	}
 
+	
+	// 회원게시물 페이징처리
 	public String selectByUserList(HttpServletRequest request, HttpServletResponse response, int cnt) {
 
 		// 요청전달 데이터 없으면 1페이지
@@ -35,7 +39,7 @@ public class AdminController {
 
 		int currentPage = 1; // 보여줄 현재 페이지.
 		
-		System.out.println("cp = " + cp);
+		//System.out.println("cp = " + cp);
 		
 		if (cp != null) {
 			currentPage = Integer.parseInt(cp);
@@ -72,6 +76,53 @@ public class AdminController {
 		return path;
 		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// 신고게시물 페이징처리
+	public String NFselectByList(HttpServletRequest request, HttpServletResponse response) {
+
+		// 요청전달 데이터 없으면 1페이지
+		String cp = request.getParameter("currentPage");
+
+		int currentPage = 1; // 보여줄 현재 페이지.
+		
+		if (cp != null) {
+			currentPage = Integer.parseInt(cp);
+		}
+		
+		int cntPerPage = 5; // 페이지별 보여줄 목록수
+
+		int totalCnt = AdminService.getAdminService().NFselectTotalCnt();
+
+		int cntPerPageGroup = 5;
+		String url = "/MovieHolic/admin";
+
+		AdminNotifyPageDto np = new AdminNotifyPageDto(cntPerPage, totalCnt, cntPerPageGroup, url, currentPage);
+
+		//System.out.println(ap.getStartRow() + "   end : " + ap.getEndRow());
+
+		List<NotifyDto> list = AdminService.getAdminService().NFselectByRows(np.getStartRow(), np.getEndRow());
+
+		np.setList(list);
+		
+		request.setAttribute("np", np);
+
+		String path = "/page/admin/npAlllist.jsp";
+
+		return path;
+		
+	}
+	
+	
+	
 	
 	
 	

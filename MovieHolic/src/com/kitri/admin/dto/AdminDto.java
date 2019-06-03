@@ -18,8 +18,7 @@ public class AdminDto {
 	private String profile;
 	private int enable;
 	
-	public AdminDto() {
-	}
+	public AdminDto() {}
 
 	public AdminDto(String userId, String name, String pass, String phoneFirst, String phoneMid, String phoneLast,
 			String birth, String gender, Date joinDate, Date outdate, String profile, int enable) {

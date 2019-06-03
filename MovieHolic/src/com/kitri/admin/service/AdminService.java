@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.kitri.admin.controller.AdminController;
 import com.kitri.admin.dao.AdminDao;
 import com.kitri.admin.dto.AdminDto;
+import com.kitri.admin.dto.NotifyDto;
 
 public class AdminService {
 
@@ -33,7 +34,6 @@ public class AdminService {
 	
 	// 페이징처리
 	public List<AdminDto> findByRows(int startRow, int endRow, int cnt){
-		
 		return AdminDao.getAdminDao().selectByRows(startRow, endRow, cnt);
 	}
 	
@@ -42,6 +42,20 @@ public class AdminService {
 	public int getTotalCnt(int cnt) {
 		return AdminDao.getAdminDao().selectTotalCnt(cnt);
 	}
+	
+	
+	// 신고게시물 페이징처리
+	public List<NotifyDto> NFselectByRows(int startRow, int endRow){
+		return AdminDao.getAdminDao().NFselectByRows(startRow, endRow);
+	}
+		
+
+	// 신고게시물 페이징처리
+	public int NFselectTotalCnt() {
+		return AdminDao.getAdminDao().NFselectTotalCnt();
+	}
+	
+	
 	
 	
 }

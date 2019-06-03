@@ -17,10 +17,12 @@ public class AdminFrontController extends HttpServlet {
 			throws ServletException, IOException {
 
 		String act = request.getParameter("act");
+		String notify = request.getParameter("notify");
 		String path = "/page/admin/management.jsp";
 		
 //		System.out.println(act);
-		
+		System.out.println( " notify = " + notify);
+		System.out.println( " act = " + act);
 
 		if ("alllist".equals(act)) {
 			
@@ -40,9 +42,12 @@ public class AdminFrontController extends HttpServlet {
 			path = AdminController.getAdminController().selectByUserList(request, response, cnt);
 			MoveUrl.forward(request, response, path);
 			
-		} else if ("notify".equals(act)) {
+		} else if ("notify".equals(notify)) {
 			
-			
+			System.out.println("Front notify들어옴");
+			path = AdminController.getAdminController().NFselectByList(request, response);
+			System.out.println("Front notify메소드를 다 거침.");
+			MoveUrl.forward(request, response, path);
 			
 		} else {
 			

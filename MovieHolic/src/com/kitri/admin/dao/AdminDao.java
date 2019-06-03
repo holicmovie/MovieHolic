@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.kitri.admin.dto.AdminDto;
+import com.kitri.admin.dto.NotifyDto;
 import com.kitri.util.DBClose;
 import com.kitri.util.DBConnection;
 
@@ -160,36 +161,25 @@ public class AdminDao  {
 	
 	
 	
-	
-	
-//	seq,mc.boardName,mb.userId,mb.subject,mb.content,mb.postDate,mb.notify
+
 	
 	
 	
 	// 목록 불러오기.
-		public List<AdminDto> NPselectByRows(int startRow, int endRow, int cnt){
+		public List<NotifyDto> NFselectByRows(int startRow, int endRow){
 			
-			List<AdminDto> list = new ArrayList<AdminDto>();
+			List<NotifyDto> list = new ArrayList<NotifyDto>();
 
 			StringBuffer sql = new StringBuffer();
 			
-			sql.append(" select");
-			sql.append(" userid, name, birth,");
-			sql.append(" phoneFirst, phoneMid, phoneLast,");
-			sql.append(" gender, joinDate, outDate, enable");
-			
-			sql.append(" from");
-			sql.append(" ( select rownum r, userid, name, birth,");
-			sql.append(" phoneFirst, phoneMid, phoneLast,");
-			sql.append(" gender, joinDate, outDate, enable");
-			sql.append(" from mh_user");
-			if (cnt == 2) {
-				sql.append(" where enable = 1");
-			}else if (cnt == 3) {
-				sql.append(" where outDate is not null");
-			}
-			sql.append(" )");
+			sql.append(" select r, boardName, userId, subject, content, postDate, notify");
+			sql.append(" from(select rownum r,  mc.boardName, mb.userId, mb.subject, mb.content, mb.postDate, mb.notify");
+			sql.append(" from mh_board mb, mh_category mc");
+			sql.append(" where mb.boardcode = mc.boardcode");
+			sql.append(" and notify != 0");
+			sql.append(" order by seq desc)");
 			sql.append(" where r between ? and ?");
+			
 			
 			Connection conn = null;
 			PreparedStatement pstmt = null;
@@ -205,23 +195,24 @@ public class AdminDao  {
 				
 				rs = pstmt.executeQuery();
 				
+				
+//				순서
+//				rownum,mc.boardName,mb.userId,mb.subject,mb.content,mb.postDate,mb.notify
+				
+				
 				while (rs.next()) {
 					
-					AdminDto adminDto = new AdminDto();
+					NotifyDto notifyDto = new NotifyDto();
 					
-					adminDto.setUserId(rs.getString("userId"));
-					adminDto.setName(rs.getString("name"));
-					adminDto.setBirth(rs.getString("birth"));
-					adminDto.setPhoneFirst(rs.getString("phoneFirst"));
-					adminDto.setPhoneMid(rs.getString("phoneMid"));
-					adminDto.setPhoneLast(rs.getString("phoneLast"));
-					adminDto.setGender(rs.getString("gender"));
-					adminDto.setJoinDate(rs.getDate("joinDate"));
-					adminDto.setOutdate(rs.getDate("outDate"));
-					adminDto.setEnable(rs.getInt("enable"));
-					
+					notifyDto.setBoardName(rs.getString("boardName"));
+					notifyDto.setUserId(rs.getString("userId"));
+					notifyDto.setSubject(rs.getString("subject"));
+					notifyDto.setContent(rs.getString("content"));
+					notifyDto.setPostDate(rs.getDate("postDate"));
+					notifyDto.setNotify(rs.getInt("notify"));
+					notifyDto.setRow(rs.getInt("r"));
 
-					list.add(adminDto);
+					list.add(notifyDto);
 				}
 				
 
@@ -242,7 +233,7 @@ public class AdminDao  {
 	
 	
 		// 토탈수
-		public int NPselectTotalCnt(int cnt) {
+		public int NFselectTotalCnt() {
 			
 			Connection conn = null;
 			PreparedStatement pstmt = null;
@@ -250,16 +241,11 @@ public class AdminDao  {
 			
 			StringBuffer sql = new StringBuffer();
 			
-			sql.append(" select COUNT(*)");
-			sql.append(" from (select userId,name,birth,");
-			sql.append(" phoneFirst,phoneMid,phoneLast,");
-			sql.append(" gender,joinDate,outDate,enable from mh_user");
-			if (cnt == 2) {
-				sql.append(" where enable = 1");
-			}else if (cnt == 3) {
-				sql.append(" where outDate is not null");
-			}
-			sql.append(" )");
+			sql.append(" select seq,mc.boardName,mb.userId,mb.subject,mb.content,mb.postDate,mb.notify");
+			sql.append(" from mh_board mb, mh_category mc");
+			sql.append(" where mb.boardcode = mc.boardcode");
+			sql.append(" and notify != 0");
+			sql.append(" order by seq desc");
 
 			
 			int totalCnt = -1;

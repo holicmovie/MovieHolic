@@ -8,7 +8,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 
 <c:set var="ap" value="${requestScope.ap}" />
-
+<c:set var="np" value="${requestScope.np}" />
 
 
 
@@ -55,18 +55,17 @@ $(function() {
 
 
 //신고 관리 게시글
-$(function() {
-	$(".notify_search_result").empty();
-		var url = $(this).attr("href") ;
+/* $(function() {
+	/* $("div.wrapper>div.container>div.member_search_result").empty(); */
 		$.ajax({
-			url : '/MovieHolic/admin?act=notify',
+			url : '/MovieHolic/admin?npact=notify',
 			method : 'get',
 			success : function(result) {
-				$(".notify_search_result").html(result.trim()); //section#section
+				/* $(".notify_search_result").html(result.trim()); //section#section */
 			}
 		});
 	return false;
-}); 
+});   */
 
 
 
@@ -373,7 +372,7 @@ hr.line_light_w {
 				<div class="notifiy_search_result">
 
 
-					<table class="table" style="border-bottom: 0.2em solid #fff;">
+				<table class="table" style="border-bottom: 0.2em solid #fff;">
 						<br>
 						<thead>
 							<tr>
@@ -388,56 +387,24 @@ hr.line_light_w {
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td><input type="checkbox" /></td>
-								<td>1</td>
-								<td>List</td>
-								<td>abc123</td>
-								<td>으히히히</td>
-								<td>신고게시물이다. 스포내용담고있음</td>
-								<td>2019.05.25</td>
-								<td>20</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox" /></td>
-								<td>2</td>
-								<td>Review</td>
-								<td>abc123</td>
-								<td>으히히히</td>
-								<td>신고게시물이다. 스포내용담고있음</td>
-								<td>2019.05.25</td>
-								<td>120</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox" /></td>
-								<td>3</td>
-								<td>List</td>
-								<td>abc12223</td>
-								<td>으히히히</td>
-								<td>신고게시물이다. 스포내용담고있음</td>
-								<td>2019.05.25</td>
-								<td>45</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox" /></td>
-								<td>4</td>
-								<td>Review</td>
-								<td>DDong</td>
-								<td>으히히히</td>
-								<td>신고게시물이다. 스포내용담고있음</td>
-								<td>2019.05.25</td>
-								<td>88</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox" /></td>
-								<td>5</td>
-								<td>List</td>
-								<td>abc123</td>
-								<td>으히히히</td>
-								<td>신고게시물이다. 스포내용담고있음</td>
-								<td>2019.05.25</td>
-								<td>1004</td>
-							</tr>
+						
+						
+							<c:forEach var="np" items='${np.list}'>
+								<tr>
+									<td><input type="checkbox" /></td>
+									<td>${np.row }</td>
+									<td>${np.boardName }</td>
+									<td>${np.userId }</td>
+									<td>${np.subject }</td>
+									<td>${np.content }</td>
+									<td>${np.postDate }</td>
+									<td>${np.notify }</td>
+								</tr>
+							</c:forEach>	
+							
+							
+							
+							
 						</tbody>
 					</table>
 
@@ -471,7 +438,11 @@ hr.line_light_w {
 
 
 
-				</div>
+				</div>	
+					
+					
+					
+					
 				<!-- notify_search_result -->
 
 

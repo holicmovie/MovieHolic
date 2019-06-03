@@ -539,6 +539,7 @@ and notify != 0
 order by seq desc;
 
 
+
 select r,boardName,userId,subject,content,postDate,notify
 from(select rownum r,  mc.boardName, mb.userId, mb.subject, mb.content, mb.postDate, mb.notify
     from mh_board mb, mh_category mc
