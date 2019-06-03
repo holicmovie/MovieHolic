@@ -25,13 +25,15 @@ public class MyPageFrontController extends HttpServlet {
 		String path = "/page/mypage/mypage.jsp";
 
 		if ("mypage".equals(page)) {
-
+			UserController.getUserController().ReviewList(request, response);
+			UserController.getUserController().listList(request, response);
 			MoveUrl.forward(request, response, path);
 		} else if ("preference".equals(page)) {
 			MoveUrl.forward(request, response, "/page/mypage/preference.jsp");
 		} else if ("wishlist".equals(page)) {
 			MoveUrl.forward(request, response, "/page/mypage/wishlist.jsp");
 		} else if ("diary".equals(page)) {
+			UserController.getUserController().ReviewList(request, response);
 			MoveUrl.forward(request, response, "/page/mypage/diary.jsp");
 		} else if ("social".equals(page)) {
 			MoveUrl.forward(request, response, "/page/mypage/social.jsp");
