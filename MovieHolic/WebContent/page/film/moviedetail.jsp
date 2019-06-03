@@ -38,42 +38,69 @@ Set yellow color when star checked  --%> .starrating>input:hover ~ label
 	{
 	color: #ffca08;
 }
+
+/* 구분선 굵은 것 */
+hr.line_bold {
+	background-color: white;
+	height: 2px;
+	position: static;
+	top: 1em;
+}
+
+/* 구분선 얇은 것 (흰색) */
+hr.line_light_w {
+	background-color: white;
+	position: static;
+	top: 1em;
+}
+
+/* 구분선 얇은 것 (회색) */
+hr.line_light_g {
+	background-color: gray;
+	position: static;
+	top: 1em;
+}
+
+/* 위의 공간 띄울 때 */
+.top_margin {
+	margin-top: 20px;
+}
+
+.top_margin_lg {
+	margin-top: 40px;
+}
+
 <%--
-Set
+별모양 --%> .fas {
+	font-style: normal;
+	font-family: FontAwesome;
+	font-size: 1.8em;
+}
 
- 
+@media screen and (max-width: 990px) {
+	.hide1 {
+		display: none;
+	}
+	.fas {
+		font-size: 1.8em;
+	}
+}
 
-yellow
-
- 
-
-color
-
- 
-
-when
-
- 
-
-star
-
- 
-
-hover
-
-  
-
---%>
+@media screen and (max-width: 765px) {
+	.hide2 {
+		display: none;
+	}
+}
 </style>
 <body class="left-sidebar is-preload">
-<script type="text/javascript">
-$(function() {
-	$("#wishlistAdd").click(function() {
-		alert("위시리스트에 추가되었습니다");
-		return false;
-	});
-});
-</script>
+	<script type="text/javascript">
+		$(function() {
+			$("#wishlistAdd").click(function() {
+				alert("위시리스트에 추가되었습니다");
+				return false;
+			});
+		});
+	</script>
 	<div id="page-wrapper">
 
 		<!-- Header -->
@@ -97,15 +124,15 @@ $(function() {
 
 							</header>
 							<div class="col-12-moblie"
-								style="border-left: 2px solid; margin-bottom: 20px; border-right: 2px solid; ">
+								style="border-left: 2px solid; margin-bottom: 20px; border-right: 2px solid;">
 								<div
-									style="float: left; margin-right: 20px; padding: 0 2em 0 2em;" >
+									style="float: left; margin-right: 20px; padding: 0 2em 0 2em;">
 									<a href="#" class="image featured"
 										style="margin: 0; width: 18em;"><img
 										src="/MovieHolic/images/avengers4.jpg" alt="" /></a><br>
 								</div>
 								<div class="col-12-moblie"
-									style="float: left; border-left: 2px solid; padding: 0 2em 0 2em; width:65%">
+									style="float: left; border-left: 2px solid; padding: 0 2em 0 2em; width: 65%">
 									<ul style="list-style-type: none;">
 										<li
 											style="margin-bottom: 10px; padding-left: 0px; font-size: 25px;"><strong>상영관
@@ -119,7 +146,9 @@ $(function() {
 												영상</a> <a
 											style="color: rgb(240, 195, 15); background-color: rgb(2, 39, 49); margin-right: 10px;"
 											href="/MovieHolic/page/mypage/writereview.jsp" class="button">리뷰
-												쓰기</a><a id="wishlistAdd"class="button" style="color: rgb(240, 195, 15); background-color: rgb(2, 39, 49);">위시리스트 추가</a></li>
+												쓰기</a><a id="wishlistAdd" class="button"
+											style="color: rgb(240, 195, 15); background-color: rgb(2, 39, 49);">위시리스트
+												추가</a></li>
 									</ul>
 
 									<h3>
@@ -127,9 +156,12 @@ $(function() {
 									</h3>
 									<br>
 									<div class="col-lg-12 col-12-mobile">
-										<p>개요 : 액션,SF | 미국 | 181분 | 2019.04.20 개봉 <br>
-										<p>감독 : 안소니 루소, 조 루소<br>
-										<p>등급 : 12세 관람가<br>
+										<p>
+											개요 : 액션,SF | 미국 | 181분 | 2019.04.20 개봉 <br>
+										<p>
+											감독 : 안소니 루소, 조 루소<br>
+										<p>
+											등급 : 12세 관람가<br>
 										<p>제작 : 마블 스튜디오
 									</div>
 									<div id="likeunlike" class="rounded-lg"
@@ -138,7 +170,7 @@ $(function() {
 											class="font_light_small">영화를 평가해주세요.</div>
 										<div
 											class="starrating risingstar d-flex justify-content-center flex-row-reverse"
-											style="font-size: 1.3em;  align-items: ">
+											style="font-size: 1.3em; align-items:">
 											<input type="radio" id="star5" name="rating" value="5" /><label
 												for="star5" title="5 star"></label> <input type="radio"
 												id="star4" name="rating" value="4" /><label for="star4"
@@ -164,7 +196,7 @@ $(function() {
 								</header>
 								<div class="row gtr-50">
 									<div class="col-2">
-										<a href="#" class="image fit"><img
+										<a href="#" class="image fit"><img style="width: 70%"
 											src="/MovieHolic/images/ironman.jpg" alt="" title="로버트다우니주니어" /></a>
 									</div>
 									<div class="col-4">
@@ -175,7 +207,7 @@ $(function() {
 										</p>
 									</div>
 									<div class="col-2">
-										<a href="#" class="image fit"><img
+										<a href="#" class="image fit"><img style="width: 70%"
 											src="/MovieHolic/images/capamerica.jpg" alt=""
 											title="크리스 에반스" /></a>
 									</div>
@@ -187,18 +219,18 @@ $(function() {
 										</p>
 									</div>
 									<div class="col-2">
-										<a href="#" class="image fit"><img
+										<a href="#" class="image fit"><img style="width: 70%"
 											src="/MovieHolic/images/thor.jpg" alt="" title="크리스 헴스워스" /></a>
 									</div>
 									<div class="col-4">
 										<h4>크리스 헴스워스</h4>
 										<p>
 											<font color="orange" size="3px">주연</font> : <font size="3px">돼르</font><br>
-											<font size="3px">먹고싶다</font>
+											<font size="3px">햄식이</font>
 										</p>
 									</div>
 									<div class="col-2">
-										<a href="#" class="image fit"><img
+										<a href="#" class="image fit"><img style="width: 70%"
 											src="/MovieHolic/images/pic13.jpg" alt="" /></a>
 									</div>
 									<div class="col-4">
@@ -207,7 +239,7 @@ $(function() {
 											proin.</p>
 									</div>
 									<div class="col-2">
-										<a href="#" class="image fit"><img
+										<a href="#" class="image fit"><img style="width: 70%"
 											src="/MovieHolic/images/pic14.jpg" alt="" /></a>
 									</div>
 									<div class="col-4">
@@ -225,7 +257,7 @@ $(function() {
 								</header>
 								<div class="row gtr-50">
 									<div class="col-2">
-										<a href="#" class="image fit"><img
+										<a href="#" class="image fit"><img style="width: 70%"
 											src="/MovieHolic/images/sony.jpg" alt="" title="안소니 루소" /></a>
 									</div>
 									<div class="col-4">
@@ -236,7 +268,7 @@ $(function() {
 										</p>
 									</div>
 									<div class="col-2">
-										<a href="#" class="image fit"><img
+										<a href="#" class="image fit"><img style="width: 70%"
 											src="/MovieHolic/images/pic11.jpg" alt="" /></a>
 									</div>
 									<div class="col-4">
@@ -245,7 +277,7 @@ $(function() {
 											proin.</p>
 									</div>
 									<div class="col-2">
-										<a href="#" class="image fit"><img
+										<a href="#" class="image fit"><img style="width: 70%"
 											src="/MovieHolic/images/pic12.jpg" alt="" /></a>
 									</div>
 									<div class="col-4">
@@ -254,7 +286,7 @@ $(function() {
 											proin.</p>
 									</div>
 									<div class="col-2">
-										<a href="#" class="image fit"><img
+										<a href="#" class="image fit"><img style="width: 70%"
 											src="/MovieHolic/images/pic13.jpg" alt="" /></a>
 									</div>
 									<div class="col-4">
@@ -263,7 +295,7 @@ $(function() {
 											proin.</p>
 									</div>
 									<div class="col-2">
-										<a href="#" class="image fit"><img
+										<a href="#" class="image fit"><img style="width: 70%"
 											src="/MovieHolic/images/pic14.jpg" alt="" /></a>
 									</div>
 									<div class="col-4">
@@ -277,126 +309,98 @@ $(function() {
 
 					</div>
 
-					<%-- <div class="col-4 col-12-mobile" id="sidebar">
-						<hr class="first" />
-						<section>
-							<header>
-								<h3>
-									<a href="#">제작 노트</a>
-								</h3>
-							</header>
-							<p>전 세계 최고의 기대작 어벤져스 시리즈의 압도적 대미를 장식할 어벤져스: 엔드게임 이 지난 4월
-								14일(일)과 15일(월) 양일간 진행된 대한민국 내한 행사를 성공적으로 마무리 지었다. 어벤져스: 엔드게임의 주역
-								로버트 다우니 주니어, 제레미 레너, 브리 라슨, 안소니 루소&조 루소 감독, 트린 트랜 프로듀서, 케빈 파이기
-								마블 스튜디오 대표까지 방문하여 특별한 대한민국 사랑을 뽐냈다. 특히 이번 행사는 월드투어의 일환으로, 대한민국이
-								아시아 정킷 허브로 선정돼 일본, 인도, 뉴질랜드, 호주, 홍콩, 싱가폴, 말레이시아, 인도네시아, 필리핀,
-								베트남, 타이완 총 11개 아시아 국가의 기자들이 대한민국을 방문하여 함께 뜨거운 어벤져스: 엔드게임 정킷 행사를
-								함께 즐겼다. 먼저 4월 15일(월) 진행된 아시아 프레스 컨퍼런스를 비롯하여 장충체육관에서 약 4,000여명의
-								팬들과 함께 진행된 아시아 팬이벤트까지 뜨거운 내한 행사가 성공리에 끝이 났다. 프레스 컨퍼런스에서 프로듀서 트린
-								트랜은 “여성 히로인들이 이전의 영화에서도 그렇고 이번 어벤져스: 엔드게임에서 강하게 자리 잡으며 중요한 역할을 할
-								것이다. 저희는 항상 그 점을 고려하고 있고 앞으로도 여성 히로인을 계속해서 서포트 할 것”이라며 어벤져스:
-								엔드게임의 새로운 관전 포인트를 꼽기도 했다. 아이언맨 로버트 다우니 주니어는 아시아 팬이벤트 말미 깜짝 재등장해
-								한국 팬들과 관객들에게 “10년 전에는 저도 어렸고, 여러분들도 어렸다. 이렇게 잘 자라주어서 고맙고 자랑스럽다.
-								이 말을 하지 않고 갈 수는 없었다”라며 감동 메시지를 전하기도 했다. 흥행 캡틴에 등극한 브리 라슨은 아시아
-								프레스 컨퍼런스에서 “한국 음식을 계속 먹고 있어서 계속 배가 부른 상태다”라며 재치 있는 답변으로 한국 사랑을
-								보여주기도 했다. 아시아 팬이벤트에서는 관객들이 선물로 준비한 응원봉 이벤트에 진심으로 감동한 모습을 보이며 눈물
-								짓기도 해 더욱 한국 팬들과 관객들에게 뭉클한 감동을 전하였다. 어벤져스 원년멤버 호크아이의 제레미 레너도
-								한국에서의 좋은 기억을 아시아 프레스 컨퍼런스에서 언급했다. “한국의 벚꽃도 아름다웠고, 한국 음식도 먹었다. 특히
-								소주가 맛있었다”라며 유쾌한 답변을 전하기도 하였다.</p>
-							
-						</section>
-						<hr />
-						<section>
-							<header>
-								<h3>
-									<a href="#">Sed lorem etiam consequat</a>
-								</h3>
-							</header>
-							<p>Tempus cubilia ultrices tempor sagittis. Nisl fermentum
-								consequat integer interdum.</p>
-							<div class="row gtr-50">
-								<div class="col-4">
-									<a href="#" class="image fit"><img src="/MovieHolic/images/pic10.jpg"
-										alt="" /></a>
-								</div>
-								<div class="col-8">
-									<h4>Nibh sed cubilia</h4>
-									<p>Amet nullam fringilla nibh nulla convallis tique ante
-										proin.</p>
-								</div>
-								<div class="col-4">
-									<a href="#" class="image fit"><img src="/MovieHolic/images/pic11.jpg"
-										alt="" /></a>
-								</div>
-								<div class="col-8">
-									<h4>Proin sed adipiscing</h4>
-									<p>Amet nullam fringilla nibh nulla convallis tique ante
-										proin.</p>
-								</div>
-								<div class="col-4">
-									<a href="#" class="image fit"><img src="/MovieHolic/images/pic12.jpg"
-										alt="" /></a>
-								</div>
-								<div class="col-8">
-									<h4>Lorem feugiat magna</h4>
-									<p>Amet nullam fringilla nibh nulla convallis tique ante
-										proin.</p>
-								</div>
-								<div class="col-4">
-									<a href="#" class="image fit"><img src="/MovieHolic/images/pic13.jpg"
-										alt="" /></a>
-								</div>
-								<div class="col-8">
-									<h4>Sed tempus fringilla</h4>
-									<p>Amet nullam fringilla nibh nulla convallis tique ante
-										proin.</p>
-								</div>
-								<div class="col-4">
-									<a href="#" class="image fit"><img src="/MovieHolic/images/pic14.jpg"
-										alt="" /></a>
-								</div>
-								<div class="col-8">
-									<h4>Malesuada fermentum</h4>
-									<p>Amet nullam fringilla nibh nulla convallis tique ante
-										proin.</p>
-								</div>
-							</div>
-							<footer>
-								<a href="#" class="button">Magna Adipiscing</a>
-							</footer>
-						</section>	
-					</div> --%>
+
 				</div>
 				<hr />
+				<!-- 구분선 -->
+
+				<!-- 댓글 start -->
+				<div class="font_bold_small top_margin_lg"
+					style="margin-bottom: 3em;">
+					<span>REVIEWS</span>(<span id="commentcount">2</span>)
+				</div>
+
+				<!-- 구분선 -->
+
 				<div class="row">
-					<%-- <article class="col-4 col-12-mobile special">
-						<a href="#" class="image featured"><img src="/MovieHolic/images/watching.jpg"
-							alt="" /></a>
-						
-						<p>Amet nullam fringilla nibh nulla convallis tique ante proin
-							sociis accumsan lobortis. Auctor etiam porttitor phasellus tempus
-							cubilia ultrices tempor sagittis. Nisl fermentum consequat
-							integer interdum.</p>
-					</article>
-					<article class="col-4 col-12-mobile special">
-						<a href="#" class="image featured"><img src="/MovieHolic/images/money.jpg"
-							alt="" /></a>
-						
-						<p>Amet nullam fringilla nibh nulla convallis tique ante proin
-							sociis accumsan lobortis. Auctor etiam porttitor phasellus tempus
-							cubilia ultrices tempor sagittis. Nisl fermentum consequat
-							integer interdum.</p>
-					</article>
-					<article class="col-4 col-12-mobile special">
-						<a href="#" class="image featured"><img src="/MovieHolic/images/capma.jpg"
-							alt="" /></a>
-						
-						</header>
-						<p>Amet nullam fringilla nibh nulla convallis tique ante proin
-							sociis accumsan lobortis. Auctor etiam porttitor phasellus tempus
-							cubilia ultrices tempor sagittis. Nisl fermentum consequat
-							integer interdum.</p>
-					</article>--%>
+					<table class="table table-hover col-lg-12 col-mobile-12"
+						style="margin-top: 0;">
+						<tr>
+							<td style="vertical-align: middle;"><a
+								href="#"><img id="replywriter" class="profile_icon"
+									alt="댓글작성자 프로필 사진" src="/MovieHolic/images/user2.jpg"></a> 
+									<a id="replywriterId" class="font_bold_small" href="#"
+								style="color: white; margin-right: 15px;">abc123</a><span style="font-size: 1em;margin-right: 15px;">
+									<i class="fas fa-star" style="color: #ffca08;"></i> 
+									<i class="fas fa-star" style="color: #ffca08;"></i> 
+									<i class="fas fa-star" style="color: #ffca08;"></i> 
+									<i class="fas fa-star" style="color: #ffca08;"></i> 
+									<i class="fas fa-star" style="color: #222222;"></i>
+							</span> 
+							<span>2019-06-01</span>
+							<br> 
+							<span style="display: block; width:1200px;">
+								 	Amet nullam
+									fringilla nibh nulla convallis tique ante proin.Amet nullam
+									fringilla nibh nulla convallis tique ante proin.Amet nullam
+									fringilla nibh nulla convallis tique ante proin.
+									Amet nullam
+									fringilla nibh nulla convallis tique ante proin.Amet nullam
+									fringilla nibh nulla convallis tique ante proin.Amet nullam
+									fringilla nibh nulla convallis tique ante proin.
+							</span>
+							</td>
+						</tr>
+						<tr>
+							<td style="vertical-align: middle;"><a
+								href="#"><img id="replywriter" class="profile_icon"
+									alt="댓글작성자 프로필 사진" src="/MovieHolic/images/user2.jpg"></a> 
+									<a id="replywriterId" class="font_bold_small" href="#"
+								style="color: white; margin-right: 15px;">abc123</a><span style="font-size: 1em;margin-right: 15px;">
+									<i class="fas fa-star" style="color: #ffca08;"></i> 
+									<i class="fas fa-star" style="color: #ffca08;"></i> 
+									<i class="fas fa-star" style="color: #ffca08;"></i> 
+									<i class="fas fa-star" style="color: #ffca08;"></i> 
+									<i class="fas fa-star" style="color: #222222;"></i>
+							</span> <span>2019-06-01</span><br> <span style="display: block; width:1200px;">Amet nullam
+									fringilla nibh nulla convallis tique ante proin.Amet nullam
+									fringilla nibh nulla convallis tique ante proin.Amet nullam
+									fringilla nibh nulla convallis tique ante proin.
+									Amet nullam
+									fringilla nibh nulla convallis tique ante proin.
+									Amet nullam
+									fringilla nibh nulla convallis tique ante proin.</span></td>
+						</tr>
+						</table>
+
+					<%--pagination처리 --%>
+					<div class="col-lg-12">
+						<div style="float: left">
+							<button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button>
+						</div>
+
+						<div style="float: right">
+							<button class="btn btn-success font_bold_small">다&nbsp;&nbsp;&nbsp;음</button>
+						</div>
+
+						<ul class="pagination justify-content-center">
+							<li class="page-item"><a class="page-link a"
+								href="javascript:void(0);">1</a></li>
+							<li class="page-item"><a class="page-link a"
+								href="javascript:void(0);">2</a></li>
+							<li class="page-item"><a class="page-link a"
+								href="javascript:void(0);">3</a></li>
+							<li class="page-item"><a class="page-link a"
+								href="javascript:void(0);">4</a></li>
+							<li class="page-item"><a class="page-link a"
+								href="javascript:void(0);">5</a></li>
+						</ul>
+						<%-- float clear용 빈 div --%>
+						<div style="clear: both;"></div>
+					</div>
+				</div>
+				<div class="row" style="margin-top: 1em;">
+
 					<section class="carousel">
 						<div class="reel" id="romance">
 							<article style="background-color: rgb(3, 39, 49);">

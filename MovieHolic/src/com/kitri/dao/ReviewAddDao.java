@@ -75,7 +75,7 @@ public class ReviewAddDao {
 		try {
 			conn = DBConnection.makeConnection();
 			StringBuffer sql = new StringBuffer();
-			sql.append("select movieName,content \n");
+			sql.append("select movieName,content,starPoint,postDate d1, to_char(postDate, 'YYYY') d2, to_char(postDate, 'MM-DD') d3\n");
 			sql.append("from mh_board \n");
 			sql.append("where boardCode = 1 \n");
 			sql.append("order by postDate desc \n");
@@ -92,7 +92,10 @@ public class ReviewAddDao {
 				String a = st.nextToken();
 				
 				name.add(a);
-				
+				boardDto.setPostDate(rs.getString("d1"));
+				boardDto.setPostDateY(rs.getString("d2"));
+				boardDto.setPostDateM(rs.getString("d3"));
+				boardDto.setStarPoint(rs.getInt("starPoint"));
 				boardDto.setMovieName(name);
 				boardDto.setContent(rs.getString("content"));
 
@@ -108,6 +111,41 @@ public class ReviewAddDao {
 
 		return list;
 	}
+	//리스트목록
+public List<BoardDto> listList(String content) {
+		
+		List<BoardDto> list = new ArrayList<BoardDto>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DBConnection.makeConnection();
+			StringBuffer sql = new StringBuffer();
+			sql.append("select subject,content \n");
+			sql.append("from mh_board \n");
+			sql.append("where boardCode =2 \n");
+			sql.append("order by postDate desc \n");
+			pstmt = conn.prepareStatement(sql.toString());
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				BoardDto boardDto = new BoardDto();
+				boardDto.setContent(rs.getString("content"));
+
+				list.add(boardDto);
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+
+		return list;
+	}
+	
 	// 페이징 처리
 
 	public List<BoardDto> selectByRows(int startRow, int endRow) {
@@ -152,5 +190,6 @@ public class ReviewAddDao {
 	public static void main(String[] args) {
 		
 		System.out.println(getReviewAdd().reviewlist("movieName"));
+		System.out.println(getReviewAdd().listList("content"));
 	}
 }

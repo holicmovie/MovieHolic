@@ -1,4 +1,4 @@
-package com.kitri.controller;
+package com.kitri.mypage.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +41,10 @@ public class UserController {
 		
 		List<BoardDto> list = UserService.getUserService().reviewlist("movieName");
 		request.setAttribute("reviewList", list);
-		System.out.println("오니");
+	}
+	
+	public void listList(HttpServletRequest request, HttpServletResponse response) {
+		List<BoardDto> list = UserService.getUserService().listList("content");
+		request.setAttribute("listList", list);
 	}
 }
