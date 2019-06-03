@@ -40,6 +40,10 @@ public class AdminFrontController extends HttpServlet {
 			path = AdminController.getAdminController().selectByUserList(request, response, cnt);
 			MoveUrl.forward(request, response, path);
 			
+		} else if ("notify".equals(act)) {
+			
+			
+			
 		} else {
 			
 			int cnt = 4;

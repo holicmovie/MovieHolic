@@ -15,61 +15,61 @@
 
 
 <script>
-	
-	// 회원관리 게시판 처리
-	$(function() {
-		$("div>span>span>a").click(function() {
-			$("section").empty();
-			var url = $(this).attr("href") ;
+// 회원관리 게시판 처리
+$(function() {
+	$("div>span>span>a").click(
+		function() {
+			$("div.wrapper>div.container>div.member_search_result").empty();
+			var url = $(this).attr("href");
 			$.ajax({
-				url : url,
-				method : 'get',
-				/* 'alllist='+$(this).find('input[type=hidden]').val() */
-				/* $('.management').serialize(), */
-				success : function(result) {
-					$("section#section").html(result.trim()); //section#section
-				}
-			});
-			return false;
-		});
-	});
-
-	
-	
-	/* $(function() {
-
-		$(".page>a").click(
-				function() {
-					var currentPage = $(this).attr("href");
-					$.ajax({
-						url : '/MovieHolic/admin?act=alllis&'+ currentPage,
-						method : 'get',
-						/* data : 'alllist=' + alllist,  *//*
-						success : function(result) {
-							$("section").html(result.trim());
-						}
-					});
-					return false;
-				});
-	}); */
-	
-	
-	//신고 관리 게시글
-	$(function() {
-		$("section").empty();
-			var url = $(this).attr("href") ;
-			$.ajax({
+			
 				url : url,
 				method : 'get',
 				success : function(result) {
-					$("section#Declaration").html(result.trim()); //section#section
+				$("div.wrapper>div.container>div.member_search_result").html(result.trim());
 				}
 			});
 		return false;
 	});
+});
+
 	
 	
-	
+$(function() {
+	$(".page>a").click(function() {
+	var currentPage = $(this).attr("href");
+	$.ajax({
+		url : '/MovieHolic/admin?act=alllis&' + currentPage,
+			method : 'get',
+			/* data : 'alllist=' + alllist,  */
+			success : function(result) {
+				$("section").html(result.trim());
+			}
+		});
+	return false;
+	});
+});
+
+
+
+
+
+//신고 관리 게시글
+$(function() {
+	$(".notify_search_result").empty();
+		var url = $(this).attr("href") ;
+		$.ajax({
+			url : '/MovieHolic/admin?act=notify',
+			method : 'get',
+			success : function(result) {
+				$(".notify_search_result").html(result.trim()); //section#section
+			}
+		});
+	return false;
+}); 
+
+
+
 </script>
 
 
@@ -194,8 +194,8 @@ hr.line_light_w {
 
 
 
-				<section id="section">
-
+				<!-- <section id="section"> -->
+				<div class="member_search_result">
 
 
 					<table class="table" style="border-bottom: 0.2em solid #fff;">
@@ -325,8 +325,9 @@ hr.line_light_w {
 					</div>
 
 
-				</section>
-
+					<!-- </section> -->
+				</div>
+				<!-- member_search_result -->
 
 			</div>
 			<br> <br> <br>
@@ -334,7 +335,7 @@ hr.line_light_w {
 
 
 
-<%-- -------------------------------------------------------------------------------------------------- --%>
+			<%-- -------------------------------------------------------------------------------------------------- --%>
 
 
 
@@ -363,116 +364,117 @@ hr.line_light_w {
 
 
 
-				<section id="Declaration">
 
 
 
 
 
-				<table class="table" style="border-bottom: 0.2em solid #fff;">
-					<br>
-					<thead>
-						<tr>
-							<th></th>
-							<th>번호</th>
-							<th>분류</th>
-							<th>작성자ID</th>
-							<th>제목</th>
-							<th>내용</th>
-							<th>작성일</th>
-							<th>신고수</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td><input type="checkbox" /></td>
-							<td>1</td>
-							<td>List</td>
-							<td>abc123</td>
-							<td>으히히히</td>
-							<td>신고게시물이다. 스포내용담고있음</td>
-							<td>2019.05.25</td>
-							<td>20</td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" /></td>
-							<td>2</td>
-							<td>Review</td>
-							<td>abc123</td>
-							<td>으히히히</td>
-							<td>신고게시물이다. 스포내용담고있음</td>
-							<td>2019.05.25</td>
-							<td>120</td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" /></td>
-							<td>3</td>
-							<td>List</td>
-							<td>abc12223</td>
-							<td>으히히히</td>
-							<td>신고게시물이다. 스포내용담고있음</td>
-							<td>2019.05.25</td>
-							<td>45</td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" /></td>
-							<td>4</td>
-							<td>Review</td>
-							<td>DDong</td>
-							<td>으히히히</td>
-							<td>신고게시물이다. 스포내용담고있음</td>
-							<td>2019.05.25</td>
-							<td>88</td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" /></td>
-							<td>5</td>
-							<td>List</td>
-							<td>abc123</td>
-							<td>으히히히</td>
-							<td>신고게시물이다. 스포내용담고있음</td>
-							<td>2019.05.25</td>
-							<td>1004</td>
-						</tr>
-					</tbody>
-				</table>
+
+				<div class="notifiy_search_result">
 
 
-				<div class="row">
+					<table class="table" style="border-bottom: 0.2em solid #fff;">
+						<br>
+						<thead>
+							<tr>
+								<th></th>
+								<th>번호</th>
+								<th>분류</th>
+								<th>작성자ID</th>
+								<th>제목</th>
+								<th>내용</th>
+								<th>작성일</th>
+								<th>신고수</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input type="checkbox" /></td>
+								<td>1</td>
+								<td>List</td>
+								<td>abc123</td>
+								<td>으히히히</td>
+								<td>신고게시물이다. 스포내용담고있음</td>
+								<td>2019.05.25</td>
+								<td>20</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" /></td>
+								<td>2</td>
+								<td>Review</td>
+								<td>abc123</td>
+								<td>으히히히</td>
+								<td>신고게시물이다. 스포내용담고있음</td>
+								<td>2019.05.25</td>
+								<td>120</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" /></td>
+								<td>3</td>
+								<td>List</td>
+								<td>abc12223</td>
+								<td>으히히히</td>
+								<td>신고게시물이다. 스포내용담고있음</td>
+								<td>2019.05.25</td>
+								<td>45</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" /></td>
+								<td>4</td>
+								<td>Review</td>
+								<td>DDong</td>
+								<td>으히히히</td>
+								<td>신고게시물이다. 스포내용담고있음</td>
+								<td>2019.05.25</td>
+								<td>88</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" /></td>
+								<td>5</td>
+								<td>List</td>
+								<td>abc123</td>
+								<td>으히히히</td>
+								<td>신고게시물이다. 스포내용담고있음</td>
+								<td>2019.05.25</td>
+								<td>1004</td>
+							</tr>
+						</tbody>
+					</table>
 
 
-					<div class="col-lg-2">
-						<button type="submit" class="btn btn-success">이전</button>
+					<div class="row">
+
+
+						<div class="col-lg-2">
+							<button type="submit" class="btn btn-success">이전</button>
+						</div>
+
+						<div class="col-lg-2"></div>
+
+						<div class="col-lg-4">
+							<ul class="pagination"
+								style="width: 240px; margin-left: auto; margin-right: auto;">
+								<li class="page-item"><a class="page-link" href="#">1</a></li>
+								<li class="page-item"><a class="page-link" href="#">2</a></li>
+								<li class="page-item"><a class="page-link" href="#">3</a></li>
+								<li class="page-item"><a class="page-link" href="#">4</a></li>
+								<li class="page-item"><a class="page-link" href="#">5</a></li>
+							</ul>
+						</div>
+
+						<div class="col-lg-2"></div>
+
+						<div class="col-lg-2">
+							<button type="submit" class="btn btn-success">다음</button>
+						</div>
 					</div>
 
-					<div class="col-lg-2"></div>
 
-					<div class="col-lg-4">
-						<ul class="pagination"
-							style="width: 240px; margin-left: auto; margin-right: auto;">
-							<li class="page-item"><a class="page-link" href="#">1</a></li>
-							<li class="page-item"><a class="page-link" href="#">2</a></li>
-							<li class="page-item"><a class="page-link" href="#">3</a></li>
-							<li class="page-item"><a class="page-link" href="#">4</a></li>
-							<li class="page-item"><a class="page-link" href="#">5</a></li>
-						</ul>
-					</div>
 
-					<div class="col-lg-2"></div>
-
-					<div class="col-lg-2">
-						<button type="submit" class="btn btn-success">다음</button>
-					</div>
 				</div>
-				
-				
-				
-				
-				
-				</section>
-				
-				
-				
+				<!-- notify_search_result -->
+
+
 			</div>
 
 

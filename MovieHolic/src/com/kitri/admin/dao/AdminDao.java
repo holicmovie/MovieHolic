@@ -162,6 +162,13 @@ public class AdminDao  {
 	
 	
 	
+//	seq,mc.boardName,mb.userId,mb.subject,mb.content,mb.postDate,mb.notify
+	
+	
+	
+	
+	
+	
 	
 	
 	
