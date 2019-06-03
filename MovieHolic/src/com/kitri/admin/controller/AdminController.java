@@ -65,6 +65,8 @@ public class AdminController {
 			path = "/page/admin/mgInactiveList.jsp";
 		} else if (cnt == 3) {
 			path = "/page/admin/mgUnsubscribelist.jsp";
+		} else if (cnt == 4) {
+			path = "/page/admin/management.jsp";
 		}
 
 		return path;

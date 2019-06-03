@@ -252,7 +252,7 @@ CREATE TABLE mh_user (
 	phoneMid VARCHAR2(4), /* 핸드폰번호2 */
 	phoneLast VARCHAR2(4), /* 핸드폰번호3 */
 	birth VARCHAR2(16), /* 생년월일 */
-	gender VARCHAR2(2), /* 성별 */
+	gender VARCHAR2(3), /* 성별 */
 	joinDate DATE, /* 가입일 */
 	outDate DATE, /* 탈퇴일 */
 	profile VARCHAR2(200), /* 회원사진 */
