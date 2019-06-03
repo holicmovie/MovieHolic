@@ -19,9 +19,13 @@ private static UserService userService; // 2번째 전역변수 만들기
 		return userService;
 	}
 	
-	// 목록
+	// 리뷰목록
 		public List<BoardDto> reviewlist(String movieName) {
 
 			return ReviewAddDao.getReviewAdd().reviewlist(movieName);
+		}
+	//리스트목록
+		public List<BoardDto> listList(String content){
+			return ReviewAddDao.getReviewAdd().listList(content);
 		}
 }

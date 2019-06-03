@@ -1,3 +1,5 @@
+<%@page import="com.kitri.dto.BoardDto"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/template/header.jsp"%>
@@ -42,7 +44,7 @@ $(function(){
 </head>
 <body class="left-sidebar is-preload">
 <div id="page-wrapper">
-
+<%List<BoardDto> list = (List<BoardDto>)request.getAttribute("reviewList");%>
 <%-- Header --%>
 	<div id="header" style="background-image: none; margin-bottom: 0px; padding-bottom:0; height: 10px;">
 <%@ include file="/template/nav.jsp"%>
@@ -97,86 +99,29 @@ $(function(){
 				      </tr>
 				    </thead>
 				    <tbody>
+				    <%for(BoardDto dto : list){ %>
 				      <tr>
 				      	<td style="vertical-align: middle;"><input type="checkbox" class="form-check-input"></td>
 				        <td class="hide1" style="vertical-align: middle;">
-							<a href="#"><img width="90vh" src="/MovieHolic/images/tempimg/coco.jpg" title="코코 (2017)" /></a>
+							<a href="/MovieHolic/page/mypage/diaryDetail.jsp"><img width="90vh" src="/MovieHolic/images/tempimg/coco.jpg" title="코코 (2017)" /></a>
 						</td>
 				        <td style="vertical-align: middle;">
-				        	<div class="font_light_small">2019</div>
-				        	<div class="font_bold_mid" style="font-size: 2em;">5/6</div>
+				        	<div class="font_light_small"><%=dto.getPostDateY() %></div>
+				        	<div class="font_bold_mid" style="font-size: 2em;"><%=dto.getPostDateM() %></div>
 				        </td>
 				        <td class="hide2" style="vertical-align: middle;">
 					        <span style="font-size: 1em;">
+					        <%for(int i = 0; i < dto.getStarPoint(); i++){ %>
 							  <i class="fas fa-star" style="color: #ffca08;"></i>
-							  <i class="fas fa-star" style="color: #ffca08;"></i>
-							  <i class="fas fa-star" style="color: #ffca08;"></i>
-							  <i class="fas fa-star" style="color: #ffca08;"></i>
+							  <%} %>
+							 <%for(int j=0;j<5-dto.getStarPoint();j++){ %>
 							  <i class="fas fa-star" style="color: #222222;"></i>
+							  <%} %>
 							</span>
 				        </td>
-				        <td class="font_bold_mid" style="vertical-align: middle;"><span class="title">코코</span></td>
+				        <td class="font_bold_mid" style="vertical-align: middle;"><span class="title"><%=dto.getMovieName()%></span></td>
 				      </tr>
-				      <tr>
-				      	<td style="vertical-align: middle;"><input type="checkbox" class="form-check-input"></td>
-				        <td  class="hide1" style="vertical-align: middle;">
-							<a href="#"><img width="90vh" src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)" /></a>
-						</td>
-				        <td style="vertical-align: middle;">
-				        	<div class="font_light_small">2019</div>
-				        	<div class="font_bold_mid" style="font-size: 2em;">5/6</div>
-				        </td>
-				        <td class="hide2" style="vertical-align: middle;">
-					        <span style="font-size: 1em;">
-							  <i class="fas fa-star" style="color: #ffca08;"></i>
-							  <i class="fas fa-star" style="color: #ffca08;"></i>
-							  <i class="fas fa-star" style="color: #ffca08;"></i>
-							  <i class="fas fa-star" style="color: #ffca08;"></i>
-							  <i class="fas fa-star" style="color: #222222;"></i>
-							</span>
-				        </td>
-				        <td class="font_bold_mid" style="vertical-align: middle;"><span class="title">어벤져스:엔드게임</span></td>
-				      </tr>
-				      <tr>
-				      	<td style="vertical-align: middle;"><input type="checkbox" class="form-check-input"></td>
-				        <td class="hide1" style="vertical-align: middle;">
-							<a href="#"><img width="90vh" src="/MovieHolic/images/tempimg/coco.jpg" title="코코 (2017)" /></a>
-						</td>
-				        <td style="vertical-align: middle;">
-				        	<div class="font_light_small">2019</div>
-				        	<div class="font_bold_mid" style="font-size: 2em;">5/6</div>
-				        </td>
-				        <td class="hide2" style="vertical-align: middle;">
-					        <span style="font-size: 1em;">
-							  <i class="fas fa-star" style="color: #ffca08;"></i>
-							  <i class="fas fa-star" style="color: #ffca08;"></i>
-							  <i class="fas fa-star" style="color: #ffca08;"></i>
-							  <i class="fas fa-star" style="color: #ffca08;"></i>
-							  <i class="fas fa-star" style="color: #222222;"></i>
-							</span>
-				        </td>
-				        <td class="font_bold_mid" style="vertical-align: middle;"><span class="title">코코</span></td>
-				      </tr>
-				      <tr>
-				      	<td style="vertical-align: middle;"><input type="checkbox" class="form-check-input"></td>
-				        <td  class="hide1" style="vertical-align: middle;">
-							<a href="#"><img width="90vh" src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)" /></a>
-						</td>
-				        <td style="vertical-align: middle;">
-				        	<div class="font_light_small">2019</div>
-				        	<div class="font_bold_mid" style="font-size: 2em;">5/6</div>
-				        </td>
-				        <td class="hide2" style="vertical-align: middle;">
-					        <span style="font-size: 1em;">
-							  <i class="fas fa-star" style="color: #ffca08;"></i>
-							  <i class="fas fa-star" style="color: #ffca08;"></i>
-							  <i class="fas fa-star" style="color: #ffca08;"></i>
-							  <i class="fas fa-star" style="color: #ffca08;"></i>
-							  <i class="fas fa-star" style="color: #222222;"></i>
-							</span>
-				        </td>
-				        <td class="font_bold_mid" style="vertical-align: middle;"><span class="title">어벤져스:엔드게임</span></td>
-				      </tr>
+				      <%} %>
 				    </tbody>
 		  		</table>
 		  	</div>

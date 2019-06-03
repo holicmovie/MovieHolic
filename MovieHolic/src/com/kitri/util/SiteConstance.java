@@ -8,8 +8,19 @@ public class SiteConstance {
 	//DB info
 	public static final String DB_DRIVER = "oracle.jdbc.driver.OracleDriver";
 	public static final String DB_URL = "jdbc:oracle:thin:@localhost:1521:orcl";
+<<<<<<< HEAD
 	public static final String DB_USERNAME = "sjy";
 	public static final String DB_PASSWORD = "sjy";
+=======
+<<<<<<< HEAD
+	public static final String DB_USERNAME = "gwangq";
+	public static final String DB_PASSWORD = "gwangq";
+=======
+	public static final String DB_USERNAME = "dam";
+	public static final String DB_PASSWORD = "dam";
+
+>>>>>>> branch 'master' of https://github.com/holicmovie/MovieHolic.git
+>>>>>>> branch 'master' of https://github.com/holicmovie/MovieHolic.git
 	
 	
 }

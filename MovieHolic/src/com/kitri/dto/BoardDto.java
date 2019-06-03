@@ -75,9 +75,21 @@ public class BoardDto { // 게시판
 	public String getPostDate() {
 		return postDate;
 	}
+	public String getPostDateY() {
+		return postDate;
+	}
+	public String getPostDateM() {
+		return postDate;
+	}
 
 
 	public void setPostDate(String postDate) {
+		this.postDate = postDate;
+	}
+	public void setPostDateY(String postDate) {
+		this.postDate = postDate;
+	}
+	public void setPostDateM(String postDate) {
 		this.postDate = postDate;
 	}
 
@@ -198,7 +210,7 @@ public class BoardDto { // 게시판
 				+ ", postDate=" + postDate + ", content=" + content + ", movieCodeYoung=" + movieCodeYoung
 				+ ", director=" + director + ", movieName=" + movieName + ", starPoint=" + starPoint
 				+ ", category=" + category + ", best=" + best + ", worst=" + worst + ", viewCount=" + viewCount
-				+ ", enable=" + enable + ", notify=" + notify + "]";
+				+ ", enable=" + enable + ", notify=" + notify+"]" ;
 	}
 
 
