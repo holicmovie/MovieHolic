@@ -80,7 +80,7 @@ public class FilmService {
 						
 						JSONObject dailyListItems = (JSONObject) dailyBoxOfficeList.get(i);
 						
-						String movieCdYoung = dailyListItems.get("movieCd").toString(); 		// 영화코드(영진원)
+						String movieCdYoung = dailyListItems.get("movieCd").toString(); 	// 영화코드(영진원)
 						String movieNm = dailyListItems.get("movieNm").toString(); 			// 영화명
 						
 						// '영화코드(영진원)', '영화명'을 DTO에 세팅함
@@ -89,7 +89,7 @@ public class FilmService {
 						
 						
 						// 1-2. 네이버 영화 목록 검색 API + 크롤링
-					    String movieImage = CallAPI.getPoster(movieNm);
+					    String movieImage = CallAPI.getPoster(movieNm, null);
 
 						// '포스터 이미지 주소'를 DTO에 세팅함
 						filmDto.setMovieImage(movieImage);
@@ -149,7 +149,8 @@ public class FilmService {
 							
 							String movieCdYoung = movieListItems.get("movieCd").toString(); 		// 영화코드(영진원)
 							String movieNm = movieListItems.get("movieNm").toString(); 				// 영화명
-							String genreAlt = movieListItems.get("genreAlt").toString();					// 장르 (ex: 범죄,스릴러)
+							String genreAlt = movieListItems.get("genreAlt").toString();			// 장르 (ex: 범죄,스릴러)
+							String prdtYear = movieListItems.get("prdtYear").toString();		// 제작년도
 							
 							List genres = new ArrayList();
 							
@@ -169,7 +170,7 @@ public class FilmService {
 								
 								if(genre.equals(genres.get(k).toString())) {
 									
-									String movieImage = CallAPI.getPoster(movieNm);
+									String movieImage = CallAPI.getPoster(movieNm, prdtYear);
 									
 									FilmDto filmDto = new FilmDto();
 									

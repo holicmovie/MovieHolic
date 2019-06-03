@@ -144,7 +144,7 @@ for(FilmDto dto : box){
 				</article>
 <%
 }
-%>
+%> 
 			</div>
 		</section>
 		<!-- 박스오피스 배너 end -->
@@ -189,7 +189,7 @@ for(FilmDto dto : favoritefilm){
 <%
 }
 %>
-					
+	
 					</div>
 				</section>
 			</div>
