@@ -1,0 +1,210 @@
+package com.kitri.util;
+
+import java.io.*;
+import java.net.*;
+import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.Iterator;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
+public class CallAPI {
+	
+	/**
+	 * ---------------------------------- 1 ----------------------------------
+	 * <HTTP GET으로 API 호출하기> 메소드 - HttpUrlConnection 사용
+	 * 
+	 * [인자값]
+	 * - String httpUrl : 파라미터 포함 url
+	 * - HashMap header : 헤더(key-value)         *헤더 없으면 null 넣기
+	 * 
+	 * [return]
+	 * - API 응답결과 (JSON형식의 String 타입)
+	 */
+	public static String APIHttpGet(String httpUrl, HashMap<String, String> header) {
+
+		String response = ""; // 응답 결과 담을 String
+
+		try {
+
+			// ① HttpUrlConnection 객체 생성 및 세팅
+			URL obj = new URL(httpUrl);
+			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+			con.setRequestMethod("GET"); // 전송방식 설정 (GET)
+			con.setConnectTimeout(30000); // 연결 제한시간 30초
+			con.setReadTimeout(5000); // 컨텐츠 조회 제한시간 5초
+
+			// 헤더가 있을 경우,
+			if (header != null) {
+				Iterator<String> keys = header.keySet().iterator();
+				while (keys.hasNext()) {
+					String key = keys.next();
+					String value = (String) header.get(key);
+					con.setRequestProperty(key, value); // Request 헤더 설정
+				}
+			}
+
+			int responseCode = con.getResponseCode(); // response의 status 코드 얻어옴
+
+			// ② 호출이 정상일 때, 응답 결과 사용
+			if (responseCode == 200) {
+
+				Charset charset = Charset.forName("UTF-8");
+				BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream(), charset));
+				String inputLine;
+				StringBuffer sr = new StringBuffer();
+
+				while ((inputLine = in.readLine()) != null) {
+					sr.append(inputLine);
+				}
+				in.close();
+
+				response = sr.toString(); // 응답결과 저장
+
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return response;
+
+	} // APIHttpGet() end
+
+	/**
+	 * ---------------------------------- 2 ---------------------------------- 
+	 * <HTTP GET으로 API 호출하기> 메소드 - HttpClient 라이브러리 사용
+	 * 
+	 * [인자값]
+	 * - String httpUrl : 파라미터 포함 url
+	 * - HashMap header : 헤더(key-value)           *헤더 없으면 null 넣기
+	 * 
+	 * [return]
+	 * - API 응답결과 (JSON형식의 String 타입)
+	 */
+	public static String APIHttpClientGet(String httpUrl, HashMap<String, String> header) {
+
+		String response = ""; // 응답 결과 담을 String
+
+		try {
+
+			// ① HttpClient 객체 생성 및 세팅
+			HttpClient client = HttpClientBuilder.create().build(); // HttpClient 생성
+			HttpGet getRequest = new HttpGet(httpUrl); // GET 메소드 URL 생성
+
+			// 헤더가 있을 경우,
+			if (header != null) {
+				Iterator<String> keys = header.keySet().iterator();
+				while (keys.hasNext()) {
+					String key = keys.next();
+					String value = (String) header.get(key);
+					getRequest.addHeader(key, value); // Request 헤더 설정
+				}
+			}
+
+			HttpResponse httpResponse = client.execute(getRequest);
+
+			// ② 호출이 정상일 때, 응답 결과 사용
+			if (httpResponse.getStatusLine().getStatusCode() == 200) {
+
+				ResponseHandler<String> handler = new BasicResponseHandler();
+				response = handler.handleResponse(httpResponse); // 응답 결과 저장
+			}
+
+		} catch (Exception e) {
+			System.err.println(e.toString());
+
+		} // try catch end
+
+		return response;
+
+	} // APIHttpClientGet() end
+
+	/**
+	 * ---------------------------------- 3 ---------------------------------- 
+	 * <고화질 포스터 이미지 주소 얻기> 메소드
+	 * 네이버 영화 검색 api + 크롤링
+	 * 
+	 * [인자값]
+	 * - String movieNm : 영화 제목
+	 *
+	 * [return]
+	 * - 고화질 포스터의 이미지 주소 (Stirng 타입)
+	 */
+	public static String getPoster(String movieNm) {
+
+		String HighImageUrl = "";
+		
+		try {
+
+			// 1. 네이버 영화 목록 검색 API
+			// ① url + 파라미터 값 설정
+			String url = "https://openapi.naver.com/v1/search/movie.json";			// API 호출 URL
+			String search = URLEncoder.encode(movieNm, "UTF-8");				     	// 파라미터값 (UTF-8인코딩 필수)
+			String paramNaver = "query=" + search + "&display=1";
+	
+			String httpUrl = url + "?" + paramNaver;									   		// 최종 URL
+			
+			// ② 헤더값 생성
+			HashMap<String, String> header = new HashMap<>();
+			header.put("X-Naver-Client-Id", "Fc4lGVGl3zDMtizzcZbx");
+			header.put("X-Naver-Client-Secret", "q3OgVCUh0y");
+			
+			// ③ API 호출 (GET)
+			String responseNaver = APIHttpGet(httpUrl, header);  // HttpUrlConnection 사용
+			
+			// ④ responseNaver (JSON) 파싱
+			JSONParser jsonParser = new JSONParser();
+			
+			JSONObject jsonObject2 = (JSONObject) jsonParser.parse(responseNaver);
+	
+			JSONArray imageArray = (JSONArray) jsonObject2.get("items");
+			
+			// 2. 네이버 영화 포스터 url 크롤링
+			int len2 = imageArray.size();
+			for (int j = 0; j < len2; j++) {
+				
+				JSONObject imageArrayItems = (JSONObject) imageArray.get(j);
+				
+				// movieImageUrl = 검색결과의 이미지 주소
+				String movieImageUrl = (String) imageArrayItems.get("link");   
+				
+				// HighImageUrl = 고화질 포스터 이미지 주소
+		        HighImageUrl = CallAPI.getPoster(movieImageUrl);
+	
+		        int beginIndex = movieImageUrl.lastIndexOf("=") + 1;
+		        String movieCdNaver = movieImageUrl.substring(beginIndex); // movieCdNaver = 영화코드(네이버)
+	
+		        // 네이버 영화의 고화질 포스터 주소를 크롤링
+		        String connUrl = "https://movie.naver.com/movie/bi/mi/photoViewPopup.nhn?movieCode=" + movieCdNaver;
+	
+					Document doc = Jsoup.connect(connUrl).get();
+					HighImageUrl = doc.getElementById("targetImage").attr("src").toString(); // HighImageUrl = 고화질 포스터 이미지 주소
+	
+			} // for문 end
+			
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			
+			} // try catch end
+		
+		return HighImageUrl;
+
+	} // getPoster() end
+	
+	
+} // class end

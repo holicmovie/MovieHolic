@@ -22,6 +22,7 @@ public class BoardDto { // 게시판
 	private int notify; // 신고수
 
 
+	
 	///// 생성자 /////
 	
 	public BoardDto() {
