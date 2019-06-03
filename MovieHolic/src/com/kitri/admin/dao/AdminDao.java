@@ -24,13 +24,36 @@ public class AdminDao  {
 	}
 
 	
-//	목록 조회 -----------------------------------------------------------
 	
-	public List<AdminDto> selectByUserAll(int cnt) {
+	
+//	페이징 처리 -----------------------------------------------------------
+	
+	
+	// 목록 불러오기.
+	public List<AdminDto> selectByRows(int startRow, int endRow, int cnt){
 		
-
 		List<AdminDto> list = new ArrayList<AdminDto>();
 
+		StringBuffer sql = new StringBuffer();
+		
+		sql.append(" select");
+		sql.append(" userid, name, birth,");
+		sql.append(" phoneFirst, phoneMid, phoneLast,");
+		sql.append(" gender, joinDate, outDate, enable");
+		
+		sql.append(" from");
+		sql.append(" ( select rownum r, userid, name, birth,");
+		sql.append(" phoneFirst, phoneMid, phoneLast,");
+		sql.append(" gender, joinDate, outDate, enable");
+		sql.append(" from mh_user");
+		if (cnt == 2) {
+			sql.append(" where enable = 1");
+		}else if (cnt == 3) {
+			sql.append(" where outDate is not null");
+		}
+		sql.append(" )");
+		sql.append(" where r between ? and ?");
+		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -38,37 +61,17 @@ public class AdminDao  {
 		try {
 
 			conn = DBConnection.makeConnection();
-
-			StringBuffer sql = new StringBuffer();
-
-			sql.append("select");
-			sql.append(" userId,");
-			sql.append(" name,");
-			sql.append(" birth,");
-			sql.append(" phoneFirst,");
-			sql.append(" phoneMid,");
-			sql.append(" phoneLast,");
-			sql.append(" gender,");
-			sql.append(" joinDate,");
-			sql.append(" outDate,");
-			sql.append(" enable");
-			sql.append(" from holic_user");
-			if (cnt == 2) {
-				sql.append(" where enable = 1");
-			}else if (cnt == 3) {
-				sql.append(" where outDate is not null");
-			}
-			
-			System.out.println(cnt);
-			
-
 			pstmt = conn.prepareStatement(sql.toString());
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
 			
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
+				
 				AdminDto adminDto = new AdminDto();
-//				UserDto.setZipcode(rs.getString("zipcode"));
+				
 				adminDto.setUserId(rs.getString("userId"));
 				adminDto.setName(rs.getString("name"));
 				adminDto.setBirth(rs.getString("birth"));
@@ -78,56 +81,61 @@ public class AdminDao  {
 				adminDto.setGender(rs.getString("gender"));
 				adminDto.setJoinDate(rs.getDate("joinDate"));
 				adminDto.setOutdate(rs.getDate("outDate"));
+				adminDto.setEnable(rs.getInt("enable"));
+				
 
 				list.add(adminDto);
 			}
 			
 
 		} catch (SQLException e) {
-
 			e.printStackTrace();
 		} finally {
 			DBClose.close(conn, pstmt, rs);
 		}
-
-		return list;
-
-	}
-	
-	
-	
-	
-	
-//	페이징 처리 -----------------------------------------------------------
-	
-	
-	public List<AdminDto> selectByRows(int startRow, int endRow){
-		
-		List<AdminDto> list = new ArrayList<AdminDto>();
-
-			
 		
 		
 		
 		return list;
+
+
 	}
+	
+
+
+	
+	
+	
 	
 //	--------------------------------------------	
 	
-	public int selectTotalCnt() {
+	// 토탈수
+	public int selectTotalCnt(int cnt) {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		String selectTotalCntSQL = "select count(*) from holic_user";
+		StringBuffer sql = new StringBuffer();
+		
+		sql.append(" select COUNT(*)");
+		sql.append(" from (select userId,name,birth,");
+		sql.append(" phoneFirst,phoneMid,phoneLast,");
+		sql.append(" gender,joinDate,outDate,enable from mh_user");
+		if (cnt == 2) {
+			sql.append(" where enable = 1");
+		}else if (cnt == 3) {
+			sql.append(" where outDate is not null");
+		}
+		sql.append(" )");
+
 		
 		int totalCnt = -1;
 		
 		try {
 			
 			conn = DBConnection.makeConnection();
-			pstmt = conn.prepareStatement(selectTotalCntSQL);			
+			pstmt = conn.prepareStatement(sql.toString());			
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
@@ -165,11 +173,15 @@ public class AdminDao  {
 	public static void main(String[] args) {
 		
 		AdminDao adminDao = new AdminDao();
-		int cnt = 1;
-		//System.out.println(adminDao.selectByUserAll(cnt).get(0));
+//		int cnt = 1;
+//		System.out.println(adminDao.selectByUserAll(cnt).get(0));
+//		
+//		총 로우 갯수
+//		int cnt = adminDao.selectTotalCnt(1);
+//		System.out.println(cnt);
 		
-		cnt = adminDao.selectTotalCnt();
-		System.out.println(cnt);
+//		로우 ? ~ ? 까지 뽑아내는것
+//		System.out.println(adminDao.selectByRows(1, 4, 2));
 		
 	}
 	
