@@ -21,7 +21,7 @@ public class FilmFrontController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String act = request.getParameter("act"); 	// *파라미터 변수
+		String act = request.getParameter("act"); 			// *파라미터 변수
 		String path = "/index.jsp"; 			  			// *기본 경로
 
 		// *act에 따른 경로 이동
