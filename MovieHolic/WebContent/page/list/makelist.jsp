@@ -7,15 +7,83 @@
 /* 영화 포스터 */
 .movieImg {
 	border: solid 1px white;
+	width: 19.2vh;
+	margin: 0.3em;
 }
 </style>
 <script>
-<%-- 영화검색 모달 띄우기 --%>
+<%-- 영화 검색 모달 --%>
+	<%-- 영화 검색 모달 띄우기 --%>
 	$(function() {
-		$('#srchMovie').focusin(function(){
+		$('#addMovie').focusin(function(){
 			$('#movieModal').modal();
 		});
+		return false;
 	});
+	
+	<%-- 영화 검색 모달의 검색버튼 클릭시 --%>
+	$(function(){
+		$('#srchMVBtn').click(function(){
+			var srchTitle = $('#srchTitle').val().trim();
+			if(srchTitle == ""){
+				return;
+			} else {
+				$.ajax({
+					url: "<%= request.getContextPath()%>/list",
+					data: 'act=srchMV&srchTitle=' + srchTitle,
+					method: 'post',
+					success:function(result){
+						$('#modalTable>tbody').html(result);
+					}
+				});
+			}
+		});
+		return false;
+	});
+	
+	<%-- 영화 검색 모달의 행 선택시 --%>
+	$(document).on("click", '#modalTable tr', function() {		<%-- 동적으로 생성된 요소에 이벤트 주는 방법 --%>
+		<%-- 선택한 행의 img태그에서 정보 받아오기 --%>
+		var $mv = $(this).find('img');
+		var movieNm = $mv.attr("data-movieNm");
+		var movieCdYoung = $mv.attr("data-movieCdYoung");
+		var movieCdNaver = $mv.attr("data-movieCdNaver");
+		var movieImage= $mv.attr("src");
+		var prdtYear = $mv.attr("data-prdtYear");
+		
+		<%-- 포스터 추가 --%>
+		var $poster = $('<img class="movieImg" src="' + movieImage + '" data-movieNm="' + movieNm + '" data-movieCdYoung="' + movieCdYoung + '" data-movieCdNaver="' + movieCdNaver + '"  data-prdtYear="' + prdtYear + '">'); 
+		/* var $poster = $('<img class="movieImg" src="https://movie-phinf.pstatic.net/20161123_188/1479862185516tYkKO_JPEG/movie_image.jpg" data-name="' + name + '" data-codd="' + code + '" data-prdtYear="' + prdtYear + '">'); */
+		$('#addMovie').before($poster);
+		
+		<%-- modal 초기화 --%>
+		$('#movieModal').modal('hide');
+		$('#srchTitle').val('');
+		$('#modalTable>tbody').empty();
+	})
+
+	
+<%-- list 작성 --%>
+	<%-- list 작성 취소 --%>
+	$(function(){
+		$('#cancle').click(function(){
+			if(confirm("List 작성을 취소하시겠습니까?")) {
+				history.back();
+			} else {
+				return false;
+			}
+		});
+	});
+	<%-- 작성한 list 저장 --%>
+	$(function(){
+		$('#save').click(function(){
+			if(confirm("작성한 List를 저장하시겠습니까?")) {
+			} else {
+				return false;
+			}
+		});
+	});
+
 </script>
 </head>
 <body class="left-sidebar is-preload">
@@ -64,14 +132,7 @@
 		
 	<%-- 영화 이미지 --%>
 		<div class="font_bold_mid" style="width:100%; border-top: 2.5px solid #fff; margin-top: 3em; padding-top: 1.5em; padding-bottom: 3em;">
-			<img class="movieImg" src="/MovieHolic/images/capma.jpg" width="200vh;" style="margin: 0.3em;">
-			<img class="movieImg" src="/MovieHolic/images/capma.jpg" width="200vh;" style="margin: 0.3em;">
-			<img class="movieImg" src="/MovieHolic/images/capma.jpg" width="200vh;" style="margin: 0.3em;">
-			<img class="movieImg" src="/MovieHolic/images/capma.jpg" width="200vh;" style="margin: 0.3em;">
-			<img class="movieImg" src="/MovieHolic/images/capma.jpg" width="200vh;" style="margin: 0.3em;">
-			<img class="movieImg" src="/MovieHolic/images/capma.jpg" width="200vh;" style="margin: 0.3em;">
-			<img class="movieImg" src="/MovieHolic/images/capma.jpg" width="200vh;" style="margin: 0.3em;">
-			<a id="srchMovie" href="#"><img class="movieImg" src="/MovieHolic/images/getposter.png" width="200vh;" style="margin: 0.3em;"></a>
+			<a id="addMovie" href="#"><img class="movieImg" src="/MovieHolic/images/getposter.png" width="200vh;" style="margin: 0.3em;"></a>
 		</div>
 		
 	</div>
@@ -85,74 +146,24 @@
     
 			<!-- Modal Header -->
 			<div class="modal-header  text-center">
-				<input type="text" class="form-control col-8" placeholder="검색할 영화제목 입력" style="margin-left: 20px;">
+				<input type="text" id="srchTitle" class="form-control col-8" placeholder="검색할 영화제목 입력" style="margin-left: 20px;">
+				<button id="srchMVBtn" type="button" class="btn btn-success font_bold_small" style="width: 60px; margin-left: 5px;">검&nbsp;색</button>
 				<button type="button" class="close" data-dismiss="modal" style="width: 5vh;">&times;</button>
 			</div>
       
 			<!-- Modal body -->
 			<div class="modal-body" align="center">
-				<table class="table table-hover font_bold_small"">
-						<col width="10%">
-						<col width="65%">
-						<col width="25%">
-						<tr>
-							<td><img src="/MovieHolic/images/tempimg/endgame.jpg" height="100vh"></td>
-							<td style="vertical-align: middle;">어벤져스:엔드게임</td>
-							<td style="vertical-align: middle; text-align: center;">2017</td>
-						</tr>
-						<tr>
-							<td><img src="/MovieHolic/images/tempimg/coco.jpg" height="100vh"></td>
-							<td style="vertical-align: middle;">코코</td>
-							<td style="vertical-align: middle; text-align: center;">2017</td>
-						</tr>
-						<tr>
-							<td><img src="/MovieHolic/images/tempimg/endgame.jpg" height="100vh"></td>
-							<td style="vertical-align: middle;">어벤져스:엔드게임</td>
-							<td style="vertical-align: middle; text-align: center;">2017</td>
-						</tr>
-						<tr>
-							<td><img src="/MovieHolic/images/tempimg/coco.jpg" height="100vh"></td>
-							<td style="vertical-align: middle;">코코</td>
-							<td style="vertical-align: middle; text-align: center;">2017</td>
-						</tr>
-						<tr>
-							<td><img src="/MovieHolic/images/tempimg/endgame.jpg" height="100vh"></td>
-							<td style="vertical-align: middle;">어벤져스:엔드게임</td>
-							<td style="vertical-align: middle; text-align: center;">2017</td>
-						</tr>
-						<tr>
-							<td><img src="/MovieHolic/images/tempimg/coco.jpg" height="100vh"></td>
-							<td style="vertical-align: middle;">코코</td>
-							<td style="vertical-align: middle; text-align: center;">2017</td>
-						</tr>
-						<tr>
-							<td><img src="/MovieHolic/images/tempimg/endgame.jpg" height="100vh"></td>
-							<td style="vertical-align: middle;">어벤져스:엔드게임</td>
-							<td style="vertical-align: middle; text-align: center;">2017</td>
-						</tr>
-						<tr>
-							<td><img src="/MovieHolic/images/tempimg/coco.jpg" height="100vh"></td>
-							<td style="vertical-align: middle;">코코</td>
-							<td style="vertical-align: middle; text-align: center;">2017</td>
-						</tr>
-						<tr>
-							<td><img src="/MovieHolic/images/tempimg/endgame.jpg" height="100vh"></td>
-							<td style="vertical-align: middle;">어벤져스:엔드게임</td>
-							<td style="vertical-align: middle; text-align: center;">2017</td>
-						</tr>
-						<tr>
-							<td><img src="/MovieHolic/images/tempimg/coco.jpg" height="100vh"></td>
-							<td style="vertical-align: middle;">코코</td>
-							<td style="vertical-align: middle; text-align: center;">2017</td>
-						</tr>
-					</table>
+				<table class="table table-hover font_bold_small" id="modalTable">
+					<col width="10%">
+					<col width="65%">
+					<col width="25%">
+					<tbody></tbody>
+				</table>
 			</div>
       
 			<!-- Modal footer -->
 			<div class="modal-footer">
-				<div class="input-group" align="left" style="padding-left: 5px;">
-					
-				</div>
+				<div class="input-group" align="left" style="padding-left: 5px;"></div>
 			</div>
       
 		</div>
