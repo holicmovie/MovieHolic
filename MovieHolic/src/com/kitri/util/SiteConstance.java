@@ -8,8 +8,8 @@ public class SiteConstance {
 	//DB info
 	public static final String DB_DRIVER = "oracle.jdbc.driver.OracleDriver";
 	public static final String DB_URL = "jdbc:oracle:thin:@localhost:1521:orcl";
-	public static final String DB_USERNAME = "kitri2";
-	public static final String DB_PASSWORD = "kitri2";
+	public static final String DB_USERNAME = "gwangq";
+	public static final String DB_PASSWORD = "gwangq";
 	
 	
 }

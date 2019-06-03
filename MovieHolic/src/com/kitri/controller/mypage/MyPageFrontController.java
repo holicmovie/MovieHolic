@@ -1,4 +1,4 @@
-package com.kitri.mypage.controller;
+package com.kitri.controller.mypage;
 
 import java.io.IOException;
 import javax.servlet.ServletConfig;
@@ -22,11 +22,12 @@ public class MyPageFrontController extends HttpServlet {
 			throws ServletException, IOException {
 		System.out.println("서블릿");
 		String page = request.getParameter("page");
-		String path = "/page/mypage/mypage.jsp";
-
+		String path = "";
 		if ("mypage".equals(page)) {
-
+			
+			path = MyPageController.getMyPageController().findFollowings(request, response);
 			MoveUrl.forward(request, response, path);
+			
 		} else if ("preference".equals(page)) {
 			MoveUrl.forward(request, response, "/page/mypage/preference.jsp");
 		} else if ("wishlist".equals(page)) {

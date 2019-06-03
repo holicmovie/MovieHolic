@@ -1,9 +1,13 @@
+<%@page import="com.kitri.dto.SocialDto"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/template/header.jsp"%>
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<% List<SocialDto> list = (List)request.getAttribute("followinglist");%>
 <style>
 <%-- 캐러셀 안의 포스터 공백제거 --%>
 .reel>article{
@@ -34,16 +38,26 @@ $(function() {
 	var arr = $("table#lsd>tr>td>a");
 	$(arr).click(function() {
 	var vurl = $(this).attr("href");
-	$a.jax({
+	$ajax({
 		url : vurl,
 		method:'get',
 		success:function(result){
 			location.href="listdetail.jsp";
 		}
 	});
-		
+		return false;
+	});
+	<%--"/MovieHoli/mypage?page=tab2"--%>
+	$("#tabf").click(function(){
+		alert("하이");
+		$.ajax({
+			url : "/MovieHolic/mypage",
+			method : "GET"
+		});
+		return false;
 	});
 });
+<%System.out.println(list);%>
 </script>
 <div id="page-wrapper">
 
@@ -73,7 +87,7 @@ $(function() {
 				<%-- 탭 2개 선언 --%>
 				<ul class="nav nav-tabs" role="tablist">
 					<li class="nav-item"><a class="nav-link active"  data-toggle="tab" href="#mine">Mine</a></li>
-				    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#following">Following</a></li>
+				    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#following" id = "tabf">Following</a></li>
 			  	</ul>
 	
 	
