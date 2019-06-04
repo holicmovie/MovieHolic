@@ -1,10 +1,32 @@
+<%@page import="com.kitri.dto.SocialDto"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
 <%@ include file="/template/header.jsp"%>
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<!-- 소셜 페이지 눌렀을 때 출력 -->
+<script>
+	$(function(){
+		$("#social").click(function(){
+			alert("눌렸다");
+			$.ajax({
+				url:"/MovieHolic/mypage?page=social",
+				method:"GET",
+				success: function() {
+					alert("잘왔다");
+				}
+			});
+		});
+	});
+</script>
 
+<%
+List<SocialDto> list = (List)request.getAttribute("followinglist"); 
+System.out.println("social.jps에 잘왔다:" + list);
+%>
 <style>
 <!-- 좋아요 둥근 버튼을 위해 필요 -->
 .btn-circle.btn-xl {
@@ -85,6 +107,7 @@
 								    </tr>
 								  </thead>
 								  <tbody>
+								  
 								    <tr>
 								      <th scope="row">1</th>
 								      <td>Mark</td>

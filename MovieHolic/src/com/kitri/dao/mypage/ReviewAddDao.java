@@ -1,4 +1,4 @@
-package com.kitri.dao;
+package com.kitri.dao.mypage;
 
 import java.sql.*;
 import java.util.*;

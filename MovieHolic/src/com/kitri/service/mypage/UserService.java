@@ -1,8 +1,8 @@
-package com.kitri.service;
+package com.kitri.service.mypage;
 
 import java.util.List;
 
-import com.kitri.dao.ReviewAddDao;
+import com.kitri.dao.mypage.ReviewAddDao;
 import com.kitri.dto.BoardDto;
 
 public class UserService {
