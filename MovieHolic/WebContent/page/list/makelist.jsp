@@ -20,6 +20,21 @@
 		});
 		return false;
 	});
+	
+	<%-- modal의 종료버튼 클릭시 초기화 --%>
+	$(function(){
+		$('#movieModal .close').click(function(){
+			modalClear();
+		});
+	});
+	<%-- modal 초기화 function --%>
+	function modalClear(){
+		$('#movieModal').modal('hide');
+		$('#srchTitle').val('');
+		$('#modalTable>tbody').empty();
+	}
+	
+	<%-- #### 영화 검색 모달(검색기능) #### --%>
 	<%-- 영화 검색 모달의 검색버튼 클릭시 영화정보 테이블에 띄우기 --%>
 	$(function(){
 		$('#srchMVBtn').click(function(){
@@ -39,20 +54,21 @@
 		});
 		return false;
 	});
-	<%-- modal의 종료버튼 클릭시 초기화 --%>
-	$(function(){
-		$('#movieModal .close').click(function(){
-			modalClear();
-		});
-	});
-	<%-- modal 초기화 function --%>
-	function modalClear(){
-		$('#movieModal').modal('hide');
-		$('#srchTitle').val('');
-		$('#modalTable>tbody').empty();
-	}
-	
-
+	<%-- 영화 검색 모달의 행 선택시 --%>
+	$(document).on("click", '#modalTable tr', function() {		<%-- 동적으로 생성된 요소에 이벤트 주는 방법 --%>
+		<%-- 선택한 행의 img태그 객체 얻어오기 --%>
+		var $mv = $(this).find('img');
+		<%-- 포스터 및 영화정보전달용 hidden 추가 --%>
+		/* var $poster = $('<img class="movieImg" src="' + movieImage + '" data-movieNm="' + movieNm + '" data-movieCdYoung="' + movieCdYoung + '" data-movieCdNaver="' + movieCdNaver + '"  data-prdtYear="' + prdtYear + '">'); */ 
+		$('#addMovie').before(
+				'<img class="movieImg" src="' + $mv.attr("src") + '">'
+				+ '<input type="hidden" name="movieNm" value="' + $mv.attr("data-movieNm") + '">'
+				+ '<input type="hidden" name="movieCdYoung" value="' + $mv.attr("data-movieCdYoung") + '">'
+				+ '<input type="hidden" name="movieCdNaver" value="' + $mv.attr("data-movieCdNaver") + '">'
+				+ '<input type="hidden" name="prdtYear" value="' + $mv.attr("data-prdtYear") + '">'
+		);
+		modalClear();		
+	})
 	
 <%-- #### list 작성 #### --%>
 	<%-- list 작성 취소 --%>
