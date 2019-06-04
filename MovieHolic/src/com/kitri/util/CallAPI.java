@@ -23,8 +23,8 @@ import org.jsoup.nodes.Element;
 import com.kitri.dto.FilmDto;
 
 public class CallAPI {
-	
-	static int count = 0;
+		
+	static int error = 0;
 	
 	/**
 	 * ---------------------------------- 1 ----------------------------------
@@ -64,6 +64,7 @@ public class CallAPI {
 				con.setRequestProperty("X-Naver-Client-Id", "Fc4lGVGl3zDMtizzcZbx");
 				con.setRequestProperty("X-Naver-Client-Secret", "q3OgVCUh0y");
 				
+				Sleep(100); //네이버 API일 경우, 0.1초 쉬었다 가기
 			}
 
 			int responseCode = con.getResponseCode(); // response의 status 코드 얻어옴
@@ -82,15 +83,12 @@ public class CallAPI {
 				
 				response = sr.toString(); // 응답결과 저장
 
-				CallAPI.count++;
-				System.out.println("응답 정상 | 영화 " + CallAPI.count + "번째");
+				//System.out.println("응답 정상");
 				
 			} else {
-				CallAPI.count =  0;
+				error++;
+				System.out.println("에러횟수 : " + error);
 				System.out.println("예외코드 : " + responseCode);
-				System.out.println("3초 쉬고 다시 받아온다!");
-				Sleep();
-				APIHttpGet(httpUrl, header);
 			}
 
 		} catch (IOException e) {
@@ -121,7 +119,8 @@ public class CallAPI {
 	 * - String prdtYear : 제작년도    *제작년도 없으면 null로 주기!
 	 *
 	 * [return]
-	 * - 고화질 포스터 이미지 주소, 네이버 코드, 네이버 별점 (FilmDto 타입)
+	 * - 검색 결과 있을 경우 : 고화질 포스터 이미지 주소, 네이버 코드, 네이버 별점 (FilmDto 타입)
+	 * - 검색 결과 없는 경우 : null
 	 */
 	public static FilmDto getPoster(String movieNm, String prdtYear) {
 
@@ -154,7 +153,7 @@ public class CallAPI {
 			// ④ responseNaver (JSON) 파싱
 			JSONParser jsonParser = new JSONParser();
 			
-			System.out.println("responseNaver : " + responseNaver);
+			//System.out.println("responseNaver : " + responseNaver);
 			JSONObject jsonObject = (JSONObject) jsonParser.parse(responseNaver);
 	
 			JSONArray imageArray = (JSONArray) jsonObject.get("items");
@@ -182,20 +181,19 @@ public class CallAPI {
 					Element imgtag = doc.getElementById("targetImage");
 					
 					if(imgtag != null) {
-						System.out.println("imgtag가 있다 고화질을 얻어보자");
-						HighImageUrl.setMovieImage(imgtag.attr("src").toString()); 			// 이미지 주소 set
+						// 고화질 이미지 주소 얻기
+						HighImageUrl.setMovieImage(imgtag.attr("src").toString()); 			// 고화질 이미지 주소 set
 					}else {
 						// 네이버 제공 고화질 이미지 주소가 없는 경우, 기본 이미지로 나오게 함.
-						System.out.println("imgtag가 없다 기본 이미지경로를 세팅하자");
-						HighImageUrl.setMovieImage("/MovieHolic/images/noMovieImage.png");
+						HighImageUrl.setMovieImage("/MovieHolic/images/noMovieImage.png");  // 기본 이미지 set
 					}
 	
 		
 				} // for문 end
 			
 			}else {
-				System.out.println("items가 없다 기본 이미지경로를 세팅하자");
-				HighImageUrl.setMovieImage("/MovieHolic/images/noMovieImage.png");
+				// 네이버 검색 결과가 없는 경우, null 리턴
+				return null;
 			} // if else문 end
 			
 			} catch (IOException e) {
@@ -213,12 +211,14 @@ public class CallAPI {
 	/**
 	 * ---------------------------------- 3 ---------------------------------- 
 	 * <1초 쉬기> 메소드
+	 * 
+	 * [인자값]
+	 * - int seconds : 대기 시간 (1/1000초)  *1000 입력 = 1초 대기
 	 */
-	public static void Sleep() {
+	public static void Sleep(int seconds) {
 		
 		try {
-				Thread.sleep(3000); //3초 대기
-
+				Thread.sleep(seconds); // seconds * 0.001 초 대기
 			}catch (InterruptedException e) {
 				e.printStackTrace();
 			}
