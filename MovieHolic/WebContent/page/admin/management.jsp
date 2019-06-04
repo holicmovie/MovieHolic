@@ -9,65 +9,74 @@
 
 <c:set var="ap" value="${requestScope.ap}" />
 <c:set var="np" value="${requestScope.np}" />
-
-
-
-
-
 <script>
-// 회원관리 게시판 처리
+
+/* 회원관리 게시판 목록종류 */
 $(function() {
-	$("div>span>span>a").click(
-		function() {
-			$("div.wrapper>div.container>div.member_search_result").empty();
-			var url = $(this).attr("href");
-			$.ajax({
-			
-				url : url,
-				method : 'get',
-				success : function(result) {
+	$("div>span>span>a").click(function() {
+		$("div.wrapper>div.container>div.member_search_result").empty();
+		var url = $(this).attr("href");
+		$.ajax({
+			url : url,
+			method : 'get',
+			success : function(result) {
 				$("div.wrapper>div.container>div.member_search_result").html(result.trim());
-				}
-			});
+			}
+		});
 		return false;
 	});
 });
 
-	
-	
-$(function() {
-	$(".page>a").click(function() {
+
+
+// 페이징 처리 - 동적은 사용 불가 코드.
+/* $(function() {
+	$("div>span>span>a").click(function() {
+	$("div.wrapper>div.container>div.member_search_result").empty();
+		var url = $(this).attr("href");
+		$.ajax({
+			url : url, /* '/MovieHolic/admin?act=alllist&' + 'currentPage=' + currentPage, *//*
+			method : 'get',
+			success : function(result) {
+				$("div.wrapper>div.container>div.member_search_result").html(result.trim());
+			}
+		});
+	return false;
+	});
+}); */
+
+
+//.on으로 바꾸면 정적과 동적 둘다 사용 가능.
+$(document).on("click", ".page>a", function(){
 	var currentPage = $(this).attr("href");
+	$("div.wrapper>div.container>div.member_search_result").empty();
 	$.ajax({
-		url : '/MovieHolic/admin?act=alllis&' + currentPage,
+		url : '/MovieHolic/admin?act=alllist&' + 'currentPage='+currentPage,
+		method : 'get',
+		success : function(result) {
+			$("div.wrapper>div.container>div.member_search_result").html(result.trim()); 
+		}
+	});
+	return false;
+});
+
+
+// 신고게시물 페이징 처리
+$(function() {
+	$('.page_notify>a').click(function() {
+	var currentPage = $(this).attr("href");
+	$(".notify_search_result").empty();
+	$.ajax({
+		url : '/MovieHolic/admin?notify=notify&' + currentPage,
 			method : 'get',
 			/* data : 'alllist=' + alllist,  */
 			success : function(result) {
-				$("section").html(result.trim());
+				$(".notify_search_result").html(result.trim());
 			}
 		});
 	return false;
 	});
 });
-
-
-
-
-
-//신고 관리 게시글
-/* $(function() {
-	/* $("div.wrapper>div.container>div.member_search_result").empty(); */
-		$.ajax({
-			url : '/MovieHolic/admin?npact=notify',
-			method : 'get',
-			success : function(result) {
-				/* $(".notify_search_result").html(result.trim()); //section#section */
-			}
-		});
-	return false;
-});   */
-
-
 
 </script>
 
@@ -137,8 +146,11 @@ hr.line_light_w {
 
 
 		<!-- Main -->
-
 		<div class="wrapper style1">
+
+
+
+
 
 			<div class="container">
 
@@ -177,14 +189,13 @@ hr.line_light_w {
 
 				<div align="right">
 					<span class="dropdown">
-						<button type="button" class="btn btn-success dropdown-toggle"
-							data-toggle="dropdown">목록</button> <span class="dropdown-menu">
+						<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">목록</button> 
+						<span class="dropdown-menu">
 							<a class="dropdown-item" href="/MovieHolic/admin?act=alllist">전체목록</a>
-							<%-- DB number값이 1일때 휴면. --%> <a class="dropdown-item"
-							href="/MovieHolic/admin?act=inactiveList">휴면목록</a> <a
-							class="dropdown-item"
-							href="/MovieHolic/admin?act=unsubscribelist">탈퇴목록</a>
-					</span>
+							<%-- DB number값이 1일때 휴면. --%> 
+							<a class="dropdown-item" href="/MovieHolic/admin?act=inactiveList">휴면목록</a> 
+							<a class="dropdown-item" href="/MovieHolic/admin?act=unsubscribelist">탈퇴목록</a>
+						</span>
 					</span>
 					<button type="submit" class="btn btn-success" style="z-index: 0">탈퇴</button>
 					<button type="submit" class="btn btn-success" style="z-index: 0">휴면</button>
@@ -193,8 +204,13 @@ hr.line_light_w {
 
 
 
-				<!-- <section id="section"> -->
+
+
+
+				<!-- <member_search_result> -->
 				<div class="member_search_result">
+				
+				
 
 
 					<table class="table" style="border-bottom: 0.2em solid #fff;">
@@ -330,10 +346,6 @@ hr.line_light_w {
 
 			</div>
 			<br> <br> <br>
-
-
-
-
 			<%-- -------------------------------------------------------------------------------------------------- --%>
 
 
@@ -368,11 +380,11 @@ hr.line_light_w {
 
 
 
+				<!-- notify_search_result -->
+				<div class="notify_search_result">
 
-				<div class="notifiy_search_result">
 
-
-				<table class="table" style="border-bottom: 0.2em solid #fff;">
+					<table class="table" style="border-bottom: 0.2em solid #fff;">
 						<br>
 						<thead>
 							<tr>
@@ -387,8 +399,8 @@ hr.line_light_w {
 							</tr>
 						</thead>
 						<tbody>
-						
-						
+
+
 							<c:forEach var="np" items='${np.list}'>
 								<tr>
 									<td><input type="checkbox" /></td>
@@ -400,11 +412,11 @@ hr.line_light_w {
 									<td>${np.postDate }</td>
 									<td>${np.notify }</td>
 								</tr>
-							</c:forEach>	
-							
-							
-							
-							
+							</c:forEach>
+
+
+
+
 						</tbody>
 					</table>
 
@@ -413,7 +425,16 @@ hr.line_light_w {
 
 
 						<div class="col-lg-2">
-							<button type="submit" class="btn btn-success">이전</button>
+
+
+							<c:if test="${np.startPage > 1 }">
+								<span class="page_notify"> <a href="${np.startPage - 1}"><button
+											class="btn btn-success">이전</button></a>
+								</span>
+
+							</c:if>
+
+
 						</div>
 
 						<div class="col-lg-2"></div>
@@ -421,28 +442,41 @@ hr.line_light_w {
 						<div class="col-lg-4">
 							<ul class="pagination"
 								style="width: 240px; margin-left: auto; margin-right: auto;">
-								<li class="page-item"><a class="page-link" href="#">1</a></li>
-								<li class="page-item"><a class="page-link" href="#">2</a></li>
-								<li class="page-item"><a class="page-link" href="#">3</a></li>
-								<li class="page-item"><a class="page-link" href="#">4</a></li>
-								<li class="page-item"><a class="page-link" href="#">5</a></li>
+
+								<c:forEach begin="${np.startPage}" end="${np.endPage}" var="i">
+									<c:choose>
+
+										<c:when test="${np.currentPage == i}">
+											<li class="page-item"><span><a class="page-link">${i}</a></span></li>
+										</c:when>
+
+										<c:otherwise>
+											<li class="page-item"><span class="page_notify"><a
+													class="page-link" href="${i}">${i}</a></span></li>
+										</c:otherwise>
+
+									</c:choose>
+								</c:forEach>
+
 							</ul>
 						</div>
 
 						<div class="col-lg-2"></div>
 
 						<div class="col-lg-2">
-							<button type="submit" class="btn btn-success">다음</button>
+							<c:if test="${np.totalPage > np.endPage }">
+
+								<span class="page_notify"> <a href="${np.endPage+1}"><button
+											class="btn btn-success">다음</button></a>
+								</span>
+
+							</c:if>
 						</div>
 					</div>
 
 
 
-				</div>	
-					
-					
-					
-					
+				</div>
 				<!-- notify_search_result -->
 
 

@@ -17,6 +17,21 @@ public class AdminNotifyPageDto {
 	private String url; 			// 페이지링크 클릭시 요청할 url
 	private int currentPage; 		//현재페이지
 	
+	
+	
+	public AdminNotifyPageDto(int cntPerPage, int totalCnt, int cntPerPageGroup, int currentPage) {
+		super();
+		
+		this.cntPerPage = cntPerPage;
+		this.totalCnt = totalCnt;
+		this.cntPerPageGroup = cntPerPageGroup;
+		this.currentPage = currentPage;
+		
+		execute();
+		
+	}
+	
+	
 	public AdminNotifyPageDto(int cntPerPage, int totalCnt, int cntPerPageGroup, String url, int currentPage) {
 		super();
 		

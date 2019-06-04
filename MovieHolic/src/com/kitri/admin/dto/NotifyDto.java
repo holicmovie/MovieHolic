@@ -202,7 +202,7 @@ public class NotifyDto {
 				+ ", notify=" + notify + ", enable=" + enable + ", viewCount=" + viewCount + ", starPoint=" + starPoint
 				+ ", postDate=" + postDate + ", userId=" + userId + ", subject=" + subject + ", content=" + content
 				+ ", movieName=" + movieName + ", director=" + director + ", movieCodeYoung=" + movieCodeYoung
-				+ ", category=" + category + ", boardName=" + boardName + ", row=" + row + "]";
+				+ ", category=" + category + ", boardName=" + boardName + ", row=" + row + "]" + "/n";
 	}
 
 

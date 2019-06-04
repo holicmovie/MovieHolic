@@ -9,51 +9,20 @@
 
 
 <script>
-	$(function() {
 
-		$(".page>a").click(function() {
-					var currentPage = $(this).attr("href");
-					$.ajax({
-						url : '/MovieHolic/admin?act=alllist&' + 'currentPage='+currentPage,
-						method : 'get',
-						success : function(result) {
-							$("div.wrapper>div.container>div.member_search_result").html(result.trim());
-						}
-					});
-					return false;
-				});
-	});
-
-	//$(document).on("click", "#check-all", function() {
-	$("#check-all").click(function() { // 전체 선택 버튼 클릭시
-
-		$(":input[name=chk]").prop("checked", true)
-
+	
+//$(document).on("click", "#check-all", function() {
+$("#check-all").click(function() { // 전체 선택 버튼 클릭시
+	$(":input[name=chk]").prop("checked", true)
 		/* if ($(":input[name=chk]").prop("checked", true)) {
 			$(":input[name=chk]").prop("checked", false);
 		} else if ($(":input[name=chk]").prop("checked", false)) {
 			$(":input[name=chk]").prop("checked", true);
 		} */
-
-		return false;
-
-	});
+	return false;
+});
 	
 	
-	/* $(function() {
-
-		$(".enable").click(function() {
-					var currentPage = $(this).attr("href");
-					$.ajax({
-						url : '/MovieHolic/admin?act=enable',
-						method : 'get',
-						success : function(result) {
-							$("section").html(result.trim());
-						}
-					});
-					return false;
-				});
-	}); */
 	
 </script>
 

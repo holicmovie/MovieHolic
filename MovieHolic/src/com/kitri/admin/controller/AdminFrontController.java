@@ -20,11 +20,26 @@ public class AdminFrontController extends HttpServlet {
 		String notify = request.getParameter("notify");
 		String path = "/page/admin/management.jsp";
 		
-//		System.out.println(act);
-		System.out.println( " notify = " + notify);
-		System.out.println( " act = " + act);
+//		System.out.println( " notify = " + notify);
+//		System.out.println( " act = " + act);
+		
+		
+		
+		
+		
 
-		if ("alllist".equals(act)) {
+		if ("notify".equals(notify) && "alllist".equals(act)) { // 다른 페이지에서 management 들어올때.
+			
+			int cnt = 1; 
+			path = AdminController.getAdminController().NFandAll(request, response,cnt);
+			MoveUrl.forward(request, response, path);
+			
+		} else if ("notify".equals(notify)) {
+			
+			path = AdminController.getAdminController().NFselectByList(request, response);
+			MoveUrl.forward(request, response, path);
+			
+		} else if ("alllist".equals(act)) {
 			
 			int cnt = 1;
 			path = AdminController.getAdminController().selectByUserList(request, response, cnt);
@@ -42,14 +57,7 @@ public class AdminFrontController extends HttpServlet {
 			path = AdminController.getAdminController().selectByUserList(request, response, cnt);
 			MoveUrl.forward(request, response, path);
 			
-		} else if ("notify".equals(notify)) {
-			
-			System.out.println("Front notify들어옴");
-			path = AdminController.getAdminController().NFselectByList(request, response);
-			System.out.println("Front notify메소드를 다 거침.");
-			MoveUrl.forward(request, response, path);
-			
-		} else {
+		}  else {
 			
 			int cnt = 4;
 			path = AdminController.getAdminController().selectByUserList(request, response, cnt);
