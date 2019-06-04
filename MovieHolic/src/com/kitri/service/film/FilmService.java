@@ -10,6 +10,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import com.kitri.dao.film.FilmDao;
 import com.kitri.dto.FilmDto;
 import com.kitri.util.CallAPI;
 
@@ -39,7 +40,7 @@ public class FilmService {
 			// #1 API 호출
 
 			// 1-1. 영진원 일별 박스오피스 API
-			// ① url + 파라미터 값 설정
+			// ① url + 파라미터 값 설정 
 			
 			// 어제 날짜 구하기
 			Calendar c1 = new GregorianCalendar();
@@ -109,7 +110,24 @@ public class FilmService {
 		
 		}  // getBoxOffice() end
 	
+
+		// 2
+		// <장르별 영화 추천 목록 10개 출력> 메소드
+		// : MH_Films select
+		// *장르별 네이버 별점 높은 순 10개
+		public List<FilmDto> getFavoriteFilm(String category) {
+			
+			// #1 DAO 호출
+			List<FilmDto> film = FilmDao.getFilmDao().selectByCategory(category);
+			
+			return film;
+
+		} //  getFavoriteFilm() end
 		
+		
+		
+		
+		/*
 		// 2
 		// <장르별 영화 목록 출력> 메소드
 		// : 영진원 영화 목록 api
@@ -150,7 +168,7 @@ public class FilmService {
 							String movieCdYoung = movieListItems.get("movieCd").toString(); 		// 영화코드(영진원)
 							String movieNm = movieListItems.get("movieNm").toString(); 				// 영화명
 							String genreAlt = movieListItems.get("genreAlt").toString();			// 장르 (ex: 범죄,스릴러)
-							String prdtYear = movieListItems.get("prdtYear").toString();		// 제작년도
+							String prdtYear = movieListItems.get("prdtYear").toString();			// 제작년도
 							
 							List genres = new ArrayList();
 							
@@ -177,7 +195,7 @@ public class FilmService {
 									// '영화코드(영진원)', '영화명', '첫번째장르'를 DTO에 세팅함
 									filmDto.setMovieCdYoung(movieCdYoung);
 									filmDto.setMovieNm(movieNm);
-									filmDto.setGenreNm(genres.get(k).toString());
+									filmDto.setCategory(genres.get(k).toString());
 									filmDto.setMovieImage(movieImage);
 									
 									film.add(filmDto);
@@ -196,6 +214,6 @@ public class FilmService {
 				return film;
 
 		} //  getFavoriteFilm() end
-		
+		*/
 		
 } // class end

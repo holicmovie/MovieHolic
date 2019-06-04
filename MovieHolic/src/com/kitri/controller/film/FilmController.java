@@ -37,7 +37,7 @@ public class FilmController {
 		// 박스오피스 set 		(C -> FC)
 		request.setAttribute("box", list);
 		
-		// 경로 return 				(C -> FC)
+		// 경로 return 		(C -> FC)
 		return path;
 	}
 	
