@@ -25,7 +25,7 @@ public class MyPageController {
 	
 	public String findFollowings(HttpServletRequest request, HttpServletResponse response) {
 		String userId = "'a196@gmail.com'";
-		String path = "/page/mypage/mypage.jsp";
+		String path = "/page/mypage/social.jsp";
 		List<SocialDto> list = new ArrayList<SocialDto>();
 		list = MyPageService.getMyPageService().selectFollowing(userId);
 		request.setAttribute("followinglist", list);
