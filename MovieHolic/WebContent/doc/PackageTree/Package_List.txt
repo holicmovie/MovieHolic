@@ -1,0 +1,19 @@
+0. View_request
+
+1. ListFrontController (@list)
+	1) act 분류
+		- content :
+		- modify
+		- delete
+		- 
+		
+2. ListController
+
+
+3. ListService
+
+
+4. ListDao
+
+
+5. View_result
