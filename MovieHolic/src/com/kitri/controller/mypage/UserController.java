@@ -31,7 +31,7 @@ public class UserController {
 		
 		String path = "/page/mypage/mypage.jsp";
 		
-		request.setAttribute("review", list);
+		request.setAttribute("writereview", list);
 		
 		return path;
 		

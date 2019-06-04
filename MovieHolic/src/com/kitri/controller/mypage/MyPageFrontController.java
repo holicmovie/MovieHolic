@@ -25,7 +25,8 @@ public class MyPageFrontController extends HttpServlet {
 		String path = "";
 		String tab = request.getParameter("tab");
 		if ("mypage".equals(page)) {
-			
+			UserController.getUserController().ReviewList(request, response);
+			UserController.getUserController().listList(request, response);
 			path = MyPageController.getMyPageController().findFollowings(request, response);
 			MoveUrl.forward(request, response, path);
 			
@@ -34,6 +35,7 @@ public class MyPageFrontController extends HttpServlet {
 		} else if ("wishlist".equals(page)) {
 			MoveUrl.forward(request, response, "/page/mypage/wishlist.jsp");
 		} else if ("diary".equals(page)) {
+			UserController.getUserController().ReviewList(request, response);
 			MoveUrl.forward(request, response, "/page/mypage/diary.jsp");
 		} else if ("social".equals(page)) {
 			path = MyPageController.getMyPageController().findFollowings(request, response);
@@ -43,6 +45,9 @@ public class MyPageFrontController extends HttpServlet {
 		} else if ("following".equals(tab)) {
 			path = MyPageController.getMyPageController().findFollowings(request, response);
 			MoveUrl.forward(request, response, path);
+		} else if("writereview".equals(page)) {
+			UserController.getUserController().ReviewRegister(request, response);
+			MoveUrl.forward(request, response, "/page/mypage/writereview.jsp");
 		}
 	}
 

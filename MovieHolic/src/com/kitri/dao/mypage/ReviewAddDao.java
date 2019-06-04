@@ -3,6 +3,7 @@ package com.kitri.dao.mypage;
 import java.sql.*;
 import java.util.*;
 
+import com.kitri.admin.dto.AdminDto;
 import com.kitri.dto.BoardDto;
 import com.kitri.util.DBClose;
 import com.kitri.util.DBConnection;
@@ -148,41 +149,112 @@ public List<BoardDto> listList(String content) {
 	
 	// 페이징 처리
 
-	public List<BoardDto> selectByRows(int startRow, int endRow) {
-
+//목록 불러오기.
+	public List<BoardDto> selectByRows(int startRow, int endRow, int cnt){
+		
 		List<BoardDto> list = new ArrayList<BoardDto>();
 
-		return list;
-	}
-
-	public int selectTotalCnt() {
-
+		StringBuffer sql = new StringBuffer();
+		
+		sql.append("select movieName,content,starPoint,postDate d1, to_char(postDate, 'YYYY') d2, to_char(postDate, 'MM-DD') d3\n");
+		sql.append("from (select movieName,content,starPoint,postDate d1, to_char(postDate, 'YYYY') d2, to_char(postDate, 'MM-DD') d3 \n");
+		sql.append("mh_board \n");
+		sql.append("where boardCode = 1 \n");
+		sql.append("order by postDate desc) \n");
+		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-
-		StringBuffer sql = new StringBuffer(); 
-		
-		sql.append("select count(*) from mh_board");
-		
-		int totalCnt = -1;
 
 		try {
 
 			conn = DBConnection.makeConnection();
 			pstmt = conn.prepareStatement(sql.toString());
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
 			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				totalCnt = rs.getInt(1);
+			
+			while (rs.next()) {
+				
+				BoardDto boardDto = new BoardDto();
+				
+				List<String> name = new ArrayList<String>();
+				String str = rs.getString("movieName");
+				StringTokenizer st = new StringTokenizer(str, "||");
+				String a = st.nextToken();
+				
+				name.add(a);
+				boardDto.setPostDate(rs.getString("d1"));
+				boardDto.setPostDateY(rs.getString("d2"));
+				boardDto.setPostDateM(rs.getString("d3"));
+				boardDto.setStarPoint(rs.getInt("starPoint"));
+				boardDto.setMovieName(name);
+				boardDto.setContent(rs.getString("content"));
+
+				list.add(boardDto);
+				
 			}
+			
 
 		} catch (SQLException e) {
-
 			e.printStackTrace();
-
 		} finally {
 			DBClose.close(conn, pstmt, rs);
 		}
+		
+		
+		
+		return list;
+
+
+	}
+	
+
+
+	
+	
+	
+	
+//	--------------------------------------------	
+	
+	// 토탈수
+	public int selectTotalCnt(int cnt) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		StringBuffer sql = new StringBuffer();
+		
+		sql.append(" select COUNT(*)");
+		sql.append("from (select rownum r, movieName,content,starPoint,postDate d1, to_char(postDate, 'YYYY') d2, to_char(postDate, 'MM-DD') d3 \n");
+		sql.append("mh_board \n");
+		sql.append("where boardCode = 1 \n");
+		sql.append("order by postDate desc) \n");
+
+		
+		int totalCnt = -1;
+		
+		try {
+			
+			conn = DBConnection.makeConnection();
+			pstmt = conn.prepareStatement(sql.toString());			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				totalCnt = rs.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		
 
 		return totalCnt;
 	}
