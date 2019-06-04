@@ -121,7 +121,7 @@ $("#check-all").click(function() { // 전체 선택 버튼 클릭시
 
 	<div class="col-lg-2"></div>
 
-	<div class="col-lg-4">
+	<div class="col-lg-4" style="align-content: center;">
 		<ul class="pagination"
 			style="width: 240px; margin-left: auto; margin-right: auto;">
 

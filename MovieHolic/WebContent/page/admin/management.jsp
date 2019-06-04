@@ -9,6 +9,9 @@
 
 <c:set var="ap" value="${requestScope.ap}" />
 <c:set var="np" value="${requestScope.np}" />
+
+
+
 <script>
 
 /* 회원관리 게시판 목록종류 */
@@ -46,7 +49,7 @@ $(function() {
 }); */
 
 
-//.on으로 바꾸면 정적과 동적 둘다 사용 가능.
+//.on으로 바꾸면 정적과 동적 둘다 사용 가능. notify
 $(document).on("click", ".page>a", function(){
 	var currentPage = $(this).attr("href");
 	$("div.wrapper>div.container>div.member_search_result").empty();
@@ -60,14 +63,30 @@ $(document).on("click", ".page>a", function(){
 	return false;
 });
 
-
-// 신고게시물 페이징 처리
-$(function() {
+// notify
+/* $(function() {
 	$('.page_notify>a').click(function() {
 	var currentPage = $(this).attr("href");
 	$(".notify_search_result").empty();
 	$.ajax({
 		url : '/MovieHolic/admin?notify=notify&' + currentPage,
+			method : 'get',
+			success : function(result) {
+				$(".notify_search_result").html(result.trim());
+			}
+		});
+	return false;
+	});
+}); */
+
+
+
+//신고게시물 페이징 처리
+$(document).on("click", ".page_notify>a", function(){
+	var currentPage = $(this).attr("href");
+	$(".notify_search_result").empty();
+	$.ajax({
+		url : '/MovieHolic/admin?notify=notify&currentPage='+currentPage,
 			method : 'get',
 			/* data : 'alllist=' + alllist,  */
 			success : function(result) {
@@ -75,10 +94,88 @@ $(function() {
 			}
 		});
 	return false;
-	});
 });
 
+
+
+// 전체선택
+/* $(document).on("click", ".check-all", function(){
+        //클릭되었으면
+        if($(".ab").prop("checked")){
+            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
+            $(".ab").prop("checked",false);
+            //클릭이 안되있으면
+        }else{
+            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
+            $(".ab").prop("checked",true);
+        }
+    }); */
+
+
+    
+// 체크박스 선택시 한 로우 가져오기.
+// 상단 선택버튼 클릭시 체크된 Row의 값을 가져온다.
+$("#selectBtn").click(function(){ 
+		
+	var rowData = new Array();
+	var tdArr = new Array();
+	var checkbox = $("input[name=chk]:checked");
+	
+	// 체크된 체크박스 값을 가져온다
+	checkbox.each(function(i) {
+		// checkbox.parent() : checkbox의 부모는 <td>이다.
+		// checkbox.parent().parent() : <td>의 부모이므로 <tr>이다.
+		var tr = checkbox.parent().parent().eq(i);
+		var td = tr.children();
+				
+		// 체크된 row의 모든 값을 배열에 담는다.
+		rowData.push(tr.text());
+		
+		// td.eq(0)은 체크박스 이므로  td.eq(1)의 값부터 가져온다.
+		var userId = td.eq(1).text()+", "
+		var name = td.eq(2).text()+", ";
+		var birth = td.eq(3).text()+", ";
+		var phone = td.eq(4).text()+", ";
+		var gender = td.eq(5).text()+", ";
+		var joinDate = td.eq(6).text()+", ";
+		var outdate = td.eq(7).text()+", ";
+		
+		/* <td>${ap.userId}</td>
+		<td>${ap.name }</td>
+		<td>${ap.birth }</td>
+		<td>${ap.phoneFirst }-${ap.phoneMid }-${ap.phoneLast }</td>
+		<td>${ap.gender }</td>
+		<td>${ap.joinDate }</td>
+		<td>${ap.outdate }</td>
+		enable까지 */
+		
+		// 가져온 값을 배열에 담는다.
+		tdArr.push(userId);
+		tdArr.push(name);
+		tdArr.push(birth);
+		tdArr.push(phone);
+		tdArr.push(gender);
+		tdArr.push(joinDate);
+		tdArr.push(joinDate);
+		tdArr.push(outdate);
+		
+		//console.log("no : " + no);
+		//console.log("userid : " + userid);
+		//console.log("name : " + name);
+		//console.log("email : " + email);
+	});
+	
+	$("#ex3_Result1").html(" * 체크된 Row의 모든 데이터 = "+rowData);	
+	$("#ex3_Result2").html(tdArr);	
+});
+    
+    
+
+
+
 </script>
+
+
 
 
 
@@ -140,8 +237,6 @@ hr.line_light_w {
 		<div id="header" style="background-image: none;">
 			<%@ include file="/template/nav.jsp"%>
 		</div>
-
-
 
 
 
@@ -234,7 +329,7 @@ hr.line_light_w {
 							</tr>
 						</thead>
 						<tbody>
-
+						
 							<c:forEach var="ap" items='${ap.list}'>
 								<tr>
 									<td><input type="checkbox" class="ab" name="chk" /></td>
@@ -273,7 +368,7 @@ hr.line_light_w {
 							</c:forEach>
 						</tbody>
 					</table>
-
+					 
 
 
 					<div class="row">
@@ -295,8 +390,7 @@ hr.line_light_w {
 						<div class="col-lg-2"></div>
 
 						<div class="col-lg-4">
-							<ul class="pagination"
-								style="width: 240px; margin-left: auto; margin-right: auto;">
+							<ul class="pagination" style="width: 240px; margin-left: auto; margin-right: auto;">
 
 								<c:forEach begin="${ap.startPage}" end="${ap.endPage}" var="i">
 									<c:choose>

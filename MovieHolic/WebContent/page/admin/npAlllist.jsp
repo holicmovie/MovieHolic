@@ -9,7 +9,7 @@
 
 <script>
 
-
+// 예시.
 /* $(function() {
 	$('.page_notify>a').click(function() {
 	var currentPage = $(this).attr("href");

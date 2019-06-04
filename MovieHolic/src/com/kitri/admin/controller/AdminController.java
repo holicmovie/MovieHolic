@@ -82,6 +82,8 @@ public class AdminController {
 		// 요청전달 데이터 없으면 1페이지
 		String cp = request.getParameter("currentPage");
 
+//		System.out.println("cp = " + cp);
+		
 		int currentPage = 1; // 보여줄 현재 페이지.
 
 		if (cp != null) {
@@ -97,7 +99,7 @@ public class AdminController {
 
 		AdminNotifyPageDto np = new AdminNotifyPageDto(cntPerPage, totalCnt, cntPerPageGroup, url, currentPage);
 
-		System.out.println(np.getStartRow() + "   end : " + np.getEndRow());
+//		System.out.println(np.getStartRow() + "   end : " + np.getEndRow());
 
 		List<NotifyDto> list = AdminService.getAdminService().NFselectByRows(np.getStartRow(), np.getEndRow());
 
@@ -105,7 +107,6 @@ public class AdminController {
 
 		request.setAttribute("np", np);
 
-		// String path = "/page/admin/npAlllist.jsp";
 		String path = "/page/admin/npAlllist.jsp";
 
 		return path;
@@ -155,7 +156,7 @@ public class AdminController {
 
 		request.setAttribute("np", np);
 
-		System.out.println(np.getList());
+		//System.out.println(np.getList());
 
 		String path = "/page/admin/management.jsp";
 

@@ -241,11 +241,11 @@ public class AdminDao  {
 			
 			StringBuffer sql = new StringBuffer();
 			
-			sql.append(" select seq,mc.boardName,mb.userId,mb.subject,mb.content,mb.postDate,mb.notify");
+			sql.append(" select count(*)");
 			sql.append(" from mh_board mb, mh_category mc");
 			sql.append(" where mb.boardcode = mc.boardcode");
 			sql.append(" and notify != 0");
-			sql.append(" order by seq desc");
+			sql.append(" order by notify desc");
 
 			
 			int totalCnt = -1;
@@ -257,7 +257,7 @@ public class AdminDao  {
 				rs = pstmt.executeQuery();
 				
 				if(rs.next()) {
-					totalCnt = rs.getInt(1);
+					totalCnt = rs.getInt("count(*)"); //  = rs.getInt(1);
 				}
 				
 			} catch (SQLException e) {
@@ -289,6 +289,9 @@ public class AdminDao  {
 		
 //		로우 ? ~ ? 까지 뽑아내는것
 //		System.out.println(adminDao.selectByRows(1, 4, 2));
+		
+//		int cnt = adminDao.NFselectTotalCnt();
+//		System.out.println(cnt);
 		
 	}
 	
