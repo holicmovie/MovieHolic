@@ -1,4 +1,4 @@
-package com.kitri.service;
+package com.kitri.service.mypage;
 
 import java.util.List;
 

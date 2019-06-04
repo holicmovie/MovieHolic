@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kitri.controller.mypage.UserController;
 import com.kitri.util.MoveUrl;
 
 @WebServlet("/mypage")
@@ -24,7 +25,8 @@ public class MyPageFrontController extends HttpServlet {
 		String page = request.getParameter("page");
 		String path = "";
 		if ("mypage".equals(page)) {
-			
+			UserController.getUserController().ReviewList(request, response);
+			UserController.getUserController().listList(request, response);
 			path = MyPageController.getMyPageController().findFollowings(request, response);
 			MoveUrl.forward(request, response, path);
 			
