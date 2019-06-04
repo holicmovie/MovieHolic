@@ -24,9 +24,9 @@ public class MyPageFrontController extends HttpServlet {
 		String page = request.getParameter("page");
 		String path = "";
 		String tab = request.getParameter("tab");
-		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		String deletefollowing = request.getParameter("deletefollowing");
+		System.out.println(deletefollowing);
 		if ("mypage".equals(page)) {
-			
 			MoveUrl.forward(request, response, path);
 		} else if ("preference".equals(page)) {
 			MoveUrl.forward(request, response, "/page/mypage/preference.jsp");
@@ -39,13 +39,15 @@ public class MyPageFrontController extends HttpServlet {
 			MoveUrl.forward(request, response, path);
 		} else if ("setting".equals(page)) {
 			MoveUrl.forward(request, response, "/page/mypage/setting.jsp");
-		} else if ("following".equals(tab)) {
-			path = MyPageController.getMyPageController().findFollowings(request, response);
-			MoveUrl.forward(request, response, path);
-		} else if (Integer.parseInt("currentPage")==currentPage){
-			path = MyPageController.getMyPageController().findTotalCnt(currentPage);
-			MoveUrl.forward(request, response, path);
-		}
+		} 
+//		else if ("tab".equals(act)) {
+//			path = MyPageController.getMyPageController().deleteFollowings(request,response);
+//			
+//		}
+//		else if ("following".equals(tab)) {
+//			path = MyPageController.getMyPageController().findFollowings(request, response);
+//			MoveUrl.forward(request, response, path);
+//		} 
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

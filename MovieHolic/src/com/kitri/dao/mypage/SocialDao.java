@@ -40,8 +40,8 @@ public class SocialDao {
 			conn = DBConnection.makeConnection();
 			StringBuffer sql = new StringBuffer();
 			sql.append(
-					"select rownum no, social.followingid, social.name, social.list_count, social.best_count\r\n" + 
-					"from(select ms.followingid, mu.name, mu.list_count, mu.best_count\r\n" + 
+					"select rownum no, social.userid, social.followingid, social.name, social.list_count, social.best_count\r\n" + 
+					"from(select ms.userid, ms.followingid, mu.name, mu.list_count, mu.best_count\r\n" + 
 					"    from mh_social ms, mh_user mu\r\n" + 
 					"    where ms.userid = ?\r\n" + 
 					"    and mu.enable = 1\r\n" + 
@@ -64,7 +64,7 @@ public class SocialDao {
 				list.add(socialDto);
 			}
 			
-			System.out.println(list);
+//			System.out.println(list);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -75,6 +75,31 @@ public class SocialDao {
 		return list;
 	}
 
+//	public int updateUnable() {
+//		int cnt =-1;
+//		Connection conn = null;
+//		PreparedStatement pstmt = null;
+//		
+//		try {
+//			conn = DBConnection.makeConnection();
+//			StringBuffer sql = new StringBuffer();
+//			sql.append(
+//					
+//					
+//					);
+//			
+//			
+//			pstmt = conn.prepareStatement(sql);
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		
+//		
+//		return cnt;
+//	}
+
 //	public static void main(String[] args) {
 //		List<SocialDto> result = new ArrayList<SocialDto>();
 //		String userId = "'a196@gmail.com'";
@@ -82,56 +107,56 @@ public class SocialDao {
 //		System.out.println(result);
 //	}
 	
-	public int selectTotalCnt(int currentPage) {
-		
-		int totalCnt = -1;
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		
-		try {
-			StringBuffer selectTotalCntSQL = new StringBuffer();
-			selectTotalCntSQL.append(
-					"SELECT count(*) FROM "+
-							"(select ms.followingid, mu.name, mu.list_count, mu.best_count\r\n" + 
-							"		from mh_social ms, mh_user mu\r\n"+ 
-							"		where ms.userid = ?\r\n" + 
-							"		and mu.enable = 1\r\n"+ 
-							"		and ms.followingid = mu.userid\r\n" + 
-							"		order by best_count DESC) social)"
-							);
-			
-			
-			conn = DBConnection.makeConnection();
-			pstmt = conn.prepareStatement(selectTotalCntSQL.toString());
-			rs = pstmt.executeQuery();
-			rs.next();
-			totalCnt =rs.getInt(1);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			if (pstmt != null)
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			if (conn != null)
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-		}
-		
-		return totalCnt;
-	}
+//	public int selectTotalCnt(int currentPage) {
+//		
+//		int totalCnt = -1;
+//		Connection conn = null;
+//		PreparedStatement pstmt = null;
+//		ResultSet rs = null;
+//		
+//		try {
+//			StringBuffer selectTotalCntSQL = new StringBuffer();
+//			selectTotalCntSQL.append(
+//					"SELECT count(*) FROM "+
+//							"(select ms.followingid, mu.name, mu.list_count, mu.best_count\r\n" + 
+//							"		from mh_social ms, mh_user mu\r\n"+ 
+//							"		where ms.userid = ?\r\n" + 
+//							"		and mu.enable = 1\r\n"+ 
+//							"		and ms.followingid = mu.userid\r\n" + 
+//							"		order by best_count DESC) social)"
+//							);
+//			
+//			
+//			conn = DBConnection.makeConnection();
+//			pstmt = conn.prepareStatement(selectTotalCntSQL.toString());
+//			rs = pstmt.executeQuery();
+//			rs.next();
+//			totalCnt =rs.getInt(1);
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		} finally {
+//			if (rs != null) {
+//				try {
+//					rs.close();
+//				} catch (SQLException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//			if (pstmt != null)
+//				try {
+//					pstmt.close();
+//				} catch (SQLException e) {
+//					e.printStackTrace();
+//				}
+//			if (conn != null)
+//				try {
+//					conn.close();
+//				} catch (SQLException e) {
+//					e.printStackTrace();
+//				}
+//		}
+//		
+//		return totalCnt;
+//	}
 
 }

@@ -35,33 +35,13 @@ public class MyPageController {
 		request.setAttribute("followinglist", list);
 		return path;
 	}
+
+//	public String deleteFollowings(HttpServletRequest request, HttpServletResponse response) {
+//		String path = "page/mypage/social.jsp";
+//		int result = MyPageService.getMyPageService().deleteFollowingId();
+//		
+//		return path;
+//	}
 	
-	public String findTotalCnt(int currentPage) {
-		
-		String path = "/page/mypage/social.jsp";
-		
-		currentPage = 1; // 보여줄 현재페이지
-		if (currentPage != null) {
-			currentPage = Integer.parseInt(currentPage);
-
-		}
-		int cntPerPage = 5;// 페이지별 보여줄 목록수
-		int totalCnt = MyPageService.getMyPageService().selectTotalCnt(currentPage);
-		int cntPerPageGroup = 3;// 페이지 그룹에 보여 줄 페이지수
-		String url = "boardlist";
-		
-		SocialPageDto spd = new SocialPageDto(currentPage, 
-									cntPerPage, 
-									cntPerPageGroup, 
-									totalCnt
-									);
-
-		List<SocialPageDto> list = 
-				MyPageService.getMyPageService().selectTotalCnt(spd.getStartRow(), 
-						spd.getEndRow());
-		spd.setList(list);
-
-
-		return path;
-	}
+	
 }

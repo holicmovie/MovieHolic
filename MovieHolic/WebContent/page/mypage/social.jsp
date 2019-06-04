@@ -8,34 +8,55 @@
 <%@ include file="/template/boot_431.jsp"%>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <!-- 소셜 페이지 눌렀을 때 출력 -->
-
   <script>
-	$(function(){
-		$("#social").click(function(){
+  
+$(function(){
+	
+	$(".deletef").click(function() {
+			
+			var followingid = $(this).find("table>tbody>td.followingid").html();
+				
 			$.ajax({
 				url:"/MovieHolic/mypage?page=social",
-				method:"GET",
-				success: function() {
-					alert("잘왔다");
-				}
-			});
-		});
-		
-		<%--page처리 ajax--%>
-		$(".page-link a").click(function(){
-			var currentPage=$(this).attr("href");
-			//alert(currentPage+"페이지를 보여줍니다.");
-			 $.ajax({
-				url:'mypage?page=social&',
-				method:'get',
-				data:'currentPage='+currentPage,
-				success:function(result){
-					$("section").html(result.trim());
+				method: "GET",
+				data:"deletefollowing=" + followingid,
+				success: function(result){
+					System.out.println(followingid);
 				}
 			});
 			return false;
 		});
+	
+	$("page-link a").click(function(){
+		var currentPage=$(this).attr("href");
+		alert(currentPage+"페이지를 보여줍니다.");
+		 $.ajax({
+			url:'mypage',
+			method:'get',
+			data:'currentPage='+currentPage,
+			success:function(result){
+				$("section").html(result.trim());
+			}
+		});
+		return false;
 	});
+	
+	
+	
+	/*$("#social").click(function(){
+		$.ajax({
+			url:"/MovieHolic/mypage?page=social",
+			method:"GET",
+			success: function() {
+				alert("잘왔다");
+				}
+			});
+		return false;
+	});*/
+	
+});	
+		
+
 </script>
 <%
 List<SocialDto> list = (List)request.getAttribute("followinglist"); 
@@ -114,6 +135,7 @@ List<SocialDto> list = (List)request.getAttribute("followinglist");
 								  <thead>
 								    <tr>
 								      <th scope="col">no.</th>
+								      <th scope="col">ID</th>
 								      <th scope="col">Name</th>
 								      <th scope="col">Lists</th>
 								      <th scope="col">Likes</th>
@@ -121,22 +143,27 @@ List<SocialDto> list = (List)request.getAttribute("followinglist");
 								    </tr>
 								  </thead>
 								  <tbody>
+								  
+								  
 								  <%--social following page 위한 for문 --%>
 								    <%for(SocialDto s : list){%>
 								    <tr>
 								    
 								      <th scope="row"><%=s.getNo()%></th>
+								      <td class = "followingid"><%=s.getFollowingId()%></td>
 								      <td><%=s.getName()%></td>
 								      <td><i class="fa fa-list" style="color:gold;"></i> <%=s.getBest_count()%></td>
 								      <td><i class="fa fa-heart" style="color:tomato;"></i> <%=s.getList_count()%></td>
 								      <td>
-								      	<button type="button" class="btn btn-danger btn-circle btn-xl"><i class="fa fa-times"></i></button>
+								      	<button type="button" class="btn btn-danger btn-circle btn-xl deletef" ><i class="fa fa-times"></i></button>
 									  </td>
 								    </tr>
 								    
 								    <% } %>
 								  </tbody>
 								</table>
+								
+								
 								
 								<!-- 페이지 처리 -->
 								<div class="row">
@@ -159,6 +186,11 @@ List<SocialDto> list = (List)request.getAttribute("followinglist");
 						 		</div>
 								</div>
   					   		</div>
+  					   		
+  					   		
+  					   		
+  					   		
+  					   		
   					   		
   					   		 <!-- 두번째 탭 페이지 -->
 							<div id="followers" class="container tab-pane fade">

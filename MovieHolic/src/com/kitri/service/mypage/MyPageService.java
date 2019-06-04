@@ -27,9 +27,11 @@ public class MyPageService {
 //		System.out.println("서비스 확인 : " + list);		
 		return list;
 	}
-	
-	public int selectTotalCnt(int currentPage) {
-		int totalCnt = SocialDao.getSocialDao().selectTotalCnt(currentPage);
-		return totalCnt;
-	}
+
+//	public int deleteFollowingId() {
+//		
+//		
+//		return SocialDao.getSocialDao().updateUnable();
+//	}
+//	
 }
