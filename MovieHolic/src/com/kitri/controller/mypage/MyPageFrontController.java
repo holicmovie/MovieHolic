@@ -25,8 +25,6 @@ public class MyPageFrontController extends HttpServlet {
 		String path = "";
 		if ("mypage".equals(page)) {
 			
-			UserController.getUserController().ReviewList(request, response);
-			UserController.getUserController().listList(request, response);
 			path = MyPageController.getMyPageController().findFollowings(request, response);
 			MoveUrl.forward(request, response, path);
 			
