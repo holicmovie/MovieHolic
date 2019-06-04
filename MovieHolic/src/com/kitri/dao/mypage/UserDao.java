@@ -1,4 +1,4 @@
-package com.kitri.dao;
+package com.kitri.dao.mypage;
 
 public interface UserDao {
 

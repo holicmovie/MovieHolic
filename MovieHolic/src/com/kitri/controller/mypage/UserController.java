@@ -1,4 +1,4 @@
-package com.kitri.mypage.controller;
+package com.kitri.controller.mypage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 import javax.servlet.http.*;
 
 import com.kitri.dto.BoardDto;
-import com.kitri.service.UserService;
+import com.kitri.service.mypage.UserService;
 
 public class UserController {
 	
