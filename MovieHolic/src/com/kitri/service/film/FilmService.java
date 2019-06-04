@@ -177,7 +177,7 @@ public class FilmService {
 									// '영화코드(영진원)', '영화명', '첫번째장르'를 DTO에 세팅함
 									filmDto.setMovieCdYoung(movieCdYoung);
 									filmDto.setMovieNm(movieNm);
-									filmDto.setGenreNm(genres.get(k).toString());
+									filmDto.setCategory(genres.get(k).toString());
 									filmDto.setMovieImage(movieImage);
 									
 									film.add(filmDto);

@@ -27,16 +27,10 @@ public class UpdateFilmsDB {
 		
 		// TODO
 		// db에 insert하는 부분 고치기!! (list에 밑의 변수 넣고, 그걸 모두 insert하게 하기!!!)
-		
+				
 		List<FilmDto> list = new ArrayList<>();
 		
 		String movieNm = "";		// 영화제목
-		String movieCdYoung = "";	// 영화코드(영진원)
-		String movieCdNaver = "";	// 영화코드(네이버)
-		String openYear = "";		// 개봉연도
-		String category = "";		// 장르 	*ex:액션, 스릴러
-		String movieImage = "";		// 이미지 주소
-		String starPointNaver = "";	// 네이버 별점
 		
 		// 영화제목, 영화코드(영진원), 제작연도, 개봉연도, 장르
 		String httpUrl1 = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieList.json"
@@ -60,21 +54,32 @@ public class UpdateFilmsDB {
 				int len = movieListArray.size();
 				for (int i = 0; i < len; i++) {
 					
-					JSONObject movieListItems = (JSONObject) movieListArray.get(i);
+					FilmDto films = new FilmDto();
 					
-					movieNm= movieListItems.get("movieNm").toString(); 				// 영화명
-					movieCdYoung = movieListItems.get("movieCd").toString(); 		// 영화코드(영진원)
-					category = movieListItems.get("genreAlt").toString();			// 장르
+					JSONObject movieListItems = (JSONObject) movieListArray.get(i);
+										
+					movieNm = movieListItems.get("movieNm").toString();
+					
+					films.setMovieNm(movieListItems.get("movieNm").toString());			// 영화명
+					films.setMovieCdYoung(movieListItems.get("movieCd").toString()); 	// 영화코드(영진원)
+					films.setCategory(movieListItems.get("genreAlt").toString());		// 장르
 					
 					String openDate = movieListItems.get("openDt").toString();
-					openYear = openDate.substring(0, 3);							// 개봉연도
+					System.out.println("개봉일자 : " + openDate);
+					if(openDate != " ") {
+						films.setOpenYear(openDate.substring(0));						// 개봉연도						
+					}else {
+						// 개봉을 안 한 경우
+						films.setOpenYear("");
+					}
 					
 					FilmDto naverFrlmDto = new FilmDto();
 					naverFrlmDto = CallAPI.getPoster(movieNm, prdtYear);
-					movieCdNaver = naverFrlmDto.getMovieCdNaver();					// 영화코드(네이버)
-					starPointNaver = naverFrlmDto.getStarPointNaver();				// 네이버 별점
-					movieImage = naverFrlmDto.getMovieImage();						// 영화 이미지
-										
+					films.setMovieCdNaver(naverFrlmDto.getMovieCdNaver());				// 영화코드(네이버)
+					films.setStarPointNaver(naverFrlmDto.getStarPointNaver());			// 네이버 별점
+					films.setMovieImage(naverFrlmDto.getMovieImage());					// 영화 이미지
+					
+					System.out.println("잘 가져 왔나~ : " + films.getMovieNm() + " 이미지는 : " + films.getMovieImage());
 				} // for문 end
 		
 		
@@ -99,16 +104,12 @@ public class UpdateFilmsDB {
 			int idx = 1;
 			
 			pstmt = con.prepareStatement(sql.toString());
-			pstmt.setString(idx++, movieNm);
-			pstmt.setString(idx++, movieCdYoung);
-			pstmt.setString(idx++, movieCdNaver);
-			pstmt.setString(idx++, prdtYear);
-			pstmt.setString(idx++, openYear);
-			pstmt.setString(idx++, category);
-			pstmt.setString(idx++, movieImage);
-			pstmt.setString(idx++, starPointNaver);
-			
-			System.out.println("영화명 : ");
+			/*
+			 * pstmt.setString(idx++, movieNm); pstmt.setString(idx++, movieCdYoung);
+			 * pstmt.setString(idx++, movieCdNaver); pstmt.setString(idx++, prdtYear);
+			 * pstmt.setString(idx++, openYear); pstmt.setString(idx++, category);
+			 * pstmt.setString(idx++, movieImage); pstmt.setString(idx++, starPointNaver);
+			 */
 			
 			//pstmt.executeUpdate();
 		
@@ -121,6 +122,10 @@ public class UpdateFilmsDB {
 	
 	// [메인 실행 메소드]
 	public static void main(String[] args) {
+		
+		UpdateFilmsDB ufdb = new UpdateFilmsDB();
+		
+		ufdb.insertFilms("2019");
 		
 	}
 	
