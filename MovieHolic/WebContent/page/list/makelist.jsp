@@ -4,7 +4,7 @@
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
 <style>
-/* 영화 포스터 */
+<%-- 영화 포스터 --%>
 .movieImg {
 	border: solid 1px white;
 	width: 19.2vh;
@@ -12,7 +12,7 @@
 }
 </style>
 <script>
-<%-- 영화 검색 모달 --%>
+<%-- #### 영화 검색 모달(기본기능) #### --%>
 	<%-- 영화 검색 모달 띄우기 --%>
 	$(function() {
 		$('#addMovie').focusin(function(){
@@ -20,8 +20,7 @@
 		});
 		return false;
 	});
-	
-	<%-- 영화 검색 모달의 검색버튼 클릭시 --%>
+	<%-- 영화 검색 모달의 검색버튼 클릭시 영화정보 테이블에 띄우기 --%>
 	$(function(){
 		$('#srchMVBtn').click(function(){
 			var srchTitle = $('#srchTitle').val().trim();
@@ -40,30 +39,22 @@
 		});
 		return false;
 	});
-	
-	<%-- 영화 검색 모달의 행 선택시 --%>
-	$(document).on("click", '#modalTable tr', function() {		<%-- 동적으로 생성된 요소에 이벤트 주는 방법 --%>
-		<%-- 선택한 행의 img태그에서 정보 받아오기 --%>
-		var $mv = $(this).find('img');
-		var movieNm = $mv.attr("data-movieNm");
-		var movieCdYoung = $mv.attr("data-movieCdYoung");
-		var movieCdNaver = $mv.attr("data-movieCdNaver");
-		var movieImage= $mv.attr("src");
-		var prdtYear = $mv.attr("data-prdtYear");
-		
-		<%-- 포스터 추가 --%>
-		var $poster = $('<img class="movieImg" src="' + movieImage + '" data-movieNm="' + movieNm + '" data-movieCdYoung="' + movieCdYoung + '" data-movieCdNaver="' + movieCdNaver + '"  data-prdtYear="' + prdtYear + '">'); 
-		/* var $poster = $('<img class="movieImg" src="https://movie-phinf.pstatic.net/20161123_188/1479862185516tYkKO_JPEG/movie_image.jpg" data-name="' + name + '" data-codd="' + code + '" data-prdtYear="' + prdtYear + '">'); */
-		$('#addMovie').before($poster);
-		
-		<%-- modal 초기화 --%>
+	<%-- modal의 종료버튼 클릭시 초기화 --%>
+	$(function(){
+		$('#movieModal .close').click(function(){
+			modalClear();
+		});
+	});
+	<%-- modal 초기화 function --%>
+	function modalClear(){
 		$('#movieModal').modal('hide');
 		$('#srchTitle').val('');
 		$('#modalTable>tbody').empty();
-	})
+	}
+	
 
 	
-<%-- list 작성 --%>
+<%-- #### list 작성 #### --%>
 	<%-- list 작성 취소 --%>
 	$(function(){
 		$('#cancle').click(function(){
@@ -77,9 +68,20 @@
 	<%-- 작성한 list 저장 --%>
 	$(function(){
 		$('#save').click(function(){
-			if(confirm("작성한 List를 저장하시겠습니까?")) {
-			} else {
-				return false;
+			var title = $('input[name="title"]').val();
+			var content = $('textarea[name="content"]').val();
+			var $imgArry = $('');
+			if(titleStr == '') {
+				alert("제목을 입력하세요.");
+				return;
+			} else if(content == ''){
+				alert("내용을 입력하세요.");
+				return;
+			} else if(true) {
+				if(confirm("작성한 List를 저장하시겠습니까?")) {
+				} else {
+					return false;
+				}
 			}
 		});
 	});
@@ -117,16 +119,16 @@
 			<div style="float: left;">나의 리뷰</div>
 			<div style="clear: both;"></div>
 		</div>
-						   		
+		<form>
 	<%-- 리스트 제목 및 내용입력 --%>
 		<div class="row" style="margin-top: 1em;">
 			<div class="col-lg-12">
 				<h3><label>YOUR LIST</label></h3>
-				<input type="text" class="form-control form-control-lg" style="width: 50%;" placeholder="당신의  추천 리스트 제목을 입력하세요" name="list-name">
+				<input type="text" class="form-control form-control-lg" style="width: 50%;" placeholder="당신의  추천 리스트 제목을 입력하세요" name="title">
 			</div>
 			<div class="col-lg-12" style="margin-top: 1em;">
 				<h3><label for="list-detail-description">ABOUT YOUR FAVORITE MOVIE</label></h3>
-				<textarea class="form-control" rows="15" style="resize : none;" id="list-detail-description" ></textarea>
+				<textarea class="form-control" rows="15" style="resize : none;" id="list-detail-description" name="content"></textarea>
 			</div>
 		</div>
 		
@@ -134,7 +136,7 @@
 		<div class="font_bold_mid" style="width:100%; border-top: 2.5px solid #fff; margin-top: 3em; padding-top: 1.5em; padding-bottom: 3em;">
 			<a id="addMovie" href="#"><img class="movieImg" src="/MovieHolic/images/getposter.png" width="200vh;" style="margin: 0.3em;"></a>
 		</div>
-		
+		</form>
 	</div>
 </div>
 

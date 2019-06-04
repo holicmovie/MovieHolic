@@ -1,14 +1,19 @@
 package com.kitri.service.list;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 
 import com.kitri.dto.FilmDto;
 import com.kitri.util.CallAPI;
@@ -27,7 +32,7 @@ public class ListService {
 	
 	
 	// #### 제목으로 영화 검색 ####
-	public List<FilmDto> srchMVbyTitle(String title) {
+	public List<FilmDto> srchMVbyName(String title) {
 		
 		//1. 영진원 목록조회API이용(영화제목으로 검색)
 		//2. 각 영화제목, 제작연도, 영화코드 받아오기
@@ -53,7 +58,7 @@ public class ListService {
 			JSONArray movieList = (JSONArray) movieListResult.get("movieList");
 			
 			list = new ArrayList<FilmDto>();
-			// dailyBoxOfficeList JSON배열의 값(JSON객체)들을 뽑아냄
+			// dailyBoxOfficeList JSON배열의 값(JSON객체)들 뽑아냄
 			int len = movieList.size();
 			for (int i = 0; i < len; i++) {
 				
@@ -68,11 +73,11 @@ public class ListService {
 				// '영화코드(영진원)', '영화명'을 DTO에 세팅함
 				filmDto.setMovieNm(movieNm);
 				filmDto.setMovieCdYoung(movieCdYoung);
-				filmDto.setPrdtYear(prdtYear);
+				filmDto.setPrdtYear(prdtYear.substring(0, 4));	//받아온 제작 연월일에서 연도만 DTO에 set
 				
 				//네이버 영화검색 API이용
 				//영화제목 + 제작연도 검색
-				//영화 코드 및  
+				//영화 코드 및 이미지 주소
 				FilmDto nAPI = CallAPI.getPoster(movieNm, prdtYear);
 				
 				// '포스터 이미지 주소'를 DTO에 세팅함
@@ -90,4 +95,6 @@ public class ListService {
 		
 		return list;
 	}
+	
+	
 }

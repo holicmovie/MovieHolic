@@ -23,13 +23,13 @@ public class ListController {
 	
 	
 	//// 영화명으로 영화 검색 ////
-	public String srchMVbyTitle(HttpServletRequest request, HttpServletResponse response) {
+	public String srchMVbyName(HttpServletRequest request, HttpServletResponse response) {
 		//request에서 검색어 받아옴
 		String title = request.getParameter("srchTitle").trim();
 		String path = "/page/list/result/srchMVResult.jsp";
 		
 		//service에서 검색 결과를 MovieDto타입의 List로 받아옴
-		List<FilmDto> list = ListService.getListService().srchMVbyTitle(title);
+		List<FilmDto> list = ListService.getListService().srchMVbyName(title);
 		request.setAttribute("list", list);
 		
 		return path;

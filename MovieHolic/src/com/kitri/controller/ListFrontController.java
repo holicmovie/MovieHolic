@@ -20,7 +20,7 @@ public class ListFrontController extends HttpServlet {
 		String act = request.getParameter("act");
 		
 		if("srchMV".equals(act)) {		//// makelist.jsp의 모달 : 영화 검색 ////
-			String path = ListController.getListController().srchMVbyTitle(request, response);
+			String path = ListController.getListController().srchMVbyName(request, response);
 			MoveUrl.forward(request, response, path);
 		} else if("".equals(act)) {
 			
@@ -48,5 +48,6 @@ public class ListFrontController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
+	
 
 }
