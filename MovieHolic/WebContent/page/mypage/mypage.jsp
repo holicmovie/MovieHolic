@@ -1,8 +1,12 @@
+<%@page import="com.kitri.dto.SocialDto"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/template/header.jsp"%>
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
+
+
 <style>
 <%-- 캐러셀 안의 포스터 공백제거 --%>
 .reel>article{
@@ -25,6 +29,7 @@
 	  background-color: #3a3a3a;
 	}
 </style>
+
 </head>
 <body class="left-sidebar is-preload">
 <div id="page-wrapper">
@@ -55,7 +60,7 @@
 				<%-- 탭 2개 선언 --%>
 				<ul class="nav nav-tabs" role="tablist">
 					<li class="nav-item"><a class="nav-link active"  data-toggle="tab" href="#mine">Mine</a></li>
-				    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#following">Following</a></li>
+				    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#following" id = "tabf">Following</a></li>
 			  	</ul>
 	
 	

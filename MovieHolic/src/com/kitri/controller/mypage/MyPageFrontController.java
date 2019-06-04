@@ -23,6 +23,7 @@ public class MyPageFrontController extends HttpServlet {
 		System.out.println("서블릿");
 		String page = request.getParameter("page");
 		String path = "";
+		String tab = request.getParameter("tab");
 		if ("mypage".equals(page)) {
 			
 			path = MyPageController.getMyPageController().findFollowings(request, response);
@@ -35,9 +36,13 @@ public class MyPageFrontController extends HttpServlet {
 		} else if ("diary".equals(page)) {
 			MoveUrl.forward(request, response, "/page/mypage/diary.jsp");
 		} else if ("social".equals(page)) {
-			MoveUrl.forward(request, response, "/page/mypage/social.jsp");
+			path = MyPageController.getMyPageController().findFollowings(request, response);
+			MoveUrl.forward(request, response, path);
 		} else if ("setting".equals(page)) {
 			MoveUrl.forward(request, response, "/page/mypage/setting.jsp");
+		} else if ("following".equals(tab)) {
+			path = MyPageController.getMyPageController().findFollowings(request, response);
+			MoveUrl.forward(request, response, path);
 		}
 	}
 

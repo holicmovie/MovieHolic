@@ -8,9 +8,20 @@ public class SocialDto { // 소셜
 	private int list_count;
 	private int best_count;
 	private String name;
+	private int no;
 	
 	///// 생성자 /////
 	
+	public int getNo() {
+		return no;
+	}
+
+
+	public void setNo(int no) {
+		this.no = no;
+	}
+
+
 	public String getName() {
 		return name;
 	}
@@ -72,10 +83,12 @@ public class SocialDto { // 소셜
 		this.followingId = followingId;
 	}
 
+
 	@Override
 	public String toString() {
 		return "SocialDto [userId=" + userId + ", postDate=" + postDate + ", followingId=" + followingId
-				+ ", list_count=" + list_count + ", best_count=" + best_count + ", name=" + name + "]";
+				+ ", list_count=" + list_count + ", best_count=" + best_count + ", name=" + name + ", no=" + no + "]";
 	}
+
 
 }

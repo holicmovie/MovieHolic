@@ -39,10 +39,14 @@ public class SocialDao {
 			userId = "a196@gmail.com";
 			conn = DBConnection.makeConnection();
 			StringBuffer sql = new StringBuffer();
-			sql.append("select ms.followingid, mu.name, mu.list_count, mu.best_count\r\n" + 
+			sql.append(
+					"select rownum no, social.followingid, social.name, social.list_count, social.best_count\r\n" + 
+					"from(select ms.followingid, mu.name, mu.list_count, mu.best_count\r\n" + 
 					"    from mh_social ms, mh_user mu\r\n" + 
-					"    where ms.userid = ? \r\n" + 
-					"    and ms.followingid = mu.userid");
+					"    where ms.userid = ?\r\n" + 
+					"    and ms.followingid = mu.userid\r\n" + 
+					"    order by best_count DESC) social"
+					);
 			pstmt = conn.prepareStatement(sql.toString());
 			pstmt.setString(1, userId);
 			rs = pstmt.executeQuery();
@@ -50,6 +54,7 @@ public class SocialDao {
 			while(rs.next()) {
 				SocialDto socialDto = new SocialDto();
 				
+				socialDto.setNo(rs.getInt("no"));
 				socialDto.setFollowingId(rs.getString("followingId"));
 				socialDto.setName(rs.getString("name"));
 				socialDto.setList_count(rs.getInt("list_count"));
@@ -69,11 +74,11 @@ public class SocialDao {
 		return list;
 	}
 
-	public static void main(String[] args) {
-		List<SocialDto> result = new ArrayList<SocialDto>();
-		String userId = "'a196@gmail.com'";
-		result = SocialDao.selectFollowingId(userId);
-		System.out.println(result);
-	}
+//	public static void main(String[] args) {
+//		List<SocialDto> result = new ArrayList<SocialDto>();
+//		String userId = "'a196@gmail.com'";
+//		result = SocialDao.selectFollowingId(userId);
+//		System.out.println(result);
+//	}
 	
 }

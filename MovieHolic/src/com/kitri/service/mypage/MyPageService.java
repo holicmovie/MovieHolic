@@ -21,10 +21,10 @@ public class MyPageService {
 		return myPageService;
 	}
 	
-	public static List<SocialDto> selectFollowing(String userId) {
+	public List<SocialDto> selectFollowing(String userId) {
 		List<SocialDto> list = new ArrayList<SocialDto>();
 		list = SocialDao.getSocialDao().selectFollowingId(userId);
-		System.out.println("서비스 확인 : " + list);		
+//		System.out.println("서비스 확인 : " + list);		
 		return list;
 	}
 	

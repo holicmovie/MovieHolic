@@ -29,7 +29,7 @@
 		.fas { font-size: 1.8em;}
 	} 
 	@media screen and (max-width: 765px) {
-		.hide2 { display: none;}
+		.hide2 { display: none;}s
 	} 
 </style>
 
