@@ -1,6 +1,4 @@
-<<<<<<< HEAD
 <%@page import="com.kitri.dto.SocialDto"%>
-=======
 <%@page import="com.kitri.dto.BoardDto"%>
 >>>>>>> branch 'master' of https://github.com/holicmovie/MovieHolic.git
 <%@page import="java.util.List"%>
@@ -9,13 +7,8 @@
 <%@ include file="/template/header.jsp"%>
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
-<<<<<<< HEAD
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
-<% List<SocialDto> list = (List)request.getAttribute("followinglist");%>
-=======
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
->>>>>>> branch 'master' of https://github.com/holicmovie/MovieHolic.git
+
 <style>
 <%--
 캐러셀 안의 포스터 공백제거 --%> .reel>article {
@@ -66,7 +59,6 @@
 </head>
 <body class="left-sidebar is-preload">
 
-<<<<<<< HEAD
 <script type="text/javascript">
 $(function() {
 	var arr = $("table#lsd>tr>td>a");
@@ -91,10 +83,10 @@ $(function() {
 		return false;
 	});
 });
+<% List<SocialDto> list = (List)request.getAttribute("followinglist");%>
 <%System.out.println(list);%>
 </script>
 <div id="page-wrapper">
-=======
 	<script type="text/javascript">
 		$(function() {
 			var arr = $("table#lsd>tr>td>a");
@@ -107,7 +99,6 @@ $(function() {
 						location.href = "listdetail.jsp";
 					}
 				});
->>>>>>> branch 'master' of https://github.com/holicmovie/MovieHolic.git
 
 			});
 		});
@@ -119,7 +110,6 @@ $(function() {
 			style="background-image: none; margin-bottom: 0px; padding-bottom: 0; height: 10px;">
 			<%@ include file="/template/nav.jsp"%>
 		</div>
-<<<<<<< HEAD
 	
 	<%-- **첫번째 행 시작 --%>
 		<div class="row" style="margin-bottom: 5%; margin-top: 10px;">
@@ -525,12 +515,10 @@ $(function() {
 		</div>
 			
 	</div>
-=======
 		<%
-			List<BoardDto> list = (List<BoardDto>) request.getAttribute("reviewList");
-			List<BoardDto> list2 = (List<BoardDto>)request.getAttribute("listList");
+			List<BoardDto> list2 = (List<BoardDto>) request.getAttribute("reviewList");
+			List<BoardDto> list3 = (List<BoardDto>)request.getAttribute("listList");
 		%>
->>>>>>> branch 'master' of https://github.com/holicmovie/MovieHolic.git
 
 		<%-- Main --%>
 		<div class="wrapper style1">
@@ -653,7 +641,7 @@ $(function() {
 										<col style="width: 10%;">
 										<col style="width: 20%;">
 										<%
-											for (BoardDto dto : list) {
+											for (BoardDto dto : list2) {
 										%>
 										<tr>
 											<td style="vertical-align: middle;"><a href="#"><img
@@ -710,7 +698,7 @@ $(function() {
 										class="table table-hover col-lg-12 col-mobile-12"
 										style="margin-top: 0;">
 										<col style="width: 40%;">
-										<%for(BoardDto dto : list2){ %>
+										<%for(BoardDto dto : list3){ %>
 										<tr>
 											<td>
 												<div>
