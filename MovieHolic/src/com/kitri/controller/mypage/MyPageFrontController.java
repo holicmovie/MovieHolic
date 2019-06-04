@@ -24,11 +24,10 @@ public class MyPageFrontController extends HttpServlet {
 		String page = request.getParameter("page");
 		String path = "";
 		String tab = request.getParameter("tab");
+		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		if ("mypage".equals(page)) {
 			
-			path = MyPageController.getMyPageController().findFollowings(request, response);
 			MoveUrl.forward(request, response, path);
-			
 		} else if ("preference".equals(page)) {
 			MoveUrl.forward(request, response, "/page/mypage/preference.jsp");
 		} else if ("wishlist".equals(page)) {
@@ -42,6 +41,9 @@ public class MyPageFrontController extends HttpServlet {
 			MoveUrl.forward(request, response, "/page/mypage/setting.jsp");
 		} else if ("following".equals(tab)) {
 			path = MyPageController.getMyPageController().findFollowings(request, response);
+			MoveUrl.forward(request, response, path);
+		} else if (Integer.parseInt("currentPage")==currentPage){
+			path = MyPageController.getMyPageController().findTotalCnt(currentPage);
 			MoveUrl.forward(request, response, path);
 		}
 	}

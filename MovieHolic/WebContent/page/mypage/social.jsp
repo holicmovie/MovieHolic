@@ -8,10 +8,10 @@
 <%@ include file="/template/boot_431.jsp"%>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <!-- 소셜 페이지 눌렀을 때 출력 -->
-<script>
+
+  <script>
 	$(function(){
 		$("#social").click(function(){
-			alert("눌렸다");
 			$.ajax({
 				url:"/MovieHolic/mypage?page=social",
 				method:"GET",
@@ -20,12 +20,26 @@
 				}
 			});
 		});
+		
+		<%--page처리 ajax--%>
+		$(".page-link a").click(function(){
+			var currentPage=$(this).attr("href");
+			//alert(currentPage+"페이지를 보여줍니다.");
+			 $.ajax({
+				url:'mypage?page=social&',
+				method:'get',
+				data:'currentPage='+currentPage,
+				success:function(result){
+					$("section").html(result.trim());
+				}
+			});
+			return false;
+		});
 	});
 </script>
-
 <%
 List<SocialDto> list = (List)request.getAttribute("followinglist"); 
-System.out.println("social.jps에 잘왔다:" + list);
+//System.out.println("social.jps에 잘왔다:" + list);
 %>
 <style>
 <!-- 좋아요 둥근 버튼을 위해 필요 -->
@@ -107,34 +121,20 @@ System.out.println("social.jps에 잘왔다:" + list);
 								    </tr>
 								  </thead>
 								  <tbody>
-								  
+								  <%--social following page 위한 for문 --%>
+								    <%for(SocialDto s : list){%>
 								    <tr>
-								      <th scope="row">1</th>
-								      <td>Mark</td>
-								      <td><i class="fa fa-list" style="color:gold;"></i> 100</td>
-								      <td><i class="fa fa-heart" style="color:tomato;"></i> 300</td>
+								    
+								      <th scope="row"><%=s.getNo()%></th>
+								      <td><%=s.getName()%></td>
+								      <td><i class="fa fa-list" style="color:gold;"></i> <%=s.getBest_count()%></td>
+								      <td><i class="fa fa-heart" style="color:tomato;"></i> <%=s.getList_count()%></td>
 								      <td>
 								      	<button type="button" class="btn btn-danger btn-circle btn-xl"><i class="fa fa-times"></i></button>
 									  </td>
 								    </tr>
-								    <tr>
-								      <th scope="row">2</th>
-								      <td>Jacob</td>
-								      <td><i class="fa fa-list" style="color:gold;"></i> 200</td>
-								      <td><i class="fa fa-heart" style="color:tomato;"></i> 150</td>
-								      <td>
-								      	<button type="button" class="btn btn_green btn-circle btn-xl"><i class="fa fa-check"></i></button>
-								      </td>
-								    </tr>
-								    <tr>
-								      <th scope="row">3</th>
-								      <td>Larry</td>
-								      <td><i class="fa fa-list" style="color:gold;"></i> 400</td>
-								      <td><i class="fa fa-heart" style="color:tomato;"></i> 342</td>
-								      <td>
-								      	<button type="button" class="btn btn_green btn-circle btn-xl"><i class="fa fa-check"></i></button>
-								      </td>
-								    </tr>
+								    
+								    <% } %>
 								  </tbody>
 								</table>
 								

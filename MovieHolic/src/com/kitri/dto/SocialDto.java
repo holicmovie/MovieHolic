@@ -84,6 +84,15 @@ public class SocialDto { // 소셜
 	}
 
 
+//	@Override
+//	public String toString() {
+//		return "SocialDto [followingId=" + followingId + ", list_count=" + list_count + ", best_count=" + best_count
+//				+ ", name=" + name + ", no=" + no + "]";
+//	}
+
+
+	
+	
 	@Override
 	public String toString() {
 		return "SocialDto [userId=" + userId + ", postDate=" + postDate + ", followingId=" + followingId

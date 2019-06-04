@@ -28,4 +28,8 @@ public class MyPageService {
 		return list;
 	}
 	
+	public int selectTotalCnt(int currentPage) {
+		int totalCnt = SocialDao.getSocialDao().selectTotalCnt(currentPage);
+		return totalCnt;
+	}
 }

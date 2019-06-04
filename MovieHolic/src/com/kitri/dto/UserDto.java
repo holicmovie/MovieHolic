@@ -14,10 +14,35 @@ public class UserDto {	//회원정보
 	private String outDate;		//탈퇴일
 	private int enable;			//활성화 여부
 	private String profile;		//프로필 사진
-
+	private int list_count;
+	private int best_count;
 	
 	///// 생성자 /////
 	
+	public int getList_count() {
+		return list_count;
+	}
+
+
+
+	public void setList_count(int list_count) {
+		this.list_count = list_count;
+	}
+
+
+
+	public int getBest_count() {
+		return best_count;
+	}
+
+
+
+	public void setBest_count(int best_count) {
+		this.best_count = best_count;
+	}
+
+
+
 	public UserDto() {
 		super();
 	}
