@@ -8,14 +8,38 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
+
 @WebServlet("/review")
 public class UserFrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("왓니");
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String act = request.getParameter("act");
+
+		if ("".equals(act)) { 
+			
+		} else if ("".equals(act)) {
+
+		} else if ("".equals(act)) {
+
+		} else if ("".equals(act)) {
+
+		} else if ("".equals(act)) {
+
+		} else if ("".equals(act)) {
+
+		} else if ("".equals(act)) {
+
+		} else if ("".equals(act)) {
+
+		} else if ("".equals(act)) {
+
+		} else if ("".equals(act)) {
+
+		} else if ("".equals(act)) {
+
+		}
 	}
-
 
 }

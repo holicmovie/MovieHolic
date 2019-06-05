@@ -9,6 +9,8 @@ public class BoardDto { // 게시판
 	private String subject; // 제목
 	private String userId; // 작성자ID
 	private String postDate; // 작성일
+	private String postDateY; // 작성일
+	private String postDateM; // 작성일
 	private String content; // 내용
 	private List<String> movieCodeYoung; // 영화코드(영진원)
 	private List<String> director; // 감독명
@@ -72,13 +74,9 @@ public class BoardDto { // 게시판
 	}
 
 
+	
+
 	public String getPostDate() {
-		return postDate;
-	}
-	public String getPostDateY() {
-		return postDate;
-	}
-	public String getPostDateM() {
 		return postDate;
 	}
 
@@ -86,11 +84,25 @@ public class BoardDto { // 게시판
 	public void setPostDate(String postDate) {
 		this.postDate = postDate;
 	}
-	public void setPostDateY(String postDate) {
-		this.postDate = postDate;
+
+
+	public String getPostDateY() {
+		return postDateY;
 	}
-	public void setPostDateM(String postDate) {
-		this.postDate = postDate;
+
+
+	public void setPostDateY(String postDateY) {
+		this.postDateY = postDateY;
+	}
+
+
+	public String getPostDateM() {
+		return postDateM;
+	}
+
+
+	public void setPostDateM(String postDateM) {
+		this.postDateM = postDateM;
 	}
 
 
@@ -207,11 +219,13 @@ public class BoardDto { // 게시판
 	@Override
 	public String toString() {
 		return "BoardDto [seq=" + seq + ", boardCode=" + boardCode + ", subject=" + subject + ", userId=" + userId
-				+ ", postDate=" + postDate + ", content=" + content + ", movieCodeYoung=" + movieCodeYoung
-				+ ", director=" + director + ", movieName=" + movieName + ", starPoint=" + starPoint
-				+ ", category=" + category + ", best=" + best + ", worst=" + worst + ", viewCount=" + viewCount
-				+ ", enable=" + enable + ", notify=" + notify+"]" ;
+				+ ", postDate=" + postDate + ", postDateY=" + postDateY + ", postDateM=" + postDateM + ", content="
+				+ content + ", movieCodeYoung=" + movieCodeYoung + ", director=" + director + ", movieName=" + movieName
+				+ ", starPoint=" + starPoint + ", category=" + category + ", best=" + best + ", worst=" + worst
+				+ ", viewCount=" + viewCount + ", enable=" + enable + ", notify=" + notify + "]";
 	}
+
+
 
 
 

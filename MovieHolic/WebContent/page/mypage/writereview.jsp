@@ -1,3 +1,5 @@
+<%@page import="com.kitri.dto.BoardDto"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/template/header.jsp"%>
@@ -69,7 +71,7 @@
 <%@ include file="/template/nav.jsp"%>
 	</div>
 
-
+<%--List<BoardDto> write = (List<BoardDto>)request.getAttribute("writereview"); --%>
 
 <!-- Main -->
 <div class="wrapper style1">
@@ -165,56 +167,14 @@
 						<col width="10%">
 						<col width="65%">
 						<col width="25%">
+						<%-- <%for(BoardDto dto : write){ %> --%>
 						<tr>
 							<td><img src="/MovieHolic/images/tempimg/endgame.jpg" height="100vh"></td>
 							<td style="vertical-align: middle;">어벤져스:엔드게임</td>
 							<td style="vertical-align: middle; text-align: center;">2017</td>
 						</tr>
-						<tr>
-							<td><img src="/MovieHolic/images/tempimg/coco.jpg" height="100vh"></td>
-							<td style="vertical-align: middle;">코코</td>
-							<td style="vertical-align: middle; text-align: center;">2017</td>
-						</tr>
-						<tr>
-							<td><img src="/MovieHolic/images/tempimg/endgame.jpg" height="100vh"></td>
-							<td style="vertical-align: middle;">어벤져스:엔드게임</td>
-							<td style="vertical-align: middle; text-align: center;">2017</td>
-						</tr>
-						<tr>
-							<td><img src="/MovieHolic/images/tempimg/coco.jpg" height="100vh"></td>
-							<td style="vertical-align: middle;">코코</td>
-							<td style="vertical-align: middle; text-align: center;">2017</td>
-						</tr>
-						<tr>
-							<td><img src="/MovieHolic/images/tempimg/endgame.jpg" height="100vh"></td>
-							<td style="vertical-align: middle;">어벤져스:엔드게임</td>
-							<td style="vertical-align: middle; text-align: center;">2017</td>
-						</tr>
-						<tr>
-							<td><img src="/MovieHolic/images/tempimg/coco.jpg" height="100vh"></td>
-							<td style="vertical-align: middle;">코코</td>
-							<td style="vertical-align: middle; text-align: center;">2017</td>
-						</tr>
-						<tr>
-							<td><img src="/MovieHolic/images/tempimg/endgame.jpg" height="100vh"></td>
-							<td style="vertical-align: middle;">어벤져스:엔드게임</td>
-							<td style="vertical-align: middle; text-align: center;">2017</td>
-						</tr>
-						<tr>
-							<td><img src="/MovieHolic/images/tempimg/coco.jpg" height="100vh"></td>
-							<td style="vertical-align: middle;">코코</td>
-							<td style="vertical-align: middle; text-align: center;">2017</td>
-						</tr>
-						<tr>
-							<td><img src="/MovieHolic/images/tempimg/endgame.jpg" height="100vh"></td>
-							<td style="vertical-align: middle;">어벤져스:엔드게임</td>
-							<td style="vertical-align: middle; text-align: center;">2017</td>
-						</tr>
-						<tr>
-							<td><img src="/MovieHolic/images/tempimg/coco.jpg" height="100vh"></td>
-							<td style="vertical-align: middle;">코코</td>
-							<td style="vertical-align: middle; text-align: center;">2017</td>
-						</tr>
+						<%-- <%} %> --%>
+						
 					</table>
 			</div>
       

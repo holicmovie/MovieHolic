@@ -31,7 +31,7 @@ public class UserController {
 		
 		String path = "/page/mypage/mypage.jsp";
 		
-		request.setAttribute("review", list);
+		request.setAttribute("writereview", list);
 		
 		return path;
 		
@@ -40,6 +40,7 @@ public class UserController {
 	public void ReviewList(HttpServletRequest request, HttpServletResponse response) {
 		
 		List<BoardDto> list = UserService.getUserService().reviewlist("movieName");
+		
 		request.setAttribute("reviewList", list);
 	}
 	

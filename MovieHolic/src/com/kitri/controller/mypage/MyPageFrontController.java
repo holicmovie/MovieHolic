@@ -1,7 +1,6 @@
 package com.kitri.controller.mypage;
 
 import java.io.IOException;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -37,6 +36,7 @@ public class MyPageFrontController extends HttpServlet {
 		} else if ("wishlist".equals(page)) {
 			MoveUrl.forward(request, response, "/page/mypage/wishlist.jsp");
 		} else if ("diary".equals(page)) {
+			UserController.getUserController().ReviewList(request, response);
 			MoveUrl.forward(request, response, "/page/mypage/diary.jsp");
 		} else if ("social".equals(page)) {
 			path = MyPageController.getMyPageController().showFollowings(request, response, cp);
@@ -56,6 +56,17 @@ public class MyPageFrontController extends HttpServlet {
 //			path = MyPageController.getMyPageController().findFollowings(request, response);
 //			MoveUrl.forward(request, response, path);
 //		} 
+//		else if ("following".equals(tab)) {
+//			path = MyPageController.getMyPageController().findFollowings(request, response);
+//			MoveUrl.forward(request, response, path);
+//		} 
+		else if("writereview".equals(page)) {
+			UserController.getUserController().ReviewRegister(request, response);
+			MoveUrl.forward(request, response, "/page/mypage/writereview.jsp");
+		} else if("diaryDetail".equals(page)) {
+			UserController.getUserController().ReviewList(request, response);
+			MoveUrl.forward(request, response, "/page/mypage/diaryDetail.jsp");
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

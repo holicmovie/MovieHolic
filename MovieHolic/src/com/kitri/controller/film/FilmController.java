@@ -37,7 +37,7 @@ public class FilmController {
 		// 박스오피스 set 		(C -> FC)
 		request.setAttribute("box", list);
 		
-		// 경로 return 				(C -> FC)
+		// 경로 return 		(C -> FC)
 		return path;
 	}
 	
@@ -51,6 +51,22 @@ public class FilmController {
 		// 선호 장르 영화 목록 set
 		request.setAttribute("favoritefilm", list);
 		
+	}
+	
+	// 3
+	// 검색된 영화 목록 get
+	public String getSearchedFilmList(HttpServletRequest request, HttpServletResponse response) {
+		
+		String path = "/page/film/result/searchfilmresult.jsp";
+		
+		String srchKey = request.getParameter("srchKey"); // 검색어
+
+		// 검색 결과 목록 get
+		List<FilmDto> list = FilmService.getFilmService().getSearchedFilmList(srchKey);
+		// 검색 결과 목록 set
+		request.setAttribute("searchedFilmList", list);
+		
+		return path;
 	}
 
 }

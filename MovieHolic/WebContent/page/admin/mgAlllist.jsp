@@ -9,52 +9,21 @@
 
 
 <script>
-	$(function() {
 
-		$(".page>a").click(function() {
-					var currentPage = $(this).attr("href");
-					$.ajax({
-						url : '/MovieHolic/admin?act=alllis&' + 'currentPage='+currentPage,
-						method : 'get',
-						/* data : 'alllist=' + alllist,  */
-						success : function(result) {
-							$("section").html(result.trim());
-						}
-					});
-					return false;
-				});
-	});
 
-	//$(document).on("click", "#check-all", function() {
-	$("#check-all").click(function() { // 전체 선택 버튼 클릭시
-
-		$(":input[name=chk]").prop("checked", true)
-
+	
+//$(document).on("click", "#check-all", function() {
+$("#check-all").click(function() { // 전체 선택 버튼 클릭시
+	$(":input[name=chk]").prop("checked", true)
 		/* if ($(":input[name=chk]").prop("checked", true)) {
 			$(":input[name=chk]").prop("checked", false);
 		} else if ($(":input[name=chk]").prop("checked", false)) {
 			$(":input[name=chk]").prop("checked", true);
 		} */
-
-		return false;
-
-	});
+	return false;
+});
 	
 	
-	$(function() {
-
-		$(".enable").click(function() {
-					var currentPage = $(this).attr("href");
-					$.ajax({
-						url : '/MovieHolic/admin?act=enable',
-						method : 'get',
-						success : function(result) {
-							$("section").html(result.trim());
-						}
-					});
-					return false;
-				});
-	});
 	
 </script>
 
@@ -64,8 +33,8 @@
 	<thead>
 		<tr>
 			<th>
-				<div id="check-all">
-					<button type="button" class="btn btn-success" style="z-index: 0;">전체선택</button>
+				<div>
+					<button type="submit" class="btn btn-success" style="z-index: 0;">전체선택</button>
 				</div>
 			</th>
 			<th>회원ID</th>
@@ -82,19 +51,16 @@
 
 		<c:forEach var="ap" items='${ap.list}'>
 			<tr>
-				<td><input type="checkbox" class="ab" name="chk" /></td>
+				<td><input type="checkbox" /></td>
 				<td>${ap.userId}</td>
 				<td>${ap.name }</td>
 				<td>${ap.birth }</td>
-				<td>${ap.phoneFirst }-${ap.phoneMid }-${ap.phoneLast }</td>
+				<td>${ap.phoneFirst }- ${ap.phoneMid } - ${ap.phoneLast }</td>
 				<td>${ap.gender }</td>
 				<td>${ap.joinDate }</td>
 				<td>${ap.outdate }</td>
 				<td>
-
-
 					<div>
-					<span class="enable">
 						<button type="button" class="btn btn-success dropdown-toggle"
 							data-toggle="dropdown">
 
@@ -102,7 +68,7 @@
 							<c:if test="${ap.enable == 0}">활동</c:if>
 
 						</button>
-					</span>
+
 
 						<div class="dropdown-menu">
 							<a class="dropdown-item" href="#"> <c:if
@@ -111,12 +77,12 @@
 							</a>
 						</div>
 					</div>
-
 				</td>
 			</tr>
 		</c:forEach>
 	</tbody>
 </table>
+
 
 
 
@@ -126,7 +92,8 @@
 
 
 		<c:if test="${ap.startPage > 1 }">
-				<span class="page"> 
+			
+				<span class="page">
 					<a href="${ap.startPage - 1}"><button class="btn btn-success">이전</button></a>
 				</span>
 			
@@ -150,8 +117,8 @@
 					</c:when>
 
 					<c:otherwise>
-						<li class="page-item"><span class="page"><a
-								class="page-link" href="${i}">${i}</a></span></li>
+						<li class="page-item"><span class="page"><a class="page-link"
+								href="${i}">${i}</a></span></li>
 					</c:otherwise>
 
 				</c:choose>
@@ -173,7 +140,7 @@
 		<c:if test="${ap.totalPage > ap.endPage }">
 			
 				<span class="page">
-					<a href="${ap.endPage+1}"><button class="btn btn-success">다음</button></a>
+					<a href="${ap.endPage + 1}"><button class="btn btn-success">다음</button></a>
 				</span>
 			
 		</c:if>
@@ -182,4 +149,3 @@
 
 
 </div>
-

@@ -1,15 +1,17 @@
 package com.kitri.service.film;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import com.kitri.dao.film.FilmDao;
 import com.kitri.dto.FilmDto;
 import com.kitri.util.CallAPI;
 
@@ -39,7 +41,7 @@ public class FilmService {
 			// #1 API 호출
 
 			// 1-1. 영진원 일별 박스오피스 API
-			// ① url + 파라미터 값 설정
+			// ① url + 파라미터 값 설정 
 			
 			// 어제 날짜 구하기
 			Calendar c1 = new GregorianCalendar();
@@ -89,7 +91,13 @@ public class FilmService {
 						
 						
 						// 1-2. 네이버 영화 목록 검색 API + 크롤링
-					    String movieImage = CallAPI.getPoster(movieNm, null).getMovieImage();
+					    FilmDto film = CallAPI.getPoster(movieNm, null);
+					    String movieImage = "";
+					    if(film != null) {
+					    	movieImage = film.getMovieImage();
+				    	} else {
+				    		movieImage = "/MovieHolic/images/noMovieImage.png";
+				    	}
 
 						// '포스터 이미지 주소'를 DTO에 세팅함
 						filmDto.setMovieImage(movieImage);
@@ -109,7 +117,39 @@ public class FilmService {
 		
 		}  // getBoxOffice() end
 	
+
+		// 2
+		// <장르별 영화 추천 목록 10개 출력> 메소드
+		// : 장르별 추천 영화 10개  (네이버 별점순)
+		//   * select
+		//   * return List<FilmDto>
+		public List<FilmDto> getFavoriteFilm(String category) {
+			
+			// #1 DAO 호출
+			return FilmDao.getFilmDao().selectByCategory(category);
+
+		}
 		
+		// 3
+		// <장르별 영화 목록 출력> 메소드
+		// : 선택한 장르별 영화 목록 결과 전체 (개봉연도 최신순 & 이름 오름차순)
+		
+		
+		// 3
+		// <영화 검색 목록 출력> 메소드
+		// : 검색어로 검색한 영화 목록 결과 전체 (개봉연도 최신순 & 이름 오름차순)
+		//   * select
+		//   * return List<FilmDto>
+		public List<FilmDto> getSearchedFilmList(String srchKey) {
+			
+			// #1 DAO 호출
+			return FilmDao.getFilmDao().selectBySrchKey(srchKey);
+		}
+		
+		
+		
+		
+		/*
 		// 2
 		// <장르별 영화 목록 출력> 메소드
 		// : 영진원 영화 목록 api
@@ -150,7 +190,7 @@ public class FilmService {
 							String movieCdYoung = movieListItems.get("movieCd").toString(); 		// 영화코드(영진원)
 							String movieNm = movieListItems.get("movieNm").toString(); 				// 영화명
 							String genreAlt = movieListItems.get("genreAlt").toString();			// 장르 (ex: 범죄,스릴러)
-							String prdtYear = movieListItems.get("prdtYear").toString();		// 제작년도
+							String prdtYear = movieListItems.get("prdtYear").toString();			// 제작년도
 							
 							List genres = new ArrayList();
 							
@@ -177,7 +217,7 @@ public class FilmService {
 									// '영화코드(영진원)', '영화명', '첫번째장르'를 DTO에 세팅함
 									filmDto.setMovieCdYoung(movieCdYoung);
 									filmDto.setMovieNm(movieNm);
-									filmDto.setGenreNm(genres.get(k).toString());
+									filmDto.setCategory(genres.get(k).toString());
 									filmDto.setMovieImage(movieImage);
 									
 									film.add(filmDto);
@@ -196,6 +236,6 @@ public class FilmService {
 				return film;
 
 		} //  getFavoriteFilm() end
-		
+		*/
 		
 } // class end

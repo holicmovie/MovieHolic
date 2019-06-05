@@ -6,8 +6,9 @@ public class FilmDto {
 	private String movieCdYoung; 	// 영화코드(영진원)
 	private String movieCdNaver; 	// 영화코드(네이버)
 	private String movieImage; 		// 영화 포스터 이미지 주소
-	private String genreNm;			// 장르
+	private String category;		// 장르
 	private String prdtYear;		// 제작년도
+	private String openYear;		// 개봉년도
 	private String starPointNaver;	// 네이버 별점 
 
 	public String getMovieNm() {
@@ -42,20 +43,29 @@ public class FilmDto {
 		this.movieImage = movieImage;
 	}
 
-	public String getGenreNm() {
-		return genreNm;
+	public String getCategory() {
+		return category;
 	}
 
-	public void setGenreNm(String genreNm) {
-		this.genreNm = genreNm;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 	
+
 	public String getPrdtYear() {
 		return prdtYear;
 	}
 
 	public void setPrdtYear(String prdtYear) {
 		this.prdtYear = prdtYear;
+	}
+	
+	public String getOpenYear() {
+		return openYear;
+	}
+	
+	public void setOpenYear(String openYear) {
+		this.openYear = openYear;
 	}
 	
 	public String getStarPointNaver() {
@@ -66,13 +76,11 @@ public class FilmDto {
 		this.starPointNaver = starPointNaver;
 	}
 
-	
 	@Override
 	public String toString() {
 		return "FilmDto [movieNm=" + movieNm + ", movieCdYoung=" + movieCdYoung + ", movieCdNaver=" + movieCdNaver
-				+ ", movieImage=" + movieImage + ", genreNm=" + genreNm + ", prdtYear=" + prdtYear + ", starPointNaver="
-				+ starPointNaver + "]";
+				+ ", movieImage=" + movieImage + ", category=" + category + ", prdtYear=" + prdtYear + ", openYear="
+				+ openYear + ", starPointNaver=" + starPointNaver + "]";
 	}
-	
 	
 }

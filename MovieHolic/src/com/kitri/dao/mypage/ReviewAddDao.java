@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.*;
 
 import com.kitri.dto.BoardDto;
+import com.kitri.dto.CommentDto;
 import com.kitri.util.DBClose;
 import com.kitri.util.DBConnection;
 
@@ -75,7 +76,7 @@ public class ReviewAddDao {
 		try {
 			conn = DBConnection.makeConnection();
 			StringBuffer sql = new StringBuffer();
-			sql.append("select movieName,content,starPoint,postDate d1, to_char(postDate, 'YYYY') d2, to_char(postDate, 'MM-DD') d3\n");
+			sql.append("select seq,userid, movieName,content,starPoint,postDate d1, to_char(postDate, 'YYYY') d2, to_char(postDate, 'MM-DD') d3 , viewcount \n");
 			sql.append("from mh_board \n");
 			sql.append("where boardCode = 1 \n");
 			sql.append("order by postDate desc \n");
@@ -88,19 +89,26 @@ public class ReviewAddDao {
 					
 				List<String> name = new ArrayList<String>();
 				String str = rs.getString("movieName");
+				String userid = rs.getString("userid");
 				StringTokenizer st = new StringTokenizer(str, "||");
+				StringTokenizer userid2 = new StringTokenizer(userid,"@");
+				String id = userid2.nextToken();
 				String a = st.nextToken();
 				
 				name.add(a);
+				boardDto.setSeq(rs.getInt("seq"));
+				boardDto.setUserId(id);
+				boardDto.setViewCount(rs.getInt("viewcount"));
+				boardDto.setContent(rs.getString("content"));
+				boardDto.setStarPoint(rs.getInt("starPoint"));
+				boardDto.setMovieName(name);
 				boardDto.setPostDate(rs.getString("d1"));
 				boardDto.setPostDateY(rs.getString("d2"));
 				boardDto.setPostDateM(rs.getString("d3"));
-				boardDto.setStarPoint(rs.getInt("starPoint"));
-				boardDto.setMovieName(name);
 				boardDto.setContent(rs.getString("content"));
 
-				list.add(boardDto);
 				
+				list.add(boardDto);
 			}
 			
 		} catch (SQLException e) {
@@ -148,48 +156,149 @@ public List<BoardDto> listList(String content) {
 	
 	// 페이징 처리
 
-	public List<BoardDto> selectByRows(int startRow, int endRow) {
-
+//목록 불러오기.
+	public List<BoardDto> selectByRows(int startRow, int endRow, int cnt){
+		
 		List<BoardDto> list = new ArrayList<BoardDto>();
 
-		return list;
-	}
-
-	public int selectTotalCnt() {
-
+		StringBuffer sql = new StringBuffer();
+		
+		sql.append("select movieName,content,starPoint,postDate d1, to_char(postDate, 'YYYY') d2, to_char(postDate, 'MM-DD') d3\n");
+		sql.append("from (select movieName,content,starPoint,postDate d1, to_char(postDate, 'YYYY') d2, to_char(postDate, 'MM-DD') d3 \n");
+		sql.append("mh_board \n");
+		sql.append("where boardCode = 1 \n");
+		sql.append("order by postDate desc) \n");
+		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-
-		StringBuffer sql = new StringBuffer(); 
-		
-		sql.append("select count(*) from mh_board");
-		
-		int totalCnt = -1;
 
 		try {
 
 			conn = DBConnection.makeConnection();
 			pstmt = conn.prepareStatement(sql.toString());
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
 			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				totalCnt = rs.getInt(1);
+			
+			while (rs.next()) {
+				
+				BoardDto boardDto = new BoardDto();
+				
+				List<String> name = new ArrayList<String>();
+				String str = rs.getString("movieName");
+				StringTokenizer st = new StringTokenizer(str, "||");
+				String a = st.nextToken();
+				
+				name.add(a);
+				boardDto.setPostDate(rs.getString("d1"));
+				boardDto.setPostDateY(rs.getString("d2"));
+				boardDto.setPostDateM(rs.getString("d3"));
+				boardDto.setStarPoint(rs.getInt("starPoint"));
+				boardDto.setMovieName(name);
+				boardDto.setContent(rs.getString("content"));
+
+				list.add(boardDto);
+				
 			}
+			
 
 		} catch (SQLException e) {
-
 			e.printStackTrace();
-
 		} finally {
 			DBClose.close(conn, pstmt, rs);
 		}
+		
+		
+		
+		return list;
+
+
+	}
+	
+	
+	// 토탈수
+	public int selectTotalCnt(int cnt) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		StringBuffer sql = new StringBuffer();
+		
+		sql.append(" select COUNT(*)");
+		sql.append("from (select rownum r, movieName,content,starPoint,postDate d1, to_char(postDate, 'YYYY') d2, to_char(postDate, 'MM-DD') d3 \n");
+		sql.append("mh_board \n");
+		sql.append("where boardCode = 1 \n");
+		sql.append("order by postDate desc) \n");
+
+		
+		int totalCnt = -1;
+		
+		try {
+			
+			conn = DBConnection.makeConnection();
+			pstmt = conn.prepareStatement(sql.toString());			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				totalCnt = rs.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		
 
 		return totalCnt;
 	}
-	
+	public List<CommentDto> reviewContent(){
+		List<CommentDto> list = new ArrayList<CommentDto>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DBConnection.makeConnection();
+			StringBuffer sql = new StringBuffer();
+			sql.append("select seq,content,postDate d1, to_char(postDate, 'YYYY') d2, userId \n");
+			sql.append("from mh_comment \n");
+			sql.append("order by postDate desc \n");
+			pstmt = conn.prepareStatement(sql.toString());
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				CommentDto commentDto = new CommentDto();	
+				String str = rs.getString("userid");
+				StringTokenizer st = new StringTokenizer(str, "@");
+				String a = st.nextToken();
+				commentDto.setSeq(rs.getInt("seq"));
+				commentDto.setUserId(a);
+				commentDto.setContent(rs.getString("content"));
+				commentDto.setPostDate(rs.getString("d1"));
+				commentDto.setPostDateY(rs.getString("d2"));
+				list.add(commentDto);
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+
+		return list;
+	}
 	public static void main(String[] args) {
 		
 		System.out.println(getReviewAdd().reviewlist("movieName"));
 		System.out.println(getReviewAdd().listList("content"));
+		System.out.println(getReviewAdd().reviewContent());
 	}
 }
