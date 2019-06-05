@@ -98,8 +98,8 @@ $(document).on("click", ".page_notify>a", function(){
 
 
 
-// 전체선택
-/* $(document).on("click", ".check-all", function(){
+/* // 전체선택
+$(document).on("click", ".check-all", function(){
         //클릭되었으면
         if($(".ab").prop("checked")){
             //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
@@ -109,17 +109,17 @@ $(document).on("click", ".page_notify>a", function(){
             //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
             $(".ab").prop("checked",true);
         }
-    }); */
+}); */
 
 
-    
-// 체크박스 선택시 한 로우 가져오기.
-// 상단 선택버튼 클릭시 체크된 Row의 값을 가져온다.
-$("#selectBtn").click(function(){ 
-		
+
+//체크박스 선택시 한 로우 가져오기.
+//상단 선택버튼 클릭시 체크된 Row의 값을 가져온다.
+$(document).on("click", ".secession", function(){
+	
 	var rowData = new Array();
 	var tdArr = new Array();
-	var checkbox = $("input[name=chk]:checked");
+	var checkbox = $("input[name=ap_checkbox]:checked");
 	
 	// 체크된 체크박스 값을 가져온다
 	checkbox.each(function(i) {
@@ -140,14 +140,6 @@ $("#selectBtn").click(function(){
 		var joinDate = td.eq(6).text()+", ";
 		var outdate = td.eq(7).text()+", ";
 		
-		/* <td>${ap.userId}</td>
-		<td>${ap.name }</td>
-		<td>${ap.birth }</td>
-		<td>${ap.phoneFirst }-${ap.phoneMid }-${ap.phoneLast }</td>
-		<td>${ap.gender }</td>
-		<td>${ap.joinDate }</td>
-		<td>${ap.outdate }</td>
-		enable까지 */
 		
 		// 가져온 값을 배열에 담는다.
 		tdArr.push(userId);
@@ -156,22 +148,29 @@ $("#selectBtn").click(function(){
 		tdArr.push(phone);
 		tdArr.push(gender);
 		tdArr.push(joinDate);
-		tdArr.push(joinDate);
 		tdArr.push(outdate);
 		
-		//console.log("no : " + no);
-		//console.log("userid : " + userid);
-		//console.log("name : " + name);
-		//console.log("email : " + email);
+		console.log("userId : " + userId);
+		console.log("name : " + name);
+		console.log("birth : " + birth);
+		console.log("phone : " + phone);
+		console.log("gender : " + gender);
+		console.log("joinDate : " + joinDate);
+		console.log("outdate : " + outdate);
 	});
 	
 	$("#ex3_Result1").html(" * 체크된 Row의 모든 데이터 = "+rowData);	
-	$("#ex3_Result2").html(tdArr);	
+	$("#ex3_Result2").html(tdArr);
+	
+		
 });
+ 
+ 
+ 
+ 
+ 
+//   --------------------------------------------------
     
-    
-
-
 
 </script>
 
@@ -246,6 +245,12 @@ hr.line_light_w {
 
 
 
+		<div class="col-lg-12" id="ex3_Result1" ></div> 
+		<div class="col-lg-12" id="ex3_Result2" ></div> 
+
+
+
+
 
 			<div class="container">
 
@@ -292,8 +297,8 @@ hr.line_light_w {
 							<a class="dropdown-item" href="/MovieHolic/admin?act=unsubscribelist">탈퇴목록</a>
 						</span>
 					</span>
-					<button type="submit" class="btn btn-success" style="z-index: 0">탈퇴</button>
-					<button type="submit" class="btn btn-success" style="z-index: 0">휴면</button>
+					<span class="secession"><button type="button" class="btn btn-success" style="z-index: 0">탈퇴</button></span>
+					<span class="dormancy"><button type="submit" class="btn btn-success" style="z-index: 0">휴면</button></span>
 				</div>
 
 
@@ -314,8 +319,8 @@ hr.line_light_w {
 							<tr>
 								<th>
 									<div id="check-all">
-										<button type="button" class="btn btn-success"
-											style="z-index: 0;">전체선택</button>
+										<span class="allcheckbox"><button type="button" class="btn btn-success"
+											style="z-index: 0;">전체선택</button></span>
 									</div>
 								</th>
 								<th>회원ID</th>
@@ -332,7 +337,7 @@ hr.line_light_w {
 						
 							<c:forEach var="ap" items='${ap.list}'>
 								<tr>
-									<td><input type="checkbox" class="ab" name="chk" /></td>
+									<td><input type="checkbox" class="ap_checkbox" name="ap_checkbox" /></td>
 									<td>${ap.userId}</td>
 									<td>${ap.name }</td>
 									<td>${ap.birth }</td>

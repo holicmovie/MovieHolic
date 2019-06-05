@@ -10,6 +10,7 @@
 
 <script>
 
+
 	
 //$(document).on("click", "#check-all", function() {
 $("#check-all").click(function() { // 전체 선택 버튼 클릭시
