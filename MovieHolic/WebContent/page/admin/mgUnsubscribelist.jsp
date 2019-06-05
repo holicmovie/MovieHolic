@@ -18,7 +18,7 @@
 				method : 'get',
 				/* data : 'alllist=' + alllist,  */
 				success : function(result) {
-					$("section").html(result.trim());
+					$("div.wrapper>div.container>div.member_search_result").html(result.trim());
 				}
 			});
 			return false;
@@ -28,9 +28,9 @@
 	
 	
 	//$(document).on("click", "#check-all", function() {
-	$("#check-all").click(function() { // 전체 선택 버튼 클릭시
+$("#check-all").click(function() { // 전체 선택 버튼 클릭시
 
-		$(":input[name=chk]").prop("checked", true)
+	$(":input[name=chk]").prop("checked", true)
 
 		/* if ($(":input[name=chk]").prop("checked", true)) {
 			$(":input[name=chk]").prop("checked", false);
@@ -38,9 +38,9 @@
 			$(":input[name=chk]").prop("checked", true);
 		} */
 
-		return false;
+	return false;
 
-	});
+});
 
 	
 	
@@ -113,7 +113,7 @@
 		<c:if test="${ap.startPage > 1 }">
 			
 				<span class="page">
-					<button class="btn btn-success"><a href="${ap.startPage - 1}">이전</a></button>
+					<a href="${ap.startPage - 1}"><button class="btn btn-success">이전</button></a>
 				</span>
 			
 		</c:if>
@@ -159,7 +159,7 @@
 		<c:if test="${ap.totalPage > ap.endPage }">
 			
 				<span class="page">
-					<button class="btn btn-success"><a href="${ap.endPage+1}">다음</a></button>
+					<a href="${ap.endPage+1}"><button class="btn btn-success">다음</button></a>
 				</span>
 			
 		</c:if>
