@@ -124,7 +124,7 @@ public class CallAPI {
 	 */
 	public static FilmDto getPoster(String movieNm, String prdtYear) {
 
-		// HighImageUrl = 고화질 포스터 이미지 주소
+		// HighImageUrl = 고화질 포스터 이미지 주소 + 네이버 코드 + 네이버 별점
 		FilmDto HighImageUrl = new FilmDto();
 		
 		try {
@@ -143,9 +143,11 @@ public class CallAPI {
 			String httpUrl = url + "?" + paramNaver;									   		// 최종 URL
 			
 			// ② 헤더값 생성
-			HashMap<String, String> header = new HashMap<>();
-			header.put("X-Naver-Client-Id", "Fc4lGVGl3zDMtizzcZbx");
-			header.put("X-Naver-Client-Secret", "q3OgVCUh0y");
+			/*
+			 * HashMap<String, String> header = new HashMap<>();
+			 * header.put("X-Naver-Client-Id", "Fc4lGVGl3zDMtizzcZbx");
+			 * header.put("X-Naver-Client-Secret", "q3OgVCUh0y");
+			 */
 			
 			// ③ API 호출 (GET)
 			String responseNaver = APIHttpGet(httpUrl, true);  // HttpUrlConnection 사용
@@ -210,7 +212,7 @@ public class CallAPI {
 	
 	/**
 	 * ---------------------------------- 3 ---------------------------------- 
-	 * <1초 쉬기> 메소드
+	 * <x초 쉬기> 메소드
 	 * 
 	 * [인자값]
 	 * - int seconds : 대기 시간 (1/1000초)  *1000 입력 = 1초 대기
@@ -218,11 +220,15 @@ public class CallAPI {
 	public static void Sleep(int seconds) {
 		
 		try {
-				Thread.sleep(seconds); // seconds * 0.001 초 대기
+				Thread.sleep(seconds); // (seconds * 0.001) 초 대기
 			}catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 	}
+	
+	
+	
+	
 	
 	
 	////////////////////////////////////////사용 안 함(임시보류)//////////////////////////////////////////////

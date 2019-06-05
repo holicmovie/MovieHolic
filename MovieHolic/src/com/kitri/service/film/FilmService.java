@@ -1,9 +1,10 @@
 package com.kitri.service.film;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -90,7 +91,13 @@ public class FilmService {
 						
 						
 						// 1-2. 네이버 영화 목록 검색 API + 크롤링
-					    String movieImage = CallAPI.getPoster(movieNm, null).getMovieImage();
+					    FilmDto film = CallAPI.getPoster(movieNm, null);
+					    String movieImage = "";
+					    if(film != null) {
+					    	movieImage = film.getMovieImage();
+				    	} else {
+				    		movieImage = "/MovieHolic/images/noMovieImage.png";
+				    	}
 
 						// '포스터 이미지 주소'를 DTO에 세팅함
 						filmDto.setMovieImage(movieImage);
@@ -113,16 +120,31 @@ public class FilmService {
 
 		// 2
 		// <장르별 영화 추천 목록 10개 출력> 메소드
-		// : MH_Films select
-		// *장르별 네이버 별점 높은 순 10개
+		// : 장르별 추천 영화 10개  (네이버 별점순)
+		//   * select
+		//   * return List<FilmDto>
 		public List<FilmDto> getFavoriteFilm(String category) {
 			
 			// #1 DAO 호출
-			List<FilmDto> film = FilmDao.getFilmDao().selectByCategory(category);
-			
-			return film;
+			return FilmDao.getFilmDao().selectByCategory(category);
 
-		} //  getFavoriteFilm() end
+		}
+		
+		// 3
+		// <장르별 영화 목록 출력> 메소드
+		// : 선택한 장르별 영화 목록 결과 전체 (개봉연도 최신순 & 이름 오름차순)
+		
+		
+		// 3
+		// <영화 검색 목록 출력> 메소드
+		// : 검색어로 검색한 영화 목록 결과 전체 (개봉연도 최신순 & 이름 오름차순)
+		//   * select
+		//   * return List<FilmDto>
+		public List<FilmDto> getSearchedFilmList(String srchKey) {
+			
+			// #1 DAO 호출
+			return FilmDao.getFilmDao().selectBySrchKey(srchKey);
+		}
 		
 		
 		
