@@ -1,3 +1,5 @@
+<%@page import="com.kitri.dto.BoardDto"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/template/header.jsp"%>
@@ -78,6 +80,9 @@ hr.line_light_g {
 
 </head>
 <body class="left-sidebar is-preload">
+<% List<BoardDto> list = (List<BoardDto>)request.getAttribute("reviewList2");
+System.out.println(list);%>
+<%!BoardDto boardDto; %>
 	<div id="page-wrapper">
 
 		<!-- Header -->
@@ -97,7 +102,7 @@ hr.line_light_g {
 							<span>✱&nbsp;&nbsp;</span>
 							<a href="/MovieHolic/page/mypage/mypage.jsp" style="color:white;">My Page</a>
 							<span>&nbsp;&nbsp;❱❱&nbsp;&nbsp;</span>
-							<a href="/MovieHolic/page/mypage/diary.jsp" class="font_bold_small" ">Diary</a>
+							<a href="/MovieHolic/page/mypage/diary.jsp" class="font_bold_small">Diary</a>
 						</div>
 					</div>
 
@@ -123,50 +128,30 @@ hr.line_light_g {
 					<!-- 왼쪽 내용 start -->
 					<div class="col-lg-3 col-12-mobile top_margin" align="center">
 
-						<!-- 포스터, 좋아요싫어요 -->
+						<!-- 포스터 -->
 						<section class="movieImg-wrap">
 							<a href="#"><img class="movieImg" alt="어벤져스:엔드게임 포스터"
 								src="/MovieHolic/images/avengers4.jpg" border="solid 1px white"></a>
 						</section>
-
-						<section id="likeunlike"
-							class="rounded-lg top_margin font_light_small"
-							style="width: 244px; height: 100px; background-color: #555; padding: 15px 40px;">
-							<ul style="list-style: none; padding: 0px;">
-								<li
-									style="float: left; position: relative; text-align: center; margin-right: 50px;">
-									<a href="#"><img alt="좋아요 아이콘"
-										src="/MovieHolic/images/like.png"></a> <span
-									style="display: block;">1000</span>
-								</li>
-								<li style="float: left; text-align: center;"><a href="#"><img
-										alt="싫어요 아이콘" src="/MovieHolic/images/unlike.png"></a> <span
-									style="display: block;">1000</span></li>
-							<!-- float clear용 빈 li -->
-							<li style="clear: both;"></li>
-							</ul>
-						</section>
-
 					</div>
 					<!-- 왼쪽 내용 end -->
 
 					<!-- 오른쪽 내용 start -->
 					<div class="col-lg-9 col-12-mobile top_margin">
-
 						<!-- 영화명, 개봉연도, 조회수, 작성일 -->
 						<div class="title">
 							<div class="movietitle" style="float: left;">
-								<span class="font_bold_lg">어벤져스:엔드게임</span> <span
-									class="font_light_mid">&nbsp;2019</span> &nbsp;&nbsp;<img
+								<span class="font_bold_lg"><%=boardDto.getMovieName()%></span> <span
+									class="font_light_mid">&nbsp;<%=boardDto.getPostDateY() %></span> &nbsp;&nbsp;<img
 									alt="잠금 여부 표시 아이콘" src="/MovieHolic/images/lock.png"
 									style="margin-bottom: 12px;">
 							</div>
 							<div class="writeinfo" style="float: right;">
 								<span class="font_light_small">
 									<span class="font_bold_lg">&nbsp;</span>
-									조회수 : <span id="viewcount">22</span>
+									조회수 : <span id="viewcount"><%=boardDto.getViewCount() %></span>
 									&nbsp;&nbsp;|&nbsp;&nbsp;
-									<span id="writedate">2019.05.25 &nbsp;오후 05:45</span>
+									<span id="writedate"><%= boardDto.getPostDate() %></span>
 								</span>
 							</div>
 							
@@ -193,7 +178,7 @@ hr.line_light_g {
 							</a>
 							&nbsp;
 							<span class="font_light_small">by&nbsp;
-							<a id="writerId" class="font_bold_small" href="#" style="color: white">shzy232</a></span>
+							<a id="writerId" class="font_bold_small" href="#" style="color: white"><%=boardDto.getUserId() %></a></span>
 						</div>
 
 						<!-- float clear용 빈 div -->
@@ -205,18 +190,7 @@ hr.line_light_g {
 						<!-- 작성 내용 -->
 						<div class="font_light_small top_margin">
 							<p>
-								2008년 아이언맨으로 시작한 MCU(Marvel Cinematic Universe)의 10년이 끝을 맺었다.
-								다양한 히어로들의 스토리가 연결되면서 거대한 서사를 이루었다. 단순한 히어로영화가 마스터피스가 되는 순간이었다.
-								모든 마블영화들의 스토리가 집약되며 결말을 이루었지만, 위화감 대신에 웅장한 느낌을 받는다. 그 중심에는 아이언맨
-								토니 스타크가 있다. 지극히 일반적이나 돌아보면 입체적이다. <br>
-								<br> 3시간의 러닝타임이 지루할 법 하지만 순간순간 유머로 그것을 환기 시킨다. 토르! 그는 진지하다.
-								마지막 어벤져스 어셈블! 극의 정점을 찍는다. 이별을 맞지만, 지금까지와는 다른 양상을 보이면서 교차된다.
-								아이언맨은 희생을, 스티브는 자신의 인생을 선택한다. 지금까지 대립구도의 역설을 보여주며 마치 양자시간여행의
-								뫼비우스 띠 같은 느낌을 받는다. 어찌 보면 토니는 가족을 이루었고, 스티브는 지금까지의 희생 뒤에 결말을 짓고
-								자신의 가족을 만든 것이 순리대로 풀린 느낌을 받는다. 어색하지 않고 담담하다. <br>
-								<br> 지금까지의 작품의 방점을 찍는 듯이 화려하다. 하지만 첫 시작으로는 어렵다. 새로운 시작으로 가기
-								위한 어색함이 담겨있다. 너무 많은 히어로들 속에 잊혀지거나 과하거나. 그렇지만 역시 마스터피스! MCU의 10년에
-								박수를 보낸다.
+								<%=boardDto.getContent() %>
 							</p>
 						</div>
 

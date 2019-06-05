@@ -28,4 +28,21 @@ public class MyPageService {
 		return list;
 	}
 	
+	
+	public static List<SocialDto> findByRows(int startRow, int endRow){
+		return SocialDao.selectByRows(startRow, endRow);
+	}
+
+
+	public static int getTotalCnt() {
+		return SocialDao.selectTotalCnt();
+	}
+	
+	
+//	public int deleteFollowingId() {
+//		
+//		
+//		return SocialDao.getSocialDao().updateUnable();
+//	}
+//	
 }

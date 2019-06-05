@@ -43,8 +43,10 @@ $(function(){
 </script>
 </head>
 <body class="left-sidebar is-preload">
+
+<%List<BoardDto> list = (List<BoardDto>)request.getAttribute("reviewList");
+System.out.println(list);%>
 <div id="page-wrapper">
-<%List<BoardDto> list = (List<BoardDto>)request.getAttribute("reviewList");%>
 <%-- Header --%>
 	<div id="header" style="background-image: none; margin-bottom: 0px; padding-bottom:0; height: 10px;">
 <%@ include file="/template/nav.jsp"%>
@@ -62,7 +64,7 @@ $(function(){
 				<span>✱&nbsp;&nbsp;</span>
 				<a href="/MovieHolic/page/mypage/mypage.jsp" style="color:white;">My Page</a>
 				<span>&nbsp;&nbsp;❱❱&nbsp;&nbsp;</span>
-				<a href="/MovieHolic/page/mypage/diary.jsp" class="font_bold_small" ">Diary</a>
+				<a href="/MovieHolic/page/mypage/diary.jsp" class="font_bold_small">Diary</a>
 			</div>
 		</div>
 		
@@ -103,7 +105,7 @@ $(function(){
 				      <tr>
 				      	<td style="vertical-align: middle;"><input type="checkbox" class="form-check-input"></td>
 				        <td class="hide1" style="vertical-align: middle;">
-							<a href="/MovieHolic/page/mypage/diaryDetail.jsp"><img width="90vh" src="/MovieHolic/images/tempimg/coco.jpg" title="코코 (2017)" /></a>
+							<a href="/MovieHolic/mypage?page=diaryDetail"><img width="90vh" src="/MovieHolic/images/tempimg/coco.jpg" title="코코 (2017)" /></a>
 						</td>
 				        <td style="vertical-align: middle;">
 				        	<div class="font_light_small"><%=dto.getPostDateY() %></div>
