@@ -21,7 +21,7 @@ private static UserService userService; // 2번째 전역변수 만들기
 	
 	// 리뷰목록
 		public List<BoardDto> reviewlist(String movieName) {
-
+			
 			return ReviewAddDao.getReviewAdd().reviewlist(movieName);
 		}
 	//리스트목록

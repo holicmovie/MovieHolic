@@ -52,5 +52,21 @@ public class FilmController {
 		request.setAttribute("favoritefilm", list);
 		
 	}
+	
+	// 3
+	// 검색된 영화 목록 get
+	public String getSearchedFilmList(HttpServletRequest request, HttpServletResponse response) {
+		
+		String path = "/page/film/result/searchfilmresult.jsp";
+		
+		String srchKey = request.getParameter("srchKey"); // 검색어
+
+		// 검색 결과 목록 get
+		List<FilmDto> list = FilmService.getFilmService().getSearchedFilmList(srchKey);
+		// 검색 결과 목록 set
+		request.setAttribute("searchedFilmList", list);
+		
+		return path;
+	}
 
 }

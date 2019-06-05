@@ -4,6 +4,23 @@
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
 <%@ include file="/template/nav.jsp"%>
+
+<script>
+<%-- 영화 검색어 입력후 엔터키 누른 경우 --%>
+$(function(){
+	var searchFilm = $('#searchFilm');
+	$(searchFilm).keypress(function(event){
+	    if (event.which == 13 ) {
+			if(searchFilm.val() != "") {	<%-- 검색어가 공백이 아닌 경우 srchKey로 받아옴 --%>
+				var srchKey = searchFilm.val();
+				location.href = "/MovieHolic/page/film?act=searchFilm&srchKey=" + srchKey;
+			}
+	    }
+	});
+	return false;
+});
+</script>
+
 </head>
 <body class="left-sidebar is-preload" style="background-color: black;">
 	<div id="page-wrapper">
@@ -139,7 +156,7 @@
 					<div class="col-lg-8"></div>
 					<div class="col-lg-4 col-2-mobile"
 						style="margin-top: 1em; padding-left:90px;">
-						<input type="text" class="form-control"
+						<input type="text" id="searchFilm" class="form-control"
 							style="height: 40px; width: 13em; background-image: /MovieHolic/images/searchb.png"
 							placeholder="제목으로 검색">
 					</div>

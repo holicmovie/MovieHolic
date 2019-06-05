@@ -10,6 +10,7 @@ import java.util.StringTokenizer;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
@@ -46,25 +47,29 @@ public class UpdateFilmsDB {
 				+ "&prdtStartYear="+prdtYear + "&curPage="+curPage;
 		String responseMovies = CallAPI.APIHttpGet(httpUrl1, false);
 		
+		System.out.println(responseMovies);
+				
 		// responseBoxOffice (JSON) 파싱
 		// *박스오피스 JSON 구조 : { {movieListResult} - [movieList]  - {key1 : "", key2 : "" , ...} 여러 개 }
 		try {
-			
+
 				JSONParser jsonParser = new JSONParser();
 			
 				JSONObject jsonObject = (JSONObject) jsonParser.parse(responseMovies);
 		
 				JSONObject movieListObject = (JSONObject) jsonObject.get("movieListResult");
+				Object resultCnt = (Object) movieListObject.get("totCnt");						// 결과 개수 (Object)
 				JSONArray movieListArray = (JSONArray) movieListObject.get("movieList");
-				
+								
 				// 페이지에 해당하는 영화 목록이 없으면, null 리턴
-				if(movieListArray == null) {
+				if(resultCnt.toString().equals("0")) {
+					System.out.println(curPage + "페이지에 영화 목록이 없습니다.");
 					return null;
 				}
 				// movieListArray JSON배열의 값(JSON객체)들을 뽑아냄
 				int len = movieListArray.size();
 				for (int i = 0; i < len; i++) {
-					
+
 					FilmDto films = new FilmDto();
 					
 					JSONObject movieListItems = (JSONObject) movieListArray.get(i);
@@ -76,8 +81,10 @@ public class UpdateFilmsDB {
 					films.setCategory(movieListItems.get("genreAlt").toString());		// 장르
 					films.setPrdtYear(prdtYear); 										// 제작연도
 					String openDate = movieListItems.get("openDt").toString();
-					if(openDate != " ") {
-						films.setOpenYear(openDate.substring(0));						// 개봉연도						
+
+					// 개봉한 경우
+					if(!openDate.equals("")) {
+						films.setOpenYear(openDate.substring(0, 4));					// 개봉연도						
 					}else {
 						// 개봉을 안 한 경우, NULL 로 세팅
 						films.setOpenYear(null);
@@ -96,8 +103,7 @@ public class UpdateFilmsDB {
 						list.add(films);
 					}
 					
-//					System.out.println("service / 영화명 : " + movieNm);
-//					System.out.println("service / 영화코드(영진원) : " + movieListItems.get("movieCd").toString());
+					System.out.println("getFilmList() / " + (i+1) + "번째 영화명 : " + movieNm);
 				
 				} // for문 end
 		
@@ -140,6 +146,9 @@ public class UpdateFilmsDB {
 			int len = list.size();
 			for(int i = 0; i < len; i++) {
 				
+				System.out.println(i);
+				System.out.println("DB영화코드영진원 : " + list.get(i).getMovieCdYoung());
+				System.out.println("DB영화이름영진원 : " + list.get(i).getMovieNm());
 				pstmt.setString(idx++, list.get(i).getMovieCdYoung());
 				pstmt.setString(idx++, list.get(i).getMovieNm());
 				pstmt.setString(idx++, list.get(i).getMovieCdNaver());
@@ -155,7 +164,7 @@ public class UpdateFilmsDB {
 			}
 			
 			} catch (SQLException e) {
-			e.printStackTrace();
+				e.printStackTrace();
 			} finally {
 				DBClose.close(conn, pstmt);
 			}
@@ -171,41 +180,46 @@ public class UpdateFilmsDB {
 		int year = c.get(Calendar.YEAR);
 		
 		// 시작 년도
-		int startYear = 2017;
+		int startYear = 2016;
 		// 구할 기간 (년)
 		int term = 3;
 		// 끝 년도
 		int endYear = startYear - term;
 		
-		System.out.println("[api 호출 횟수] 영진원 영화 목록 조회 api : " + (term * 50) + "번 호출 예정");
+		System.out.println("[조회 기간] : " + startYear + "~" + endYear);
+		System.out.println("[api 호출 횟수] 영진원 영화 목록 조회 api : " + (term * 50) + "번 호출 예정 (페이지 없을 시 감소 가능)");
 		System.out.println("[api 호출 횟수] 네이버 영화 목록 조회 api : " + (term * 50 * 100) + "번 호출 예정");
-		System.out.println("[api 호출 횟수] 5초 뒤에 작업을 시작합니다! 5초안에 작업을 취소해주세요");
+		System.out.println("[api 호출 준비] 5초 뒤에 작업을 시작합니다! 5초안에 작업을 취소해주세요");
 				
 		CallAPI.Sleep(5000); // 5초 쉴 동안 취소할려면 취소하기
 		
 		////////////////////////////////// 영진원 영화목록 년도별 50페이지씩 조회 ////////////////////////////////////////
-		for(int y = startYear; y > endYear; y--) {
-			
+		//for(int y = startYear; y > endYear; y--) {
+			String y = "2014";
 			// 50페이지 조회
 			for(int p = 1; p < 51; p++) {
 				
 				System.out.println("[영진원 api] " + y + "년 영화 목록 100개 검색 중 ... (" + p + "페이지)");
+				
 				// 연도별 영화 목록 생성
 				List<FilmDto> list = updateDB.getFilmList(String.valueOf(y), String.valueOf(p));
 				
-				// 해당 페이지에 영화목록이 없는 경우, for문 종료 (다음 년도로 넘어감)
-				if(list == null) {
-					System.out.println(y + "년의 마지막 페이지 : " + (p-1) + "페이지");
+				if(list != null) {
+					System.out.println("[영진원 api] " + y + "년 영화 목록 100개 검색 완료 (" + p + "페이지)");
+					
+					int len = list.size();
+					System.out.println("[네이버 api] " + y + "년 네이버 검색 유효 개수 : " + len);
+					
+					// DB에 영화 목록 삽입
+					updateDB.insertFilms(list);
+					System.out.println("#################" + y + "년 "+ len +"개 insert 완료(" + p + "페이지) #################");
+					
+				} else {
+					// 해당 페이지에 영화목록이 없는 경우, for문 종료 (다음 년도로 넘어감)
+					System.out.println("#################" + y + "년의 마지막 페이지 : " + (p-1) + "페이지 #################");
 					break;
 				}
-				
-				int len = list.size();
-				System.out.println("[네이버 api] " + y + "년 네이버 검색 유효 개수 : " + len);
-				
-				// DB에 영화 목록 삽입
-				updateDB.insertFilms(list);
-				System.out.println(y + "년 "+ len +"개 insert 완료(" + p + "페이지)");
-			}
+			//}
 			
 		
 		}
