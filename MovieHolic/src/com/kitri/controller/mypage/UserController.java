@@ -40,6 +40,7 @@ public class UserController {
 	public void ReviewList(HttpServletRequest request, HttpServletResponse response) {
 		
 		List<BoardDto> list = UserService.getUserService().reviewlist("movieName");
+		
 		request.setAttribute("reviewList", list);
 	}
 	

@@ -1,7 +1,6 @@
 package com.kitri.controller.mypage;
 
 import java.io.IOException;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.kitri.util.MoveUrl;
 
-@WebServlet("/mypages")
+@WebServlet("/mypage")
 public class MyPageFrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -25,7 +24,6 @@ public class MyPageFrontController extends HttpServlet {
 		String path = "";
 		String tab = request.getParameter("tab");
 		if ("mypage".equals(page)) {
-			path = MyPageController.getMyPageController().findFollowings(request, response);
 			MoveUrl.forward(request, response, path);
 			
 		} else if ("preference".equals(page)) {
@@ -46,6 +44,9 @@ public class MyPageFrontController extends HttpServlet {
 		} else if("writereview".equals(page)) {
 			UserController.getUserController().ReviewRegister(request, response);
 			MoveUrl.forward(request, response, "/page/mypage/writereview.jsp");
+		} else if("diaryDetail".equals(page)) {
+			UserController.getUserController().ReviewList(request, response);
+			MoveUrl.forward(request, response, "/page/mypage/diaryDetail.jsp");
 		}
 	}
 
