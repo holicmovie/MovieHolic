@@ -27,7 +27,18 @@ public class MyPageService {
 //		System.out.println("서비스 확인 : " + list);		
 		return list;
 	}
+	
+	
+	public static List<SocialDto> findByRows(int startRow, int endRow){
+		return SocialDao.selectByRows(startRow, endRow);
+	}
 
+
+	public static int getTotalCnt() {
+		return SocialDao.selectTotalCnt();
+	}
+	
+	
 //	public int deleteFollowingId() {
 //		
 //		

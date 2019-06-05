@@ -11,13 +11,13 @@ import com.kitri.dto.SocialDto;
  *
  */
 public class PageBean {
-	private int cntPerPage = 10;// 페이지별 보여줄 목록수
+	private int cntPerPage = 5;// 페이지별 보여줄 목록수
 	private int startRow = 1;// 시작행
 	private int endRow = 1;// 끝행
 	private List<SocialDto> list;// 목록
 	private int totalPage=1;// 총 페이지 수
 	private int totalCnt;// 총 게시글 수
-	private int cntPerPageGroup = 3;// 페이지그룹에 보여줄 페이지 수
+	private int cntPerPageGroup;// 페이지그룹에 보여줄 페이지 수
 	private int startPage;// 페이지그룹의 시작페이지
 	private int endPage;// 페이지 그룹의 끝 페이지
 	private String url;// 페이지 링크 클릭시 요청할 url

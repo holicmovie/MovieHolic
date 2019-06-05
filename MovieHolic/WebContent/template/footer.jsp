@@ -7,7 +7,6 @@
 					<div class="col-12">
 
 						<!-- Contact -->
-							<section class="contact">
 								<header>
 									<h3>Nisl turpis nascetur interdum?</h3>
 								</header>
@@ -18,7 +17,6 @@
 									<li><a href="#" ><span class="label"><img width="25vh" src="/MovieHolic/images/logout.png" style="margin-top: 2px;" title="logout"></span></a></li>
 									<li><a href="#" ><span class="label"><img width="25vh" src="/MovieHolic/images/upbtn.png" style="margin-top: 2px;" title="up"></span></a></li>
 								</ul>
-							</section>
 
 						<!-- Copyright -->
 							<div class="copyright">
