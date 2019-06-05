@@ -3,12 +3,12 @@ package com.kitri.admin.dto;
 import java.util.List;
 
 
-public class AdminPageDto {
+public class AdminNotifyPageDto {
 	
 	private int cntPerPage = 5; 	// 페이지별 보여줄 목록수
 	private int startRow = 1; 		// 시작행
 	private int endRow = 1; 		// 끝행
-	private List<AdminDto> list; 	// 목록
+	private List<NotifyDto> list; 	// 목록
 	private int totalPage = 1; 		// 총 페이지수
 	private int totalCnt; 			// 총 게시글 수
 	private int cntPerPageGroup; 	// 페이지그룹에 보여줄 페이지
@@ -18,7 +18,8 @@ public class AdminPageDto {
 	private int currentPage; 		//현재페이지
 	
 	
-	public AdminPageDto(int cntPerPage, int totalCnt, int cntPerPageGroup, int currentPage) {
+	
+	public AdminNotifyPageDto(int cntPerPage, int totalCnt, int cntPerPageGroup, int currentPage) {
 		super();
 		
 		this.cntPerPage = cntPerPage;
@@ -31,7 +32,7 @@ public class AdminPageDto {
 	}
 	
 	
-	public AdminPageDto(int cntPerPage, int totalCnt, int cntPerPageGroup, String url, int currentPage) {
+	public AdminNotifyPageDto(int cntPerPage, int totalCnt, int cntPerPageGroup, String url, int currentPage) {
 		super();
 		
 		this.cntPerPage = cntPerPage;
@@ -82,11 +83,11 @@ public class AdminPageDto {
 		this.endRow = endRow;
 	}
 
-	public List<AdminDto> getList() {
+	public List<NotifyDto> getList() {
 		return list;
 	}
 
-	public void setList(List<AdminDto> list) {
+	public void setList(List<NotifyDto> list) {
 		this.list = list;
 	}
 
@@ -148,7 +149,7 @@ public class AdminPageDto {
 
 	@Override
 	public String toString() {
-		return "AdminPageDto [cntPerPage=" + cntPerPage + ", startRow=" + startRow + ", endRow=" + endRow + ", list="
+		return "AdminNotifyPageDto [cntPerPage=" + cntPerPage + ", startRow=" + startRow + ", endRow=" + endRow + ", list="
 				+ list + ", totalPage=" + totalPage + ", totalCnt=" + totalCnt + ", cntPerPageGroup=" + cntPerPageGroup
 				+ ", startPage=" + startPage + ", endPage=" + endPage + ", url=" + url + ", currentPage=" + currentPage
 				+ "]";
