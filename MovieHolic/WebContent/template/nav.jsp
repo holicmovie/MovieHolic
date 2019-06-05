@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+  
 	<!-- Nav -->
 		<nav id="nav" style="z-index: 999;">
 			<ul>

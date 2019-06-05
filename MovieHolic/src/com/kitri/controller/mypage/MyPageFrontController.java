@@ -21,11 +21,16 @@ public class MyPageFrontController extends HttpServlet {
 			throws ServletException, IOException {
 		System.out.println("서블릿");
 		String page = request.getParameter("page");
-		String path = "";
-		String tab = request.getParameter("tab");
+		String path = "/page/mypage/mypage.jsp";
+		String cp = request.getParameter("followingpage");
+		
+		System.out.println(cp);
+
+		
+		
 		if ("mypage".equals(page)) {
+			path = "/page/mypage/mypage.jsp";
 			MoveUrl.forward(request, response, path);
-			
 		} else if ("preference".equals(page)) {
 			MoveUrl.forward(request, response, "/page/mypage/preference.jsp");
 		} else if ("wishlist".equals(page)) {
@@ -34,14 +39,28 @@ public class MyPageFrontController extends HttpServlet {
 			UserController.getUserController().ReviewList(request, response);
 			MoveUrl.forward(request, response, "/page/mypage/diary.jsp");
 		} else if ("social".equals(page)) {
-			path = MyPageController.getMyPageController().findFollowings(request, response);
+			path = MyPageController.getMyPageController().showFollowings(request, response, cp);
 			MoveUrl.forward(request, response, path);
 		} else if ("setting".equals(page)) {
 			MoveUrl.forward(request, response, "/page/mypage/setting.jsp");
-		} else if ("following".equals(tab)) {
-			path = MyPageController.getMyPageController().findFollowings(request, response);
-			MoveUrl.forward(request, response, path);
-		} else if("writereview".equals(page)) {
+		} 
+//		else if ( ) {
+//			path = MyPageController.getMyPageController().showFollowings(request, response, cp);
+//			MoveUrl.forward(request, response, path);
+//		}
+//		else if ("tab".equals(act)) {
+//			path = MyPageController.getMyPageController().deleteFollowings(request,response);
+//			
+//		}
+//		else if ("following".equals(tab)) {
+//			path = MyPageController.getMyPageController().findFollowings(request, response);
+//			MoveUrl.forward(request, response, path);
+//		} 
+//		else if ("following".equals(tab)) {
+//			path = MyPageController.getMyPageController().findFollowings(request, response);
+//			MoveUrl.forward(request, response, path);
+//		} 
+		else if("writereview".equals(page)) {
 			UserController.getUserController().ReviewRegister(request, response);
 			MoveUrl.forward(request, response, "/page/mypage/writereview.jsp");
 		} else if("diaryDetail".equals(page)) {
