@@ -74,10 +74,10 @@ String yesterday = f.format(c1.getTime()); 				// String으로 저장
 List<FilmDto> box = (List<FilmDto>)request.getAttribute("box");
 int rank=1;
 
-// 선호장르(액션) 영화 목록 결과
+// 선호장르 추천 영화 목록 결과
 List<FilmDto> favoritefilm = (List<FilmDto>)request.getAttribute("favoritefilm");
 
-// 로그인 세션
+// 로그인 세션 ##### 임시
 String id = "abc123";
 String name = "김무비";
 String genre = "액션"; // ##DB 게시판 table에서 select해야 함##
@@ -132,7 +132,7 @@ for(FilmDto dto : box){
 				<article style="background-color: rgb(3, 39, 49);">
 					<span class="font_light_small"><%=rank++%>위</span><br>
 					<a href="/MovieHolic/page/film/moviedetail.jsp" class="image featured">
-						<img src="<%=dto.getMovieImage()%>" alt="<%=dto.getMovieNm()%> 포스터" />
+						<img style="height:320px;" src="<%=dto.getMovieImage()%>" alt="<%=dto.getMovieNm()%> 포스터" />
 					</a>
 					<header>
 						<h5>
@@ -174,9 +174,9 @@ for(FilmDto dto : box){
 <%
 for(FilmDto dto : favoritefilm){
 %>					
-						<article style="background-color: rgb(3, 39, 49);">
+						<article style="margin: ; height: 410px; background-color: rgb(3, 39, 49);">
 							<a href="#" class="image featured">
-								<img src="<%=dto.getMovieImage()%>" alt="<%=dto.getMovieNm()%> 포스터" />
+								<img style="height:320px;" src="<%=dto.getMovieImage()%>" alt="<%=dto.getMovieNm()%> 포스터" />
 							</a>
 							<header>
 								<h5>
@@ -212,8 +212,9 @@ for(FilmDto dto : favoritefilm){
 			<div class="reel">
 
 				<article style="background-color: rgb(3, 39, 49);">
-					<a href="#" class="image featured"><img
-						src="images/brother.jpg" alt="" /></a>
+					<a href="#" class="image featured">
+						<img style="height:320px;" src="images/brother.jpg" alt="" />
+					</a>
 					<header>
 						<h5>
 							<a href="#">나의 특별한 형제</a>
