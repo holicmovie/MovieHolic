@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kitri.admin.dto.AdminDto;
+import com.kitri.admin.dto.AdminNotifyPageDto;
 import com.kitri.admin.dto.AdminPageDto;
+import com.kitri.admin.dto.NotifyDto;
 import com.kitri.admin.service.AdminService;
 
 public class AdminController {
@@ -28,19 +30,20 @@ public class AdminController {
 		return adminController;
 	}
 
+	// 회원게시물 페이징처리
 	public String selectByUserList(HttpServletRequest request, HttpServletResponse response, int cnt) {
 
 		// 요청전달 데이터 없으면 1페이지
 		String cp = request.getParameter("currentPage");
 
 		int currentPage = 1; // 보여줄 현재 페이지.
-		
-		System.out.println("cp = " + cp);
-		
+
+		// System.out.println("cp = " + cp);
+
 		if (cp != null) {
 			currentPage = Integer.parseInt(cp);
 		}
-		
+
 		int cntPerPage = 5; // 페이지별 보여줄 목록수
 
 		int totalCnt = AdminService.getAdminService().getTotalCnt(cnt);
@@ -50,7 +53,7 @@ public class AdminController {
 
 		AdminPageDto ap = new AdminPageDto(cntPerPage, totalCnt, cntPerPageGroup, url, currentPage);
 
-		//System.out.println(ap.getStartRow() + "   end : " + ap.getEndRow());
+		// System.out.println(ap.getStartRow() + " end : " + ap.getEndRow());
 
 		List<AdminDto> list = AdminService.getAdminService().findByRows(ap.getStartRow(), ap.getEndRow(), cnt);
 
@@ -58,7 +61,7 @@ public class AdminController {
 		request.setAttribute("ap", ap);
 
 		String path = "/page/admin/management.jsp";
-		
+
 		if (cnt == 1) {
 			path = "/page/admin/mgAlllist.jsp";
 		} else if (cnt == 2) {
@@ -70,9 +73,95 @@ public class AdminController {
 		}
 
 		return path;
-		
+
 	}
+
+	// 신고게시물 페이징처리
+	public String NFselectByList(HttpServletRequest request, HttpServletResponse response) {
+
+		// 요청전달 데이터 없으면 1페이지
+		String cp = request.getParameter("currentPage");
+
+//		System.out.println("cp = " + cp);
+		
+		int currentPage = 1; // 보여줄 현재 페이지.
+
+		if (cp != null) {
+			currentPage = Integer.parseInt(cp);
+		}
+
+		int cntPerPage = 5; // 페이지별 보여줄 목록수
+
+		int totalCnt = AdminService.getAdminService().NFselectTotalCnt();
+
+		int cntPerPageGroup = 5;
+		String url = "/MovieHolic/admin";
+
+		AdminNotifyPageDto np = new AdminNotifyPageDto(cntPerPage, totalCnt, cntPerPageGroup, url, currentPage);
+
+//		System.out.println(np.getStartRow() + "   end : " + np.getEndRow());
+
+		List<NotifyDto> list = AdminService.getAdminService().NFselectByRows(np.getStartRow(), np.getEndRow());
+
+		np.setList(list);
+
+		request.setAttribute("np", np);
+
+		String path = "/page/admin/npAlllist.jsp";
+
+		return path;
+
+	}
+
 	
 	
 	
+	
+	
+	
+	
+	// 처음 전체 항목 띄워줄때
+
+	public String NFandAll(HttpServletRequest request, HttpServletResponse response, int cnt) {
+
+		// 요청전달 데이터 없으면 1페이지
+		String cp = request.getParameter("currentPage");
+
+		int currentPage = 1; // 보여줄 현재 페이지.
+
+		int cntPerPage = 5; // 페이지별 보여줄 목록수
+
+		int totalCnt = AdminService.getAdminService().getTotalCnt(cnt);
+
+		int cntPerPageGroup = 5;
+
+//				String url = "/MovieHolic/admin"; // 한번만 보여주고 그안에서 돌아갈 것이라 필요없음
+
+		AdminPageDto ap = new AdminPageDto(cntPerPage, totalCnt, cntPerPageGroup, currentPage);
+
+		List<AdminDto> list = AdminService.getAdminService().findByRows(ap.getStartRow(), ap.getEndRow(), cnt);
+
+		ap.setList(list);
+		request.setAttribute("ap", ap);
+
+//				----------------------------------------------------------------------------------------------------
+
+		int totalCnt2 = AdminService.getAdminService().NFselectTotalCnt();
+
+		AdminNotifyPageDto np = new AdminNotifyPageDto(cntPerPage, totalCnt2, cntPerPageGroup, currentPage);
+
+		List<NotifyDto> list2 = AdminService.getAdminService().NFselectByRows(np.getStartRow(), np.getEndRow());
+
+		np.setList(list2);
+
+		request.setAttribute("np", np);
+
+		//System.out.println(np.getList());
+
+		String path = "/page/admin/management.jsp";
+
+		return path;
+
+	}
+
 }

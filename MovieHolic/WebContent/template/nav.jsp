@@ -25,9 +25,9 @@
 					</ul>
 				</li>
 				<li>
-					<a href="/MovieHolic/admin">MANAGEMENT</a>
+					<a href="/MovieHolic/admin?act=alllist&notify=notify">MANAGEMENT</a>
 					<ul>
-						<li><a href="/MovieHolic/admin">MANAGEMENT</a></li>
+						<li><a href="/MovieHolic/admin?act=alllist&notify=notify">MANAGEMENT</a></li>
 						<li><a href="/MovieHolic/page/admin/statistics.jsp">STATISTICS</a></li>
 					</ul>
 				</li>
