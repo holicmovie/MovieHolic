@@ -24,7 +24,7 @@ public class FilmDao {
 	// 1
 	// <장르별 추천 영화 10개 select> 메소드
 	// 네이버 별점순
-	public List<FilmDto> selectByCategory(String category) {
+	public List<FilmDto> selectFilmsByCategory(String category) {
 		
 		List<FilmDto> list = new ArrayList<FilmDto>();
 		
@@ -78,9 +78,11 @@ public class FilmDao {
 	
 	// 2
 	// <장르별 영화 목록 select> 메소드
-	// 이름 오름차순
-	public List<FilmDto> selectFilm(String category) {
+	//  개봉연도 최신순 & 이름 오름차순
+	public List<FilmDto> selectFilmListByCategory(String category) {
 		
+		
+		System.out.println("FilmDao : 파라미터로 보내 온 장르는 " + category);
 		// TODO
 		// FilmDao : 장르별 영화 목록 select
 		List<FilmDto> list = new ArrayList<FilmDto>();
@@ -94,14 +96,21 @@ public class FilmDao {
 			conn = DBConnection.makeConnection();
 			
 			StringBuffer sql = new StringBuffer();
-			sql.append("select movieName, movieCodeYoung, movieCodeNaver, movieImage, category, prdtYear, openYear, starPointNaver \\n");
+			sql.append("select movieName, movieCodeYoung, movieCodeNaver, movieImage, category, prdtYear, openYear, starPointNaver \n");
 			sql.append("from mh_films \n");
 			sql.append("where category like '%'||?||'%' \n");
 			sql.append("and rownum < 11 \n");
-			sql.append("order by starpointnaver desc");
+			sql.append("order by openYear desc");
 			
 			pstmt = conn.prepareStatement(sql.toString());
-			pstmt.setString(1, category);
+			
+			// 장르 = 전체
+			if(category == null) {
+				pstmt.setString(1, "");
+			}else {
+				// 장르 = 선택 장르
+				pstmt.setString(1, category);
+			}
 			
 			rs = pstmt.executeQuery();
 			
