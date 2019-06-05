@@ -37,9 +37,9 @@ public class FilmController {
 		// 박스오피스 set 		(C -> FC)
 		request.setAttribute("box", list);
 		
-		// 경로 return 		(C -> FC)
 		return path;
 	}
+	
 	
 	// 2
 	// 선호 장르 영화 목록 get
@@ -53,20 +53,39 @@ public class FilmController {
 		
 	}
 	
+	
 	// 3
+	// 장르별 영화 목록 get
+	public String getFilmList(HttpServletRequest request, HttpServletResponse response) {
+
+		String path = "/page/film/result/filmlistresult.jsp";
+		
+		String category = request.getParameter("category"); // 선택된 장르 메뉴
+		
+		// 장르별 영화 목록 get
+		List<FilmDto> list = FilmService.getFilmService().getFilmList(category);
+		// 장르별 영화 목록 set
+		request.setAttribute("filmlist", list);
+		
+		return path;
+	}
+
+	
+	// 4
 	// 검색된 영화 목록 get
 	public String getSearchedFilmList(HttpServletRequest request, HttpServletResponse response) {
-		
+			
 		String path = "/page/film/result/searchfilmresult.jsp";
-		
+			
 		String srchKey = request.getParameter("srchKey"); // 검색어
 
 		// 검색 결과 목록 get
 		List<FilmDto> list = FilmService.getFilmService().getSearchedFilmList(srchKey);
 		// 검색 결과 목록 set
 		request.setAttribute("searchedFilmList", list);
-		
+			
 		return path;
 	}
-
+	
+	
 }

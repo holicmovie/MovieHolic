@@ -126,16 +126,22 @@ public class FilmService {
 		public List<FilmDto> getFavoriteFilm(String category) {
 			
 			// #1 DAO 호출
-			return FilmDao.getFilmDao().selectByCategory(category);
+			return FilmDao.getFilmDao().selectFilmsByCategory(category);
 
 		}
 		
 		// 3
 		// <장르별 영화 목록 출력> 메소드
 		// : 선택한 장르별 영화 목록 결과 전체 (개봉연도 최신순 & 이름 오름차순)
+		public List<FilmDto> getFilmList(String category) {
+		
+			// #1 DAO 호출
+			return FilmDao.getFilmDao().selectFilmListByCategory(category);
+		}
 		
 		
-		// 3
+		
+		// 4
 		// <영화 검색 목록 출력> 메소드
 		// : 검색어로 검색한 영화 목록 결과 전체 (개봉연도 최신순 & 이름 오름차순)
 		//   * select
@@ -145,6 +151,7 @@ public class FilmService {
 			// #1 DAO 호출
 			return FilmDao.getFilmDao().selectBySrchKey(srchKey);
 		}
+		
 		
 		
 		

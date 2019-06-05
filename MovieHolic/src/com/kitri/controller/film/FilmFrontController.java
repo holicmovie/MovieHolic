@@ -21,34 +21,45 @@ public class FilmFrontController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		System.out.println("FilmFrontConteroller : 서블릿 들어옴");
+		
 		String act = request.getParameter("act"); 			// *파라미터 변수
 		String path = "/index.jsp"; 			  			// *기본 경로
 
 		// *act에 따른 경로 이동
-		// 1
+		// #1
 		// Home 눌릴때 || localhost/MovieHolic/film 링크 검색 시(첫 화면)
 		if ("showBox".equals(act)||act==null) {
-			// 메인 페이지 띄우기
 			// 경로 get 				 		  		   	  (C -> FC)
 			// request(setted 박스오피스 & 추천영화목록) get    (C -> FC)
 			path = FilmController.getUserController().getBoxOffice(request, response);	// attr1 : box
 			FilmController.getUserController().getFavoriteFilm(request, response);		// attr2 : favoritefilm
 			
-			// 경로로 go (FC -> V)
 			MoveUrl.forward(request, response, path);
 		}
-		// 2
+		// #2
+		// 영화 목록 출력
+		else if ("viewfilmlist".equals(act)) {
+			System.out.println("FilmFrontConteroller : act=viewfilmlist");
+
+			// 경로 get 				 		  		(C -> FC)
+			// request(setted 장르별 영화목록) get    	(C -> FC)
+			path = FilmController.getUserController().getFilmList(request, response);	// attr : filmlist
+			
+			MoveUrl.forward(request, response, path);
+		}
+		// #3
 		// 영화 검색
 		else if ("searchFilm".equals(act)) {
-			
-			// 메인 페이지 띄우기
 			// 경로 get 				 		  		(C -> FC)
 			// request(setted 검색된 영화목록) get    	(C -> FC)
-			path = FilmController.getUserController().getSearchedFilmList(request, response);
+			path = FilmController.getUserController().getSearchedFilmList(request, response); // attr : searchedFilmList
 			
 			MoveUrl.forward(request, response, path);
-		}
+		} // else if end
 
+		
+		
 	} //doGet end
 
 	
