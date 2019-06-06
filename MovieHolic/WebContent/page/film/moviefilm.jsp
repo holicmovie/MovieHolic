@@ -1,3 +1,4 @@
+<%@page import="java.util.List, com.kitri.dto.FilmDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/template/header.jsp"%>
@@ -13,13 +14,22 @@ $(function(){
 	    if (event.which == 13 ) {
 			if(searchFilm.val() != "") {	<%-- 검색어가 공백이 아닌 경우 srchKey로 받아옴 --%>
 				var srchKey = searchFilm.val();
-				location.href = "/MovieHolic/page/film?act=searchFilm&srchKey=" + srchKey;
+				location.href = "/MovieHolic/film?act=searchFilm&srchKey=" + srchKey;
 			}
 	    }
 	});
 	return false;
 });
 </script>
+
+<%
+// 장르별 영화 목록 결과
+List<FilmDto> favoritefilm = (List<FilmDto>)request.getAttribute("filmlist");
+
+int films = favoritefilm.size(); 	// 영화 총 개수
+int lines = films / 5; 				// 목록 줄 개수
+
+%>
 
 </head>
 <body class="left-sidebar is-preload" style="background-color: black;">
@@ -40,13 +50,15 @@ $(function(){
 
 			</section>
 		</div>
-		<section class="carousel"
-			style="background-color: rgb(3, 39, 49); padding: 1.5em 0 0 0;">
+		
+		<section class="carousel" style="background-color: rgb(3, 39, 49); padding: 1.5em 0 0 0;">
 			<div class="reel">
+			
 				<article style="background-color: rgb(3, 39, 49); color: white;">
 					<a href="/MovieHolic/page/film/moviedetail.jsp"
-						class="image featured"><img
-						src="/MovieHolic/images/avengers4.jpg" alt="" /></a>
+						class="image featured">
+						<img src="/MovieHolic/images/avengers4.jpg" alt="" />
+					</a>
 					<header>
 						<h5>
 							<a href="/MovieHolic/page/film/moviedetail.jsp"
@@ -55,100 +67,14 @@ $(function(){
 					</header>
 				</article>
 
-				<article style="background-color: rgb(3, 39, 49); color: white;">
-					<a href="#" class="image featured"><img
-						src="/MovieHolic/images/brother.jpg" alt="" /></a>
-					<header>
-						<h5>
-							<a href="#" style="color: white;">나의 특별한 형제</a>
-						</h5>
-					</header>
-				</article>
-
-				<article style="background-color: rgb(3, 39, 49); color: white;">
-					<a href="#" class="image featured"><img
-						src="/MovieHolic/images/capma.jpg" alt="" /></a>
-					<header>
-						<h5>
-							<a href="#" style="color: white;">캡틴 마블</a>
-						</h5>
-					</header>
-				</article>
-
-				<article style="background-color: rgb(3, 39, 49); color: white;">
-					<a href="#" class="image featured"><img
-						src="/MovieHolic/images/watching.jpg" alt="" /></a>
-					<header>
-						<h5>
-							<a href="#" style="color: white;">왓칭</a>
-						</h5>
-					</header>
-				</article>
-
-				<article style="background-color: rgb(3, 39, 49); color: white;">
-					<a href="#" class="image featured"><img
-						src="/MovieHolic/images/money.jpg" alt="" /></a>
-					<header>
-						<h5>
-							<a href="#" style="color: white;">돈</a>
-						</h5>
-					</header>
-				</article>
-
-				<article style="background-color: rgb(3, 39, 49); color: white;">
-					<a href="#" class="image featured"><img
-						src="/MovieHolic/images/lalaland.jpg" alt="" /></a>
-					<header>
-						<h5>
-							<a href="#" style="color: white;">라라랜드</a>
-						</h5>
-					</header>
-				</article>
-
-				<article style="background-color: rgb(3, 39, 49); color: white;">
-					<a href="#" class="image featured"><img
-						src="/MovieHolic/images/girlcops.jpg" alt="" /></a>
-					<header>
-						<h5>
-							<a href="#" style="color: white;">걸캅스</a>
-						</h5>
-					</header>
-				</article>
-
-				<article style="background-color: rgb(3, 39, 49); color: white;">
-					<a href="#" class="image featured"><img
-						src="/MovieHolic/images/mi.jpg" alt="" /></a>
-					<header>
-						<h5>
-							<a href="#" style="color: white;">미성년</a>
-						</h5>
-					</header>
-				</article>
-
-				<article style="background-color: rgb(3, 39, 49); color: white;">
-					<a href="#" class="image featured"><img
-						src="/MovieHolic/images/benisback.jpg" alt="" /></a>
-					<header>
-						<h5>
-							<a href="#" style="color: white;">벤이즈백</a>
-						</h5>
-					</header>
-				</article>
-
-				<article style="background-color: rgb(3, 39, 49); color: white;">
-					<a href="#" class="image featured"><img
-						src="/MovieHolic/images/tempimg/zootopia.jpg" alt="" /></a>
-					<header>
-						<h5>
-							<a href="#" style="color: white;">주토피아</a>
-						</h5>
-					</header>
-				</article>
-
 			</div>
 		</section>
+		
 		<hr style="top: 1em; border-top: 5px solid rgba(255, 255, 255);">
 		<div>
+		
+		<!---------------------------------------------- 검색 ----------------------------------------------------->
+		
 			<div class="col-lg-9 col-2-mobile"
 				style="float: right; margin-right: 2em; border-left: 5px solid; border-color: white;">
 
@@ -161,262 +87,51 @@ $(function(){
 							placeholder="제목으로 검색">
 					</div>
 				</div>
-				<div class="row"
-					style="margin-top: 0px; margin-left: 0px; margin-right: 0px;">
-					<div class="col-lg-2 col-4-mobile"
-						style="float: left; margin: 0.5em 0.5em 0.5em 0.5em; padding: 2px; border: 2px solid; border-color: white;">
-						<a href="/MovieHolic/page/film/moviedetail.jsp"
-							class="image featured" style="margin: 0;"><img
-							src="/MovieHolic/images/brother.jpg" alt=""></a>
-						<header
-							style="text-align: center; background-color: white; margin: 0;">
-							<h6 style="background-color: black;">
-								<a href="/MovieHolic/images/brother.jpg">나의 특별한 형제</a>
-							</h6>
-						</header>
-					</div>
-					<div class="col-lg-2 col-4-mobile"
-						style="float: left; margin: 0.5em 0.5em 0.5em 0.5em; padding: 2px; border: 2px solid; border-color: white;">
-
-						<a href="/MovieHolic/page/film/moviedetail.jsp"
-							class="image featured" style="margin: 0;"><img
-							src="/MovieHolic/images/sm-avengers4.jpg" alt=""></a>
-						<header
-							style="text-align: center; background-color: white; margin: 0;">
-							<h6 style="background-color: black;">
-								<a href="/MovieHolic/page/film/moviedetail.jsp">어벤져스 : 엔드게임</a>
-							</h6>
-						</header>
-					</div>
-					<div class="col-lg-2 col-4-mobile"
-						style="float: left; margin: 0.5em 0.5em 0.5em 0.5em; padding: 2px; border: 2px solid; border-color: white;">
-						<a href="/MovieHolic/page/film/moviedetail.jsp"
-							class="image featured" style="margin: 0;"><img
-							src="/MovieHolic/images/money.jpg" alt=""></a>
-						<header
-							style="text-align: center; background-color: white; margin: 0;">
-							<h6 style="background-color: black;">
-								<a href="/MovieHolic/page/film/moviedetail.jsp">돈</a>
-							</h6>
-						</header>
-					</div>
-					<div class="col-lg-2 col-4-mobile"
-						style="float: left; margin: 0.5em 0.5em 0.5em 0.5em; padding: 2px; border: 2px solid; border-color: white;">
-						<a href="/MovieHolic/page/film/moviedetail.jsp"
-							class="image featured" style="margin: 0;"><img
-							src="/MovieHolic/images/watching.jpg" alt=""></a>
-						<header
-							style="text-align: center; background-color: white; margin: 0;">
-							<h6 style="background-color: black;">
-								<a href="/MovieHolic/page/film/moviedetail.jsp">왓칭</a>
-							</h6>
-						</header>
-					</div>
-					<div class="col-lg-2 col-4-mobile"
-						style="float: left; margin: 0.5em 0.5em 0.5em 0.5em; padding: 2px; border: 2px solid; border-color: white;">
-						<a href="/MovieHolic/page/film/moviedetail.jsp"
-							class="image featured" style="margin: 0;"><img
-							src="/MovieHolic/images/money.jpg" alt=""></a>
-						<header
-							style="text-align: center; background-color: white; margin: 0;">
-							<h6 style="background-color: black;">
-								<a href="/MovieHolic/page/film/moviedetail.jsp">돈</a>
-							</h6>
-						</header>
-					</div>
-				</div>
-				<div class="row" style="margin-top: 0px; margin-left: 0px; margin-right: 0px;">
-				<div class="col-lg-2 col-3-mobile"
-						style="float: left; margin: 0.5em 0.5em 0.5em 0.5em; padding: 2px; border: 2px solid; border-color: white;">
-						<a href="/MovieHolic/page/film/moviedetail.jsp"
-							class="image featured" style="margin: 0;"><img
-							src="/MovieHolic/images/money.jpg" alt=""></a>
-						<header
-							style="text-align: center; background-color: white; margin: 0;">
-							<h6 style="background-color: black;">
-								<a href="/MovieHolic/page/film/moviedetail.jsp">돈</a>
-							</h6>
-						</header>
-					</div>
-					<div class="col-lg-2 col-3-mobile"
-						style="float: left; margin: 0.5em 0.5em 0.5em 0.5em; padding: 2px; border: 2px solid; border-color: white;">
-						<a href="/MovieHolic/page/film/moviedetail.jsp"
-							class="image featured" style="margin: 0;"><img
-							src="/MovieHolic/images/brother.jpg" alt=""></a>
-						<header
-							style="text-align: center; background-color: white; margin: 0;">
-							<h6 style="background-color: black;">
-								<a href="/MovieHolic/images/brother.jpg">나의 특별한 형제</a>
-							</h6>
-						</header>
-					</div>
-					<div class="col-lg-2 col-3-mobile"
-						style="float: left; margin: 0.5em 0.5em 0.5em 0.5em; padding: 2px; border: 2px solid; border-color: white;">
-
-						<a href="/MovieHolic/page/film/moviedetail.jsp"
-							class="image featured" style="margin: 0;"><img
-							src="/MovieHolic/images/sm-avengers4.jpg" alt=""></a>
-						<header
-							style="text-align: center; background-color: white; margin: 0;">
-							<h6 style="background-color: black;">
-								<a href="/MovieHolic/page/film/moviedetail.jsp">어벤져스 : 엔드게임</a>
-							</h6>
-						</header>
-					</div>
-					<div class="col-lg-2 col-3-mobile"
-						style="float: left; margin: 0.5em 0.5em 0.5em 0.5em; padding: 2px; border: 2px solid; border-color: white;">
-						<a href="/MovieHolic/page/film/moviedetail.jsp"
-							class="image featured" style="margin: 0;"><img
-							src="/MovieHolic/images/watching.jpg" alt=""></a>
-						<header
-							style="text-align: center; background-color: white; margin: 0;">
-							<h6 style="background-color: black;">
-								<a href="/MovieHolic/page/film/moviedetail.jsp">왓칭</a>
-							</h6>
-						</header>
-					</div>
-					<div class="col-lg-2 col-3-mobile"
-						style="float: left; margin: 0.5em 0.5em 0.5em 0.5em; padding: 2px; border: 2px solid; border-color: white;">
-						<a href="/MovieHolic/page/film/moviedetail.jsp"
-							class="image featured" style="margin: 0;"><img
-							src="/MovieHolic/images/money.jpg" alt=""></a>
-						<header
-							style="text-align: center; background-color: white; margin: 0;">
-							<h6 style="background-color: black;">
-								<a href="/MovieHolic/page/film/moviedetail.jsp">돈</a>
-							</h6>
-						</header>
-					</div>
-				</div>
-				<div class="row" style="margin-top: 0px; margin-left: 0px; margin-right: 0px;">
-				<div class="col-lg-2 col-3-mobile"
-						style="float: left; margin: 0.5em 0.5em 0.5em 0.5em; padding: 2px; border: 2px solid; border-color: white;">
-						<a href="/MovieHolic/page/film/moviedetail.jsp"
-							class="image featured" style="margin: 0;"><img
-							src="/MovieHolic/images/money.jpg" alt=""></a>
-						<header
-							style="text-align: center; background-color: white; margin: 0;">
-							<h6 style="background-color: black;">
-								<a href="/MovieHolic/page/film/moviedetail.jsp">돈</a>
-							</h6>
-						</header>
-					</div>
-					<div class="col-lg-2 col-3-mobile"
-						style="float: left; margin: 0.5em 0.5em 0.5em 0.5em; padding: 2px; border: 2px solid; border-color: white;">
-						<a href="/MovieHolic/page/film/moviedetail.jsp"
-							class="image featured" style="margin: 0;"><img
-							src="/MovieHolic/images/brother.jpg" alt=""></a>
-						<header
-							style="text-align: center; background-color: white; margin: 0;">
-							<h6 style="background-color: black;">
-								<a href="/MovieHolic/images/brother.jpg">나의 특별한 형제</a>
-							</h6>
-						</header>
-					</div>
-					<div class="col-lg-2 col-3-mobile"
-						style="float: left; margin: 0.5em 0.5em 0.5em 0.5em; padding: 2px; border: 2px solid; border-color: white;">
-
-						<a href="/MovieHolic/page/film/moviedetail.jsp"
-							class="image featured" style="margin: 0;"><img
-							src="/MovieHolic/images/sm-avengers4.jpg" alt=""></a>
-						<header
-							style="text-align: center; background-color: white; margin: 0;">
-							<h6 style="background-color: black;">
-								<a href="/MovieHolic/page/film/moviedetail.jsp">어벤져스 : 엔드게임</a>
-							</h6>
-						</header>
-					</div>
-					<div class="col-lg-2 col-3-mobile"
-						style="float: left; margin: 0.5em 0.5em 0.5em 0.5em; padding: 2px; border: 2px solid; border-color: white;">
-						<a href="/MovieHolic/page/film/moviedetail.jsp"
-							class="image featured" style="margin: 0;"><img
-							src="/MovieHolic/images/watching.jpg" alt=""></a>
-						<header
-							style="text-align: center; background-color: white; margin: 0;">
-							<h6 style="background-color: black;">
-								<a href="/MovieHolic/page/film/moviedetail.jsp">왓칭</a>
-							</h6>
-						</header>
-					</div>
-					<div class="col-lg-2 col-3-mobile"
-						style="float: left; margin: 0.5em 0.5em 0.5em 0.5em; padding: 2px; border: 2px solid; border-color: white;">
-						<a href="/MovieHolic/page/film/moviedetail.jsp"
-							class="image featured" style="margin: 0;"><img
-							src="/MovieHolic/images/money.jpg" alt=""></a>
-						<header
-							style="text-align: center; background-color: white; margin: 0;">
-							<h6 style="background-color: black;">
-								<a href="/MovieHolic/page/film/moviedetail.jsp">돈</a>
-							</h6>
-						</header>
-					</div>
-				</div>
-				<div class="row" style="margin-top: 0px; margin-left: 0px; margin-right: 0px;">
-				<div class="col-lg-2 col-3-mobile"
-						style="float: left; margin: 0.5em 0.5em 0.5em 0.5em; padding: 2px; border: 2px solid; border-color: white;">
-						<a href="/MovieHolic/page/film/moviedetail.jsp"
-							class="image featured" style="margin: 0;"><img
-							src="/MovieHolic/images/money.jpg" alt=""></a>
-						<header
-							style="text-align: center; background-color: white; margin: 0;">
-							<h6 style="background-color: black;">
-								<a href="/MovieHolic/page/film/moviedetail.jsp">돈</a>
-							</h6>
-						</header>
-					</div>
-					<div class="col-lg-2 col-3-mobile"
-						style="float: left; margin: 0.5em 0.5em 0.5em 0.5em; padding: 2px; border: 2px solid; border-color: white;">
-						<a href="/MovieHolic/page/film/moviedetail.jsp"
-							class="image featured" style="margin: 0;"><img
-							src="/MovieHolic/images/brother.jpg" alt=""></a>
-						<header
-							style="text-align: center; background-color: white; margin: 0;">
-							<h6 style="background-color: black;">
-								<a href="/MovieHolic/images/brother.jpg">나의 특별한 형제</a>
-							</h6>
-						</header>
-					</div>
-					<div class="col-lg-2 col-3-mobile"
-						style="float: left; margin: 0.5em 0.5em 0.5em 0.5em; padding: 2px; border: 2px solid; border-color: white;">
-
-						<a href="/MovieHolic/page/film/moviedetail.jsp"
-							class="image featured" style="margin: 0;"><img
-							src="/MovieHolic/images/sm-avengers4.jpg" alt=""></a>
-						<header
-							style="text-align: center; background-color: white; margin: 0;">
-							<h6 style="background-color: black;">
-								<a href="/MovieHolic/page/film/moviedetail.jsp">어벤져스 : 엔드게임</a>
-							</h6>
-						</header>
-					</div>
-					<div class="col-lg-2 col-3-mobile"
-						style="float: left; margin: 0.5em 0.5em 0.5em 0.5em; padding: 2px; border: 2px solid; border-color: white;">
-						<a href="/MovieHolic/page/film/moviedetail.jsp"
-							class="image featured" style="margin: 0;"><img
-							src="/MovieHolic/images/watching.jpg" alt=""></a>
-						<header
-							style="text-align: center; background-color: white; margin: 0;">
-							<h6 style="background-color: black;">
-								<a href="/MovieHolic/page/film/moviedetail.jsp">왓칭</a>
-							</h6>
-						</header>
-					</div>
-					<div class="col-lg-2 col-3-mobile"
-						style="float: left; margin: 0.5em 0.5em 0.5em 0.5em; padding: 2px; border: 2px solid; border-color: white;">
-						<a href="/MovieHolic/page/film/moviedetail.jsp"
-							class="image featured" style="margin: 0;"><img
-							src="/MovieHolic/images/money.jpg" alt=""></a>
-						<header
-							style="text-align: center; background-color: white; margin: 0;">
-							<h6 style="background-color: black;">
-								<a href="/MovieHolic/page/film/moviedetail.jsp">돈</a>
-							</h6>
-						</header>
-					</div>
-				</div>
+		<!---------------------------------------------- 검색 ----------------------------------------------------->
 				
-					<%-- float clear용 빈 div --%>
-					<div style="clear: both;"></div>
+		
+		<!--------------------------------------------- 영화 목록 ----------------------------------------------------->
+		
+				<!-- 목록 한 줄 start-->
+				<div class="row" style="margin-top: 0px; margin-left: 0px; margin-right: 0px;">
+				
+	<%
+	for(int i = 0; i < films; i++) {
+	%>
+					<!-- 총 영화 5개 -->
+					<!-- 영화 한 개 start -->
+					<div class="col-lg-2 col-4-mobile"
+						style="float: left; margin: 0.5em 0.5em 0.5em 0.5em; padding: 2px; border: 2px solid; border-color: white;">
+						
+						<a href="<%=root%>/page/film?act=viewfilmdetail&<%=favoritefilm.get(i).getMovieCdYoung()%>" class="image featured" style="margin: 0;">
+							<img src="<%=favoritefilm.get(i).getMovieImage()%>" alt="<%=favoritefilm.get(i).getMovieNm()%> 포스터 이미지">
+						</a>
+						
+						<header style="text-align: center; background-color: white; margin: 0;">
+							<h6 style="background-color: black;">
+								<a href="<%=root%>/page/film?act=viewfilmdetail&<%=favoritefilm.get(i).getMovieCdYoung()%>"><%=favoritefilm.get(i).getMovieNm()%></a>
+							</h6>
+						</header>
+						
+					</div>
+					<!-- 영화 한 개 end -->
+	<%
+	}
+	%>
+				</div>
+				<!-- 목록 한 줄 end -->
+
+			
+	<!--------------------------------------------- 영화 목록 ----------------------------------------------------->
+				
+				
+				
+				
+	<!-------------------------------------------- 페이징 처리----------------------------------------------------->
+	
+				<%-- float clear용 빈 div --%>
+				<div style="clear: both;"></div>
+				
 				<div class="col-lg-12" style="padding: 0 0 0 0;">
 				<div style="float: left; padding-left: 1em;">
 					<button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button>
@@ -441,32 +156,41 @@ $(function(){
 				</div>
 			</div>
 
-			<div class="col-lg-2 col-1-mobile"
-				style="width: 20%; float: right; text-align: left; margin: 1em 0 0 10px;">
+	<!-------------------------------------------- 페이징 처리----------------------------------------------------->
+
+
+	<!--------------------------------------------- 장르 분류----------------------------------------------------->
+
+			<div class="col-lg-2 col-1-mobile" style="width: 20%; float: right; text-align: left; margin: 1em 0 0 10px;">
 				<ul style="list-style-type: none;">
 					<li><h3>
 							<strong>장르 분류</strong>
-						</h3></li>
-					<li><a href="#" style="color: white;">전체</a></li>
-					<li><a href="#" style="color: white;">드라마</a></li>
-					<li><a href="#" style="color: white;">판타지</a></li>
-					<li><a href="#" style="color: white;">공포</a></li>
-					<li><a href="#" style="color: white;">멜로/애정/로맨스</a></li>
-					<li><a href="#" style="color: white;">모험</a></li>
-					<li><a href="#" style="color: white;">스릴러</a></li>
-					<li><a href="#" style="color: white;">느와르</a></li>
-					<li><a href="#" style="color: white;">다큐멘터리</a></li>
-					<li><a href="#" style="color: white;">코미디</a></li>
-					<li><a href="#" style="color: white;">가족</a></li>
-					<li><a href="#" style="color: white;">미스터리</a></li>
-					<li><a href="#" style="color: white;">전쟁</a></li>
+						</h3>
+					</li>
+					
+					<li><a href="<%=root%>/page/film?act=viewfilmlist" style="color: white;">전체</a></li>
+					<li><a href="<%=root%>/page/film?act=viewfilmlist&category=드라마" style="color: white;">드라마</a></li>
+					<li><a href="<%=root%>/page/film?act=viewfilmlist&category=판타지" style="color: white;">판타지</a></li>
+					<li><a href="<%=root%>/page/film?act=viewfilmlist&category=공포" style="color: white;">공포</a></li>
+					<li><a href="<%=root%>/page/film?act=viewfilmlist&category=로맨스" style="color: white;">로맨스</a></li>
+					<li><a href="<%=root%>/page/film?act=viewfilmlist&category=모험" style="color: white;">모험</a></li>
+					<li><a href="<%=root%>/page/film?act=viewfilmlist&category=스릴러" style="color: white;">스릴러</a></li>
+					<li><a href="<%=root%>/page/film?act=viewfilmlist&category=느와르" style="color: white;">느와르</a></li>
+					<li><a href="<%=root%>/page/film?act=viewfilmlist&category=다큐멘터리" style="color: white;">다큐멘터리</a></li>
+					<li><a href="<%=root%>/page/film?act=viewfilmlist&category=코미디" style="color: white;">코미디</a></li>
+					<li><a href="<%=root%>/page/film?act=viewfilmlist&category=가족" style="color: white;">가족</a></li>
+					<li><a href="<%=root%>/page/film?act=viewfilmlist&category=미스터리" style="color: white;">미스터리</a></li>
+					<li><a href="<%=root%>/page/film?act=viewfilmlist&category=전쟁" style="color: white;">전쟁</a></li>
 				</ul>
 			</div>
+			
+		<!--------------------------------------------- 장르 분류----------------------------------------------------->
+	
+	
+	
 		</div>
-		
-				
-		
-	</div>
+			
+	</div> <!-- page-wrapper end -->
 
 
 
