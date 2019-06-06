@@ -1,10 +1,7 @@
 package com.kitri.service.film;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -31,6 +28,8 @@ public class FilmService {
 		
 		// [메소드]
 
+		// ------------------------------------------------------- [ index.jsp ] -------------------------------------------------------
+		
 		// 1
 		// <일별 박스 오피스 영화 출력> 메소드
 		// : 영진원 일별 박스오피스 api + 네이버 이미지 검색 api
@@ -130,18 +129,87 @@ public class FilmService {
 
 		}
 		
+		
+		
+		// ------------------------------------------------------- [ moviefilm.jsp ] -------------------------------------------------------
+
 		// 3
+		// <주간 인기 영화 목록 출력> 메소드
+		// : 주간 인기 영화 목록 결과 (최근 일주일간 리뷰 개수 순)
+		//   * select
+		//   * return List<FilmDto>
+		public List<FilmDto> getWeekBestFilmList() {
+			
+			List<FilmDto> result = new ArrayList<FilmDto>();
+			
+			// #1 주간 인기 영화 정보를 위해, DAO 호출    *영화명||, 영화코드(영진원)||, 평균별점(무비홀릭)
+			List<FilmDto> bestFilm = FilmDao.getFilmDao().selectFilmListByReviewCount();
+			
+			int len = bestFilm.size();
+			for(int i = 0; i < len; i++) {
+				
+				FilmDto bestItems = new FilmDto();
+				
+				String movieNm = CallAPI.getOneToken(bestFilm.get(i).getMovieNm());					// 영화명
+				String movieCdYoung = CallAPI.getOneToken(bestFilm.get(i).getMovieCdYoung());	// 영화코드(영진원)
+				String prdtYear = "";																						// 제작년도
+				
+				// #2 영진원 영화상세정보 api 호출하여, getPoster()의 인자 중, 제작년도를 구하기
+				// url 설정
+				String url = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json";
+				String paramYoung1 = "key=d497cad784b01e0c354d04518c4ddfc7";
+				String paramYoung2 = "movieCd="+movieCdYoung;
+				
+				String httpUrl = url + "?" + paramYoung1 + "&" + paramYoung2;
+				
+				String filmdetailJSON = CallAPI.APIHttpGet(httpUrl, false);
+				
+				try {
+					// JSON 파싱
+					JSONParser jsonParser = new JSONParser();
+					
+					JSONObject jsonObject = (JSONObject) jsonParser.parse(filmdetailJSON.toString());
+					JSONObject movieInfoResult = (JSONObject) jsonObject.get("movieInfoResult");
+					JSONObject movieInfo = (JSONObject) movieInfoResult.get("movieInfo");
+					Object prdtYearObj = (Object) movieInfo.get("prdtYear");
+					
+					prdtYear = prdtYearObj.toString();			// 제작년도 set
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				
+				// #3 getPoster() 호출하여, 영화 이미지 얻기
+				FilmDto image = CallAPI.getPoster(movieNm, prdtYear);
+				String movieImage = image.getMovieImage();			// 영화 이미지 주소
+				String movieCdNaver = image.getMovieCdNaver(); 	// 영화코드 (네이버)
+				String starPointNaver = image.getStarPointNaver();	// 네이버 별점
+				
+				bestItems.setMovieNm(movieNm);
+				bestItems.setMovieCdYoung(movieCdYoung);
+				bestItems.setMovieImage(movieImage);
+				bestItems.setMovieCdNaver(movieCdNaver);
+				bestItems.setStarPointNaver(starPointNaver);
+				bestItems.setPrdtYear(prdtYear);
+				
+				result.add(bestItems);
+			}
+			
+			// #1 DAO 호출
+			return result;
+		}
+		
+		// 4
 		// <장르별 영화 목록 출력> 메소드
 		// : 선택한 장르별 영화 목록 결과 전체 (개봉연도 최신순 & 이름 오름차순)
+		//   * select
+		//   * return List<FilmDto>
 		public List<FilmDto> getFilmList(String category) {
 		
 			// #1 DAO 호출
 			return FilmDao.getFilmDao().selectFilmListByCategory(category);
-		}
+		}	
 		
-		
-		
-		// 4
+		// 5
 		// <영화 검색 목록 출력> 메소드
 		// : 검색어로 검색한 영화 목록 결과 전체 (개봉연도 최신순 & 이름 오름차순)
 		//   * select
@@ -155,94 +223,7 @@ public class FilmService {
 		
 		
 		
-		
-		/*
-		// 2
-		// <장르별 영화 목록 출력> 메소드
-		// : 영진원 영화 목록 api
-		public List<FilmDto> getFavoriteFilm(String genre) {
-				List<FilmDto> film = new ArrayList<>();
-			
-				// #1 API 호출
+		// ------------------------------------------------------- [ moviedetail.jsp ] -------------------------------------------------------
 
-				// 1. 영진원 영화 목록 API
-				// ① url + 파라미터 값 설정
-				String url = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieList.json";
-				String paramYoung1 = "key=d497cad784b01e0c354d04518c4ddfc7";
-				String paramYoung2 = "itemPerPage=100";	// 랜덤 영화 200개 호출
-				String paramYoung3 = "openStartDt=2019";	// 2019년 개봉작
-	
-				String httpUrl = url + "?" + paramYoung1 + "&" + paramYoung2 + "&" + paramYoung3;
-	
-				// ② API 호출 (GET)
-				String responseMovies = CallAPI.APIHttpGet(httpUrl, false);
-				
-				// ③ responseMovies (JSON) 파싱
-				// *영화목록 JSON 구조 : { {movieListResult} - [movieList]  - {key1 : "", key2 : "" , ...} 여러 개 }
-				try {
-					
-						JSONParser jsonParser = new JSONParser();
-					
-						JSONObject jsonObject = (JSONObject) jsonParser.parse(responseMovies);
-				
-						JSONObject movieListObject = (JSONObject) jsonObject.get("movieListResult");
-						JSONArray movieListArray = (JSONArray) movieListObject.get("movieList");
-						
-						// movieListArray JSON배열의 값(JSON객체)들을 뽑아냄
-						int len = movieListArray.size();
-						for (int i = 0; i < len; i++) {
-							
-							JSONObject movieListItems = (JSONObject) movieListArray.get(i);
-							
-							String movieCdYoung = movieListItems.get("movieCd").toString(); 		// 영화코드(영진원)
-							String movieNm = movieListItems.get("movieNm").toString(); 				// 영화명
-							String genreAlt = movieListItems.get("genreAlt").toString();			// 장르 (ex: 범죄,스릴러)
-							String prdtYear = movieListItems.get("prdtYear").toString();			// 제작년도
-							
-							List genres = new ArrayList();
-							
-							// 장르가 여러 개일 경우,
-							if(genreAlt.contains(",")) {
-								StringTokenizer st = new StringTokenizer(genreAlt, ",");
-								for(int j = 0; j < st.countTokens(); j ++)
-									genres.add(st.nextToken());
-							} else {
-								// 장르가 하나일 경우,
-								genres.add(genreAlt);								
-							}
-							
-							// 인자값의 장르와 일치하는 것만 film에 추가
-							int glen = genres.size();
-							for(int k = 0; k < glen; k++) {
-								
-								if(genre.equals(genres.get(k).toString())) {
-									
-									String movieImage = CallAPI.getPoster(movieNm, prdtYear).getMovieImage();
-									
-									FilmDto filmDto = new FilmDto();
-									
-									// '영화코드(영진원)', '영화명', '첫번째장르'를 DTO에 세팅함
-									filmDto.setMovieCdYoung(movieCdYoung);
-									filmDto.setMovieNm(movieNm);
-									filmDto.setCategory(genres.get(k).toString());
-									filmDto.setMovieImage(movieImage);
-									
-									film.add(filmDto);
-								}
-
-							} // for문 end
-																	
-						} // for문 end
-				
-				
-				} catch (ParseException e) {  // json 파싱 예외
-						e.printStackTrace();
-						
-				} // try catch end
-		
-				return film;
-
-		} //  getFavoriteFilm() end
-		*/
 		
 } // class end

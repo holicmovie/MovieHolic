@@ -7,8 +7,6 @@
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
 
-
-
 <style>
 /* 큰 제목 */
 .big_title{
@@ -44,7 +42,7 @@ margin-top: 100px;
 
 </head>
 <body class="homepage is-preload" style="background-color: black;">
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	$(function() {
 		var arr = $("div>div>nav.nav2>li>a");
 		$(arr).click(function() {
@@ -59,7 +57,7 @@ margin-top: 100px;
 			
 		});
 	});
-</script>
+</script> -->
 
 
 
