@@ -10,7 +10,8 @@ public class FilmDto {
 	private String prdtYear;		// 제작년도
 	private String openYear;		// 개봉년도
 	private String starPointNaver;	// 네이버 별점 
-
+	private FilmDetailDto filmDetailDto;	// 영화 상세정보 DTO
+	
 	public String getMovieNm() {
 		return movieNm;
 	}
@@ -76,11 +77,23 @@ public class FilmDto {
 		this.starPointNaver = starPointNaver;
 	}
 
+	
+	
+	public FilmDetailDto getFilmDetailDto() {
+		return filmDetailDto;
+	}
+
+	public void setFilmDetailDto(FilmDetailDto filmDetailDto) {
+		this.filmDetailDto = filmDetailDto;
+	}
+
 	@Override
 	public String toString() {
 		return "FilmDto [movieNm=" + movieNm + ", movieCdYoung=" + movieCdYoung + ", movieCdNaver=" + movieCdNaver
 				+ ", movieImage=" + movieImage + ", category=" + category + ", prdtYear=" + prdtYear + ", openYear="
-				+ openYear + ", starPointNaver=" + starPointNaver + "]";
+				+ openYear + ", starPointNaver=" + starPointNaver + ", filmDetailDto=" + filmDetailDto + "]";
 	}
+
+
 	
 }

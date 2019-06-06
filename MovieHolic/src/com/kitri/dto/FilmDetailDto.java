@@ -13,6 +13,16 @@ public class FilmDetailDto extends FilmDto{
 	private String watchGradeNm;	// 관람등급
 	private String companyNm;		// 제작사명
 	
+	
+	public FilmDetailDto() {
+		super();
+	}
+
+	public FilmDetailDto(String directors) {
+		super();
+		this.directors = directors;
+	}
+
 	public String getMovieNmEn() {
 		return movieNmEn;
 	}
