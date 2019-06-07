@@ -38,6 +38,15 @@ public class ListController {
 		
 		return path;
 	}
+	public String saveList(HttpServletRequest request, HttpServletResponse response) {
+		
+		String result = "";
+		
+		// 1. request에서 글제목, 글내용, 선택한 영화정보 받아옴
+		
+		
+		return result;
+	}
 	
 	
 	

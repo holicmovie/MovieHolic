@@ -71,7 +71,7 @@
 				+ '<input type="hidden" name="movieNm" value="' + $mv.attr("data-movieNm") + '">'
 				+ '<input type="hidden" name="movieCdYoung" value="' + $mv.attr("data-movieCdYoung") + '">'
 				+ '<input type="hidden" name="movieCdNaver" value="' + $mv.attr("data-movieCdNaver") + '">'
-				+ '<input type="hidden" name="prdtYear" value="' + $mv.attr("data-prdtYear") + '">'
+				/*  + '<input type="hidden" name="prdtYear" value="' + $mv.attr("data-prdtYear") + '">' */
 		);
 		modalClear();		
 	})
@@ -101,6 +101,14 @@
 				return;
 			} else if(true) {
 				if(confirm("작성한 List를 저장하시겠습니까?")) {
+					$.ajax({
+						url: "<%= request.getContextPath()%>/list",
+						data: "act=saveList" + $('form').serialize(),
+						method: 'post',
+						success:function(result){
+							alert(result);
+						}
+					});
 				} else {
 					return false;
 				}
