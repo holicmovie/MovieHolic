@@ -39,37 +39,46 @@ public class ListService {
 	
 	
 //	#### 제목으로 영화 검색 ####
-	public List<FilmDto> srchMVbyName(String title) {
-		List<FilmDto> list = new ArrayList<FilmDto>();
+	public List<FilmDetailDto> srchMVbyName(String title) {
+		List<FilmDetailDto> list = new ArrayList<FilmDetailDto>();
 		
 		// 1. 영진원 API 조회
-		List<FilmDto> listAPI = yAPI(title);
+		List<FilmDetailDto> listAPI = yAPI(title);
 		
 		if(listAPI != null) {
 			int len = listAPI.size();
 			for(int i=0; i<len; i++) {	//영진원 결과 갯수만큼 반복
 				
-				FilmDto filmDto = listAPI.get(i);
+				FilmDetailDto filmDto = listAPI.get(i);
 				String movieNm = filmDto.getMovieNm();
 				String prdtYear = filmDto.getPrdtYear();
-				String director = null;
-				if(filmDto.getFilmDetailDto()!=null)
-					director = filmDto.getFilmDetailDto().getDirectors();
+				String director = filmDto.getDirectors();
+				
+//				System.out.println("영화제목 : " + filmDto.getMovieNm());
+//				System.out.println("제작연도 : " + filmDto.getPrdtYear());
+//				System.out.println("감독이름 : " + filmDto.getDirectors());
+//				System.out.println("영진원 코드 : " + filmDto.getMovieCdYoung());
+				
+				if(!"".equals(director)) {
+					director = filmDto.getDirectors();
+				}
 				
 				// 2. 네이버 영화 API 조회해서 DTO에 set
-				String movieCdNaver = nAPI(movieNm, prdtYear, director);	//네이버 영화코드
+				if(!"".equals(prdtYear)) {
+					String movieCdNaver = nAPI(movieNm, prdtYear, director);	//네이버 영화코드
+					
+					if(movieCdNaver != null) {
+						
+						filmDto.setMovieCdNaver(movieCdNaver);	 // DTO에 set
+						
+						// 3. 고화질 이미지 크롤링
+						String movieImage = getImgURL(movieCdNaver);
+						filmDto.setMovieImage(movieImage);
+						
+						list.add(filmDto);
+					} // if문 종료
 				
-				if(movieCdNaver != null) {
-					
-					filmDto.setMovieCdNaver(movieCdNaver);	 // DTO에 set
-					
-					// 3. 고화질 이미지 크롤링
-					String movieImage = getImgURL(movieCdNaver);
-					filmDto.setMovieImage(movieImage);
-					
-					list.add(filmDto);
-				} // if문 종료
-				
+				} // if문 종료(제작연도)
 				
 			} // for문 종료
 		} // if문 종료
@@ -85,8 +94,8 @@ public class ListService {
 	
 	
 //	#### 영진원 API (영화 제목 검색어로 검색) ####
-	public List<FilmDto> yAPI(String title) {	
-		List<FilmDto> list = null;
+	public List<FilmDetailDto> yAPI(String title) {	
+		List<FilmDetailDto> list = null;
 		
 		// 검색조건 : 영화제목
 		// 검색결과 : 영화제목, 제작연도, 영진원 코드
@@ -131,17 +140,21 @@ public class ListService {
 				JSONObject jsonObject = (JSONObject) jParser.parse(response);	// 가장 큰 JSON 객체 생성	
 				JSONObject movieListResult = (JSONObject) jsonObject.get("movieListResult");
 				JSONArray movieList = (JSONArray) movieListResult.get("movieList");
-				list = new ArrayList<FilmDto>();
+				list = new ArrayList<FilmDetailDto>();
 				
 				int len = movieList.size();
 				for (int i = 0; i < len; i++) {
-					FilmDto filmDto = new FilmDto();
+					FilmDetailDto filmDto = new FilmDetailDto();
 					
 					JSONObject film = (JSONObject) movieList.get(i);
 					
 					String movieNm = film.get("movieNm").toString(); 	
-					String movieCdYoung = film.get("movieCd").toString(); 		
-					String prdtYear = film.get("prdtYear").toString().substring(0, 4); //8자리 날짜정보에서 연도만 추출
+					String movieCdYoung = film.get("movieCd").toString();
+					String prdtYear = (String) film.get("prdtYear");
+
+					if(prdtYear.length() > 5) {
+						prdtYear = prdtYear.substring(0, 4); //8자리 날짜정보에서 연도만 추출
+					}
 					
 					// 영화코드(영진원), 영화명, 제작연도를 DTO에 셋팅함
 					filmDto.setMovieNm(movieNm);
@@ -153,7 +166,7 @@ public class ListService {
 					if(directorJArr.size() != 0) {
 						JSONObject directorObj = (JSONObject) directorJArr.get(0);
 						String director = directorObj.get("peopleNm").toString();
-						filmDto.setFilmDetailDto(new FilmDetailDto(director));
+						filmDto.setDirectors(director);
 					}
 					
 					// 영화제목, 영진원 코드, 제작연도가 셋팅된 DTO를 list에 담음
@@ -205,6 +218,8 @@ public class ListService {
 			url += "&yearfrom=" + year;	//제작연도(from)
 			url += "&yearto=" + (1+year);	//제작연도(to)
 			
+			CallAPI.Sleep(100);
+			
 			// ① HttpUrlConnection 객체 생성 및 세팅
 			URL obj = new URL(url);
 			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -244,12 +259,12 @@ public class ListService {
 					String directorN = (String) film.get("director");
 					
 					// 감독이름이 있는 경우에만 1번째 감독 받아옴
-					if(directorN != null) {
+					if("".equals(directorN)) {
 						String[] directorsN = directorN.split("|");
 						directorN = directorsN[0];
 					}
-					
-					if(year == prdtYearN || len == 1 || director.equals(directorN)) {	
+
+					if(year == prdtYearN || len == 1 || ("".equals(director) && director.equals(directorN))) {	
 						beginIndex = imgLink.lastIndexOf("=") + 1;
 						movieCdNaver = imgLink.substring(beginIndex);
 						break;
@@ -301,7 +316,6 @@ public class ListService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println(movieImage);
 		return movieImage;
 	}
 	
@@ -309,33 +323,33 @@ public class ListService {
 	
 //	public static void main(String[] args) {
 //		
-//		//영진원 테스트
-//		List<FilmDto> list = ListService.getListService().yAPI("어벤져스");
-//		FilmDto film = list.get(0);
-//		String movieNm = film.getMovieNm();
-//		String prdtYear = film.getMovieCdYoung();
-//		System.out.println("영화 제목 : " + movieNm);
-//		System.out.println("영진원 코드 : " + prdtYear);
-//		
-//		String movieCdNaver = ListService.getListService().nAPI("라라랜드", "2016");
-//		System.out.println("네이버 영화코드 : " + movieCdNaver);
-//		
-//		//이미지 크롤링 테스트
-//		String movieImage = ListService.getListService().getImgURL(movieCdNaver);
-//		System.out.println("고화질 이미지 링크 : " + movieImage);
+////		//영진원 테스트
+////		List<FilmDetailDto> list = ListService.getListService().yAPI("어벤져스");
+////		FilmDto film = list.get(0);
+////		String movieNm = film.getMovieNm();
+////		String prdtYear = film.getMovieCdYoung();
+////		System.out.println("영화 제목 : " + movieNm);
+////		System.out.println("영진원 코드 : " + prdtYear);
+////		
+////		String movieCdNaver = ListService.getListService().nAPI("라라랜드", "2016", null);
+////		System.out.println("네이버 영화코드 : " + movieCdNaver);
+////		
+////		//이미지 크롤링 테스트
+////		String movieImage = ListService.getListService().getImgURL(movieCdNaver);
+////		System.out.println("고화질 이미지 링크 : " + movieImage);
 //		
 //		
 //		
 //		// srchMVbyName() 테스트
-//		List<FilmDto> list = ListService.getListService().srchMVbyName("어벤져스");
+//		List<FilmDetailDto> list = ListService.getListService().srchMVbyName("골");
 //		for(int i=0; i<list.size(); i++) {
 //			FilmDto film = list.get(i);
-//			System.out.println("영화제목 : " + film.getMovieNm());
-//			System.out.println("제작연도 : " + film.getPrdtYear());
-//			System.out.println("영진원 코드 : " + film.getMovieCdYoung());
+////			System.out.println("영화제목 : " + film.getMovieNm());
+////			System.out.println("제작연도 : " + film.getPrdtYear());
+////			System.out.println("영진원 코드 : " + film.getMovieCdYoung());
 //			System.out.println("네이버 코드 : " + film.getMovieCdNaver());
 //			System.out.println("이미지 주소 : " + film.getMovieImage());
-//			System.out.println();
+////			System.out.println();
 //		}
 //		
 //	}

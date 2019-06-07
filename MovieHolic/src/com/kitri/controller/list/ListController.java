@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kitri.dto.FilmDetailDto;
 import com.kitri.dto.FilmDto;
 import com.kitri.service.list.ListService;
 
@@ -30,7 +31,7 @@ public class ListController {
 		String path = "/page/list/result/srchMVResult.jsp";
 		
 		// 2. service에서 검색 결과를 MovieDto타입의 List로 받아옴
-		List<FilmDto> list = ListService.getListService().srchMVbyName(title);
+		List<FilmDetailDto> list = ListService.getListService().srchMVbyName(title);
 		if(list != null) {
 			request.setAttribute("list", list);
 		}

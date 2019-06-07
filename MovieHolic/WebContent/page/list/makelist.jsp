@@ -7,8 +7,8 @@
 <%-- 영화 포스터 --%>
 .movieImg {
 	border: solid 1px white;
-	width: 19.2vh;
-	margin: 0.3em;
+	width: 20vh;
+	margin: 0.5em;
 }
 </style>
 <script>
@@ -16,7 +16,8 @@
 	<%-- 영화 검색 모달 띄우기 --%>
 	$(function() {
 		$('#addMovie').focusin(function(){
-			$('#movieModal').modal();
+			<%-- 모달 외부 클릭시 닫히지 않도록 처리 --%>
+			$('#movieModal').modal({backdrop: 'static', keyboard: false});
 		});
 		return false;
 	});
@@ -37,23 +38,28 @@
 	<%-- #### 영화 검색 모달(검색기능) #### --%>
 	<%-- 영화 검색 모달의 검색버튼 클릭시 영화정보 테이블에 띄우기 --%>
 	$(function(){
-		$('#srchMVBtn').click(function(){
-			var srchTitle = $('#srchTitle').val().trim();
-			if(srchTitle == ""){
-				return;
-			} else {
-				$.ajax({
-					url: "<%= request.getContextPath()%>/list",
-					data: 'act=srchMV&srchTitle=' + srchTitle,
-					method: 'post',
-					success:function(result){
-						$('#modalTable>tbody').html(result);
-					}
-				});
-			}
+		$('#srchMVBtn').click(searchMV);
+		$("#srchTitle").keypress(function(e){
+			if (e.which == 13){
+				searchMV();  // 실행할 이벤트
+     		}
 		});
-		return false;
 	});
+	function searchMV(){
+		var srchTitle = $('#srchTitle').val().trim();
+		if(srchTitle == ""){
+			return;
+		} else {
+			$.ajax({
+				url: "<%= request.getContextPath()%>/list",
+				data: 'act=srchMV&srchTitle=' + srchTitle,
+				method: 'post',
+				success:function(result){
+					$('#modalTable>tbody').html(result);
+				}
+			});
+		}
+	}
 	<%-- 영화 검색 모달의 행 선택시 --%>
 	$(document).on("click", '#modalTable tr', function() {		<%-- 동적으로 생성된 요소에 이벤트 주는 방법 --%>
 		<%-- 선택한 행의 img태그 객체 얻어오기 --%>
@@ -149,7 +155,7 @@
 		</div>
 		
 	<%-- 영화 이미지 --%>
-		<div class="font_bold_mid" style="width:100%; border-top: 2.5px solid #fff; margin-top: 3em; padding-top: 1.5em; padding-bottom: 3em;">
+		<div class="font_bold_mid" style="width:100%; border-top: 2.5px solid #fff; margin-top: 3em; padding: 1.5em 1.2em 3em 1.2em;">
 			<a id="addMovie" href="#"><img class="movieImg" src="/MovieHolic/images/getposter.png" width="200vh;" style="margin: 0.3em;"></a>
 		</div>
 		</form>

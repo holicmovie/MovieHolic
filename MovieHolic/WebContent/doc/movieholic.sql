@@ -256,7 +256,9 @@ CREATE TABLE mh_user (
 	joinDate DATE, /* 가입일 */
 	outDate DATE, /* 탈퇴일 */
 	profile VARCHAR2(200), /* 회원사진 */
-	enable NUMBER default 0/* 활성화여부 */
+	enable NUMBER default 0, /* 활성화여부 */
+	best_count NUMBER default 0, /* 좋아요 횟수 */
+	list_count NUMBER default 0
 );
 
 COMMENT ON TABLE mh_user IS 'mh_user';
