@@ -2,13 +2,14 @@ package com.kitri.dto;
 
 public class LogDto { // 활동기록
 
-	private String logDate; 		// 활동시간
-	private int logCate; 			// 활동분류
-	private String logId; 			// 활동ID
-	private String sujbect; 		// 제목
-	private String userId; 			// 작성자ID
-	private String movieCodeYoung; 	//영화코드(영진원)
-	
+	private String logDate; // 활동시간
+	private int logCate; // 활동분류
+	private String logId; // 활동ID
+	private String sujbect; // 제목
+	private int seq; // 글번호
+	private String userId; // 작성자ID
+	private String movieCodeYoung; // 영화코드(영진원)
+
 	///// 생성자 /////
 
 	public LogDto() {
@@ -16,9 +17,8 @@ public class LogDto { // 활동기록
 	}
 
 	
-	
 	///// getter & setter /////
-	
+
 	public String getLogDate() {
 		return logDate;
 	}
@@ -51,6 +51,14 @@ public class LogDto { // 활동기록
 		this.sujbect = sujbect;
 	}
 
+	public int getSeq() {
+		return seq;
+	}
+
+	public void setSeq(int seq) {
+		this.seq = seq;
+	}
+
 	public String getUserId() {
 		return userId;
 	}
@@ -62,7 +70,7 @@ public class LogDto { // 활동기록
 	public String getMovieCodeYoung() {
 		return movieCodeYoung;
 	}
-	
+
 	public void setMovieCodeYoung(String movieCodeYoung) {
 		this.movieCodeYoung = movieCodeYoung;
 	}
@@ -70,9 +78,7 @@ public class LogDto { // 활동기록
 	@Override
 	public String toString() {
 		return "LogDto [logDate=" + logDate + ", logCate=" + logCate + ", logId=" + logId + ", sujbect=" + sujbect
-				+ ", userId=" + userId + ", movieCodeYoung=" + movieCodeYoung + "]";
+				+ ", seq=" + seq + ", userId=" + userId + ", movieCodeYoung=" + movieCodeYoung + "]";
 	}
-
-	
 
 }
