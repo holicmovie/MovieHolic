@@ -136,7 +136,7 @@ public class FilmDao {
 	// 3
 	// <장르별 영화 목록 select> 메소드
 	//  개봉연도 최신순 & 네이버 별점순
-	public List<FilmDto> selectFilmListByCategory(String category) {
+	public List<FilmDto> selectFilmListByCategory(String category, int startRow, int endRow) {
 		
 		System.out.println("FilmDao : 파라미터로 보내 온 장르는 " + category);
 
@@ -151,11 +151,15 @@ public class FilmDao {
 			conn = DBConnection.makeConnection();
 			
 			StringBuffer sql = new StringBuffer();
-			sql.append("select movieName, movieCodeYoung, movieCodeNaver, movieImage, category, prdtYear, openYear, starPointNaver \n");
-			sql.append("from mh_films \n");
-			sql.append("where category like '%'||?||'%' \n");
-			sql.append("and rownum < 21 \n");   //임시 ##################################
-			sql.append("order by openYear desc, starPointNaver desc");
+			
+			sql.append("select * \n");
+			sql.append("from (select rownum r, f.movieName, f.movieCodeYoung, f.movieCodeNaver, f.movieImage, f.category, f.prdtYear, f.openYear, f.starPointNaver \n");
+			sql.append("	  from (select movieName, movieCodeYoung, movieCodeNaver, movieImage, category, prdtYear, openYear, starPointNaver \n");
+			sql.append("	   		from mh_films \n");
+			sql.append("			where category like '%'||?||'%' \n");
+			sql.append("			order by openYear desc, starPointNaver desc) f \n");
+			sql.append("	  order by rownum) \n");
+			sql.append("where r between ? and ?");
 			
 			pstmt = conn.prepareStatement(sql.toString());
 			
@@ -166,6 +170,10 @@ public class FilmDao {
 				// 장르 = 선택 장르
 				pstmt.setString(1, category);
 			}
+			
+			// 페이지 범위
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			
 			rs = pstmt.executeQuery();
 			
@@ -199,7 +207,7 @@ public class FilmDao {
 	// 4
 	// <검색 결과 영화 목록 select> 메소드
 	// 개봉연도 최신순 & 네이버 별점순
-	public List<FilmDto> selectBySrchKey(String srchKey) {
+	public List<FilmDto> selectBySrchKey(String srchKey, int startRow, int endRow) {
  
 		List<FilmDto> list = new ArrayList<FilmDto>();
 		
@@ -211,14 +219,21 @@ public class FilmDao {
 			
 			conn = DBConnection.makeConnection();
 			StringBuffer sql = new StringBuffer();
-			sql.append("select movieName, movieCodeYoung, movieCodeNaver, movieImage, category, prdtYear, openYear, starPointNaver \n");
-			sql.append("from mh_films \n");
-			sql.append("where movieName like '%'||?||'%' \n");
-			sql.append("and rownum < 21 \n");  // 임시 #####################################
-			sql.append("order by openYear desc, starPointNaver desc");
+			sql.append("select * \n");
+			sql.append("from (select rownum r, f.movieName, f.movieCodeYoung, f.movieCodeNaver, f.movieImage, f.category, f.prdtYear, f.openYear, f.starPointNaver \n");
+			sql.append("	  from (select movieName, movieCodeYoung, movieCodeNaver, movieImage, category, prdtYear, openYear, starPointNaver \n");
+			sql.append("			from mh_films \n");
+			sql.append("			where movieName like '%'||?||'%' \n");
+			sql.append("			order by openYear desc, starPointNaver desc) f \n");
+			sql.append("	  order by rownum) \n");
+			sql.append("where r between ? and ?");
 			
 			pstmt = conn.prepareStatement(sql.toString());
+			// 검색어 설정
 			pstmt.setString(1, srchKey);
+			// 페이지 범위
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			
 			rs = pstmt.executeQuery();
 			
@@ -249,7 +264,98 @@ public class FilmDao {
 		return list;
 		
 	}
+	
+	// 5
+	// <장르별 영화 목록 개수 select> 메소드
+	// 개봉연도 최신순 & 네이버 별점순
+	public int selectFilmCountByCategory(String category) {
 
+		int cnt = 0;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			conn = DBConnection.makeConnection();
+			StringBuffer sql = new StringBuffer();
+			sql.append("select count(*) \n");
+			sql.append("from mh_films \n");
+			sql.append("where category like '%'||?||'%' \n");
+			sql.append("order by openYear desc, starPointNaver desc");
+			
+			pstmt = conn.prepareStatement(sql.toString());
+			
+			// 장르 = 전체
+			if(category == null) {
+					pstmt.setString(1, "");
+			}else {
+				// 장르 = 선택 장르
+				pstmt.setString(1, category);
+			}
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+								
+				cnt = rs.getInt(1);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		
+		
+		return cnt;
+	}
+	
+	// 6
+	// <검색한 영화 목록 개수 select> 메소드
+	// 개봉연도 최신순 & 네이버 별점순
+	public int selectFilmCountBySrchKey(String srchKey) {
+
+int cnt = 0;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			conn = DBConnection.makeConnection();
+			StringBuffer sql = new StringBuffer();
+			sql.append("select count(*) \n");
+			sql.append("from mh_films \n");
+			sql.append("where movieName like '%'||?||'%' \n");
+			sql.append("order by openYear desc, starPointNaver desc");
+			
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1, srchKey);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+								
+				cnt = rs.getInt(1);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		
+		
+		return cnt;
+		
+	}
 	
 	
 	

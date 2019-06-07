@@ -198,27 +198,54 @@ public class FilmService {
 			return result;
 		}
 		
+		
 		// 4
+		// <총 영화목록 개수 얻기> 메소드
+		// : 출력할 영화목록 총 개수
+		// *select
+		// *return int
+		public int getTotalPage(String category) {
+
+			// #1 DAO 호출
+			return FilmDao.getFilmDao().selectFilmCountByCategory(category);
+		}
+					
+		
+		// 5
 		// <장르별 영화 목록 출력> 메소드
 		// : 선택한 장르별 영화 목록 결과 전체 (개봉연도 최신순 & 이름 오름차순)
 		//   * select
 		//   * return List<FilmDto>
-		public List<FilmDto> getFilmList(String category) {
+		public List<FilmDto> getFilmList(String category, int startRow, int endRow) {
 		
 			// #1 DAO 호출
-			return FilmDao.getFilmDao().selectFilmListByCategory(category);
+			return FilmDao.getFilmDao().selectFilmListByCategory(category, startRow, endRow);
 		}	
+
 		
-		// 5
+		// 6
 		// <영화 검색 목록 출력> 메소드
 		// : 검색어로 검색한 영화 목록 결과 전체 (개봉연도 최신순 & 이름 오름차순)
 		//   * select
 		//   * return List<FilmDto>
-		public List<FilmDto> getSearchedFilmList(String srchKey) {
+		public List<FilmDto> getSearchedFilmList(String srchKey, int startRow, int endRow) {
 			
 			// #1 DAO 호출
-			return FilmDao.getFilmDao().selectBySrchKey(srchKey);
+			return FilmDao.getFilmDao().selectBySrchKey(srchKey, startRow, endRow);
 		}
+		
+		
+		// 7
+		// <총 영화 검색 목록 개수 얻기> 메소드
+		// : 출력할 검색 목록 총 개수
+		// *select
+		// *return int
+		public int getSearchTotalPage(String srchKey) {
+
+			// #1 DAO 호출
+			return FilmDao.getFilmDao().selectFilmCountBySrchKey(srchKey);
+		}
+		
 		
 		
 		

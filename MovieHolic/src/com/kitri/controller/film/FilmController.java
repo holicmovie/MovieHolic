@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kitri.dto.FilmDto;
+import com.kitri.dto.film.PageBean;
 import com.kitri.service.film.FilmService;
 
 // C
@@ -81,14 +82,36 @@ public class FilmController {
 	public String getFilmList(HttpServletRequest request, HttpServletResponse response) {
 
 		String path = "/page/film/result/filmlistresult.jsp";
-		
 		String category = request.getParameter("category"); // 선택된 장르 메뉴
 		
+		// #1 페이징 처리
+		String cp = request.getParameter("currentPage1");
+		int currentPage = 1;  // 기본은 1페이지
+				
+		if(cp != null) {
+			currentPage = Integer.parseInt(cp); // 페이지 눌린 값있다면, 해당 페이지
+		}
+				
+		int cntPerPage = 20;  										 			// 페이지 별 보여줄 목록 수
+		int totalCnt = FilmService.getFilmService().getTotalPage(category); 	// 총 게시글 수
+		int cntPerPageGroup = 5;                					 			// 그룹 페이지 수
+				
+		String url = "film";  // ??? 뭐지
+
+		PageBean pb = new PageBean(currentPage,
+									cntPerPage,
+									cntPerPageGroup,
+									totalCnt,
+									url);
+
 		// 장르별 영화 목록 get
-		List<FilmDto> list = FilmService.getFilmService().getFilmList(category);
-		// 장르별 영화 목록 set
-		request.setAttribute("filmlist", list);
-		
+		List<FilmDto> list = FilmService.getFilmService().getFilmList(category, pb.getStartRow(), pb.getEndRow());
+				
+		// 페이지에 맞는 장르별 영화 목록 set
+		pb.setList(list);
+		request.setAttribute("filmlist", pb);
+		request.setAttribute("cate", category);
+					
 		return path;
 	}
 
@@ -101,10 +124,32 @@ public class FilmController {
 			
 		String srchKey = request.getParameter("srchKey"); // 검색어
 
+		// #1 페이징 처리
+		String cp = request.getParameter("currentPage2");
+		int currentPage = 1;  // 기본은 1페이지
+						
+		if(cp != null) {
+			currentPage = Integer.parseInt(cp); // 페이지 눌린 값있다면, 해당 페이지
+		}
+						
+		int cntPerPage = 20;  										 				// 페이지 별 보여줄 목록 수
+		int totalCnt = FilmService.getFilmService().getSearchTotalPage(srchKey); 	// 총 게시글 수
+		int cntPerPageGroup = 5;                					 				// 그룹 페이지 수
+						
+		String url = "film";  // ??? 뭐지
+
+		PageBean pb = new PageBean(currentPage,
+									cntPerPage,
+									cntPerPageGroup,
+									totalCnt,
+									url);
+		
 		// 검색 결과 목록 get
-		List<FilmDto> list = FilmService.getFilmService().getSearchedFilmList(srchKey);
-		// 검색 결과 목록 set
-		request.setAttribute("searchedFilmList", list);
+		List<FilmDto> list = FilmService.getFilmService().getSearchedFilmList(srchKey, pb.getStartRow(), pb.getEndRow());
+		// 페이지에 맞는 검색 결과 목록 set
+		pb.setList(list);
+		request.setAttribute("searchedFilmList", pb);
+		request.setAttribute("srchKey", srchKey);
 			
 		return path;
 	}
