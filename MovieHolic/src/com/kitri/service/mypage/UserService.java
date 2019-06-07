@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kitri.dao.mypage.ReviewAddDao;
 import com.kitri.dto.BoardDto;
+import com.kitri.dto.CommentDto;
 
 public class UserService {
 
@@ -27,5 +28,13 @@ private static UserService userService; // 2번째 전역변수 만들기
 	//리스트목록
 		public List<BoardDto> listList(String content){
 			return ReviewAddDao.getReviewAdd().listList(content);
+		}
+	//리뷰정보
+		public BoardDto selectByNo(String seq) {
+			return ReviewAddDao.getReviewAdd().selectByNo(seq);
+		}
+	//코멘트
+		public List<CommentDto> findByCo(String seq){
+			return ReviewAddDao.getReviewAdd().reviewContent(seq);
 		}
 }
