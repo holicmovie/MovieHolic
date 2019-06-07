@@ -20,6 +20,7 @@ public class FilmDao {
 		return filmDao;
 	}
 	
+	// ------------------------------------------------------- [ index.jsp ] -------------------------------------------------------
 	
 	// 1
 	// <장르별 추천 영화 10개 select> 메소드
@@ -76,15 +77,69 @@ public class FilmDao {
 	}
 	
 	
+	
+	
+	// ------------------------------------------------------- [ moviefilm.jsp ] -------------------------------------------------------
+	
 	// 2
+	// <주간 인기 영화 목록 select> 메소드
+	//  최근 일주일간 리뷰 개수 순 10개
+	public List<FilmDto> selectFilmListByReviewCount() {
+
+		List<FilmDto> list = new ArrayList<FilmDto>();
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			conn = DBConnection.makeConnection();
+			
+			StringBuffer sql = new StringBuffer();
+			sql.append("select distinct mboard.mname, best.mcodeyoung \n");
+			sql.append("from (select TO_CHAR(moviename) mname, TO_CHAR(moviecodeyoung) mcodeyoung \n");
+			sql.append("		from mh_board) mboard , \n");
+			sql.append(" 		(select TO_CHAR(moviecodeyoung) mcodeyoung, count(*) mreviewcnt \n");
+			sql.append("		 from mh_board \n");
+			sql.append(" 		 where boardcode = 1 \n");
+			sql.append("		 and postdate between (sysdate - 7) and sysdate \n");
+			sql.append("		 and rownum < 11 \n");
+			sql.append("		 group by TO_CHAR(moviecodeyoung) \n");
+			sql.append("		 order by count(*) desc) best \n");
+			sql.append("where mboard.mcodeyoung = best.mcodeyoung");
+			      
+			pstmt = conn.prepareStatement(sql.toString());
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				FilmDto film = new FilmDto();
+				
+				film.setMovieNm(rs.getString(1));				// 영화명
+				film.setMovieCdYoung(rs.getString(2));		// 영화코드(영진원)
+				
+				list.add(film);
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		
+		return list;
+	}
+	
+	// 3
 	// <장르별 영화 목록 select> 메소드
 	//  개봉연도 최신순 & 이름 오름차순
 	public List<FilmDto> selectFilmListByCategory(String category) {
 		
-		
 		System.out.println("FilmDao : 파라미터로 보내 온 장르는 " + category);
-		// TODO
-		// FilmDao : 장르별 영화 목록 select
+
 		List<FilmDto> list = new ArrayList<FilmDto>();
 		
 		Connection conn = null;
@@ -99,7 +154,7 @@ public class FilmDao {
 			sql.append("select movieName, movieCodeYoung, movieCodeNaver, movieImage, category, prdtYear, openYear, starPointNaver \n");
 			sql.append("from mh_films \n");
 			sql.append("where category like '%'||?||'%' \n");
-			sql.append("and rownum < 11 \n");
+//			sql.append("and rownum < 11 \n");
 			sql.append("order by openYear desc");
 			
 			pstmt = conn.prepareStatement(sql.toString());
@@ -141,13 +196,11 @@ public class FilmDao {
 		
 	}
 	
-	// 3
+	// 4
 	// <검색 결과 영화 목록 select> 메소드
 	// 개봉연도 최신순 && 이름 오름차순
 	public List<FilmDto> selectBySrchKey(String srchKey) {
  
-		// TODO
-		// FilmDao : 검색 결과 영화 목록 select
 		List<FilmDto> list = new ArrayList<FilmDto>();
 		
 		Connection conn = null;
@@ -157,11 +210,12 @@ public class FilmDao {
 		try {
 			
 			conn = DBConnection.makeConnection();
-			
 			StringBuffer sql = new StringBuffer();
-			sql.append("select movieName, movieCodeYoung, movieCodeNaver, movieImage, category, prdtYear, openYear, starPointNaver \\n");
+			sql.append("select movieName, movieCodeYoung, movieCodeNaver, movieImage, category, prdtYear, openYear, starPointNaver \n");
 			sql.append("from mh_films \n");
-			sql.append("where movieName like '%'||?||'%'");
+			sql.append("where movieName like '%'||?||'%' \n");
+			//sql.append("and rownum < 11 \n");
+			sql.append("order by openYear desc");
 			
 			pstmt = conn.prepareStatement(sql.toString());
 			pstmt.setString(1, srchKey);
@@ -195,7 +249,11 @@ public class FilmDao {
 		return list;
 		
 	}
+
 	
+	
+	
+	// ------------------------------------------------------- [ moviedetail.jsp ] -------------------------------------------------------
 	
 	
 }

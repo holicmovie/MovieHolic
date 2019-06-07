@@ -3,8 +3,7 @@ package com.kitri.util;
 import java.io.*;
 import java.net.*;
 import java.nio.charset.Charset;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -32,7 +31,7 @@ public class CallAPI {
 	 * 
 	 * [인자값]
 	 * - String httpUrl : 파라미터 포함 url
-	 * - Boolean header : 헤더		         *헤더 없으면 false 넣기
+	 * - Boolean header : 헤더		            *영진원 API - false / 네이버 API - true
 	 * 
 	 * [return]
 	 * - API 응답결과 (JSON형식의 String 타입)
@@ -229,11 +228,52 @@ public class CallAPI {
 	
 	
 	
+	/**
+	 * ---------------------------------- 4 - 1 ---------------------------------- 
+	 * <토큰 분해> 메소드 - 한 가지 항목인 경우
+	 * 
+	 * [인자값]
+	 * - String str : 토큰에 의해 구분되어 있는 문자열  *ex : 기생충||
+	 *
+	 * [return]
+	 * - 토큰 '||' 을 제외한 나머지 값 (String 타입)
+	 */
+	public static String getOneToken(String str) {
+		String result = "";
+		
+		StringTokenizer st = new StringTokenizer(str,"||");
+		while(st.hasMoreTokens()) {
+			result = st.nextToken();
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * ---------------------------------- 4 - 2 ---------------------------------- 
+	 * <토큰 분해> 메소드 - 두 가지 이상 항목인 경우
+	 * 
+	 * [인자값]
+	 * - String str : 토큰에 의해 구분되어 있는 문자열  *ex : 기생충||라라랜드||
+	 *
+	 * [return]
+	 * - 토큰 '||' 을 제외한 나머지 값들 (List<String> 타입)
+	 */
+	public static List<String> getMoreToken(String str) {
+		List<String> result = new ArrayList<String>();
+		
+		StringTokenizer st = new StringTokenizer(str,"||");
+		while(st.hasMoreTokens()) {
+			result.add(st.nextToken());
+		}
+		
+		return result;
+	}
 	
 	
 	////////////////////////////////////////사용 안 함(임시보류)//////////////////////////////////////////////
 	/**
-	 * ---------------------------------- 4 ---------------------------------- 
+	 * ---------------------------------- 5 ---------------------------------- 
 	 * <HTTP GET으로 API 호출하기> 메소드 - HttpClient 라이브러리 사용
 	 * 
 	 * [인자값]

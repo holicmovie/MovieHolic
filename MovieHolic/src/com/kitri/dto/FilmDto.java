@@ -9,7 +9,7 @@ public class FilmDto {
 	private String category;		// 장르
 	private String prdtYear;		// 제작년도
 	private String openYear;		// 개봉년도
-	private String starPointNaver;	// 네이버 별점 
+	private String starPointNaver;	// 네이버 별점
 
 	public String getMovieNm() {
 		return movieNm;
@@ -75,7 +75,7 @@ public class FilmDto {
 	public void setStarPointNaver(String starPointNaver) {
 		this.starPointNaver = starPointNaver;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "FilmDto [movieNm=" + movieNm + ", movieCdYoung=" + movieCdYoung + ", movieCdNaver=" + movieCdNaver
