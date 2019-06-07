@@ -3,6 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/template/header.jsp"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
 
 <style>
 /* 좋아요 둥근 버튼을 위해 필요 */
@@ -79,10 +80,11 @@ hr.line_light_g {
 <%@ include file="/template/boot_431.jsp"%>
 
 </head>
+
 <body class="left-sidebar is-preload">
-<% List<BoardDto> list = (List<BoardDto>)request.getAttribute("reviewList2");
-System.out.println(list);%>
-<%!BoardDto boardDto; %>
+<c:set var ="dto" value="${requestScope.reviewdetail}"/>
+<%BoardDto dto = (BoardDto)request.getAttribute("reviewdetail");%>
+
 	<div id="page-wrapper">
 
 		<!-- Header -->
@@ -141,17 +143,17 @@ System.out.println(list);%>
 						<!-- 영화명, 개봉연도, 조회수, 작성일 -->
 						<div class="title">
 							<div class="movietitle" style="float: left;">
-								<span class="font_bold_lg"><%=boardDto.getMovieName()%></span> <span
-									class="font_light_mid">&nbsp;<%=boardDto.getPostDateY() %></span> &nbsp;&nbsp;<img
+								<span class="font_bold_lg">${dto.movieName}</span> <span
+									class="font_light_mid">&nbsp;${dto.postDateY}</span> &nbsp;&nbsp;<img
 									alt="잠금 여부 표시 아이콘" src="/MovieHolic/images/lock.png"
 									style="margin-bottom: 12px;">
 							</div>
 							<div class="writeinfo" style="float: right;">
 								<span class="font_light_small">
 									<span class="font_bold_lg">&nbsp;</span>
-									조회수 : <span id="viewcount"><%=boardDto.getViewCount() %></span>
+									조회수 : <span id="viewcount">${dto.viewCount}</span>
 									&nbsp;&nbsp;|&nbsp;&nbsp;
-									<span id="writedate"><%= boardDto.getPostDate() %></span>
+									<span id="writedate">${dto.postDate}</span>
 								</span>
 							</div>
 							
@@ -163,11 +165,12 @@ System.out.println(list);%>
 						<!-- 별점, 작성자 -->
 						<div style="float: left">
 							<span style="font-size: 1em;">
+							<%for(int i =1;i<=dto.getStarPoint();i++){ %>
 								<i class="fas fa-star" style="color: #ffca08;"></i>
-								<i class="fas fa-star" style="color: #ffca08;"></i>
-								<i class="fas fa-star" style="color: #ffca08;"></i>
-								<i class="fas fa-star" style="color: #ffca08;"></i>
+								<%} %>
+							<%for(int i = 1;i<=5-dto.getStarPoint();i++){ %>
 								<i class="fas fa-star" style="color: #222222;"></i>
+								<%} %>
 							</span>
 						</div>
 
@@ -178,7 +181,7 @@ System.out.println(list);%>
 							</a>
 							&nbsp;
 							<span class="font_light_small">by&nbsp;
-							<a id="writerId" class="font_bold_small" href="#" style="color: white"><%=boardDto.getUserId() %></a></span>
+							<a id="writerId" class="font_bold_small" href="#" style="color: white">${dto.userId}</a></span>
 						</div>
 
 						<!-- float clear용 빈 div -->
@@ -190,7 +193,7 @@ System.out.println(list);%>
 						<!-- 작성 내용 -->
 						<div class="font_light_small top_margin">
 							<p>
-								<%=boardDto.getContent() %>
+								${dto.content}
 							</p>
 						</div>
 
@@ -206,8 +209,9 @@ System.out.println(list);%>
 
 						<!-- 구분선 -->
 						<hr class="line_bold">
-
+						
 						<!-- 댓글 start -->
+						<c:set var="dto" value="${requestScope.reviewcomment}"/>
 						<div class="font_bold_small top_margin_lg">
 							<span>COMMENTS</span>(<span id="commentcount">2</span>)
 						</div>
@@ -216,6 +220,7 @@ System.out.println(list);%>
 						<hr class="line_light_w">
 
 						<!-- 댓글 한 개 -->
+						<c:forEach var="comm" items="${requestScope.reviewcomment}">
 						<div class="font_light_small">
 							<div style="float: left">
 								<a href="#"><img id="replywriter" class="profile_icon"
@@ -224,10 +229,10 @@ System.out.println(list);%>
 							</div>
 							<div style="float: left">
 								<a id="replywriterId" class="font_bold_small" href="#"
-									style="color: white">abc123</a><br> <span>3시간 전</span>
+									style="color: white">${comm.userId}</a><br> <span>3시간 전</span>
 							</div>
 							<div style="float: left; margin-left: 20px;">
-								<p id="replycontent">리뷰에서 오랜 팬심이 느껴져서 공감가네요. ㅎㅎ 좋아요 누르고 갑니다!
+								<p id="replycontent">${comm.content}
 								</p>
 							</div>
 							<div style="float: right">
@@ -241,34 +246,8 @@ System.out.println(list);%>
 							<hr class="line_light_g">
 
 						</div>
-
-						<!-- 댓글 한 개 -->
-						<div class="font_light_small">
-							<div style="float: left">
-								<a href="#"><img id="replywriter" class="profile_icon"
-									alt="댓글작성자 프로필 사진" src="/MovieHolic/images/user2.jpg"></a>
-								&nbsp;&nbsp;
-							</div>
-							<div style="float: left">
-								<a id="replywriterId" class="font_bold_small" href="#"
-									style="color: white">abc123</a><br> <span>3시간 전</span>
-							</div>
-							<div style="float: left; margin-left: 20px;">
-								<p id="replycontent">리뷰에서 오랜 팬심이 느껴져서 공감가네요. ㅎㅎ 좋아요 누르고 갑니다!
-								</p>
-							</div>
-							<div style="float: right">
-								<button type="button" id="replydelete" class="close"
-									style="color: white">&times;</button>
-							</div>
-
-							<!-- float clear용 빈 div -->
-							<div style="clear: both;"></div>
-							<!-- 구분선 -->
-							<hr class="line_light_g">
-
-						</div>
-
+						</c:forEach>
+						
 						<!-- 댓글 입력칸 -->
 						<div class="font_light_small top_margin_lg">
 							<textarea class="form-control" rows="4" id="mycomment"

@@ -24,7 +24,6 @@ public class MyPageFrontController extends HttpServlet {
 		String path = "/page/mypage/mypage.jsp";
 		String cp = request.getParameter("followingpage");
 		
-		System.out.println(cp);
 
 		
 		
@@ -63,8 +62,11 @@ public class MyPageFrontController extends HttpServlet {
 		else if("writereview".equals(page)) {
 			UserController.getUserController().ReviewRegister(request, response);
 			MoveUrl.forward(request, response, "/page/mypage/writereview.jsp");
-		} else if("diaryDetail".equals(page)) {
-			UserController.getUserController().ReviewList(request, response);
+		} else if("reviewdetail".equals(page)) {
+			UserController.getUserController().ReviewDetail(request, response);
+			MoveUrl.forward(request, response, "/page/mypage/diaryDetail.jsp");
+		} else if("reviewcomment".equals(page)) {
+			UserController.getUserController().ReviewComment(request, response);
 			MoveUrl.forward(request, response, "/page/mypage/diaryDetail.jsp");
 		}
 	}

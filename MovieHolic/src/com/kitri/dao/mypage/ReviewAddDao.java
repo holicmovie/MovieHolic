@@ -3,8 +3,7 @@ package com.kitri.dao.mypage;
 import java.sql.*;
 import java.util.*;
 
-import com.kitri.dto.BoardDto;
-import com.kitri.dto.CommentDto;
+import com.kitri.dto.*;
 import com.kitri.util.DBClose;
 import com.kitri.util.DBConnection;
 
@@ -258,7 +257,8 @@ public List<BoardDto> listList(String content) {
 
 		return totalCnt;
 	}
-	public List<CommentDto> reviewContent(){
+	//comment
+	public List<CommentDto> reviewContent(String seq){
 		List<CommentDto> list = new ArrayList<CommentDto>();
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -295,10 +295,73 @@ public List<BoardDto> listList(String content) {
 
 		return list;
 	}
+	//리뷰정보
+	public BoardDto selectByNo(String seq) {
+		BoardDto boardDto = null;
+		CommentDto commentDto = null;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+	
+		
+		try {
+			conn = DBConnection.makeConnection();
+			StringBuffer sql = new StringBuffer();
+			sql.append("select mb.seq, mb.movieName,mb.starPoint, mb.postdate,mc.postdate, to_char(mb.postdate, 'YYYY') d1, mb.content,mc.content, mb.userid,mc.userid , mb.viewcount\n");
+			sql.append("from mh_board mb, mh_comment mc \n");
+			sql.append("where mb.boardcode = 1 \n");
+			sql.append("and mb.seq = ?");
+//			if("mb.content" != null) { 
+//				sql.append("and mb.seq = mc.seq \n");
+//			}
+			sql.append("order by mb.postdate desc \n");
+			
+			pstmt= conn.prepareStatement(sql.toString());
+			pstmt.setString(1, seq);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				boardDto = new BoardDto();
+				List<String> mbmovie = new ArrayList<String>();
+				commentDto = new CommentDto();
+				String mbid = rs.getString("userid");
+				String name = rs.getString("movieName");
+				StringTokenizer mb = new StringTokenizer(mbid, "@");
+				StringTokenizer mbname = new StringTokenizer(name, "||");
+				String mbid2 = mb.nextToken();
+				String moviename = mbname.nextToken();
+				mbmovie.add(moviename);
+				
+				boardDto.setSeq(rs.getInt("seq"));
+				boardDto.setMovieName(mbmovie);
+				boardDto.setPostDate(rs.getString("postdate"));
+				boardDto.setPostDateY(rs.getString("d1"));
+				boardDto.setContent(rs.getString("content"));
+				boardDto.setUserId(mbid2);
+				boardDto.setViewCount(rs.getInt("viewcount"));
+				boardDto.setStarPoint(rs.getInt("starpoint"));
+				
+				commentDto.setPostDate(rs.getString("postdate"));
+				commentDto.setContent(rs.getString("content"));
+				commentDto.setUserId(mbid2);
+				
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		return boardDto;
+	}
 	public static void main(String[] args) {
 		
 		System.out.println(getReviewAdd().reviewlist("movieName"));
 		System.out.println(getReviewAdd().listList("content"));
-		System.out.println(getReviewAdd().reviewContent());
+		System.out.println(getReviewAdd().reviewContent("seq"));
+		System.out.println(getReviewAdd().selectByNo("seq"));
 	}
 }

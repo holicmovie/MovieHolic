@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.*;
 
 import com.kitri.dto.BoardDto;
+import com.kitri.dto.CommentDto;
 import com.kitri.service.mypage.UserService;
 
 public class UserController {
@@ -47,5 +48,15 @@ public class UserController {
 	public void listList(HttpServletRequest request, HttpServletResponse response) {
 		List<BoardDto> list = UserService.getUserService().listList("content");
 		request.setAttribute("listList", list);
+	}
+	public void ReviewDetail(HttpServletRequest request, HttpServletResponse response) {
+		String seq = request.getParameter("seq");
+		BoardDto result = UserService.getUserService().selectByNo(seq);
+		request.setAttribute("reviewdetail", result);
+	}
+	public void ReviewComment(HttpServletRequest request, HttpServletResponse response) {
+		String seq = request.getParameter("seq");
+		List<CommentDto> list = UserService.getUserService().findByCo(seq);
+		request.setAttribute("reviewcomment", list);
 	}
 }
