@@ -10,7 +10,6 @@ String root = request.getContextPath();
 for(int i = 0; i < bestfilm.size(); i++){
 %>
 
-			
 				<article style="background-color: rgb(3, 39, 49); color: white;">
 					<a href="/MovieHolic/page/film/moviedetail.jsp"
 						class="image featured">
@@ -23,7 +22,6 @@ for(int i = 0; i < bestfilm.size(); i++){
 						</h5>
 					</header>
 				</article>
-
 
 <%
 }
