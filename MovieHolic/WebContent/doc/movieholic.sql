@@ -143,8 +143,10 @@ CREATE TABLE mh_board (
 	starPoint NUMBER, /* 별점 */
 	movieName CLOB, /* 영화명 */
 	director CLOB, /* 감독명 */
+    actors CLOB, /* 배우 */
+    category VARCHAR2(24), /* 장르 */
 	movieCodeYoung CLOB, /* 영화코드(진흥원) */
-	category VARCHAR2(24), /* 장르 */
+    movieCodeNaver CLOB, /* 영화코드(네이버) */
 	best NUMBER default 0, /* 추천 */
 	worst NUMBER default 0, /* 비추천 */
 	notify NUMBER default 0, /* 신고 */
@@ -399,6 +401,7 @@ CREATE TABLE mh_log (
 	userId VARCHAR2(100), /* 작성자ID */
 	logCate NUMBER, /* 활동분류 */
 	subject VARCHAR2(100), /* 제목 */
+    seq NUMBER, /* 글번호 */
 	movieCodeYoung CLOB /* 영화코드(진흥원) */
 );
 
