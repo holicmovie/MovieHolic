@@ -92,18 +92,21 @@
 		$('#save').click(function(){
 			var title = $('input[name="title"]').val();
 			var content = $('textarea[name="content"]').val();
-			var $imgArry = $('');
-			if(titleStr == '') {
+			var $imgArr = $('.movieImg');
+			if(title == '') {
 				alert("제목을 입력하세요.");
 				return;
 			} else if(content == ''){
 				alert("내용을 입력하세요.");
 				return;
-			} else if(true) {
+			} else if($imgArr.length < 3) {
+				alert("리스트에 추가할 영화를 2편 이상 선택하세요.")
+				return;
+			} else {
 				if(confirm("작성한 List를 저장하시겠습니까?")) {
 					$.ajax({
 						url: "<%= request.getContextPath()%>/list",
-						data: "act=saveList" + $('form').serialize(),
+						data: $('form').serialize() + "&act=saveList",
 						method: 'post',
 						success:function(result){
 							alert(result);
@@ -114,6 +117,7 @@
 				}
 			}
 		});
+		return false;
 	});
 
 </script>
