@@ -56,9 +56,11 @@ public class FilmFrontController extends HttpServlet {
 		else if ("viewfilmlist".equals(act)) {
 			System.out.println("FilmFrontConteroller : act=viewfilmlist");
 
-			// 경로 get 				 		  					(C -> FC)
+			
+			
+			// 경로 get 				 		  		(C -> FC)
 			// request(setted 장르별 영화목록) get    	(C -> FC)
-			path = FilmController.getUserController().getFilmList(request, response);	// attr : filmlist
+			path = FilmController.getUserController().getFilmList(request, response);	// attr : filmlist (페이지 정보에 맞는 목록)
 			
 			MoveUrl.forward(request, response, path);
 		}
@@ -67,7 +69,7 @@ public class FilmFrontController extends HttpServlet {
 		else if ("searchfilm".equals(act)) {
 			System.out.println("FilmFrontConteroller : act=searchfilm");
 			
-			// 경로 get 				 		  					(C -> FC)
+			// 경로 get 				 		  		(C -> FC)
 			// request(setted 검색된 영화목록) get    	(C -> FC)
 			path = FilmController.getUserController().getSearchedFilmList(request, response); // attr : searchedFilmList
 			

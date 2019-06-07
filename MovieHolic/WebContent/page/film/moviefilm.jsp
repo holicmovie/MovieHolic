@@ -17,7 +17,7 @@ $(function(){
 		method:'get', 
 		success:function(result){
 			alert("주간 인기 영화 완료");
-			$("#weekendbest").html(result);
+			$("#weekendbest").html(result.trim());
 		}
 	});
 	
@@ -27,13 +27,49 @@ $(function(){
 		method:'get', 
 		success:function(result){
 			alert("그냥 목록 완료");
-			$("#filmlist").html(result);
+			$("#filmlist").html(result.trim());
 		}
 	});
 	
 	return false;
 	
 });
+
+<%-- 페이지 선택한 경우 --%>
+$(function(){
+	$(document).on("click", ".test", function(){		
+		var conurl = $(this).attr("con-url");
+		if(conurl == "filmlist") {
+			var currentPage=$(this).attr("data-page");
+			var category = $(this).attr("cate");
+			alert(currentPage+"페이지를 보여줍니다.");
+
+			$.ajax({
+				url:'/MovieHolic/film?act=viewfilmlist&category=' + category + '&currentPage1=' + currentPage,
+				method:'get',
+				success:function(result){
+					$("#filmlist").html(result.trim());
+				}
+			});
+			
+		}else if(conurl == "searchedlist"){
+			var currentPage=$(this).attr("data-page");
+			var srchKey = $(this).attr("srchKey");
+			alert(currentPage+"페이지를 보여줍니다.");
+
+			$.ajax({
+				url:'/MovieHolic/film?act=searchfilm&srchKey=' + srchKey + '&currentPage2=' + currentPage,
+				method:'get',
+				success:function(result){
+					$("#filmlist").html(result.trim());
+				}
+			});
+		}
+		
+		return false;
+	});
+});
+
 
 <%-- 장르 선택한 경우 --%>
 $(function(){
@@ -107,10 +143,10 @@ $(function(){
 		<hr style="top: 1em; border-top: 5px solid rgba(255, 255, 255);">
 		<div>
 		
+			<div class="col-lg-9 col-2-mobile" style="float: right; margin-right: 2em; border-left: 5px solid; border-color: white;">
+
 		<!---------------------------------------------- 검색 ----------------------------------------------------->
 		
-			<div class="col-lg-9 col-2-mobile"
-				style="float: right; margin-right: 2em; border-left: 5px solid; border-color: white;">
 
 				<div class="row">
 					<div class="col-lg-8"></div>
@@ -139,38 +175,17 @@ $(function(){
 	<!--------------------------------------------- 영화 목록 ----------------------------------------------------->
 				
 				
+				<%-- float clear용 빈 div --%>
+				<div style="clear: both;"></div>
 				
 				
 	<!-------------------------------------------- 페이징 처리----------------------------------------------------->
 	
-				<%-- float clear용 빈 div --%>
-				<div style="clear: both;"></div>
-				
-				<div class="col-lg-12" style="padding: 0 0 0 0;">
-				<div style="float: left; padding-left: 1em;">
-					<button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button>
-				</div>
-				
-				<div style="float: right; padding-right: 11em;">
-					<button class="btn btn-success font_bold_small">다&nbsp;&nbsp;&nbsp;음</button>
-				</div>
-		
-				<ul class="pagination justify-content-center">
-					<li class="page-item"><a class="page-link a"
-						href="javascript:void(0);">1</a></li>
-					<li class="page-item"><a class="page-link a"
-						href="javascript:void(0);">2</a></li>
-					<li class="page-item"><a class="page-link a"
-						href="javascript:void(0);">3</a></li>
-					<li class="page-item"><a class="page-link a"
-						href="javascript:void(0);">4</a></li>
-					<li class="page-item"><a class="page-link a"
-						href="javascript:void(0);">5</a></li>
-				</ul>
-				</div>
-			</div>
+				<!-- ####################### 동적 공간 (filmlistresult.jsp) ###################### -->
+				<!-- ####################### 동적 공간 (searchfilmresult.jsp) ###################### -->
 
 	<!-------------------------------------------- 페이징 처리----------------------------------------------------->
+			</div>
 
 
 	<!--------------------------------------------- 장르 분류----------------------------------------------------->
