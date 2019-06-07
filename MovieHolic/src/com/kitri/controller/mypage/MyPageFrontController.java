@@ -41,26 +41,11 @@ public class MyPageFrontController extends HttpServlet {
 		} else if ("social".equals(page)) {
 			path = MyPageController.getMyPageController().showFollowings(request, response, cp);
 			MoveUrl.forward(request, response, path);
+			path = MyPageController.getMyPageController().showFollowers(request, response, cp);
+			MoveUrl.forward(request, response, path);
 		} else if ("setting".equals(page)) {
 			MoveUrl.forward(request, response, "/page/mypage/setting.jsp");
-		} 
-//		else if ( ) {
-//			path = MyPageController.getMyPageController().showFollowings(request, response, cp);
-//			MoveUrl.forward(request, response, path);
-//		}
-//		else if ("tab".equals(act)) {
-//			path = MyPageController.getMyPageController().deleteFollowings(request,response);
-//			
-//		}
-//		else if ("following".equals(tab)) {
-//			path = MyPageController.getMyPageController().findFollowings(request, response);
-//			MoveUrl.forward(request, response, path);
-//		} 
-//		else if ("following".equals(tab)) {
-//			path = MyPageController.getMyPageController().findFollowings(request, response);
-//			MoveUrl.forward(request, response, path);
-//		} 
-		else if("writereview".equals(page)) {
+		} else if("writereview".equals(page)) {
 			UserController.getUserController().ReviewRegister(request, response);
 			MoveUrl.forward(request, response, "/page/mypage/writereview.jsp");
 		} else if("diaryDetail".equals(page)) {

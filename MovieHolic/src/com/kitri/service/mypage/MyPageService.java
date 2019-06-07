@@ -21,22 +21,27 @@ public class MyPageService {
 		return myPageService;
 	}
 	
-	public List<SocialDto> selectFollowing(String userId) {
-		List<SocialDto> list = new ArrayList<SocialDto>();
-		list = SocialDao.getSocialDao().selectFollowingId(userId);
-//		System.out.println("서비스 확인 : " + list);		
-		return list;
-	}
-	
-	
+
+	//following id작업
 	public static List<SocialDto> findByRows(int startRow, int endRow){
 		return SocialDao.selectByRows(startRow, endRow);
 	}
 
-
+	
 	public static int getTotalCnt() {
 		return SocialDao.selectTotalCnt();
 	}
+	
+	//follower 작업
+	public static List<SocialDto> findByRows2(int startRow, int endRow){
+		return SocialDao.selectByRows2(startRow, endRow);
+	}
+
+	
+	public static int getTotalCnt2() {
+		return SocialDao.selectTotalCnt2();
+	}
+	
 	
 	
 //	public int deleteFollowingId() {
