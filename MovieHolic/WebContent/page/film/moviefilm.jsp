@@ -16,6 +16,7 @@ $(function(){
 		url: '/MovieHolic/film?act=viewbestfilmlist', 
 		method:'get', 
 		success:function(result){
+			alert("주간 인기 영화 완료");
 			$("#weekendbest").html(result);
 		}
 	});
@@ -25,6 +26,7 @@ $(function(){
 		url: '/MovieHolic/film?act=viewfilmlist', 
 		method:'get', 
 		success:function(result){
+			alert("그냥 목록 완료");
 			$("#filmlist").html(result);
 		}
 	});
@@ -190,6 +192,7 @@ $(function(){
 					<li><a href="<%=root%>/film?act=viewfilmlist&category=느와르" style="color: white;">느와르</a></li>
 					<li><a href="<%=root%>/film?act=viewfilmlist&category=다큐멘터리" style="color: white;">다큐멘터리</a></li>
 					<li><a href="<%=root%>/film?act=viewfilmlist&category=코미디" style="color: white;">코미디</a></li>
+					<li><a href="<%=root%>/film?act=viewfilmlist&category=애니메이션" style="color: white;">애니메이션</a></li>
 					<li><a href="<%=root%>/film?act=viewfilmlist&category=가족" style="color: white;">가족</a></li>
 					<li><a href="<%=root%>/film?act=viewfilmlist&category=미스터리" style="color: white;">미스터리</a></li>
 					<li><a href="<%=root%>/film?act=viewfilmlist&category=전쟁" style="color: white;">전쟁</a></li>

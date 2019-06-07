@@ -135,7 +135,7 @@ public class FilmDao {
 	
 	// 3
 	// <장르별 영화 목록 select> 메소드
-	//  개봉연도 최신순 & 이름 오름차순
+	//  개봉연도 최신순 & 네이버 별점순
 	public List<FilmDto> selectFilmListByCategory(String category) {
 		
 		System.out.println("FilmDao : 파라미터로 보내 온 장르는 " + category);
@@ -154,8 +154,8 @@ public class FilmDao {
 			sql.append("select movieName, movieCodeYoung, movieCodeNaver, movieImage, category, prdtYear, openYear, starPointNaver \n");
 			sql.append("from mh_films \n");
 			sql.append("where category like '%'||?||'%' \n");
-//			sql.append("and rownum < 11 \n");
-			sql.append("order by openYear desc");
+			sql.append("and rownum < 21 \n");   //임시 ##################################
+			sql.append("order by openYear desc, starPointNaver desc");
 			
 			pstmt = conn.prepareStatement(sql.toString());
 			
@@ -198,7 +198,7 @@ public class FilmDao {
 	
 	// 4
 	// <검색 결과 영화 목록 select> 메소드
-	// 개봉연도 최신순 && 이름 오름차순
+	// 개봉연도 최신순 & 네이버 별점순
 	public List<FilmDto> selectBySrchKey(String srchKey) {
  
 		List<FilmDto> list = new ArrayList<FilmDto>();
@@ -214,8 +214,8 @@ public class FilmDao {
 			sql.append("select movieName, movieCodeYoung, movieCodeNaver, movieImage, category, prdtYear, openYear, starPointNaver \n");
 			sql.append("from mh_films \n");
 			sql.append("where movieName like '%'||?||'%' \n");
-			//sql.append("and rownum < 11 \n");
-			sql.append("order by openYear desc");
+			sql.append("and rownum < 21 \n");  // 임시 #####################################
+			sql.append("order by openYear desc, starPointNaver desc");
 			
 			pstmt = conn.prepareStatement(sql.toString());
 			pstmt.setString(1, srchKey);
