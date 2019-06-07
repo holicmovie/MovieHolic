@@ -25,10 +25,13 @@ public class FilmController {
 	
 	
 	// [메소드]
+	
+	// ------------------------------------------------------- [ index.jsp ] -------------------------------------------------------
+	
 	// 1
 	// 박스오피스 get
 	public String getBoxOffice(HttpServletRequest request, HttpServletResponse response) {
-		
+				
 		String path = "/index.jsp";
 		
 		// 박스오피스 목록 get  (S -> C)
@@ -54,7 +57,26 @@ public class FilmController {
 	}
 	
 	
+	
+	
+	// ------------------------------------------------------- [ moviefilm.jsp ] -------------------------------------------------------
+	
 	// 3
+	// 주간 인기 영화 목록 get
+	public String getWeekBestFilmList(HttpServletRequest request, HttpServletResponse response) {
+		
+		String path = "/page/film/result/bestfilmlistresult.jsp";
+		
+		// 주간 인기 영화 목록 get
+		List<FilmDto> list = FilmService.getFilmService().getWeekBestFilmList();
+		// 주간 인기 영화 목록 set
+		request.setAttribute("bestfilmlist", list);
+		
+		return path;
+				
+	}
+	
+	// 4
 	// 장르별 영화 목록 get
 	public String getFilmList(HttpServletRequest request, HttpServletResponse response) {
 
@@ -71,7 +93,7 @@ public class FilmController {
 	}
 
 	
-	// 4
+	// 5
 	// 검색된 영화 목록 get
 	public String getSearchedFilmList(HttpServletRequest request, HttpServletResponse response) {
 			
@@ -87,5 +109,9 @@ public class FilmController {
 		return path;
 	}
 	
+	
+	
+	
+	// ------------------------------------------------------- [ moviedetail.jsp ] -------------------------------------------------------
 	
 }
