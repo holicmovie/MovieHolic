@@ -43,8 +43,14 @@ public class ListController {
 		String result = "";
 		
 		// 1. request에서 글제목, 글내용, 선택한 영화정보 받아옴
+		String listTitle = request.getParameter("title");
+		String listContent = request.getParameter("content");
+		String[] movieNmArr = request.getParameterValues("movieNm");
 		
-		
+		int len = movieNmArr.length;
+		for(int i=0; i<len; i++)
+			System.out.println(movieNmArr[i]);
+
 		return result;
 	}
 	

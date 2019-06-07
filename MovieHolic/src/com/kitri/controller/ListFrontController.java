@@ -24,7 +24,7 @@ public class ListFrontController extends HttpServlet {
 			MoveUrl.forward(request, response, path);
 		} else if("saveList".equals(act)) {	// #### makelist.jsp의 저장 버튼 : List 저장 ####
 			String result = ListController.getListController().saveList(request, response);
-			response.setContentType("text/html; charset=UTF-8");
+			response.setContentType("text/plain; charset=UTF-8"); 
 			PrintWriter out = response.getWriter();
 			out.print(result);
 		} else if("".equals(act)) {
