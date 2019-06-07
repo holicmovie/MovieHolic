@@ -75,7 +75,7 @@ public class FilmDto {
 	public void setStarPointNaver(String starPointNaver) {
 		this.starPointNaver = starPointNaver;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "FilmDto [movieNm=" + movieNm + ", movieCdYoung=" + movieCdYoung + ", movieCdNaver=" + movieCdNaver
