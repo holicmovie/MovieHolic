@@ -4,7 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-// [페이지에 맞는 영화목록 결과]
+// [페이지에 맞는 검색된 영화목록 결과]
 String searchKey = (String) request.getAttribute("srchKey");
 PageBean pb = (PageBean) request.getAttribute("searchedFilmList");
 List<FilmDto> searchedFilmList = pb.getList();

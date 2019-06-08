@@ -31,7 +31,7 @@ public class FilmFrontController extends HttpServlet {
 		// #1
 		// Home 눌릴때 || localhost/MovieHolic/film 링크 검색 시(첫 화면)
 		if ("showbox".equals(act)||act==null) {
-			System.out.println("FilmFrontConteroller : act=showbox");
+			System.out.println("FilmFrontConteroller : act=showbox 또는 null");
 			
 			// 경로 get 				 		  		   	 						 (C -> FC)
 			// request(setted 박스오피스 & 추천영화목록) get   	 (C -> FC)
@@ -55,12 +55,10 @@ public class FilmFrontController extends HttpServlet {
 		// 영화 목록 출력
 		else if ("viewfilmlist".equals(act)) {
 			System.out.println("FilmFrontConteroller : act=viewfilmlist");
-
-			
-			
-			// 경로 get 				 		  		(C -> FC)
+	
+			// 경로 get 				 		  					(C -> FC)
 			// request(setted 장르별 영화목록) get    	(C -> FC)
-			path = FilmController.getUserController().getFilmList(request, response);	// attr : filmlist (페이지 정보에 맞는 목록)
+			path = FilmController.getUserController().getFilmList(request, response);	// attr : filmlist
 			
 			MoveUrl.forward(request, response, path);
 		}
@@ -69,7 +67,7 @@ public class FilmFrontController extends HttpServlet {
 		else if ("searchfilm".equals(act)) {
 			System.out.println("FilmFrontConteroller : act=searchfilm");
 			
-			// 경로 get 				 		  		(C -> FC)
+			// 경로 get 				 		  					(C -> FC)
 			// request(setted 검색된 영화목록) get    	(C -> FC)
 			path = FilmController.getUserController().getSearchedFilmList(request, response); // attr : searchedFilmList
 			
