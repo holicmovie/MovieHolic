@@ -9,6 +9,17 @@ public class SocialDto { // 소셜
 	private int best_count;
 	private String name;
 	private int no;
+	private String followerId;
+	
+	public String getFollowerId() {
+		return followerId;
+	}
+
+
+	public void setFollowerId(String followerId) {
+		this.followerId = followerId;
+	}
+
 	
 	///// 생성자 /////
 	
@@ -84,20 +95,17 @@ public class SocialDto { // 소셜
 	}
 
 
-//	@Override
-//	public String toString() {
-//		return "SocialDto [followingId=" + followingId + ", list_count=" + list_count + ", best_count=" + best_count
-//				+ ", name=" + name + ", no=" + no + "]";
-//	}
-
-
-	
-	
 	@Override
 	public String toString() {
 		return "SocialDto [userId=" + userId + ", postDate=" + postDate + ", followingId=" + followingId
-				+ ", list_count=" + list_count + ", best_count=" + best_count + ", name=" + name + ", no=" + no + "]";
+				+ ", list_count=" + list_count + ", best_count=" + best_count + ", name=" + name + ", no=" + no
+				+ ", followerId=" + followerId + "]";
 	}
+
+
+
+	
+	
 
 
 }
