@@ -4,6 +4,7 @@
 
 <c:set var="ap" value="${requestScope.ap}" />
 
+
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 
@@ -67,7 +68,11 @@ $("#check-all").click(function() { // 전체 선택 버튼 클릭시
 
 		<c:forEach var="ap" items='${ap.list}'>
 			<tr>
-				<td><input type="checkbox" /></td>
+				<td>
+					<c:if test="${ap.outdate == null}">
+						<input type="checkbox" class="ap_checkbox" name="ap_checkbox" value="${ap.userId}"/>
+					</c:if>
+				</td>
 				<td>${ap.userId}</td>
 				<td>${ap.name }</td>
 				<td>${ap.birth }</td>

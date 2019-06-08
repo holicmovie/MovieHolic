@@ -18,6 +18,9 @@ public class AdminPageDto {
 	private int currentPage; 		//현재페이지
 	
 	
+	
+	
+
 	public AdminPageDto(int cntPerPage, int totalCnt, int cntPerPageGroup, int currentPage) {
 		super();
 		
@@ -57,6 +60,8 @@ public class AdminPageDto {
 		}
 		
 	}
+
+	
 
 	public int getCntPerPage() {
 		return cntPerPage;

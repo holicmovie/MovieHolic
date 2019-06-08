@@ -5,6 +5,9 @@ import java.util.Date;
 public class AdminDto {
 	
 	
+	
+	
+	int cnt; // 탈퇴시 성공
 	private String userId;
 	private String name;
 	private String pass;
@@ -40,6 +43,14 @@ public class AdminDto {
 
 
 
+
+	public int getCnt() {
+		return cnt;
+	}
+
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
 
 	public String getUserId() {
 		return userId;
@@ -144,6 +155,7 @@ public class AdminDto {
 				+ ", joinDate=" + joinDate + ", outdate=" + outdate + ", profile=" + profile + ", enable=" + enable
 				+ "]";
 	}
+
 	
 	
 	

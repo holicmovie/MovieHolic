@@ -32,29 +32,46 @@ public class AdminService {
 	
 	
 	
-	// 페이징처리
+	// 페이징처리 row
 	public List<AdminDto> findByRows(int startRow, int endRow, int cnt){
 		return AdminDao.getAdminDao().selectByRows(startRow, endRow, cnt);
 	}
 	
 
-	// 페이징처리
+	// 페이징처리 totalcnt
 	public int getTotalCnt(int cnt) {
 		return AdminDao.getAdminDao().selectTotalCnt(cnt);
 	}
 	
 	
-	// 신고게시물 페이징처리
+	// 신고게시물 페이징처리 row
 	public List<NotifyDto> NFselectByRows(int startRow, int endRow){
 		return AdminDao.getAdminDao().NFselectByRows(startRow, endRow);
 	}
 		
 
-	// 신고게시물 페이징처리
+	// 신고게시물 페이징처리 totalcnt
 	public int NFselectTotalCnt() {
 		return AdminDao.getAdminDao().NFselectTotalCnt();
 	}
 	
+	
+	// 회원 탈퇴 갱신
+	public void deletUser(HttpServletRequest request, HttpServletResponse response) {
+		AdminDao.getAdminDao().deletUser(request,response);
+	}
+	
+	
+	// 신고 게시물 댓글 삭제
+	public void deleteComment(HttpServletRequest request, HttpServletResponse response) {
+		AdminDao.getAdminDao().deleteComment(request, response);
+	}
+	
+	
+	//신고 게시물 본글 삭제
+	public void deleteBoard(HttpServletRequest request, HttpServletResponse response) {
+		AdminDao.getAdminDao().deleteBoard(request, response);
+	}
 	
 	
 	
