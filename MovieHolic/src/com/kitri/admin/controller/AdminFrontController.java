@@ -1,27 +1,27 @@
 package com.kitri.admin.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.kitri.util.MoveUrl;
+import com.kitri.util.SiteConstance;
 
 @WebServlet("/admin")
 public class AdminFrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
+			throws ServletException, IOException{
+		response.setContentType("text/html;charset=UTF-8");
+		
 		String act = request.getParameter("act");
 		String notify = request.getParameter("notify");
 		String path = "/page/admin/management.jsp";
-		
-//		System.out.println( " notify = " + notify);
-//		System.out.println( " act = " + act);
 		
 		
 		
@@ -34,30 +34,47 @@ public class AdminFrontController extends HttpServlet {
 			path = AdminController.getAdminController().NFandAll(request, response,cnt);
 			MoveUrl.forward(request, response, path);
 			
-		} else if ("notify".equals(notify)) {
+		} else if ("notify".equals(notify)) { // 신고 게시판
 			
 			path = AdminController.getAdminController().NFselectByList(request, response);
 			MoveUrl.forward(request, response, path);
 			
-		} else if ("alllist".equals(act)) {
+		} else if ("alllist".equals(act)) { // 유저 전체 게시판
 			
 			int cnt = 1;
 			path = AdminController.getAdminController().selectByUserList(request, response, cnt);
 			MoveUrl.forward(request, response, path);
 
-		} else if ("inactiveList".equals(act)) {
+		} else if ("inactiveList".equals(act)) { // 유저 휴면 게시판
 			
 			int cnt = 2;
 			path = AdminController.getAdminController().selectByUserList(request, response, cnt);
 			MoveUrl.forward(request, response, path);
 
-		} else if ("unsubscribelist".equals(act)) {
+		} else if ("unsubscribelist".equals(act)) { // 유저 탈퇴 게시판
 
 			int cnt = 3;
 			path = AdminController.getAdminController().selectByUserList(request, response, cnt);
 			MoveUrl.forward(request, response, path);
 			
-		}  else {
+		} else if ("secession".equals(act)) { // 유저 탈퇴 처리
+			
+			path = AdminController.getAdminController().deletUser(request, response);
+			MoveUrl.forward(request, response, path);
+			
+		} else if ("np_delete".equals(act)) {
+			path = AdminController.getAdminController().deleteBoard(request, response);
+			MoveUrl.forward(request, response, path);
+			
+		} 
+//		else if ("") {
+//			
+//		} else if () {
+//			
+//		} else if () {
+//			
+//		} 
+		else { // 이상하게 들어왔을때.
 			
 			int cnt = 4;
 			path = AdminController.getAdminController().selectByUserList(request, response, cnt);
@@ -70,9 +87,7 @@ public class AdminFrontController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		System.out.println("management에서 FrontController post로 들어옴.");
-
+		request.setCharacterEncoding(SiteConstance.ENCODE);
 		doGet(request, response);
 	}
 

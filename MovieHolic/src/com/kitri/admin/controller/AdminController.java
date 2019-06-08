@@ -30,9 +30,15 @@ public class AdminController {
 		return adminController;
 	}
 
+	
+	
+	
+	
+	
 	// 회원게시물 페이징처리
 	public String selectByUserList(HttpServletRequest request, HttpServletResponse response, int cnt) {
 
+		
 		// 요청전달 데이터 없으면 1페이지
 		String cp = request.getParameter("currentPage");
 
@@ -58,6 +64,8 @@ public class AdminController {
 		List<AdminDto> list = AdminService.getAdminService().findByRows(ap.getStartRow(), ap.getEndRow(), cnt);
 
 		ap.setList(list);
+		int num = 0;
+		
 		request.setAttribute("ap", ap);
 
 		String path = "/page/admin/management.jsp";
@@ -67,6 +75,8 @@ public class AdminController {
 		} else if (cnt == 2) {
 			path = "/page/admin/mgInactiveList.jsp";
 		} else if (cnt == 3) {
+			num = 1;
+			request.setAttribute("num", num);
 			path = "/page/admin/mgUnsubscribelist.jsp";
 		} else if (cnt == 4) {
 			path = "/page/admin/management.jsp";
@@ -76,6 +86,13 @@ public class AdminController {
 
 	}
 
+	
+	
+//	------------------------------------------------------------------------------------------------------
+	
+	
+	
+	
 	// 신고게시물 페이징처리
 	public String NFselectByList(HttpServletRequest request, HttpServletResponse response) {
 
@@ -115,7 +132,7 @@ public class AdminController {
 
 	
 	
-	
+//	------------------------------------------------------------------------------------------------------	
 	
 	
 	
@@ -135,7 +152,7 @@ public class AdminController {
 
 		int cntPerPageGroup = 5;
 
-//				String url = "/MovieHolic/admin"; // 한번만 보여주고 그안에서 돌아갈 것이라 필요없음
+//		String url = "/MovieHolic/admin"; // 한번만 보여주고 그안에서 돌아갈 것이라 필요없음
 
 		AdminPageDto ap = new AdminPageDto(cntPerPage, totalCnt, cntPerPageGroup, currentPage);
 
@@ -144,7 +161,7 @@ public class AdminController {
 		ap.setList(list);
 		request.setAttribute("ap", ap);
 
-//				----------------------------------------------------------------------------------------------------
+//		----------------------------------------------------------------------------------------------------
 
 		int totalCnt2 = AdminService.getAdminService().NFselectTotalCnt();
 
@@ -163,5 +180,66 @@ public class AdminController {
 		return path;
 
 	}
+	
+	
+	
+//	------------------------------------------------------------------------------------------------------	
+	
+	
+	
+	
+	public String deletUser(HttpServletRequest request, HttpServletResponse response) {
+		
+		AdminService.getAdminService().deletUser(request,response);
+		String path = "/page/admin/management.jsp";
+		
+		return path;
+	}
+	
+	
+	public String deleteBoard(HttpServletRequest request, HttpServletResponse response) {
+		AdminService.getAdminService().deleteComment(request, response);
+		AdminService.getAdminService().deleteBoard(request, response);
+		String path = "/page/admin/management.jsp";
+		
+		return path;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
+
+
+
+
+
+
+
+
+
+
+

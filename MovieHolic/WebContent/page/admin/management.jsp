@@ -4,6 +4,7 @@
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 
@@ -17,6 +18,7 @@
 /* 회원관리 게시판 목록종류 */
 $(function() {
 	$("div>span>span>a").click(function() {
+		
 		$("div.wrapper>div.container>div.member_search_result").empty();
 		var url = $(this).attr("href");
 		$.ajax({
@@ -24,29 +26,31 @@ $(function() {
 			method : 'get',
 			success : function(result) {
 				$("div.wrapper>div.container>div.member_search_result").html(result.trim());
+				$(".secession").show();//more버튼 숨기기
 			}
 		});
 		return false;
 	});
 });
 
-
-
-// 페이징 처리 - 동적은 사용 불가 코드.
-/* $(function() {
-	$("div>span>span>a").click(function() {
-	$("div.wrapper>div.container>div.member_search_result").empty();
+/* 회원관리 게시판 목록종류(탈퇴) */
+$(function() {
+	$("div>span>span>span>a").click(function() {
+		
+		$("div.wrapper>div.container>div.member_search_result").empty();
 		var url = $(this).attr("href");
 		$.ajax({
-			url : url, /* '/MovieHolic/admin?act=alllist&' + 'currentPage=' + currentPage, *//*
+			url : url,
 			method : 'get',
 			success : function(result) {
 				$("div.wrapper>div.container>div.member_search_result").html(result.trim());
+				//$(.secession)prop
+				$(".secession").hide();//more버튼 숨기기
 			}
 		});
-	return false;
+		return false;
 	});
-}); */
+});
 
 
 //.on으로 바꾸면 정적과 동적 둘다 사용 가능. notify
@@ -62,23 +66,6 @@ $(document).on("click", ".page>a", function(){
 	});
 	return false;
 });
-
-// notify
-/* $(function() {
-	$('.page_notify>a').click(function() {
-	var currentPage = $(this).attr("href");
-	$(".notify_search_result").empty();
-	$.ajax({
-		url : '/MovieHolic/admin?notify=notify&' + currentPage,
-			method : 'get',
-			success : function(result) {
-				$(".notify_search_result").html(result.trim());
-			}
-		});
-	return false;
-	});
-}); */
-
 
 
 //신고게시물 페이징 처리
@@ -98,7 +85,7 @@ $(document).on("click", ".page_notify>a", function(){
 
 
 
-/* // 전체선택
+// 전체선택
 $(document).on("click", ".check-all", function(){
         //클릭되었으면
         if($(".ab").prop("checked")){
@@ -109,64 +96,62 @@ $(document).on("click", ".check-all", function(){
             //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
             $(".ab").prop("checked",true);
         }
-}); */
-
-
-
-//체크박스 선택시 한 로우 가져오기.
-//상단 선택버튼 클릭시 체크된 Row의 값을 가져온다.
-$(document).on("click", ".secession", function(){
-	
-	var rowData = new Array();
-	var tdArr = new Array();
-	var checkbox = $("input[name=ap_checkbox]:checked");
-	
-	// 체크된 체크박스 값을 가져온다
-	checkbox.each(function(i) {
-		// checkbox.parent() : checkbox의 부모는 <td>이다.
-		// checkbox.parent().parent() : <td>의 부모이므로 <tr>이다.
-		var tr = checkbox.parent().parent().eq(i);
-		var td = tr.children();
-				
-		// 체크된 row의 모든 값을 배열에 담는다.
-		rowData.push(tr.text());
-		
-		// td.eq(0)은 체크박스 이므로  td.eq(1)의 값부터 가져온다.
-		var userId = td.eq(1).text()+", "
-		var name = td.eq(2).text()+", ";
-		var birth = td.eq(3).text()+", ";
-		var phone = td.eq(4).text()+", ";
-		var gender = td.eq(5).text()+", ";
-		var joinDate = td.eq(6).text()+", ";
-		var outdate = td.eq(7).text()+", ";
-		
-		
-		// 가져온 값을 배열에 담는다.
-		tdArr.push(userId);
-		tdArr.push(name);
-		tdArr.push(birth);
-		tdArr.push(phone);
-		tdArr.push(gender);
-		tdArr.push(joinDate);
-		tdArr.push(outdate);
-		
-		console.log("userId : " + userId);
-		console.log("name : " + name);
-		console.log("birth : " + birth);
-		console.log("phone : " + phone);
-		console.log("gender : " + gender);
-		console.log("joinDate : " + joinDate);
-		console.log("outdate : " + outdate);
-	});
-	
-	$("#ex3_Result1").html(" * 체크된 Row의 모든 데이터 = "+rowData);	
-	$("#ex3_Result2").html(tdArr);
-	
-		
+        
+        $(".ab").click(function(){
+            if($("input[name='check[]']:checked").length == 3){
+                $("#checkAll").prop("checked", true);
+            }else{
+                $("#checkAll").prop("checked", false);
+            }
+        });
+        
 });
+
+
+// 체크박스 선택(탈퇴)
+$(document).on("click", ".secession", function(){	
+	
+	$.ajax({
+		url: '/MovieHolic/admin?act=secession',
+		method: 'post',
+		data: $('.ap_checkbox').serialize(),
+		success:function(result){
+			$(":input[name=ap_checkbox]").prop("checked", false);
+			location.href = "/MovieHolic/admin?act=alllist&notify=notify";
+			alert("탈퇴가 성공적으로 이루어졌습니다.");
+		}
+	});
+});
+
+
+// 체크박스 선택시 신고게시물 삭제
+$(document).on("click", ".np_delete", function(){	
+	$.ajax({
+		url: '/MovieHolic/admin?act=np_delete',
+		method: 'post',
+		data: $('.np_checkbox').serialize(),
+		success:function(result){
+			$(":input[name=np_checkbox]").prop("checked", false);
+			location.href = "/MovieHolic/admin?act=alllist&notify=notify";
+			alert("게시물 삭제에 성공하셨습니다.");
+		}
+	});
+});
+
  
- 
- 
+// 휴면 처리 
+$(document).on("click", ".ap_enable", function(){	
+	$.ajax({
+		url: '/MovieHolic/admin?act=np_delete',
+		method: 'post',
+		data: $('.np_checkbox').serialize(),
+		success:function(result){
+			$(":input[name=np_checkbox]").prop("checked", false);
+			location.href = "/MovieHolic/admin?act=alllist&notify=notify";
+			alert("게시물 삭제에 성공하셨습니다.");
+		}
+	});
+});
  
  
 //   --------------------------------------------------
@@ -179,6 +164,26 @@ $(document).on("click", ".secession", function(){
 
 
 <style>
+
+.searchType{
+
+	width: 90px;
+    font-family: 'Noto Sans KR', sans-serif;
+    display: block;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 1.5;
+    color: #ffcd07;
+    background-color: #034741;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    border-color: #28a745;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
 tr>td>input {
 	-ms-transform: scale(2); /* IE */
 	-moz-transform: scale(2); /* FF */
@@ -242,16 +247,6 @@ hr.line_light_w {
 		<!-- Main -->
 		<div class="wrapper style1">
 
-
-
-
-		<div class="col-lg-12" id="ex3_Result1" ></div> 
-		<div class="col-lg-12" id="ex3_Result2" ></div> 
-
-
-
-
-
 			<div class="container">
 
 				<!-- 회원 관리 -->
@@ -260,16 +255,16 @@ hr.line_light_w {
 					<div class="col-lg-6">
 						<h2 align="left">회원 관리</h2>
 					</div>
-
+					
 					<div class="col-lg-1">
-						<div class="dropdown">
-							<button type="button" class="btn btn-success dropdown-toggle"
-								data-toggle="dropdown">이름</button>
-							<div class="dropdown-menu">
-								<a class="dropdown-item" href="#">아이디</a>
-							</div>
-						</div>
+						<form>
+							<select name="searchType" id="searchType" class="searchType">
+								<option value="name">이름</option>
+								<option value="id">아이디</option>
+							</select>						
+						</form>
 					</div>
+					
 
 					<div class="col-lg-5">
 						<div class="input-group mb-3" align="right">
@@ -294,11 +289,10 @@ hr.line_light_w {
 							<a class="dropdown-item" href="/MovieHolic/admin?act=alllist">전체목록</a>
 							<%-- DB number값이 1일때 휴면. --%> 
 							<a class="dropdown-item" href="/MovieHolic/admin?act=inactiveList">휴면목록</a> 
-							<a class="dropdown-item" href="/MovieHolic/admin?act=unsubscribelist">탈퇴목록</a>
+							<span class="btnUn"><a class="dropdown-item" href="/MovieHolic/admin?act=unsubscribelist">탈퇴목록</a></span>
 						</span>
 					</span>
-					<span class="secession"><button type="button" class="btn btn-success" style="z-index: 0">탈퇴</button></span>
-					<span class="dormancy"><button type="submit" class="btn btn-success" style="z-index: 0">휴면</button></span>
+						<span class="secession"><button type="button" class="btn btn-success" style="z-index: 0">탈퇴</button></span>
 				</div>
 
 
@@ -312,8 +306,7 @@ hr.line_light_w {
 				
 				
 
-
-					<table class="table" style="border-bottom: 0.2em solid #fff;">
+					<table id="table1" class="table" style="border-bottom: 0.2em solid #fff;">
 						<br>
 						<thead>
 							<tr>
@@ -337,7 +330,11 @@ hr.line_light_w {
 						
 							<c:forEach var="ap" items='${ap.list}'>
 								<tr>
-									<td><input type="checkbox" class="ap_checkbox" name="ap_checkbox" /></td>
+									<td>
+										<c:if test="${ap.outdate == null}">
+											<input type="checkbox" class="ap_checkbox" name="ap_checkbox" value="${ap.userId}"/>
+										</c:if>
+									</td>
 									<td>${ap.userId}</td>
 									<td>${ap.name }</td>
 									<td>${ap.birth }</td>
@@ -349,23 +346,20 @@ hr.line_light_w {
 
 
 										<div>
-											<span class="enable">
-												<button type="button"
-													class="btn btn-success dropdown-toggle"
-													data-toggle="dropdown">
-
-													<c:if test="${ap.enable == 1}">휴면</c:if>
-													<c:if test="${ap.enable == 0}">활동</c:if>
-
-												</button>
-											</span>
-
+											<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+												<c:if test="${ap.enable == 1}">휴면</c:if>
+												<c:if test="${ap.enable == 0}">활동</c:if>
+											</button>
+											
 											<div class="dropdown-menu">
-												<a class="dropdown-item" href="#"> <c:if
-														test="${ap.enable == 1}">활동</c:if> <c:if
-														test="${ap.enable == 0}">휴면</c:if>
+												<a class="dropdown-item" href="#">
+													<span class = "ap_enable">
+														<c:if test="${ap.enable == 1}">활동</c:if> 
+														<c:if test="${ap.enable == 0}">휴면</c:if>
+													</span>
 												</a>
 											</div>
+											
 										</div>
 
 									</td>
@@ -467,7 +461,9 @@ hr.line_light_w {
 				<hr class="line_light_w">
 
 				<div align="right">
-					<button type="submit" class="btn btn-success" style="z-index: 0">삭제</button>
+					<span class="np_delete">
+						<button class="btn btn-success" style="z-index: 0">삭제</button>
+					</span>
 				</div>
 
 
@@ -488,7 +484,7 @@ hr.line_light_w {
 						<thead>
 							<tr>
 								<th></th>
-								<th>번호</th>
+								<th>글번호</th>
 								<th>분류</th>
 								<th>작성자ID</th>
 								<th>제목</th>
@@ -502,8 +498,10 @@ hr.line_light_w {
 
 							<c:forEach var="np" items='${np.list}'>
 								<tr>
-									<td><input type="checkbox" /></td>
-									<td>${np.row }</td>
+									<td>
+											<input type="checkbox" class="np_checkbox" name="np_checkbox" value="${np.seq }"/>
+									</td>
+									<td>${np.seq }</td>
 									<td>${np.boardName }</td>
 									<td>${np.userId }</td>
 									<td>${np.subject }</td>
