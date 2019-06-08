@@ -95,7 +95,8 @@ public class FilmController {
 		int cntPerPage = 20;  										 			// 페이지 별 보여줄 목록 수
 		int totalCnt = FilmService.getFilmService().getTotalPage(category); 	// 총 게시글 수
 		int cntPerPageGroup = 5;                					 			// 그룹 페이지 수
-				
+		
+		System.out.println("현재 페이지 게시글 수 = " + totalCnt);
 		String url = "film";  // ??? 뭐지
 
 		PageBean pb = new PageBean(currentPage,

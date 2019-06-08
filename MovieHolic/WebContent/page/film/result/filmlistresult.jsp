@@ -4,7 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-// [페이지에 맞는 영화목록 결과]
+// [페이지에 맞는 장르별 영화목록 결과]
 String category = (String) request.getAttribute("cate");
 PageBean pb = (PageBean) request.getAttribute("filmlist");
 List<FilmDto> favoritefilm = pb.getList();
@@ -17,9 +17,6 @@ int endPage = pb.getEndPage();						 // 끝 페이지 index
 int cntPerPage = pb.getCntPerPage();				 // 한 페이지 내에 보여줄 최대 행 개수
 int totalPage = pb.getTotalPage();					 // 모든 페이지 개수
 int cntPerPageGroup = pb.getCntPerPageGroup();		 // 페이지 그룹 개수
-
-// [주간 인기 영화목록 결과]
-List<FilmDto> bestfilm = (List<FilmDto>) request.getAttribute("bestfilmlist");
 
 // [Context root]
 String root = request.getContextPath();

@@ -42,6 +42,9 @@ $(function(){
 		if(conurl == "filmlist") {
 			var currentPage=$(this).attr("data-page");
 			var category = $(this).attr("cate");
+			if(category==null){
+				category="";
+			}
 			alert(currentPage+"페이지를 보여줍니다.");
 
 			$.ajax({

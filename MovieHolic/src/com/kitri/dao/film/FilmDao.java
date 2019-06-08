@@ -166,7 +166,10 @@ public class FilmDao {
 			// 장르 = 전체
 			if(category == null) {
 				pstmt.setString(1, "");
-			}else {
+			} else if("null".equals(category)){
+				// 장르 = 전체인데, 페이지 이동하는 경우
+				pstmt.setString(1, "");
+			} else {
 				// 장르 = 선택 장르
 				pstmt.setString(1, category);
 			}
@@ -319,7 +322,7 @@ public class FilmDao {
 	// 개봉연도 최신순 & 네이버 별점순
 	public int selectFilmCountBySrchKey(String srchKey) {
 
-int cnt = 0;
+		int cnt = 0;
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
