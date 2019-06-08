@@ -21,6 +21,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import com.kitri.dao.list.ListDao;
+import com.kitri.dto.BoardDto;
 import com.kitri.dto.FilmDetailDto;
 import com.kitri.dto.FilmDto;
 import com.kitri.util.CallAPI;
@@ -87,6 +89,28 @@ public class ListService {
 	
 	
 	
+//	#### 작성한 List DB에 insert ####
+	public int saveList(BoardDto board) {
+		int result = 0;
+		
+//		1. list테이블 insert
+		String seq = ListDao.getListDao().insertList(board);
+		
+		if(seq != null) {
+			
+//			2. log테이블 insert
+			
+//			3. user테이블 insert
+		
+		}
+		
+		
+		
+		
+		
+		
+		return result;
+	}
 	
 	
 	
@@ -318,6 +342,17 @@ public class ListService {
 		}
 		return movieImage;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

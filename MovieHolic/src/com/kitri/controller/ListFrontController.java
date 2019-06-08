@@ -23,7 +23,7 @@ public class ListFrontController extends HttpServlet {
 			String path = ListController.getListController().srchMVbyName(request, response);
 			MoveUrl.forward(request, response, path);
 		} else if("saveList".equals(act)) {	// #### makelist.jsp의 저장 버튼 : List 저장 ####
-			String result = ListController.getListController().saveList(request, response);
+			int result = ListController.getListController().saveList(request, response);
 			response.setContentType("text/plain; charset=UTF-8"); 
 			PrintWriter out = response.getWriter();
 			out.print(result);

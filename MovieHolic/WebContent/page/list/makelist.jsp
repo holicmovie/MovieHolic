@@ -124,8 +124,11 @@
 </head>
 <body class="left-sidebar is-preload">
 <div id="page-wrapper">
+<%-- 임시 세션 --%>
+<% session.setAttribute("userID", "a187@gmail.com"); %>
 
-<!-- Header -->
+
+<%-- Header --%>
 	<div id="header"  style="background-image: none; margin-bottom: 0px; padding-bottom:0; height: 10px;">
 <%@ include file="/template/nav.jsp"%>
 	</div>
