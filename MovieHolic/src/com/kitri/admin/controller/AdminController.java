@@ -16,6 +16,8 @@ import com.kitri.admin.service.AdminService;
 
 public class AdminController {
 
+	
+	
 	private static AdminController adminController; // 2번째 전역변수 만들기
 
 	static {
@@ -50,7 +52,7 @@ public class AdminController {
 			currentPage = Integer.parseInt(cp);
 		}
 
-		int cntPerPage = 5; // 페이지별 보여줄 목록수
+		int cntPerPage = 7; // 페이지별 보여줄 목록수
 
 		int totalCnt = AdminService.getAdminService().getTotalCnt(cnt);
 
@@ -107,7 +109,7 @@ public class AdminController {
 			currentPage = Integer.parseInt(cp);
 		}
 
-		int cntPerPage = 5; // 페이지별 보여줄 목록수
+		int cntPerPage = 7; // 페이지별 보여줄 목록수
 
 		int totalCnt = AdminService.getAdminService().NFselectTotalCnt();
 
@@ -138,7 +140,6 @@ public class AdminController {
 	
 	
 	// 처음 전체 항목 띄워줄때
-
 	public String NFandAll(HttpServletRequest request, HttpServletResponse response, int cnt) {
 
 		// 요청전달 데이터 없으면 1페이지
@@ -146,7 +147,7 @@ public class AdminController {
 
 		int currentPage = 1; // 보여줄 현재 페이지.
 
-		int cntPerPage = 5; // 페이지별 보여줄 목록수
+		int cntPerPage = 7; // 페이지별 보여줄 목록수
 
 		int totalCnt = AdminService.getAdminService().getTotalCnt(cnt);
 
@@ -182,12 +183,15 @@ public class AdminController {
 	}
 	
 	
+
+	
+	
 	
 //	------------------------------------------------------------------------------------------------------	
 	
 	
 	
-	
+	// 회원 탈퇴 갱신
 	public String deletUser(HttpServletRequest request, HttpServletResponse response) {
 		
 		AdminService.getAdminService().deletUser(request,response);
@@ -195,9 +199,14 @@ public class AdminController {
 		
 		return path;
 	}
+
+	
+//	------------------------------------------------------------------------------------------------------		
 	
 	
+	// 신고 게시물 삭제
 	public String deleteBoard(HttpServletRequest request, HttpServletResponse response) {
+		
 		AdminService.getAdminService().deleteComment(request, response);
 		AdminService.getAdminService().deleteBoard(request, response);
 		String path = "/page/admin/management.jsp";
@@ -205,13 +214,64 @@ public class AdminController {
 		return path;
 	}
 	
+
+	
+//	------------------------------------------------------------------------------------------------------	
 	
 	
 	
+	// 휴면 설정
+	public String dormancy(HttpServletRequest request, HttpServletResponse response) {
+		
+		AdminService.getAdminService().dormancy(request, response);
+		String path = "/admin?act=alllist&notify=notify";
+		
+		return path;
+		
+	}
 	
 	
 	
+//	------------------------------------------------------------------------------------------------------	
 	
+	
+	
+	// 회원 게시물 검색 and 페이징처리
+	public String search(HttpServletRequest request, HttpServletResponse response) {
+
+		// 요청전달 데이터 없으면 1페이지
+		String cp = request.getParameter("currentPage");
+
+//		System.out.println("cp = " + cp);
+				
+		int currentPage = 1; // 보여줄 현재 페이지.
+
+		if (cp != null) {
+			currentPage = Integer.parseInt(cp);
+		}
+
+		int cntPerPage = 7; // 페이지별 보여줄 목록수
+
+		int totalCnt = AdminService.getAdminService().searchTotal(request,response);
+
+		int cntPerPageGroup = 5;
+		String url = "/MovieHolic/admin";
+
+		AdminPageDto ap = new AdminPageDto(cntPerPage, totalCnt, cntPerPageGroup, url, currentPage);
+
+//		System.out.println(np.getStartRow() + "   end : " + np.getEndRow());
+
+		List<AdminDto> list = AdminService.getAdminService().search(request,response,ap.getStartRow(), ap.getEndRow());
+
+		ap.setList(list);
+
+		request.setAttribute("ap", ap);
+
+		String path = "/page/admin/searchresult.jsp";
+
+		return path;
+
+	}
 	
 	
 	

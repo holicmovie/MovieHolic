@@ -23,10 +23,6 @@ public class AdminFrontController extends HttpServlet {
 		String notify = request.getParameter("notify");
 		String path = "/page/admin/management.jsp";
 		
-		
-		
-		
-		
 
 		if ("notify".equals(notify) && "alllist".equals(act)) { // 다른 페이지에서 management 들어올때.
 			
@@ -63,15 +59,22 @@ public class AdminFrontController extends HttpServlet {
 			MoveUrl.forward(request, response, path);
 			
 		} else if ("np_delete".equals(act)) {
+			
 			path = AdminController.getAdminController().deleteBoard(request, response);
 			MoveUrl.forward(request, response, path);
 			
+		} else if ("enable".equals(act)) {
+			
+			path = AdminController.getAdminController().dormancy(request, response);
+			MoveUrl.forward(request, response, path);
+			
+		} else if ("search".equals(act)) {
+			
+			path = AdminController.getAdminController().search(request, response);
+			MoveUrl.forward(request, response, path);
+			
 		} 
-//		else if ("") {
-//			
-//		} else if () {
-//			
-//		} else if () {
+//		else if () {
 //			
 //		} 
 		else { // 이상하게 들어왔을때.

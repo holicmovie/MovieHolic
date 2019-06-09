@@ -96,3 +96,21 @@ CREATE TABLE mh_category (
 --번호 분류 작성자id 제목 내용 작성일 신고수
 
 
+select * from mh_board;
+
+-- 번호로 글 삭제시켜보기.
+
+select *
+from mh_board
+where notify != 0;
+
+select *
+from mh_comment;
+
+delete from mh_comment
+where seq = 13;
+
+delete from mh_board
+where seq = 6;
+
+ROLLBACK;
