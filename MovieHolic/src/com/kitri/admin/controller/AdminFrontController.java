@@ -68,11 +68,6 @@ public class AdminFrontController extends HttpServlet {
 			path = AdminController.getAdminController().dormancy(request, response);
 			MoveUrl.forward(request, response, path);
 			
-		} else if ("enableinactive".equals(act)) { // 휴면페이지 휴면변경
-			
-			path = AdminController.getAdminController().dormancyinactive(request, response);
-			MoveUrl.forward(request, response, path);
-			
 		} else if ("search".equals(act)) {
 			
 			path = AdminController.getAdminController().search(request, response);
