@@ -211,7 +211,7 @@ hr.line_light_g {
 						<hr class="line_bold">
 						
 						<!-- 댓글 start -->
-						<c:set var="dto" value="${requestScope.reviewcomment}"/>
+						<%-- <c:set var="dto" value="${requestScope.reviewcomment}"/>
 						<div class="font_bold_small top_margin_lg">
 							<span>COMMENTS</span>(<span id="commentcount">2</span>)
 						</div>
@@ -258,7 +258,7 @@ hr.line_light_g {
 							<div style="clear: both;"></div>
 						</div>
 
-						<!-- 댓글 end -->
+						<!-- 댓글 end --> --%>
 
 					</div>
 					<!-- 오른쪽 내용 end -->

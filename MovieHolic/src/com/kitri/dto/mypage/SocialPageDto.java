@@ -143,11 +143,13 @@ public class SocialPageDto {
 
 	@Override
 	public String toString() {
-		return "AdminPageDto [cntPerPage=" + cntPerPage + ", startRow=" + startRow + ", endRow=" + endRow + ", list="
+		return "SocialPageDto [cntPerPage=" + cntPerPage + ", startRow=" + startRow + ", endRow=" + endRow + ", list="
 				+ list + ", totalPage=" + totalPage + ", totalCnt=" + totalCnt + ", cntPerPageGroup=" + cntPerPageGroup
 				+ ", startPage=" + startPage + ", endPage=" + endPage + ", url=" + url + ", currentPage=" + currentPage
 				+ "]";
 	}
+
+
 	
 	
 	

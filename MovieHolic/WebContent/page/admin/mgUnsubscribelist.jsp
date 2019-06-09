@@ -7,7 +7,6 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 
-
 <script>
 	$(function() {
 		
@@ -51,11 +50,7 @@ $("#check-all").click(function() { // 전체 선택 버튼 클릭시
 	<br>
 	<thead>
 		<tr>
-			<th>
-				<div>
-					<button type="submit" class="btn btn-success" style="z-index: 0;">전체선택</button>
-				</div>
-			</th>
+			<th></th>
 			<th>회원ID</th>
 			<th>이름</th>
 			<th>주민번호 앞자리</th>
@@ -63,14 +58,14 @@ $("#check-all").click(function() { // 전체 선택 버튼 클릭시
 			<th>성별</th>
 			<th>가입일</th>
 			<th>탈퇴일</th>
-			<th>휴면여부</th>
+			<th></th>
 		</tr>
 	</thead>
 	<tbody>
 
 		<c:forEach var="ap" items='${ap.list}'>
 			<tr>
-				<td><input type="checkbox" /></td>
+				<td></td>
 				<td>${ap.userId}</td>
 				<td>${ap.name }</td>
 				<td>${ap.birth }</td>
@@ -78,25 +73,7 @@ $("#check-all").click(function() { // 전체 선택 버튼 클릭시
 				<td>${ap.gender }</td>
 				<td>${ap.joinDate }</td>
 				<td>${ap.outdate }</td>
-				<td>
-					<div>
-						<button type="button" class="btn btn-success dropdown-toggle"
-							data-toggle="dropdown">
-
-							<c:if test="${ap.enable == 1}">휴면</c:if>
-							<c:if test="${ap.enable == 0}">활동</c:if>
-
-						</button>
-
-
-						<div class="dropdown-menu">
-							<a class="dropdown-item" href="#"> <c:if
-									test="${ap.enable == 1}">활동</c:if> <c:if
-									test="${ap.enable == 0}">휴면</c:if>
-							</a>
-						</div>
-					</div>
-				</td>
+				<td></td>
 			</tr>
 		</c:forEach>
 	</tbody>

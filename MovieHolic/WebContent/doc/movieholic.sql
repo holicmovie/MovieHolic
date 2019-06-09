@@ -143,7 +143,8 @@ CREATE TABLE mh_board (
 	starPoint NUMBER, /* 별점 */
 	movieName CLOB, /* 영화명 */
 	director CLOB, /* 감독명 */
-    actors CLOB, /* 배우 */
+    actor1 CLOB, /* 배우1 */
+    actor2 CLOB, /* 배우2 */
     category VARCHAR2(24), /* 장르 */
 	movieCodeYoung CLOB, /* 영화코드(진흥원) */
     movieCodeNaver CLOB, /* 영화코드(네이버) */
