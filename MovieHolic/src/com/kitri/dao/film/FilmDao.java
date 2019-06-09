@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.kitri.dto.BoardDto;
 import com.kitri.dto.FilmDto;
 import com.kitri.util.DBClose;
 import com.kitri.util.DBConnection;
@@ -363,6 +364,91 @@ public class FilmDao {
 	
 	
 	// ------------------------------------------------------- [ moviedetail.jsp ] -------------------------------------------------------
+
+	// 7
+	// <선택한 영화 별점 select> 메소드
+	// 무비홀릭 회원들의 별점 평균
+	public int selectByMovieCdYoung(String movieCdYoung) {
+		
+		int star = 0;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			conn = DBConnection.makeConnection();
+			StringBuffer sql = new StringBuffer();
+			sql.append("select avg(starpoint) \n");
+			sql.append("from mh_board \n");
+			sql.append("where to_char(moviecodeyoung) = ?||'||'");
+			
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1, movieCdYoung);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {					
+				star = rs.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		
+		return star;
+		
+	}
 	
+	// 8
+	// <선택한 영화 리뷰 select> 메소드
+	// 무비홀릭 회원들의 리뷰
+	public List<BoardDto> selectReviewsByMovieCdYoung(String movieCdYoung) {
+
+		List<BoardDto> list = new ArrayList<BoardDto>();
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			conn = DBConnection.makeConnection();
+			StringBuffer sql = new StringBuffer();
+			sql.append("select seq, userid, to_char(postdate,'yyyy-mm-dd') postdate, content, starpoint \n");
+			sql.append("from mh_board \n");
+			sql.append("where to_char(moviecodeyoung) = ?||'||' \n");
+			sql.append("and boardcode = 1 \n");
+			sql.append("and enable = 1 \n");
+			sql.append("order by postdate desc");
+			
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1, movieCdYoung);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				BoardDto review = new BoardDto();
+				
+				review.setSeq(rs.getInt("seq"));
+				review.setUserId(rs.getString("userid"));
+				review.setPostDate(rs.getString("postdate"));
+				review.setContent(rs.getString("content"));
+				review.setStarPoint(rs.getInt("starpoint"));
+				
+				list.add(review);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		
+		return list;
+	}
 	
 }
