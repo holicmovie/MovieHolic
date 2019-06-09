@@ -3,8 +3,7 @@ package com.kitri.service.mypage;
 import java.util.List;
 
 import com.kitri.dao.mypage.ReviewAddDao;
-import com.kitri.dto.BoardDto;
-import com.kitri.dto.CommentDto;
+import com.kitri.dto.*;
 
 public class UserService {
 
@@ -36,5 +35,9 @@ private static UserService userService; // 2번째 전역변수 만들기
 	//코멘트
 		public List<CommentDto> findByCo(String seq){
 			return ReviewAddDao.getReviewAdd().reviewContent(seq);
+		}
+	//회원정보
+		public UserDto selectById(String userid) {
+			return ReviewAddDao.getReviewAdd().selectId(userid);
 		}
 }

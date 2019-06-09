@@ -44,6 +44,7 @@ public class MyPageFrontController extends HttpServlet {
 //			MoveUrl.forward(request, response, path);
 			
 		} else if ("setting".equals(page)) {
+			UserController.getUserController().settingUser(request, response);
 			MoveUrl.forward(request, response, "/page/mypage/setting.jsp");
 		} 
 

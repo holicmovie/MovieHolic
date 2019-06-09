@@ -1,17 +1,12 @@
 package com.kitri.controller.mypage;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kitri.admin.dto.AdminDto;
-import com.kitri.admin.dto.AdminPageDto;
-import com.kitri.admin.service.AdminService;
 import com.kitri.dto.SocialDto;
 import com.kitri.dto.mypage.PageBean;
-import com.kitri.dto.mypage.SocialPageDto;
 import com.kitri.service.mypage.MyPageService;
 
 public class MyPageController {
