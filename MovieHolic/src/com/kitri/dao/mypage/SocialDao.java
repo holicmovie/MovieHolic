@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.kitri.dto.SocialDto;
+import com.kitri.dto.WishlistDto;
 import com.kitri.util.DBClose;
 import com.kitri.util.DBConnection;
 
@@ -248,6 +249,58 @@ public class SocialDao {
 		}
 		return list;
 		
+	}
+
+	public static List<WishlistDto> selectByRows3(int startRow, int endRow) {
+		List<WishlistDto> list = new ArrayList<WishlistDto>();
+		
+		
+		return list;
+	}
+
+	public static int selectTotalCnt3() {
+		String selectTotalCntSQL = "select count(*)\r\n" + 
+				"from (\r\n" + 
+				"    select code, moviecodenaver, moviecodeyoung\r\n" + 
+				"    from mh_wishlist\r\n" + 
+				"    where userid = 'a179@gmail.com'\r\n" + 
+				"    order by postdate DESC)";
+		int totalCnt = -1;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DBConnection.makeConnection();
+			pstmt = conn.prepareStatement(selectTotalCntSQL);
+			rs = pstmt.executeQuery();
+			rs.next();
+			totalCnt =rs.getInt(1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
+		
+		return totalCnt;
 	}
 
 //	public int updateUnable() {

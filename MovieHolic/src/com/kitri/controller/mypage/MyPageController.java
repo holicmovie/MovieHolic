@@ -40,7 +40,7 @@ public class MyPageController {
 		int cntPerPage = 5;// 페이지별 보여줄 목록수
 		int totalCnt = MyPageService.getTotalCnt();
 		int cntPerPageGroup = 5;// 페이지 그룹에 보여 줄 페이지수
-		String url = "/MovieHolic/mypage";
+		String url = "/MovieHolic/mypage?page=social&followingpage=";
 		
 		PageBean pb = new PageBean(currentPage, 
 									cntPerPage, 
@@ -89,11 +89,17 @@ public String showFollowers(HttpServletRequest request, HttpServletResponse resp
 		String test = "follower";
 		request.setAttribute("test", test);
 		
-		String path = "/page/mypage/followerresult.jsp";
+		String path = "/page/mypage/result/followerresult.jsp";
 		return path;
-		
 	}
+
+public String wishlistgenre() {
 	
+	
+	
+	String path = "/page/mypage/wishlist.jsp";
+	return path;
+}
 	
 //	public String deleteFollowings(HttpServletRequest request, HttpServletResponse response) {
 //		String path = "page/mypage/social.jsp";

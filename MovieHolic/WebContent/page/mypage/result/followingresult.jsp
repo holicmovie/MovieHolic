@@ -1,12 +1,12 @@
 <%@page import="com.kitri.dto.mypage.PageBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<div id="followings" class="container tab-pane active" role = "tabpanel">
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<div id="followings" class="container tab-pane active" role = "tabpanel">
 							<br>
-								<table class="table table-hover table-dark">
+								<table class="table table-hover table-dark" id = "followingtable">
 								  <thead>
 								    <tr>
 								      <th scope="col">no.</th>
@@ -53,7 +53,7 @@
 					
 						<div style="float: left">
 							<c:if test="${pb.startPage > 1 }">
-								<a href="/MovieHolic/mypage?page=social&followingpage=${pb.startPage - 1}"><button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button></a>
+								<a href="${pb.url}${pb.startPage - 1}"><button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button></a>
 								
 							</c:if>
 						</div>
@@ -62,7 +62,7 @@
 								
 						<div style="float: right;">
 							<c:if test="${pb.totalPage > pb.endPage }">
-							<a href="/MovieHolic/mypage?page=social&followingpage=${pb.endPage+1}"><button class="btn btn-success font_bold_small">다&nbsp;&nbsp;&nbsp;음</button></a>
+							<a href="${pb.url}${pb.endPage+1}"><button class="btn btn-success font_bold_small">다&nbsp;&nbsp;&nbsp;음</button></a>
 							</c:if>
 						</div>
 				
@@ -76,7 +76,8 @@
 
 										<c:otherwise>
 											<li class="page-item">
-											<a class="page-link a" href="/MovieHolic/mypage?page=social&followingpage=${i}">${i}</a></li>
+											<!-- /Movieholic/mypage?page=social&followingpage= -->
+											<a class="page-link a" id = "followingpaging" href="${pb.url}${i}">${i}</a></li>
 										</c:otherwise>
 
 									</c:choose>

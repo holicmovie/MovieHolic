@@ -23,10 +23,9 @@ public class MyPageFrontController extends HttpServlet {
 		String page = request.getParameter("page");
 		String path = "/page/mypage/mypage.jsp";
 		String cp = request.getParameter("followingpage");
-		
-
-		
-		
+		String cpf = request.getParameter("followerpage");
+		String choice = request.getParameter("choice");
+		System.out.println(choice);
 		if ("mypage".equals(page)) {
 			path = "/page/mypage/mypage.jsp";
 			MoveUrl.forward(request, response, path);
@@ -40,11 +39,10 @@ public class MyPageFrontController extends HttpServlet {
 		} else if ("social".equals(page)) {
 			path = MyPageController.getMyPageController().showFollowings(request, response, cp);
 			MoveUrl.forward(request, response, path);
-			/*
-			 * path = MyPageController.getMyPageController().showFollowers(request,
-			 * response, cp); MoveUrl.forward(request, response, path);
-			 */
-		
+			
+//			path = MyPageController.getMyPageController().showFollowers(request, response, cp);
+//			MoveUrl.forward(request, response, path);
+			
 		} else if ("setting".equals(page)) {
 			MoveUrl.forward(request, response, "/page/mypage/setting.jsp");
 		} 
@@ -58,6 +56,10 @@ public class MyPageFrontController extends HttpServlet {
 		} else if("reviewcomment".equals(page)) {
 			UserController.getUserController().ReviewComment(request, response);
 			MoveUrl.forward(request, response, "/page/mypage/diaryDetail.jsp");
+		} else if ("genre".equals(choice)) {
+			System.out.println(choice);
+		}else if ("year".equals(choice)) {
+			
 		}
 	}
 

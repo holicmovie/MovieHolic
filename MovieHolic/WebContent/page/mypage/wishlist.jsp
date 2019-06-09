@@ -18,13 +18,69 @@ hr.line_bold {
 
 <%--연도 셀렉트 박스 값 컨트롤러로 보내기 --%>
 <script>
+
 $(function(){
-	var wishlistyear = $("wishlistyear");
-	$(wishlistyear).click(function() {
-		var url = $(this).attr("")
+	$("#wishlistgenre").click(function(){
+	var genre = $("#wishlistgenre option:selected").val();
+	alert(genre);
+	$.ajax({
+		url:"/MovieHolic/mypage",
+		method:"GET",
+		data:"choice=genre&genreno="+genre,
+		/* success:function(result){
+			 $("section").html(result.trim()); 
+		} */
+	});
+	return false;
 		
-	})
-});
+	}); 
+});  
+
+$(function(){
+	$("#wishlistyear").click(function(){
+	var index = $("#wishlistyear option").index($("#wishlistyear option:selected"));
+				alert(index);
+		$.ajax({
+			url:"/MovieHolic/mypage",
+			method:"GET",
+			data:"choice=year&time="+index,
+			/* success:function(result){
+				 $("section").html(result.trim()); 
+			} */
+		});
+		return false;
+	
+	}); 
+});  
+/* 
+$(function(){
+	$("#followings>page-link a").click(function(){
+		alert("눌렸다!");
+		var currentpage=$(this).attr("href");
+		alert(currentPage+"페이지를 보여줍니다.");
+		 $.ajax({
+			url:'mypage?page=social&followingpage='+currentpage,
+			method:"GET",
+			success:function(result){
+				$("section").html(result.trim());
+			}
+		});
+		return false;
+	});  
+});   */
+
+/* $(function(){
+		 $.ajax({
+			url:'/MovieHolic/mypage?page=social',
+			method:"GET",
+			success:function(result){
+				alert("wishlist"),
+				$("#wishlistsection").html(result.trim());
+			}
+		});
+		return false;
+}); */
+
 </script>
 </head>
 <body class="left-sidebar is-preload">
@@ -50,7 +106,6 @@ $(function(){
 							<a href="/MovieHolic/page/mypage/wishlist.jsp" class="font_bold_small" ">Wish List</a>
 						</div>
 					</div>
-
 				<!-- **첫번째 행 시작 -->
 				<div class="row" style="margin-bottom: 5%">
 				
@@ -69,7 +124,7 @@ $(function(){
 					<div class="col-lg-6 col-12-moblile"></div>
 				
 					<div class="col-lg-2 col-4-moblile">
-							<select class="form-control form-control-sm">
+							<select class="form-control form-control-sm" id = "wishlistyear">
 								<option>기간별-전체</option>
 								<option>2015~2019</option>
 								<option>2010~2014</option>
@@ -82,35 +137,28 @@ $(function(){
 					</div>
 					
 					<div class="col-lg-2 col-4-moblile">
-							<select class="form-control form-control-sm">
-								<option>장르별 - 전체</option>
-								<option>드라마</option>
-								<option>판타지</option>
-								<option>서부</option>
-								<option>공포</option>
-								<option>로맨스</option>
-								<option>모험</option>
-								<option>스릴러</option>
-								<option>느와르</option>
-								<option>컬트</option>
-								<option>다큐멘터리</option>
-								<option>코미디</option>
-								<option>가족</option>
-								<option>미스터리</option>
-								<option>전쟁</option>
-								<option>애니메이션</option>
-								<option>범죄</option>
-								<option>뮤지컬</option>
-								<option>SF</option>
-								<option>액션</option>
-								<option>무협</option>
-								<option>에로</option>
-								<option>서스펜스</option>
-								<option>서사</option>
-								<option>블랙코미디</option>
-								<option>실험</option>
-								<option>영화카툰</option>
-								<option>영화음악</option>
+							<select class="form-control form-control-sm" id = "wishlistgenre">
+								<option value = "all">전체</option>
+								<option value = "1">액션</option>
+								<option value = "2">어드벤처</option>
+								<option value = "3">멜로</option>
+								<option value = "4">로맨스</option>
+								<option value = "5">코미디</option>
+								<option value = "6">드라마</option>
+								<option value = "7">가족</option>
+								<option value = "8">범죄</option>
+								<option value = "9">미스터리</option>
+								<option value = "10">스릴러</option>
+								<option value = "11">공포(호러)</option>
+								<option value = "12">판타지</option>
+								<option value = "13">SF</option>
+								<option value = "14">뮤지컬</option>
+								<option value = "15">사극</option>
+								<option value = "16">전쟁</option>
+								<option value = "17">애니메이션</option>
+								<option value = "18">다큐멘터리</option>
+								<option value = "19">공연</option>
+								<option value = "20">기타</option>		
 							</select>
 					</div>
 					
@@ -122,6 +170,7 @@ $(function(){
 				<!-- **두번째 행 끝 -->
 				
 				<!-- **세번째 행 시작 -->
+				<section id = "wishlistsection">
 				<div class="row">
 
 					<!-- 영화 포스터 나열 -->
@@ -196,7 +245,7 @@ $(function(){
 					
 				</div>
 				<!-- **네번째 행 끝 -->
-
+</section>
 			</div>
 
 		</div>
