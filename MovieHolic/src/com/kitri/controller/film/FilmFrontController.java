@@ -78,7 +78,12 @@ public class FilmFrontController extends HttpServlet {
 		else if ("viewfilmdetail".equals(act)) {
 			System.out.println("FilmFrontConteroller : act=viewfilmdetail");
 			
-			
+			// 경로 get 				 		  										(C -> FC)
+			// request(setted 선택된 영화 상세정보, 리뷰들) get    	(C -> FC)
+			path = FilmController.getUserController().getFilmInfo(request, response); // attr : filmInfo, reviews
+						
+			MoveUrl.forward(request, response, path);
+
 		} // else if end
 
 		

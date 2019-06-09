@@ -5,7 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kitri.dto.FilmDto;
+import com.kitri.dto.*;
 import com.kitri.dto.film.PageBean;
 import com.kitri.service.film.FilmService;
 
@@ -156,8 +156,36 @@ public class FilmController {
 	}
 	
 	
-	
-	
+		
 	// ------------------------------------------------------- [ moviedetail.jsp ] -------------------------------------------------------
+	
+	
+	// 6
+	// 선택된 영화 상세정보 get
+	public String getFilmInfo(HttpServletRequest request, HttpServletResponse response) {
+
+		String path = "/page/film/moviedetail.jsp";
+		String movieCdYoung = request.getParameter("movieCdYoung");
+		
+		System.out.println("C : 상세페이지 볼 영화 코드 : " + movieCdYoung);
+		
+		// 영화 상세정보 get		(S -> C)
+		FilmDetailDto list = FilmService.getFilmService().getFilmInfo(movieCdYoung);
+		int starPoint = FilmService.getFilmService().getStarPoint(movieCdYoung);
+		
+		list.setStarPoint(starPoint);
+		
+		// 영화 리뷰 get (S -> C)
+		List<BoardDto> reviews = FilmService.getFilmService().getReviews(movieCdYoung);
+		
+		// 영화 상세정보 set		(C -> FC)
+		request.setAttribute("filmInfo", list);
+		// 영화 리뷰 set			(C -> FC)
+		request.setAttribute("reviews", reviews);
+	
+		return path;
+		
+	}
+	
 	
 }
