@@ -27,14 +27,17 @@ public class ListFrontController extends HttpServlet {
 			response.setContentType("text/plain; charset=UTF-8"); 
 			PrintWriter out = response.getWriter();
 			out.print(result);
-		} else if("".equals(act)) {
-			
-		} else if("".equals(act)) {
-			
-		} else if("".equals(act)) {
-			
-		} else if("".equals(act)) {
-			
+		} else if("listDetail".equals(act)) {	// #### List목록에서 상세페이지로 넘기기 ####
+			String path = ListController.getListController().listDetail(request, response);
+			MoveUrl.forward(request, response, path);
+		} else if("selList".equals(act)) {
+			String path = ListController.getListController().selListBySeq(request, response);
+			MoveUrl.forward(request, response, path);
+		} else if("modifyList".equals(act)) {
+			int result = ListController.getListController().modifyList(request, response);
+			response.setContentType("text/plain; charset=UTF-8"); 
+			PrintWriter out = response.getWriter();
+			out.print(result);
 		} else if("".equals(act)) {
 			
 		} else if("".equals(act)) {

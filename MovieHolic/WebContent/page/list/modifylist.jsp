@@ -131,7 +131,7 @@
 				if(confirm("작성한 List를 저장하시겠습니까?")) {
 					$.ajax({
 						url: "<%= request.getContextPath()%>/list",
-						data: $('form').serialize() + "&act=saveList",
+						data: $('form').serialize() + "&act=modifyList",
 						method: 'post',
 						success:function(result){
 							if(result != 0) {
@@ -154,9 +154,6 @@
 	});
 
 </script>
-<script>
-	
-</script>
 </head>
 <body class="left-sidebar is-preload">
 <div id="page-wrapper">
@@ -165,23 +162,11 @@
 <%@ include file="/template/nav.jsp"%>
 	</div>
 
-<%-- 임시 세션 --%>
-<% session.setAttribute("userID", "a125@gmail.com"); %>
 <%-- Main --%>
 <div class="wrapper style1">
 
 	<div class="container">
 
-	<%-- 페이지 이동경로 --%>		
-		<div class="row" style="margin-bottom:30px;">
-			<div class="col-lg-12 col-12-mobile font_light_small">
-				<span>✱&nbsp;&nbsp;</span>
-				<a href="/MovieHolic/page/mypage/mypage.jsp" style="color:white;">My Page</a>
-				<span>&nbsp;&nbsp;❱❱&nbsp;&nbsp;</span>
-				<a href="/MovieHolic/page/mypage/diary.jsp" class="font_bold_small">Diary</a>
-			</div>
-		</div>
-		
 	<%-- 페이지 제목 --%>
 		<div class="font_bold_mid" style="width:100%; border-bottom: 2.5px solid #fff; margin-bottom: 0; padding-bottom: 0.8em;">
 			<button class="btn btn-success font_bold_small" style="float: right;" id="save">저&nbsp;&nbsp;&nbsp;장</button>
@@ -194,16 +179,28 @@
 		<div class="row" style="margin-top: 1em;">
 			<div class="col-lg-12">
 				<h3><label>YOUR LIST</label></h3>
-				<input type="text" class="form-control form-control-lg" style="width: 50%;" placeholder="당신의  추천 리스트 제목을 입력하세요" name="title">
+				<input type="hidden" name="seq" value="${requsetScope.board.seq}">
+				<input type="hidden" name="postDate" value="${requsetScope.board.postDate}">
+				<input type="text" class="form-control form-control-lg" style="width: 50%;" value="${requestScope.board.subject}" name="title">
 			</div>
 			<div class="col-lg-12" style="margin-top: 1em;">
 				<h3><label for="list-detail-description">ABOUT YOUR FAVORITE MOVIE</label></h3>
-				<textarea class="form-control" rows="15" style="resize : none;" id="list-detail-description" name="content"></textarea>
+				<textarea class="form-control" rows="15" style="resize : none;" id="list-detail-description" name="content">${requestScope.board.content}</textarea>
 			</div>
 		</div>
 		
 	<%-- 영화 이미지 --%>
 		<div class="font_bold_mid" style="width:100%; border-top: 2.5px solid #fff; margin-top: 3em; padding: 1.5em 1.2em 3em 1.2em;">
+			<c:forEach var="film" items="${requestScope.film}">
+			<tr>
+				<a class="chMovie" href="#")>
+					<img class="movieImg" src="${film.movieImage}">
+					<input type="hidden" name="movieNm" value="${film.movieNm}">
+					<input type="hidden" name="movieCdYoung" value="${film.movieCdYoung}">
+					<input type="hidden" name="movieCdNaver" value="${film.movieCdNaver}">
+				</a>
+			</tr>
+			</c:forEach>
 			<a id="addMovie" href="#"><img class="movieImg" src="/MovieHolic/images/getposter.png" width="200vh;" style="margin: 0.3em;"></a>
 		</div>
 		</form>
