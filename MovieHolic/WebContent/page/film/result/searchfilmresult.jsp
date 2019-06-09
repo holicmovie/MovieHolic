@@ -30,13 +30,13 @@ for(int i = 0; i < size; i++) {
 					<div class="col-lg-2 col-4-mobile"
 						style="float: left; margin: 0.5em 0.5em 0.5em 0.5em; padding: 2px; border: 2px solid; border-color: white;">
 						
-						<a href="<%=root%>/page/film?act=viewfilmdetail&<%=searchedFilmList.get(i).getMovieCdYoung()%>" class="image featured" style="margin: 0;">
+						<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=searchedFilmList.get(i).getMovieCdYoung()%>" class="image featured" style="margin: 0;">
 							<img src="<%=searchedFilmList.get(i).getMovieImage()%>" alt="<%=searchedFilmList.get(i).getMovieNm()%> 포스터 이미지">
 						</a>
 						
-						<header style="text-align: center; background-color: white; margin: 0;">
+						<header style="text-align: center; background-color: white; margin-top: 5px;">
 							<h6 style="background-color: black;">
-								<a href="<%=root%>/page/film?act=viewfilmdetail&<%=searchedFilmList.get(i).getMovieCdYoung()%>"><%=searchedFilmList.get(i).getMovieNm()%></a>
+								<a style="font-size : 13px;" class="font_light_small" href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=searchedFilmList.get(i).getMovieCdYoung()%>"><%=searchedFilmList.get(i).getMovieNm()%></a>
 							</h6>
 						</header>
 						
@@ -46,8 +46,11 @@ for(int i = 0; i < size; i++) {
 	}
 %>
 
+	<%-- float clear용 빈 div --%>
+	<div style="clear: both;"></div>
+
 	<!-- 페이징 처리 -->
-	<div id="pagegroup" class="col-lg-12" style="padding: 0 0 0 0;">
+	<div id="pagegroup" class="col-lg-12" style="margin-top : 80px; margin-bottom:80px; padding: 0 0 0 0;">
 				
 <%
 // 시작 페이지가 1이 아닌 경우만 '이전' 표시

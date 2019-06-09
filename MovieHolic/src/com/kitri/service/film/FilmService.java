@@ -1,5 +1,8 @@
 package com.kitri.service.film;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -7,9 +10,13 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import com.kitri.dao.film.FilmDao;
-import com.kitri.dto.FilmDto;
+import com.kitri.dto.*;
 import com.kitri.util.CallAPI;
 
 public class FilmService {
@@ -57,7 +64,6 @@ public class FilmService {
 
 			// ② API 호출 (GET)
 			String responseBoxOffice = CallAPI.APIHttpGet(httpUrl, null);  		// HttpUrlConnection 사용
-			//String responseBoxOffice = CallAPI.APIHttpClientGet(httpUrl, null);  // HttpClient 라이브러리 사용
 
 			// ③ responseBoxOffice (JSON) 파싱
 			// *박스오피스 JSON 구조 : { {boxOfficeResult} - [dailyBoxOfficeList] - {key1 : "", key2 : "" , ...} 여러 개 }
@@ -246,11 +252,249 @@ public class FilmService {
 			return FilmDao.getFilmDao().selectFilmCountBySrchKey(srchKey);
 		}
 		
-		
-		
-		
+				
 		
 		// ------------------------------------------------------- [ moviedetail.jsp ] -------------------------------------------------------
 
+		// 8
+		// <선택된 영화 상세정보 얻기> 메소드
+		// : 영진원 영화 상세정보 api + 네이버 검색 크롤링(인물사진)
+		public FilmDetailDto getFilmInfo(String movieCdYoung) {
+
+			FilmDetailDto result = new FilmDetailDto();
+			
+			// #1 API 호출
+
+			// 1-1. 영진원 영화 상세정보 API
+			// ① url + 파라미터 값 설정
+			String url = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json";
+			String paramYoung1 = "key=d497cad784b01e0c354d04518c4ddfc7";
+			String paramYoung2 = "movieCd="+movieCdYoung;
+
+			String httpUrl = url + "?" + paramYoung1 + "&" + paramYoung2;
+
+			// ② API 호출 (GET)
+			String responseFilmInfo = CallAPI.APIHttpGet(httpUrl, null);
+			
+			// ③ responseBoxOffice (JSON) 파싱
+			// *박스오피스 JSON 구조 : { {movieInfoResult} - {movieInfo} - key1 : "" 여러 개 }
+			try {
+							
+					JSONParser jsonParser = new JSONParser();
+					JSONObject jsonObject = (JSONObject) jsonParser.parse(responseFilmInfo.toString());
+						
+					JSONObject movieInfoResult = (JSONObject) jsonObject.get("movieInfoResult");
+					JSONObject movieInfo = (JSONObject) movieInfoResult.get("movieInfo");
+					
+					JSONArray nations = (JSONArray) movieInfo.get("nations");			// 제작국가
+					JSONArray genres = (JSONArray) movieInfo.get("genres");			// 장르
+					JSONArray directors = (JSONArray) movieInfo.get("directors");		// 감독
+					JSONArray actors = (JSONArray) movieInfo.get("actors");				// 배우
+					JSONArray companys = (JSONArray) movieInfo.get("companys");	// 제작사
+					JSONArray audits = (JSONArray) movieInfo.get("audits"); 			// 관람등급
+
+					// ④ DTO 세팅
+					// # FilmDto set
+					
+					// 영화 한글명 set
+					String movieNm = movieInfo.get("movieNm").toString();
+					result.setMovieNm(movieNm);
+					// 제작년도 set
+					String prdtYear = movieInfo.get("prdtYear").toString();
+					result.setPrdtYear(prdtYear);
+					// 영화코드(영진원) set
+					result.setMovieCdYoung((movieInfo.get("movieCd").toString()));
+					// 개봉년도 set
+					String OpenDate = movieInfo.get("openDt").toString();
+					if(!"".equals(OpenDate)) {
+						result.setOpenYear(movieInfo.get("openDt").toString().substring(0, 4));						
+					}
+					// 장르 1개 set
+					JSONObject genre = (JSONObject) genres.get(0);
+					result.setCategory(genre.get("genreNm").toString());
+
+					// # getPoster() 호출하여, 영화 이미지 얻기
+					FilmDto image = CallAPI.getPoster(movieNm, prdtYear);
+					String movieImage = image.getMovieImage();			// 영화 이미지 주소
+					String movieCdNaver = image.getMovieCdNaver(); 	// 영화코드 (네이버)
+					String starPointNaver = image.getStarPointNaver();	// 네이버 별점
+					// 영화 포스터 이미지 주소 set
+					result.setMovieImage(movieImage);
+					// 영화코드(네이버) set
+					result.setMovieCdNaver(movieCdNaver);
+					// 네이버 별점 set
+					result.setStarPointNaver(starPointNaver);
+					
+					// # FilmDetailDto set
+					// 영화 영문명 set
+					result.setMovieNmEn(movieInfo.get("movieNmEn").toString());
+					// 개봉날짜 set
+					result.setOpenDt(movieInfo.get("openDt").toString());
+					// 상영시간 set
+					result.setShowTm(movieInfo.get("showTm").toString());
+
+					// 제작국가 set
+					String nationNms = "";
+					int nlen = nations.size();
+					if(nlen==1) {
+						JSONObject nation = (JSONObject) nations.get(0);
+						result.setNations(nation.get("nationNm").toString());												
+					} else {
+						for(int i = 0; i < nlen; i++ ) {
+							JSONObject nation = (JSONObject) nations.get(i);
+							nationNms += nation.get("nationNm");
+							if(i!=nlen) {
+								nationNms += ", ";
+							}
+						}
+						result.setNations(nationNms);												
+					}
+					
+					// 감독 1명 set
+					String directorNm = "";
+					if(!directors.isEmpty()) {
+						JSONObject director = (JSONObject) directors.get(0);
+						directorNm = director.get("peopleNm").toString();
+						result.setDirectors(directorNm);						
+					}
+					
+					// 배우 2명 set             *DB insert용
+					int alen = actors.size();
+					if(alen>0) {
+						JSONObject actor1 = (JSONObject) actors.get(0);
+						result.setActor1(actor1.get("peopleNm").toString());												
+					}
+					if(alen>1) {
+						JSONObject actor2 = (JSONObject) actors.get(1);
+						result.setActor2(actor2.get("peopleNm").toString());
+					} 
+					
+					// 제작사 1개 set
+					int clen = companys.size();
+					if(clen>0) {
+						JSONObject company = (JSONObject) companys.get(0);
+						result.setCompanyNm(company.get("companyNm").toString());						
+					}
+					
+					// 관람등급 set
+					int aulen = audits.size();
+					if(aulen>0) {
+						JSONObject audit = (JSONObject) audits.get(0);
+						result.setWatchGradeNm(audit.get("watchGradeNm").toString());
+					}
+					
+					// # 영화 상세정보 뿌리기용 정보받기
+					// 배우 전체 set            *영화 상세정보 뿌리기용
+					String[] actorArray = new String[alen];
+					for(int i = 0; i < alen; i++) {
+						JSONObject actor = (JSONObject) actors.get(i);
+						actorArray[i] = actor.get("peopleNm").toString();
+					}
+					result.setActors(actorArray);
+					
+					// 배우 전체 사진 set (최대 8명까지만)
+					String[] actorImageArray = new String[alen];
+					if(alen < 8) {
+						for(int i = 0; i < alen; i++) {
+							// 네이버 검색결과의 인물 사진 주소를 크롤링
+							String searchActorNm = URLEncoder.encode("배우" + actorArray[i], "UTF-8");
+					        String connUrl = "https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query="+searchActorNm;
+					        
+							Document doc = Jsoup.connect(connUrl).get();
+							Elements imgtag = doc.select("div.cont_noline div.profile_wrap div.big_thumb img");
+							System.out.println(imgtag);
+							if(!imgtag.isEmpty()) {			
+									actorImageArray[i] = imgtag.get(0).attr("src").toString();
+							} else {
+								// 없을 경우 기본 이미지 세팅
+								actorImageArray[i] = "/MovieHolic/images/noProfile.png";
+							}
+						}
+					} else {
+						for(int i = 0; i < 8; i ++) {
+							// 네이버 검색결과의 인물 사진 주소를 크롤링
+							String searchActorNm = URLEncoder.encode("배우" + actorArray[i], "UTF-8");
+					        String connUrl = "https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query="+searchActorNm;
+					        
+							Document doc = Jsoup.connect(connUrl).get();
+							Elements imgtag = doc.select("div.cont_noline div.profile_wrap div.big_thumb img");
+							System.out.println(imgtag);
+							if(!imgtag.isEmpty()) {			
+									actorImageArray[i] = imgtag.get(0).attr("src").toString();
+							} else {
+								// 없을 경우 기본 이미지 세팅
+								actorImageArray[i] = "/MovieHolic/images/noProfile.png";
+							}
+						}
+					}
+					result.setActorImages(actorImageArray);
+					
+					// 감독 사진 set
+					// 네이버 검색결과의 인물 사진 주소를 크롤링
+					String searchDirectorNm = URLEncoder.encode("감독 " + directorNm, "UTF-8");
+			        String connUrl = "https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query="+searchDirectorNm;
+			        
+					Document doc = Jsoup.connect(connUrl).get();
+					Elements imgtag = doc.select("div.cont_noline div.profile_wrap div.big_thumb img");
+					if(!imgtag.isEmpty()) {			
+							result.setDirectorImage(imgtag.get(0).attr("src").toString());
+							System.out.println("감독 이미지 주소 : " + result.getDirectorImage() );	
+					} else {
+						// 없을 경우 기본 이미지 세팅
+						result.setDirectorImage("/MovieHolic/images/noProfile.png");						
+					}
+					
+					// 예고편용 videoId set
+					String searchMovieNm = URLEncoder.encode(movieNm+" 예고편", "UTF-8");
+					String Vurl = "https://www.googleapis.com/youtube/v3/search?part=id&q=" + searchMovieNm + "&key=AIzaSyCzuMQplzlYo-nYc_Yicoay5qY6eNdCTZA&maxResults=1";
+					String responseYoutube = CallAPI.APIHttpGet(Vurl, false);
+					if(responseYoutube!=null) {
+						JSONObject jsonObject2 = (JSONObject) jsonParser.parse(responseYoutube.toString());
+						JSONArray items = (JSONArray) jsonObject2.get("items");
+						if(!items.isEmpty()) {
+							JSONObject item = (JSONObject) items.get(0);
+							JSONObject id = (JSONObject) item.get("id");
+							if(!id.isEmpty()) {
+								if(id.get("videoId")!=null) {
+									String videoId = id.get("videoId").toString();								
+									result.setVideoId(videoId);							
+								}
+							}
+						}
+					}
+					System.out.println("S : 세팅된 영화 상세 정보 : " + result);
+					System.out.println("S : 세팅된 영화 이미지 주소 : " + result.getMovieImage());
+							
+						
+			} catch (ParseException e) {  	// json 파싱 예외
+				e.printStackTrace();
+			} catch (UnsupportedEncodingException e) {    //encode 예외
+				e.printStackTrace();
+			} catch (IOException e1) { // 크롤링 예외
+				e1.printStackTrace();
+			} 
+			
+			return result;
+		}
+		
+		// 8
+		// <선택된 영화 별점 얻기> 메소드
+		//  *select
+		//  *return int
+		public int getStarPoint(String movieCdYoung) {
+
+			// #1 DAO 호출
+			return FilmDao.getFilmDao().selectByMovieCdYoung(movieCdYoung);
+		}
+		
+		// 9
+		// <선택된 영화 리뷰 얻기> 메소드
+		// *select
+		// *return BoardDto
+		public List<BoardDto> getReviews(String movieCdYoung) {
+			
+			// #1 DAO 호출
+			return FilmDao.getFilmDao().selectReviewsByMovieCdYoung(movieCdYoung);
+		}
 		
 } // class end

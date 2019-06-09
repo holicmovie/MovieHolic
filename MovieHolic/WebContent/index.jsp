@@ -36,13 +36,36 @@ font-size: 15px;
 .top_margin{
 margin-top: 100px;
 }
+
+/* 인기 영화 랭킹 스타일 */
+div.interated_network_movie_info_img{
+width:100%;
+float: none;
+display: table-cell;
+vertical-align: top;
+position: relative;
+}
+span.movie_ranking_number {
+position: absolute;
+vertical-align: top;
+    top: 0;
+    left: 0;
+    width: 38px;
+    padding: 6px 0 6px 0;
+    font-size: 20px;
+    background-color : #ff4e00;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    z-index: 1000;
+}
 </style>
 
 
 
 </head>
 <body class="homepage is-preload" style="background-color: black;">
-<!-- <script type="text/javascript">
+<script type="text/javascript">
 	$(function() {
 		var arr = $("div>div>nav.nav2>li>a");
 		$(arr).click(function() {
@@ -57,7 +80,7 @@ margin-top: 100px;
 			
 		});
 	});
-</script> -->
+</script>
 
 
 
@@ -128,13 +151,15 @@ for(FilmDto dto : box){
 %>	
 
 				<article style="background-color: rgb(3, 39, 49);">
-					<span class="font_light_small"><%=rank++%>위</span><br>
-					<a href="/MovieHolic/page/film/moviedetail.jsp" class="image featured">
+			<div class="interated_network_movie_info_img">
+				<span class="movie_ranking_number" id="rankNum"><%=rank++%></span>
+					<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>"  class="image featured">
 						<img style="height:320px;" src="<%=dto.getMovieImage()%>" alt="<%=dto.getMovieNm()%> 포스터" />
 					</a>
+			</div>
 					<header>
 						<h5>
-							<a href="/MovieHolic/page/film/moviedetail.jsp" class="film_title">
+							<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>"  class="film_title">
 								<%=dto.getMovieNm()%>
 							</a>
 						</h5>
@@ -173,12 +198,12 @@ for(FilmDto dto : box){
 for(FilmDto dto : favoritefilm){
 %>					
 						<article style="margin: ; height: 410px; background-color: rgb(3, 39, 49);">
-							<a href="#" class="image featured">
+							<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>"  class="image featured">
 								<img style="height:320px;" src="<%=dto.getMovieImage()%>" alt="<%=dto.getMovieNm()%> 포스터" />
 							</a>
 							<header>
 								<h5>
-									<a href="/MovieHolic/page/film/moviedetail.jsp" class="film_title">
+									<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>"  class="film_title">
 										<%=dto.getMovieNm()%>
 									</a>
 								</h5>
