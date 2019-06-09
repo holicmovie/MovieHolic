@@ -408,7 +408,7 @@ public class AdminDao  {
 		
 		StringBuffer sql = new StringBuffer();
 		
-		sql.append(" delete from mh_board"); 
+		sql.append(" delete from mh_comment"); 
 		sql.append(" where seq = ?");
 		
 		String checkArr[] = request.getParameterValues("np_checkbox");
@@ -453,7 +453,7 @@ public class AdminDao  {
 		
 		StringBuffer sql = new StringBuffer();
 		
-		sql.append(" delete from mh_comment"); 
+		sql.append(" delete from mh_board"); 
 		sql.append(" where seq = ?");
 			
 		String checkArr[] = request.getParameterValues("np_checkbox");

@@ -12,7 +12,7 @@
 <script>
 	$(function() {
 		
-		$(".page>a").click(function() {
+		$(".page_inactive>a").click(function() {
 			var currentPage = $(this).attr("href");
 			$.ajax({
 				url : '/MovieHolic/admin?act=inactiveList&' + 'currentPage=' + currentPage ,
@@ -26,8 +26,6 @@
 		});
 		
 	});
-	
-	
 </script>
 
 
@@ -78,7 +76,7 @@
 
 						<div class="dropdown-menu">
 							<span class="enable">
-								<a class="dropdown-item" href="/MovieHolic/admin?act=enable&ap_userId=${ap.userId}">
+								<a class="dropdown-item" href="/MovieHolic/admin?act=enableinactive&ap_userId=${ap.userId}">
 									<c:if test="${ap.enable == 1}">활동</c:if> 
 									<c:if test="${ap.enable == 0}">휴면</c:if>
 								</a>
@@ -101,7 +99,7 @@
 
 		<c:if test="${ap.startPage > 1 }">
 			
-				<span class="page">
+				<span class="page_inactive">
 					<a href="${ap.startPage - 1}"><button class="btn btn-success">이전</button></a>
 				</span>
 			
@@ -125,7 +123,7 @@
 					</c:when>
 
 					<c:otherwise>
-						<li class="page-item"><span class="page"><a class="page-link"
+						<li class="page-item"><span class="page_inactive"><a class="page-link"
 								href="${i}">${i}</a></span></li>
 					</c:otherwise>
 
@@ -147,7 +145,7 @@
 
 		<c:if test="${ap.totalPage > ap.endPage }">
 			
-				<span class="page">
+				<span class="page_inactive">
 					<a href="${ap.endPage+1}"><button class="btn btn-success">다음</button></a>
 				</span>
 			

@@ -58,14 +58,19 @@ public class AdminFrontController extends HttpServlet {
 			path = AdminController.getAdminController().deletUser(request, response);
 			MoveUrl.forward(request, response, path);
 			
-		} else if ("np_delete".equals(act)) {
+		} else if ("np_delete".equals(act)) { // 신고게시판 행 삭제
 			
 			path = AdminController.getAdminController().deleteBoard(request, response);
 			MoveUrl.forward(request, response, path);
 			
-		} else if ("enable".equals(act)) {
+		} else if ("enable".equals(act)) { //전체페이지 휴면 변경
 			
 			path = AdminController.getAdminController().dormancy(request, response);
+			MoveUrl.forward(request, response, path);
+			
+		} else if ("enableinactive".equals(act)) { // 휴면페이지 휴면변경
+			
+			path = AdminController.getAdminController().dormancyinactive(request, response);
 			MoveUrl.forward(request, response, path);
 			
 		} else if ("search".equals(act)) {

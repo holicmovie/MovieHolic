@@ -144,7 +144,14 @@ public class AdminController {
 
 		// 요청전달 데이터 없으면 1페이지
 		String cp = request.getParameter("currentPage");
-
+		
+		String cntN = request.getParameter("cnt");
+		System.out.println(cntN);
+		
+		if (cntN != null) {
+			cnt = Integer.parseInt(cntN);
+		}
+		
 		int currentPage = 1; // 보여줄 현재 페이지.
 
 		int cntPerPage = 7; // 페이지별 보여줄 목록수
@@ -181,6 +188,21 @@ public class AdminController {
 		return path;
 
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 
@@ -224,11 +246,22 @@ public class AdminController {
 	public String dormancy(HttpServletRequest request, HttpServletResponse response) {
 		
 		AdminService.getAdminService().dormancy(request, response);
-		String path = "/admin?act=alllist&notify=notify";
+		String path = "/admin?act=alllist&notify=notify&cnt=1";
 		
 		return path;
 		
 	}
+	
+	
+	// 휴면페이지 휴면 설정
+		public String dormancyinactive(HttpServletRequest request, HttpServletResponse response) {
+			
+			AdminService.getAdminService().dormancy(request, response);
+			String path = "/admin?act=alllist&notify=notify&cnt=2";
+			
+			return path;
+			
+		}
 	
 	
 	
