@@ -357,6 +357,85 @@ public List<BoardDto> listList(String content) {
 		}
 		return boardDto;
 	}
+	//리뷰 총갯수
+	public int selectTotalReview(String seq) {
+		int cnt = 0;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			conn = DBConnection.makeConnection();
+			StringBuffer sql = new StringBuffer();
+			sql.append("select count(*) \n");
+			sql.append("from mh_board \n");
+			sql.append("where boardcode = 1 \n");
+			sql.append("order by postdate desc \n");
+			
+			pstmt = conn.prepareStatement(sql.toString());
+			
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+								
+				cnt = rs.getInt(1);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		
+		
+		return cnt;
+	}
+	public UserDto selectId(String userid) {
+		UserDto userDto =null;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DBConnection.makeConnection();
+			StringBuffer sql = new StringBuffer();
+			sql.append("select userid, name, pass, phonefirst, phonemid, phonelast, birth, gender \n");
+			sql.append("from mh_user \n");
+			sql.append("where userid = ? \n");
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1, userid);
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				
+				userDto = new UserDto();
+				userDto.setUserId(rs.getString("userId"));
+				userDto.setName(rs.getString("name"));
+				userDto.setPass(rs.getString("pass"));
+				userDto.setPhoneFirst(rs.getString("phonefirst"));
+				userDto.setPhoneMid(rs.getString("phonemid"));
+				userDto.setPhoneLast(rs.getString("phonelast"));
+				userDto.setGender(rs.getString("gender"));
+				userDto.setBirth(rs.getString("birth"));
+			}
+			
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		
+		
+		return userDto;
+	}
 	public static void main(String[] args) {
 		
 		System.out.println(getReviewAdd().reviewlist("movieName"));
