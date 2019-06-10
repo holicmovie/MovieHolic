@@ -172,7 +172,7 @@ public class CallAPI {
 			        int beginIndex = movieImageUrl.lastIndexOf("=") + 1;
 			        String movieCdNaver = movieImageUrl.substring(beginIndex); // movieCdNaver = 영화코드(네이버)
 		
-			        HighImageUrl.setMovieCdNaver(movieCdNaver);	 								// 영화코드(네이버) set
+			        HighImageUrl.setMovieCdNaver(movieCdNaver);	 									// 영화코드(네이버) set
 			        HighImageUrl.setStarPointNaver(imageArrayItems.get("userRating").toString());	// 네이버 별점 set
 			        
 			        // 네이버 영화의 고화질 포스터 주소를 크롤링
