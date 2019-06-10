@@ -3,9 +3,11 @@ package com.kitri.controller.mypage;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.*;
 
 import com.kitri.dto.*;
+import com.kitri.dto.mypage.PageBean;
 import com.kitri.service.mypage.UserService;
 
 public class UserController {
@@ -38,10 +40,30 @@ public class UserController {
 	}
 	
 	public void ReviewList(HttpServletRequest request, HttpServletResponse response) {
+		String page = request.getParameter("review");
+		int currentPage = 1;  					// 보여줄 현재 페이지
 		
-		List<BoardDto> list = UserService.getUserService().reviewlist("movieName");
+		if(page != null) {
+			currentPage = Integer.parseInt(page);
+		}
 		
-		request.setAttribute("reviewList", list);
+		int cntPerPage = 5;  					// 페이지 별 보여줄 목록 수
+		int totalCnt = UserService.getUserService().getTotalpage();  // 총 게시글 수
+		int cntPerPageGroup = 5;                // 그룹 페이지 수
+		
+		String url = "/MovieHolic/diary";
+
+		PageBean pb = new PageBean(currentPage,
+								   cntPerPage,
+								   cntPerPageGroup,
+								   totalCnt,
+								   url);
+		
+		List<BoardDto> list =UserService.getUserService().reviewlist(pb.getStartRow(), pb.getEndRow());
+		
+		pb.setBoard(list);
+		System.out.println(totalCnt);
+		request.setAttribute("reviewList", pb);
 	}
 	
 	public void listList(HttpServletRequest request, HttpServletResponse response) {
