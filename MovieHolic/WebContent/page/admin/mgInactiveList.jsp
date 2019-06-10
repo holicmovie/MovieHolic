@@ -12,9 +12,11 @@
 
 </script>
 
-					<!-- 휴면후 탈퇴 적용시키기 위해 사용 -->
-					<input type="hidden" class="mgInactiveList" name="mgInactiveList" value="mgInactiveList">
-					<input type="hidden" class="searchresult" name="searchresult" value="no">
+<!-- 휴면후 탈퇴 적용시키기 위해 사용 -->
+<input type="hidden" class="mgInactiveList" name="mgInactiveList" value="mgInactiveList">
+<input type="hidden" class="searchresult" name="searchresult" value="no">
+
+
 <table class="table" style="border-bottom: 0.2em solid #fff;">
 	<br>
 	<thead>

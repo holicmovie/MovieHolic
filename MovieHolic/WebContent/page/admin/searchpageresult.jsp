@@ -33,6 +33,9 @@ $(function() {
 });
 
 	
+	
+	
+	
 /* 회원관리 게시판 목록종류(탈퇴) */
 $(function() {
 	$("div>span>span>span>a").click(
@@ -52,7 +55,10 @@ $(function() {
 	});
 });
 
-	//.on으로 바꾸면 정적과 동적 둘다 사용 가능. notify
+
+
+
+//.on으로 바꾸면 정적과 동적 둘다 사용 가능. notify
 $(document).on("click",".page>a",function() {
 	var currentPage = $(this).attr("href");
 	$("div.wrapper>div.container>div.member_search_result").empty();
@@ -68,6 +74,8 @@ $(document).on("click",".page>a",function() {
 
 	
 	
+	
+	
 // 휴면 페이징 처리.
 $(document).on("click",".page_inactive>a",function() {
 var currentPage = $(this).attr("href");
@@ -81,6 +89,8 @@ $("div.wrapper>div.container>div.member_search_result").empty();
 	});
 	return false;
 });
+
+
 
 
 
@@ -101,6 +111,8 @@ $(document).on("click", ".page_notify>a", function() {
 
 
 
+
+
 // 유저 전체선택
 $(document).on("click", ".allcheckbox", function() {
 	//클릭되었으면
@@ -115,6 +127,7 @@ $(document).on("click", ".allcheckbox", function() {
 		return false;
 	}
 });
+
 
 
 
@@ -135,20 +148,31 @@ $(document).on("click", ".allcheckbox2", function() {
 
 
 
-// 체크박스 선택(탈퇴)
+//체크박스 선택(탈퇴)
 $(document).on("click", ".secession", function(){	
+	var mgInactiveList = $(".mgInactiveList").val();
+	var searchresult = $(".searchresult").val();
 	$.ajax({
 		url: '/MovieHolic/admin?act=secession',
 		method: 'post',
 		data: $('.ap_checkbox').serialize(),
 		success:function(result){
 			$(":input[name=ap_checkbox]").prop("checked", false);
+			
+			if (mgInactiveList == "mgInactiveList") {
+				location.href = "/MovieHolic/admin?act=inactive&notify=notify";
+			} else if (searchresult == "searchresult") {
+				var href = $("span.enable>a").attr("href");
+				location.href = href;
+			} else {
 				location.href = "/MovieHolic/admin?act=alllist&notify=notify";
-			alert("게시물 삭제에 성공하셨습니다.");
+			}
 		}
 	});
 	return false;
 });
+
+
 
 
 
@@ -176,8 +200,12 @@ $(document).on("click", ".np_delete", function() {
 });
 
 
+
+
 // 휴면 처리 
 // Ajax 안쓰고 밑에서 처리함.
+
+
 
 
 // 검색 : 이름 - 0 아이디 - 1
@@ -199,6 +227,8 @@ $(document).on("click",".search",function() {
 	});
 	return false;
 });
+
+
 
 	
 //검색 게시물 페이징 처리

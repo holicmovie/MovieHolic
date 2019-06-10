@@ -24,20 +24,19 @@ public class AdminFrontController extends HttpServlet {
 		String path = "/page/admin/management.jsp";
 		
 
-		if ("notify".equals(notify) && "alllist".equals(act)) { // 다른 페이지에서 management 들어올때.
+		if ("alllist".equals(act) && "notify".equals(notify) ) { // 다른 페이지에서 management 들어올때.
 			
 			int cnt = 1; 
 			path = AdminController.getAdminController().NFandAll(request, response,cnt);
 			MoveUrl.forward(request, response, path);
 			
-		} else if ("notify".equals(notify) && "inactive".equals(act)) { // 휴면 화면에서 휴면처리후 페이징처리
+		} else if ("inactive".equals(act) && "notify".equals(notify)) { // 휴면 화면에서 휴면처리후 페이징처리
 			
-			System.out.println("inactive 들어옴.");
 			int cnt = 2; 
-			path = AdminController.getAdminController().inactivePage(request, response,cnt);
+			path = AdminController.getAdminController().inactivePage(request, response, cnt);
 			MoveUrl.forward(request, response, path);
 			
-		} else if ("notify".equals(notify) && "search".equals(act)) { // 검색화면에서 검색처리 후 페이징처리
+		} else if ("search".equals(act) && "notify".equals(notify) ) { // 검색화면에서 검색처리 후 페이징처리
 			
 			path = AdminController.getAdminController().searchPage(request, response);
 			MoveUrl.forward(request, response, path);

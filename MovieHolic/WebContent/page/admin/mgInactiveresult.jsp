@@ -40,6 +40,7 @@ $(function() {
 
 	
 	
+	
 /* 회원관리 게시판 목록종류(탈퇴) */
 $(function() {
 	$("div>span>span>span>a").click(function() {
@@ -50,7 +51,6 @@ $(function() {
 			method : 'get',
 			success : function(result) {
 				$("div.wrapper>div.container>div.member_search_result").html(result.trim());
-				//$(.secession)prop
 				$(".secession").hide();//more버튼 숨기기
 			}
 		});
@@ -58,6 +58,7 @@ $(function() {
 	});
 });
 
+	
 	
 	
 //.on으로 바꾸면 정적과 동적 둘다 사용 가능. notify
@@ -93,6 +94,7 @@ $(document).on("click",".page_inactive>a",function() {
 
 
 
+
 // 신고게시물 페이징 처리
 $(document).on("click", ".page_notify>a", function() {
 	var currentPage = $(this).attr("href");
@@ -107,6 +109,8 @@ $(document).on("click", ".page_notify>a", function() {
 	});
 	return false;
 });
+
+
 
 
 // 유저 전체선택
@@ -125,6 +129,8 @@ $(document).on("click", ".allcheckbox", function() {
 });
 
 
+
+
 // 신고게시물 전체선택
 $(document).on("click", ".allcheckbox2", function() {
 	//클릭되었으면
@@ -141,48 +147,35 @@ $(document).on("click", ".allcheckbox2", function() {
 });
 
 
-// 체크박스 선택(탈퇴)
-/* $(document).on("click", ".secession", function(){	
+
+
+//체크박스 선택(탈퇴)
+$(document).on("click", ".secession", function(){	
 	var mgInactiveList = $(".mgInactiveList").val();
 	var searchresult = $(".searchresult").val();
-	alert("searchresult = " + searchresult);
-	alert("mgInactiveList = " + mgInactiveList);
 	$.ajax({
 		url: '/MovieHolic/admin?act=secession',
 		method: 'post',
 		data: $('.ap_checkbox').serialize(),
 		success:function(result){
 			$(":input[name=ap_checkbox]").prop("checked", false);
-
-			 if (mgInactiveList == "mgInactiveList") {
-					alert("mgInactiveList come in!!")
-					location.href = "/MovieHolic/admin?act=inactive&notify=notify";
-				} else if (searchresult == "searchresult") {
-					alert("search come in!!")
-					location.href = "/MovieHolic/admin?act=search&notify=notify";
-				} else {
-					alert("alllist come in!!")
-					location.href = "/MovieHolic/admin?act=alllist&notify=notify";
-				}
 			
-			alert("게시물 삭제에 성공하셨습니다.");
-		}
-	});
-	return false;
-}); */
-$(document).on("click", ".secession", function(){	
-	$.ajax({
-		url: '/MovieHolic/admin?act=secession',
-		method: 'post',
-		data: $('.ap_checkbox').serialize(),
-		success:function(result){
-			$(":input[name=ap_checkbox]").prop("checked", false);
+			if (mgInactiveList == "mgInactiveList") {
+				location.href = "/MovieHolic/admin?act=inactive&notify=notify";
+			} else if (searchresult == "searchresult") {
+				var href = $("span.enable>a").attr("href");
+				location.href = href;
+			} else {
 				location.href = "/MovieHolic/admin?act=alllist&notify=notify";
-			alert("게시물 삭제에 성공하셨습니다.");
+			}
 		}
 	});
 	return false;
 });
+
+
+
+
 
 // 체크박스 선택시 신고게시물 삭제
 $(document).on("click", ".np_delete", function() {
@@ -210,6 +203,7 @@ $(document).on("click", ".np_delete", function() {
 	});
 	return false;
 });
+
 
 
 // 휴면 처리 

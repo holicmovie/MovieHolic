@@ -222,8 +222,6 @@ hr.line_light_w {
 </head>
 
 
-
-
 <body class="left-sidebar is-preload">
 	<div id="page-wrapper">
 
