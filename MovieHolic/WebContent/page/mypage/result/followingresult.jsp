@@ -1,12 +1,34 @@
 <%@page import="com.kitri.dto.mypage.PageBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<div id="followings" class="container tab-pane active" role = "tabpanel">
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script>
+$(function(){
+
+	$(".deletef").click(function() {
+			var followingid = $(this).find(".followingid").html();
+				alert(followingid);
+			$.ajax({
+				url:"/MovieHolic/mypage?page=social",
+				method: "GET",
+				data:"deletefollowing=" + followingid,
+				success: function(result){
+					System.out.println(followingid);
+				}
+			});
+			return false; 
+		}); 
+});  	 
+
+</script>
+
+
+
+<div id="followings" class="container tab-pane active" role = "tabpanel">
 							<br>
-								<table class="table table-hover table-dark">
+								<table class="table table-hover table-dark" id = "followingtable">
 								  <thead>
 								    <tr>
 								      <th scope="col">no.</th>
@@ -21,7 +43,7 @@
 								<%PageBean pb = (PageBean)request.getAttribute("pb");
 									System.out.println(pb);
 								%>						  
-						
+								
 								<c:set var = "pb" value="${requestScope.pb}"/>
 								  
 								  <%--social following page 위한 for문 --%>
@@ -53,7 +75,7 @@
 					
 						<div style="float: left">
 							<c:if test="${pb.startPage > 1 }">
-								<a href="/MovieHolic/mypage?page=social&followingpage=${pb.startPage - 1}"><button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button></a>
+								<a class = "btnmove" href="${pb.startPage - 1}"><button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button></a>
 								
 							</c:if>
 						</div>
@@ -62,7 +84,7 @@
 								
 						<div style="float: right;">
 							<c:if test="${pb.totalPage > pb.endPage }">
-							<a href="/MovieHolic/mypage?page=social&followingpage=${pb.endPage+1}"><button class="btn btn-success font_bold_small">다&nbsp;&nbsp;&nbsp;음</button></a>
+							<a class = "btnmove" href="${pb.endPage+1}"><button class="btn btn-success font_bold_small">다&nbsp;&nbsp;&nbsp;음</button></a>
 							</c:if>
 						</div>
 				
@@ -71,12 +93,13 @@
 									<c:choose>
 
 										<c:when test="${pb.currentPage == i}">
-											<li class="page-item"><a class="page-link a">${i}</a></li>
+											<li class="page-item"><a class="page-link a 1">${i}</a></li>
 										</c:when>
 
 										<c:otherwise>
 											<li class="page-item">
-											<a class="page-link a" href="/MovieHolic/mypage?page=social&followingpage=${i}">${i}</a></li>
+											<!-- /Movieholic/mypage?page=social&followingpage= -->
+											<a class="page-link a 1" id = "followingpaging" href="${i}">${i}</a></li>
 										</c:otherwise>
 
 									</c:choose>
