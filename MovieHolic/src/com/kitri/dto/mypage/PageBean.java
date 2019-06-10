@@ -3,6 +3,7 @@ package com.kitri.dto.mypage;
 import java.util.List;
 
 import com.kitri.dto.SocialDto;
+import com.kitri.dto.WishlistDto;
 
 /**
  * 페이지별 JAVA BEAN
@@ -22,7 +23,8 @@ public class PageBean {
 	private int endPage;// 페이지 그룹의 끝 페이지
 	private String url;// 페이지 링크 클릭시 요청할 url
 	private int currentPage;// 현재페이지
-
+	private List<WishlistDto> wlist;
+	
 	public PageBean() {
 	}
 
@@ -131,8 +133,18 @@ public class PageBean {
 		return currentPage;
 	}
 
+	public List<WishlistDto> getWlist() {
+		return wlist;
+	}
+
+	public void setWlist(List<WishlistDto> wlist) {
+		this.wlist = wlist;
+	}
+
 	public void setCurrentPage(int currentPage) {
 		this.currentPage = currentPage;
 	}
+
+
 
 }
