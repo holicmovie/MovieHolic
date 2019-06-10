@@ -22,10 +22,12 @@ public class MyPageFrontController extends HttpServlet {
 		System.out.println("서블릿");
 		String page = request.getParameter("page");
 		String path = "/page/mypage/mypage.jsp";
-		String cp = request.getParameter("followingpage");
-		
-
-		
+//		String cp = request.getParameter("followingpage");
+//		String cpf = request.getParameter("followerpage");
+		String choice = request.getParameter("choice");
+		String genreno = request.getParameter("genreno");
+		String time = request.getParameter("time");
+		System.out.println(choice);
 		
 		if ("mypage".equals(page)) {
 			path = "/page/mypage/mypage.jsp";
@@ -38,15 +40,13 @@ public class MyPageFrontController extends HttpServlet {
 			UserController.getUserController().ReviewList(request, response);
 			MoveUrl.forward(request, response, "/page/mypage/diary.jsp");
 		} else if ("social".equals(page)) {
-			path = MyPageController.getMyPageController().showFollowings(request, response, cp);
+			path = MyPageController.getMyPageController().showFollowings(request, response);
 			MoveUrl.forward(request, response, path);
-			/*
-			 * path = MyPageController.getMyPageController().showFollowers(request,
-			 * response, cp); MoveUrl.forward(request, response, path);
-			 */
-		
+			
+//			path = MyPageController.getMyPageController().showFollowers(request, response, cp);
+//			MoveUrl.forward(request, response, path);
+			
 		} else if ("setting".equals(page)) {
-			UserController.getUserController().settingUser(request, response);
 			MoveUrl.forward(request, response, "/page/mypage/setting.jsp");
 		} 
 
@@ -59,6 +59,12 @@ public class MyPageFrontController extends HttpServlet {
 		} else if("reviewcomment".equals(page)) {
 			UserController.getUserController().ReviewComment(request, response);
 			MoveUrl.forward(request, response, "/page/mypage/diaryDetail.jsp");
+		} else if ("genre".equals(choice)) {
+			MyPageController.getMyPageController().wishlistgenre(request, response);
+//			System.out.println("genreno: "+genreno +", time : " + time);
+		}else if ("year".equals(choice)) {
+//			System.out.println("genreno: "+genreno +", time : " + time);
+			
 		}
 	}
 
