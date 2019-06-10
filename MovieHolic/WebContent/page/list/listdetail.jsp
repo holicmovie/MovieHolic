@@ -72,6 +72,24 @@
 		});
 	});
 <%-- list 삭제 버튼 클릭시 --%>
+	$(function(){
+		$('.btnCnt').click(function(){
+			var btnStr = $(this).attr('href');
+			$.ajax({
+				url: 'list',
+				data: 'act=eval&btnStr=' + btnStr + '&seq=' + $('#del').attr('data-seq'),
+				method: 'post',
+				success: function(result){
+					if(result != 0) {
+						$('.btnCnt[href="'+ btnStr +'"]').next().text(result);
+					} else {
+						alert("시스템 에러로 인해 작업 처리에 실패하였습니다. 나중에 다시 시도하세요.");
+					}
+				}
+			});
+			return false;
+		});
+	});
 </script>
 </head>
 <body class="left-sidebar is-preload">

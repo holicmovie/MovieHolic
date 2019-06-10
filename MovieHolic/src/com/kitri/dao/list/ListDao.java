@@ -120,7 +120,7 @@ public class ListDao {
 
 
 
-	//	#### 조회수 올리고 List Select ####
+//	#### 조회수 올리고 List Select ####
 	public BoardDto selBoardBySeq(String seq, boolean flag) {
 		BoardDto board = null;
 		int result = 0;
@@ -197,7 +197,11 @@ public class ListDao {
 	}
 	
 	
+	
+//	#### 좋아요&싫어요 update 후 select ####
 
+	
+	
 //---------------------------------------------------------------------------------------------------------- select
 	
 	
@@ -328,7 +332,7 @@ public class ListDao {
 	
 	
 	
-	//------------------------------------------------------------------------------------------- util
+//------------------------------------------------------------------------------------------- util
 //	#### List테이블에 insert ####
 	public int insertList(BoardDto board) throws SQLException {
 		int result = 0;
@@ -518,6 +522,7 @@ public class ListDao {
 	}
 	
 	
+//	#### delete ####
 	private int delete(String table, String column, String condition) throws SQLException {
 		
 		int result = 0;
@@ -539,6 +544,7 @@ public class ListDao {
 		
 		return result;
 	}
+	
 	
 
 	
