@@ -31,6 +31,13 @@ public class BoardDto { // 게시판
 		super();
 	}
 
+	public BoardDto(int seq) {
+		super();
+		this.seq = seq;
+	}
+
+
+
 	///// getter & setter /////
 
 	public int getSeq() {

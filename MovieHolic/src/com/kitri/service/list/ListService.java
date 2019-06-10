@@ -3,13 +3,9 @@ package com.kitri.service.list;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,8 +17,12 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import com.kitri.dao.list.ListDao;
+import com.kitri.dto.BoardDto;
+import com.kitri.dto.CommentDto;
 import com.kitri.dto.FilmDetailDto;
 import com.kitri.dto.FilmDto;
+import com.kitri.dto.UserDto;
 import com.kitri.util.CallAPI;
 
 public class ListService {
@@ -38,13 +38,16 @@ public class ListService {
 	}
 	
 	
+	
+//------------------------------------------------------------------------------------------- List 작성	
+
 //	#### 제목으로 영화 검색 ####
 	public List<FilmDetailDto> srchMVbyName(String title) {
 		List<FilmDetailDto> list = new ArrayList<FilmDetailDto>();
 		
 		// 1. 영진원 API 조회
 		List<FilmDetailDto> listAPI = yAPI(title);
-		
+
 		if(listAPI != null) {
 			int len = listAPI.size();
 			for(int i=0; i<len; i++) {	//영진원 결과 갯수만큼 반복
@@ -87,11 +90,110 @@ public class ListService {
 	
 	
 	
+//	#### 작성한 List DB에 insert ####
+	public int saveList(BoardDto board) {
+		int result = 0;
+		result = ListDao.getListDao().saveList(board);
+		return result;
+	}
+	
+	
+	
+	
+//------------------------------------------------------------------------------------------- ListDetail 조회	
+	
+	
+
+//	#### 조회수 올리고 게시판 내용 가져오기  ####
+	public BoardDto selBoardBySeq(String seq) {
+		BoardDto board= null;
+			
+		board = ListDao.getListDao().selBoardBySeq(seq, true);
+		if(board == null) {
+			return null;
+		}
+		return board;
+	}
+	
+
+	
+//	#### 댓글 내용 가져오기 ####
+	public List<CommentDto> selCommentBySeq(String seq) {
+		List<CommentDto> comment = ListDao.getListDao().selCommentBySeq(seq);
+		return comment;
+	}
+	
+	
+	
+//	#### 프로필 사진 select ####
+	public List<UserDto> selProfileById(BoardDto board, List<CommentDto> comment) {
+		List<UserDto> user = new ArrayList<UserDto>();
+		
+//		1. list 작성자 프로필
+		UserDto temp = ListDao.getListDao().selProfileById(board.getUserId());
+		if(temp != null) {
+			user.add(temp);
+			
+//			2. 댓글 작성자 프로필
+			int len = comment.size();
+			for(int i=0; i<len; i++) {
+				String id = comment.get(i).getUserId();
+				temp = ListDao.getListDao().selProfileById(id);
+				if(temp != null) {
+					user.add(temp);
+				}
+			} // for문 종료
+		} // if문 종료
+		return user;
+	}
+	
+	
+//	#### 영화 이미지 가져오기 ####
+	public List<FilmDto> getMvImg(BoardDto board) {
+		List<FilmDto> film = new ArrayList<FilmDto>();
+		
+		List<String> naverList = board.getMovieCodeNaver();
+		int len = naverList.size();
+		for(int i=0; i<len; i++) {
+			FilmDto temp = new FilmDetailDto();
+
+			String naver = naverList.get(i);
+			temp.setMovieImage(ListService.getListService().getImgURL(naver));
+			temp.setMovieCdNaver(naver);
+			temp.setMovieCdYoung(board.getMovieCodeYoung().get(i));
+			temp.setMovieNm(board.getMovieName().get(i));
+			
+			film.add(temp);
+		}
+		
+		return film;
+	}
+
+	
+//	----------------------------------------------------------------------------------------- List 수정/삭제
+	
+//	#### 게시판 내용만 가져오기 ####
+	public BoardDto selListBySeq(String seq) {
+		BoardDto board = null;
+		
+		board = ListDao.getListDao().selBoardBySeq(seq, false);
+		if(board == null) {
+			return null;
+		}
+		return board;
+	}
+	
+	
+//	#### 리스트 수정 ####
+	public int modifyList(BoardDto board) {
+		int result = 0;
+		result = ListDao.getListDao().modifyList(board);
+		return result;
+	}
 	
 	
 	
 //	----------------------------------------------------------------------------------------- Util
-	
 	
 //	#### 영진원 API (영화 제목 검색어로 검색) ####
 	public List<FilmDetailDto> yAPI(String title) {	
@@ -318,6 +420,36 @@ public class ListService {
 		}
 		return movieImage;
 	}
+	
+	
+//	#### list 삭제 ####
+	public int deleteList(String seq, String postDate, int cnt, String id) {
+		int result = 0;
+		result = ListDao.getListDao().deleteList(seq, postDate, cnt, id);
+		
+		return result;
+	}
+	
+	
+	
+	
+	
+
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
