@@ -51,7 +51,7 @@
 						  		
 						<div style="float: left">
 							<c:if test="${pbf.startPage > 1 }">
-								<a href="/MovieHolic/mypage?page=social&followerpage=${pb.startPage - 1}"><button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button></a>
+								<a class= "btnmove2" href="${pbf.url}${pb.startPage - 1}"><button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button></a>
 								
 							</c:if>
 						</div>
@@ -60,7 +60,7 @@
 								
 						<div style="float: right;">
 							<c:if test="${pbf.totalPage > pbf.endPage }">
-							<a href="/MovieHolic/mypage?page=social&followerpage=${pbf.endPage+1}"><button class="btn btn-success font_bold_small">다&nbsp;&nbsp;&nbsp;음</button></a>
+							<a class= "btnmove2" href="${pbf.url}${pbf.endPage+1}"><button class="btn btn-success font_bold_small">다&nbsp;&nbsp;&nbsp;음</button></a>
 							</c:if>
 						</div>
 							  	<ul class="pagination justify-content-center">
@@ -68,12 +68,12 @@
 									<c:choose>
 
 										<c:when test="${pbf.currentPage == i}">
-											<li class="page-item"><a class="page-link a a">${i}</a></li>
+											<li class="page-item"><a class="page-link a 2">${i}</a></li>
 										</c:when>
 
 										<c:otherwise>
 											<li class="page-item">
-											<a class="page-link a a" href="/MovieHolic/mypage?page=social&followerpage=${i}">${i}</a></li>
+											<a class="page-link a 2" href="${i}">${i}</a></li>
 										</c:otherwise>
 
 									</c:choose>
