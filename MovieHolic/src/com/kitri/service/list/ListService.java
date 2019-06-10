@@ -422,6 +422,15 @@ public class ListService {
 	}
 	
 	
+//	#### list 삭제 ####
+	public int deleteList(String seq, String postDate, int cnt, String id) {
+		int result = 0;
+		result = ListDao.getListDao().deleteList(seq, postDate, cnt, id);
+		
+		return result;
+	}
+	
+	
 	
 	
 	

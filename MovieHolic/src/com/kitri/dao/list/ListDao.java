@@ -32,6 +32,9 @@ public class ListDao {
 	ResultSet rs = null;
 	
 	
+
+//--------------------------------------------------------------------------------------------------- insert
+	
 //	#### List Insert ####
 	public int saveList(BoardDto board) {
 		int result = 0;
@@ -77,6 +80,8 @@ public class ListDao {
 	}
 	
 	
+//--------------------------------------------------------------------------------------------------------- update
+	
 //	#### List modify ####
 	public int modifyList(BoardDto board) {
 		int result = 0;
@@ -102,6 +107,7 @@ public class ListDao {
 				result = 0;
 				e.printStackTrace();
 				conn.rollback();
+				conn.setAutoCommit(true);
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
@@ -121,9 +127,10 @@ public class ListDao {
 		
 		try {
 			conn = DBConnection.makeConnection();
+			conn.setAutoCommit(false);
 			
 			if(flag) {
-				result = ListDao.getListDao().updateViewCount("mh_board", "viewCount", "seq", seq);
+				result = ListDao.getListDao().updateCount("mh_board", "viewCount", "seq", seq, "+ 1");
 			} else {
 				result = 1;
 			}
@@ -170,7 +177,6 @@ public class ListDao {
 					board.setWorst(rs.getInt("WORST"));
 					board.setViewCount(rs.getInt("VIEWCOUNT"));
 					
-					System.out.println("제목 넣어둠"+board.getMovieName());
 					conn.commit();
 					conn.setAutoCommit(true);
 				} // if문 종료
@@ -192,6 +198,7 @@ public class ListDao {
 	
 	
 
+//---------------------------------------------------------------------------------------------------------- select
 	
 	
 //	#### Comment Select ####
@@ -262,10 +269,66 @@ public class ListDao {
 	}
 	
 	
+//--------------------------------------------------------------------------------------------------------- delete
+	
+	
+//	#### delete List ####
+	public int deleteList(String seq, String postDate, int cnt, String id) {
+		int result = 0;
+		
+		try {
+			conn = DBConnection.makeConnection();
+			conn.setAutoCommit(false);
+			
+//			1. 로그 삭제 (기준: 글번호)
+			result = ListDao.getListDao().delete("MH_LOG", "SEQ", seq);
+			if(result != 0) {
+//				2. 댓글 삭제 (기준: 글번호)
+				if(cnt != 0) {
+					result = ListDao.getListDao().delete("MH_COMMENT", "SEQ", seq);
+				}
+				if(result != 0) {
+					
+//					3. 리스트 삭제 (기준: 글번호)
+					result = ListDao.getListDao().delete("MH_BOARD", "SEQ", seq);
+					if(result != 0) {
+						result = ListDao.getListDao().updateCount("MH_USER", "LIST_COUNT", "USERID", id, "- 1");
+						
+						if(result != 0) {
+							conn.commit();
+							conn.setAutoCommit(true);
+						} else {
+							conn.rollback();
+						}
+					} else {
+						conn.rollback();
+					}
+				} else {
+					conn.rollback();
+				}
+			} else {
+				conn.rollback();
+			} //if-else문 종료
+		} catch (SQLException e) {
+			try {
+				result = 0;
+				e.printStackTrace();
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		
+		return result;
+	}
 	
 	
 	
-//------------------------------------------------------------------------------------------- util
+	
+	
+	//------------------------------------------------------------------------------------------- util
 //	#### List테이블에 insert ####
 	public int insertList(BoardDto board) throws SQLException {
 		int result = 0;
@@ -432,16 +495,38 @@ public class ListDao {
 	
 	
 //	#### Count update ####
-	public int updateViewCount(String table, String col1, String col2, String condition) throws SQLException {
+	public int updateCount(String table, String col1, String col2, String condition, String value) throws SQLException {
 		int result = 0;
 		
 		try {
-			conn = DBConnection.makeConnection();
-			conn.setAutoCommit(false);
 			StringBuffer sql = new StringBuffer();
 			sql.append("UPDATE " + table + " \n");
-			sql.append("SET " + col1 + " = " + col1 + " + 1 \n");
+			sql.append("SET " + col1 + " = " + col1 + value + " \n");
 			sql.append("WHERE " + col2 + " = ? \n");
+			pstmt = conn.prepareStatement(sql.toString());
+			
+			pstmt.setString(1, condition);
+			
+			result = pstmt.executeUpdate();
+			
+		} finally {
+			if(pstmt != null)
+				pstmt.close();
+		}
+		
+		return result;
+	}
+	
+	
+	private int delete(String table, String column, String condition) throws SQLException {
+		
+		int result = 0;
+		
+		try {
+			
+			StringBuffer sql = new StringBuffer();
+			sql.append("DELETE " + table + " \n");
+			sql.append("WHERE " + column + " = ? \n");
 			pstmt = conn.prepareStatement(sql.toString());
 			
 			pstmt.setInt(1, Integer.parseInt(condition));

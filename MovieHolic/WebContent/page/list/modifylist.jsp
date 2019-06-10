@@ -54,7 +54,7 @@
 			return;
 		} else {
 			$.ajax({
-				url: "<%= request.getContextPath()%>/list",
+				url: "list",
 				data: 'act=srchMV&srchTitle=' + srchTitle,
 				method: 'post',
 				success:function(result){
@@ -75,7 +75,6 @@
 			<%-- 선택한 행의 img태그 객체 얻어오기 --%>
 			var $mv = $(this).find('img');
 			<%-- 포스터 및 영화정보전달용 hidden 추가 --%>
-			/* var $poster = $('<img class="movieImg" src="' + movieImage + '" data-movieNm="' + movieNm + '" data-movieCdYoung="' + movieCdYoung + '" data-movieCdNaver="' + movieCdNaver + '"  data-prdtYear="' + prdtYear + '">'); */ 
 			$('#addMovie').before(
 					'<a class="chMovie" href="#")>'
 					+ '<img class="movieImg" src="' + $mv.attr("src") + '">'
@@ -83,7 +82,6 @@
 					+ '<input type="hidden" name="movieCdYoung" value="' + $mv.attr("data-movieCdYoung") + '">'
 					+ '<input type="hidden" name="movieCdNaver" value="' + $mv.attr("data-movieCdNaver") + '">'
 					+ '</a>'
-					/*  + '<input type="hidden" name="prdtYear" value="' + $mv.attr("data-prdtYear") + '">' */
 			);
 			modalClear();
 			return false;
@@ -133,7 +131,7 @@
 				if(confirm("작성한 List를 저장하시겠습니까?")) {
 					$.ajax({
 						url: "<%= request.getContextPath()%>/list",
-						data: $('form').serialize() + "&act=modifyList&seq=" + seq + "&postDate=" + postDate,
+						data: $('form').serialize() + "&act=modifyList",
 						method: 'post',
 						success:function(result){
 							if(result != 0) {
@@ -181,7 +179,9 @@
 		<div class="row" style="margin-top: 1em;">
 			<div class="col-lg-12">
 				<h3><label>YOUR LIST</label></h3>
-				<input type="text" class="form-control form-control-lg" style="width: 50%;" value="${requestScope.board.subject}" name="title" data-seq="${requestScope.board.seq}" data-postDate="${requestScope.board.postDate}">
+				<input type="hidden" name="seq" value="${requestScope.board.seq}">
+				<input type="hidden" name="postDate" value="${requestScope.board.postDate}">
+				<input type="text" class="form-control form-control-lg" style="width: 50%;" value="${requestScope.board.subject}" name="title">
 			</div>
 			<div class="col-lg-12" style="margin-top: 1em;">
 				<h3><label for="list-detail-description">ABOUT YOUR FAVORITE MOVIE</label></h3>

@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.kitri.dto.BoardDto;
 import com.kitri.dto.CommentDto;
@@ -152,6 +153,22 @@ public class ListController {
 		
 //		2. BoardDto에 담아서 service로 전달하고 result 받음
 		result = ListService.getListService().modifyList(board);
+		
+		return result;
+	}
+	
+	
+	
+//	#### list 삭제 ####
+	public int deleteList(HttpServletRequest request, HttpServletResponse response) {
+		int result = 0;
+		
+		String seq = request.getParameter("seq");
+		String postDate = request.getParameter("postDate");
+		int cnt = Integer.parseInt(request.getParameter("cnt"));
+		HttpSession session = request.getSession();
+		String id = (String) session.getAttribute("userID");
+		result = ListService.getListService().deleteList(seq, postDate, cnt, id);
 		
 		return result;
 	}

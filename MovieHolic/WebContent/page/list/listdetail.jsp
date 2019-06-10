@@ -51,6 +51,26 @@
 			return false;
 		});
 	});
+<%-- list 삭제 버튼 클릭시 --%>
+$(function(){
+	$('#del').click(function(){
+		var cnt = $('#cnt').text();
+		$.ajax({
+			url: "list",
+			data: "act=delete&seq="+ $(this).attr('data-seq') + "&postDate=" + $('#writedate').text() + "&cnt=" + cnt,
+			method: 'post',
+			success:function(result){
+				if(result != 0) {
+					alert("삭제 되었습니다.");
+					location.href = "/MovieHolic/page/list/movielist.jsp";
+				} else {
+					alert("시스템 에러로 인해 삭제 처리에 실패하였습니다. 나중에 다시 시도하세요.");
+				}
+			}
+		});
+		return false;
+	});
+});
 </script>
 </head>
 <body class="left-sidebar is-preload">
@@ -73,7 +93,7 @@
 		<div class="font_bold_mid" style="width:100%; margin-bottom: 2em;">
 			<c:if test="${sessionScope.userID != null }">
 				<c:if test="${sessionScope.userID == board.userId}">
-			<button class="btn btn-success font_bold_small" style="float: right;" id="delete" data-seq="${board.seq }">삭&nbsp;&nbsp;&nbsp;제</button>
+			<button class="btn btn-success font_bold_small" style="float: right;" id="del" data-seq="${board.seq }">삭&nbsp;&nbsp;&nbsp;제</button>
 			<button class="btn btn-success font_bold_small" style="float: right; margin-right: 10px;" id="modify" data-seq="${board.seq }">수&nbsp;&nbsp;&nbsp;정</button>
 				</c:if>
 			</c:if>
@@ -144,7 +164,7 @@
 
 			<%-- 댓글 내용 --%>
 			<div class="col-lg-12 font_bold_mid" style="border-bottom: 1px solid #fff; margin: 3em 0 0 0; padding-bottom: 1em;">
-				<span>COMMENTS</span>(<c:choose><c:when test="${fn:length(comment) != 0}">${fn:length(comment)-1}</c:when><c:otherwise>0</c:otherwise></c:choose>)			
+				<span>COMMENTS</span>(<span id="cnt"><c:choose><c:when test="${fn:length(comment) != 0}">${fn:length(comment)-1}</c:when><c:otherwise>0</c:otherwise></c:choose></span>)			
 			</div>
 			<div class="col-lg-12 font_light_small" style="margin: 0 0 20em 0; height: 500px; overflow-y: auto;">
 				<table class="table table-hover" id="modalTable" >
