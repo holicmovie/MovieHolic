@@ -1,5 +1,6 @@
 package com.kitri.dao.mypage;
 
+import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -178,6 +179,35 @@ public class SocialDao {
 		return list;
 		
 	}
+	
+	
+	public void deleteFollowing(String followingid) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			
+			String sql = "delete mh_social\r\n" + 
+							"where followingid = ?";
+			conn = DBConnection.makeConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, followingid);
+			pstmt.executeQuery();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println(followingid + " 삭제를 실패했습니다.");
+		} finally {
+			DBClose.close(conn, pstmt);
+			System.out.println(followingid + "가 삭제되었습니다.");
+		}
+		
+	}
+	
+	//------------------------------wishilist---------------------------
+	
+	
 //
 //	public static List<WishlistDto> selectByRows3(int startRow, int endRow) {
 //		List<WishlistDto> list = new ArrayList<>();
@@ -278,6 +308,8 @@ public class SocialDao {
 //		
 //		return totalCnt;
 //	}
+
+	
 
 //	public int updateUnable() {
 //		int cnt =-1;

@@ -42,6 +42,11 @@ public class MyPageService {
 	public static int getTotalCnt2() {
 		return SocialDao.selectTotalCnt2();
 	}
+	
+	public void deleteFollowingId(String followingid) {
+		
+		SocialDao.getSocialDao().deleteFollowing(followingid);
+	}
 //	
 //	
 //	public static List<WishlistDto> findByYear(int startRow, int endRow){
@@ -50,11 +55,6 @@ public class MyPageService {
 //	
 //	public static int getTotalCnt3() {
 //		return SocialDao.selectTotalCnt3();
-//	}
-//	public int deleteFollowingId() {
-//		
-//		
-//		return SocialDao.getSocialDao().updateUnable();
 //	}
 //	
 }
