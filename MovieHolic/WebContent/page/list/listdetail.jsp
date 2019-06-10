@@ -52,25 +52,26 @@
 		});
 	});
 <%-- list 삭제 버튼 클릭시 --%>
-$(function(){
-	$('#del').click(function(){
-		var cnt = $('#cnt').text();
-		$.ajax({
-			url: "list",
-			data: "act=delete&seq="+ $(this).attr('data-seq') + "&postDate=" + $('#writedate').text() + "&cnt=" + cnt,
-			method: 'post',
-			success:function(result){
-				if(result != 0) {
-					alert("삭제 되었습니다.");
-					location.href = "/MovieHolic/page/list/movielist.jsp";
-				} else {
-					alert("시스템 에러로 인해 삭제 처리에 실패하였습니다. 나중에 다시 시도하세요.");
+	$(function(){
+		$('#del').click(function(){
+			var cnt = $('#cnt').text();
+			$.ajax({
+				url: "list",
+				data: "act=delete&seq="+ $(this).attr('data-seq') + "&postDate=" + $('#writedate').text() + "&cnt=" + cnt,
+				method: 'post',
+				success:function(result){
+					if(result != 0) {
+						alert("삭제 되었습니다.");
+						location.href = "/MovieHolic/page/list/movielist.jsp";
+					} else {
+						alert("시스템 에러로 인해 삭제 처리에 실패하였습니다. 나중에 다시 시도하세요.");
+					}
 				}
-			}
+			});
+			return false;
 		});
-		return false;
 	});
-});
+<%-- list 삭제 버튼 클릭시 --%>
 </script>
 </head>
 <body class="left-sidebar is-preload">
@@ -134,11 +135,11 @@ $(function(){
 				</div>
 				<div class="rounded-lg" style="background-color: #555; width:20vh; height: 100px; padding-top: 15px; margin:auto; text-align: center;">
 					<div style="float:left; margin-left: 0.8em;">
-						<a href="#"><img alt="좋아요 아이콘" src="/MovieHolic/images/like.png"></a>
+						<a href="best" class="btnCnt"><img alt="좋아요 아이콘" src="/MovieHolic/images/like.png"></a>
 						<span style="display: block;">${board.best}</span>
 					</div>
 					<div style="float:right; margin-right: 0.8em;">
-						<a href="#"><img alt="싫어요 아이콘" src="/MovieHolic/images/unlike.png"></a>
+						<a href="worst" class="btnCnt"><img alt="싫어요 아이콘" src="/MovieHolic/images/unlike.png"></a>
 						<span style="display: block;">${board.worst}</span>
 					</div>
 					<div style="clear: both;"></div>
