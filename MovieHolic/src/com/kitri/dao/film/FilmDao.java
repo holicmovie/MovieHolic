@@ -119,7 +119,7 @@ public class FilmDao {
 				FilmDto film = new FilmDto();
 				
 				film.setMovieNm(rs.getString(1));				// 영화명
-				film.setMovieCdYoung(rs.getString(2));		// 영화코드(영진원)
+				film.setMovieCdYoung(rs.getString(2));			// 영화코드(영진원)
 				
 				list.add(film);
 			}
@@ -404,9 +404,52 @@ public class FilmDao {
 	}
 	
 	// 8
+	// <선택된 영화 리뷰 개수 select> 메소드
+	public int selectReviewCountByMovieCdYoung(String movieCdYoung) {
+		
+		int cnt = 0;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			conn = DBConnection.makeConnection();
+			StringBuffer sql = new StringBuffer();
+			sql.append("select count(*) \n");
+			sql.append("from mh_board \n");
+			sql.append("where to_char(moviecodeyoung) = ?||'||' \n");
+			sql.append("and boardcode = 1 \n");
+			sql.append("and enable = 1 \n");
+			sql.append("order by postdate desc");
+			
+			pstmt = conn.prepareStatement(sql.toString());		
+			pstmt.setString(1, movieCdYoung);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+								
+				cnt = rs.getInt(1);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		
+		
+		return cnt;
+	}
+	
+	// 9
 	// <선택한 영화 리뷰 select> 메소드
 	// 무비홀릭 회원들의 리뷰
-	public List<BoardDto> selectReviewsByMovieCdYoung(String movieCdYoung) {
+	public List<BoardDto> selectReviewsByMovieCdYoung(String movieCdYoung, int startRow, int endRow) {
 
 		List<BoardDto> list = new ArrayList<BoardDto>();
 		
@@ -418,15 +461,22 @@ public class FilmDao {
 			
 			conn = DBConnection.makeConnection();
 			StringBuffer sql = new StringBuffer();
-			sql.append("select seq, userid, to_char(postdate,'yyyy-mm-dd') postdate, content, starpoint \n");
-			sql.append("from mh_board \n");
-			sql.append("where to_char(moviecodeyoung) = ?||'||' \n");
-			sql.append("and boardcode = 1 \n");
-			sql.append("and enable = 1 \n");
-			sql.append("order by postdate desc");
-			
+			sql.append("select * \n");
+			sql.append("from (select rownum r, b.seq, b.userid, b.postdate, b.content, b.starpoint \n");
+			sql.append("	  from (select seq, userid, to_char(postdate,'yyyy-mm-dd') postdate, content, starpoint \n");
+			sql.append("			from mh_board \n");
+			sql.append("			where to_char(moviecodeyoung) = ?||'||' \n");
+			sql.append("			and boardcode = 1 \n");
+			sql.append("			and enable = 1 \n");
+			sql.append("			and enable = 1 \n");
+			sql.append("			order by postdate desc) b \n");
+			sql.append("	   order by r) \n");
+			sql.append("where r between ? and ?");
+ 
 			pstmt = conn.prepareStatement(sql.toString());
 			pstmt.setString(1, movieCdYoung);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			
 			rs = pstmt.executeQuery();
 			
@@ -450,5 +500,77 @@ public class FilmDao {
 		
 		return list;
 	}
+	
+	// 10
+	// <선택된 영화 위시리스트 등록 여부 select> 메소드
+	// 해당 회원의 위시리스트 등록 여부 확인
+	// 이미 등록됨 : 1
+	// 등록 안 되어 있음 : 0
+	public int selectIsWishedByMovieCdYoung(String movieCdYoung, String id) {
+
+		int isWished = 0;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			conn = DBConnection.makeConnection();
+			StringBuffer sql = new StringBuffer();
+			sql.append("select count(*) \n");
+			sql.append("from mh_wishlist \n");
+			sql.append("where userid = ? \n");
+			sql.append("and moviecodeyoung = ?");
+			
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1, id);
+			pstmt.setString(2, movieCdYoung);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				isWished = rs.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		
+		return isWished;
+	}
+	
+	// 11
+	// <선택된 영화 위시리스트 insert> 메소드
+	// 해당 회원의 위시리스트로 등록
+	public void insertWishList(String movieCdYoung, String movieCdNaver, String id) {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			
+			conn = DBConnection.makeConnection();
+			StringBuffer sql = new StringBuffer();
+			sql.append("insert into mh_wishlist(userid, code, moviecodenaver, moviecodeyoung, postdate) \n");
+			sql.append("values(?, 1, ?, ?, sysdate)");
+			
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1, id);
+			pstmt.setString(2, movieCdNaver);
+			pstmt.setString(3, movieCdYoung);
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt);
+		}
+		
+	}
+
 	
 }

@@ -17,6 +17,7 @@ import org.jsoup.select.Elements;
 
 import com.kitri.dao.film.FilmDao;
 import com.kitri.dto.*;
+import com.kitri.service.list.ListService;
 import com.kitri.util.CallAPI;
 
 public class FilmService {
@@ -156,9 +157,9 @@ public class FilmService {
 				
 				FilmDto bestItems = new FilmDto();
 				
-				String movieNm = CallAPI.getOneToken(bestFilm.get(i).getMovieNm());					// 영화명
+				String movieNm = CallAPI.getOneToken(bestFilm.get(i).getMovieNm());				// 영화명
 				String movieCdYoung = CallAPI.getOneToken(bestFilm.get(i).getMovieCdYoung());	// 영화코드(영진원)
-				String prdtYear = "";																						// 제작년도
+				String prdtYear = "";															// 제작년도
 				
 				// #2 영진원 영화상세정보 api 호출하여, getPoster()의 인자 중, 제작년도를 구하기
 				// url 설정
@@ -179,7 +180,7 @@ public class FilmService {
 					JSONObject movieInfo = (JSONObject) movieInfoResult.get("movieInfo");
 					Object prdtYearObj = (Object) movieInfo.get("prdtYear");
 					
-					prdtYear = prdtYearObj.toString();			// 제작년도 set
+					prdtYear = prdtYearObj.toString();			// 제작년도 get
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
@@ -187,9 +188,9 @@ public class FilmService {
 				// #3 getPoster() 호출하여, 영화 이미지 얻기
 				FilmDto image = CallAPI.getPoster(movieNm, prdtYear);
 				String movieImage = image.getMovieImage();			// 영화 이미지 주소
-				String movieCdNaver = image.getMovieCdNaver(); 	// 영화코드 (네이버)
+				String movieCdNaver = image.getMovieCdNaver(); 		// 영화코드 (네이버)
 				String starPointNaver = image.getStarPointNaver();	// 네이버 별점
-				
+								
 				bestItems.setMovieNm(movieNm);
 				bestItems.setMovieCdYoung(movieCdYoung);
 				bestItems.setMovieImage(movieImage);
@@ -259,7 +260,7 @@ public class FilmService {
 		// 8
 		// <선택된 영화 상세정보 얻기> 메소드
 		// : 영진원 영화 상세정보 api + 네이버 검색 크롤링(인물사진)
-		public FilmDetailDto getFilmInfo(String movieCdYoung) {
+		public FilmDetailDto getFilmInfo(String movieCdYoung, String movieCdNaver) {
 
 			FilmDetailDto result = new FilmDetailDto();
 			
@@ -313,17 +314,19 @@ public class FilmService {
 					JSONObject genre = (JSONObject) genres.get(0);
 					result.setCategory(genre.get("genreNm").toString());
 
-					// # getPoster() 호출하여, 영화 이미지 얻기
-					FilmDto image = CallAPI.getPoster(movieNm, prdtYear);
-					String movieImage = image.getMovieImage();			// 영화 이미지 주소
-					String movieCdNaver = image.getMovieCdNaver(); 	// 영화코드 (네이버)
-					String starPointNaver = image.getStarPointNaver();	// 네이버 별점
+					// # getImgURL() 호출하여, 영화 이미지 얻기
+					String movieImage = ListService.getListService().getImgURL(movieCdNaver);
+					if(movieImage == null) {
+						movieImage = "/MovieHolic/images/noMovieImage.png";
+					}
+//					FilmDto image = CallAPI.getPoster(movieNm, prdtYear);
+//					String movieImage = image.getMovieImage();			// 영화 이미지 주소
+//					String movieCdNaver = image.getMovieCdNaver(); 		// 영화코드 (네이버)
+//					String starPointNaver = image.getStarPointNaver();	// 네이버 별점
 					// 영화 포스터 이미지 주소 set
 					result.setMovieImage(movieImage);
 					// 영화코드(네이버) set
 					result.setMovieCdNaver(movieCdNaver);
-					// 네이버 별점 set
-					result.setStarPointNaver(starPointNaver);
 					
 					// # FilmDetailDto set
 					// 영화 영문명 set
@@ -488,13 +491,45 @@ public class FilmService {
 		}
 		
 		// 9
+		// <선택된 영화 리뷰 개수 얻기> 메소드
+		// *select
+		// *return int
+		public int getReviewTotalPage(String movieCdYoung) {
+
+			// #1 DAO 호출
+			return FilmDao.getFilmDao().selectReviewCountByMovieCdYoung(movieCdYoung);
+		}
+				
+		// 10
 		// <선택된 영화 리뷰 얻기> 메소드
 		// *select
 		// *return BoardDto
-		public List<BoardDto> getReviews(String movieCdYoung) {
+		public List<BoardDto> getReviews(String movieCdYoung, int startRow, int endRow) {
 			
 			// #1 DAO 호출
-			return FilmDao.getFilmDao().selectReviewsByMovieCdYoung(movieCdYoung);
+			return FilmDao.getFilmDao().selectReviewsByMovieCdYoung(movieCdYoung, startRow, endRow);
 		}
+		
+		// 11
+		// <선택된 영화 위시리스트 등록 여부 얻기> 메소드
+		// *select
+		// *return int
+		public int isWished(String movieCdYoung, String id) {
+
+			// #1 DAO 호출
+			return FilmDao.getFilmDao().selectIsWishedByMovieCdYoung(movieCdYoung, id);
+		}
+		
+		// 12
+		// <위시리스트 등록> 메소드
+		// *insert
+		// *return String
+		public void insertWishList(String movieCdYoung, String movieCdNaver, String id) {
+
+			// #1 DAO 호출
+			FilmDao.getFilmDao().insertWishList(movieCdYoung, movieCdNaver, id);
+		}
+		
+		
 		
 } // class end
