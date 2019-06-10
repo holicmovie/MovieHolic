@@ -216,7 +216,8 @@ $(document).on("click", ".barsearch>button", function(){
 	}
 	
 	
-	var currentPage = $(this).attr("href");
+	// 년도별 보내서 디비딴에서 처리.
+	/* var currentPage = $(this).attr("href");
 	$("div.wrapper>div.container>div.member_search_result").empty();
 	$.ajax({
 		url : '/MovieHolic/admin?act=alllist&' + 'currentPage='+currentPage,
@@ -225,7 +226,7 @@ $(document).on("click", ".barsearch>button", function(){
 			$("div.wrapper>div.container>div.member_search_result").html(result.trim()); 
 		}
 	});
-	return false;
+	return false; */
 	
 	
 });
