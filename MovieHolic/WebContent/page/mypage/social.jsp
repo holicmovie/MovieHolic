@@ -12,38 +12,8 @@
 <!-- 소셜 페이지 눌렀을 때 출력 -->
   <script>
   
-/* $(function(){
-	
-	$(".deletef").click(function() {
-			
-			var followingid = $(this).find("table>tbody>td.followingid").html();
-				
-			$.ajax({
-				url:"/MovieHolic/mypage?page=social",
-				method: "GET",
-				data:"deletefollowing=" + followingid,
-				success: function(result){
-					System.out.println(followingid);
-				}
-			});
-			return false;
-		}); */
-	
- /* 	
-	$("followingpaging").click(function(){
-	
-		var currentpage=$(this).attr("href");
-		alert(currentPage+"페이지를 보여줍니다.");
-		 $.ajax({
-			url:,
-			method:"GET",
-			success:function(result){
-				$("section").html(result.trim());
-			}
-		});
-		return false;
-	});  
-});	*/
+
+
 
 $(function(){
 	 
@@ -73,6 +43,7 @@ $(function(){
 		return false;
 	});  
 });   
+
 
  
 /* $(function(){

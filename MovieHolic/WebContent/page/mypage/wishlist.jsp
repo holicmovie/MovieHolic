@@ -20,6 +20,7 @@ hr.line_bold {
 <script>
 
 $(function(){
+	
 	$("#wishlistgenre").click(function(){
 	var genre = $("#wishlistgenre option:selected").val();
 	alert(genre);
@@ -32,26 +33,24 @@ $(function(){
 		} */
 	});
 	return false;
-		
 	}); 
+	
+	$("#wishlistyear").click(function(){
+	var year = $("#wishlistyear option:selected").val();
+		alert(year);
+				$.ajax({
+					url:"/MovieHolic/mypage",
+					method:"GET",
+					data:"choice=year&time="+year,
+					/* success:function(result){
+						 $("section").html(result.trim()); 
+					} */
+				});
+				return false;
+			}); 
 });  
 
-$(function(){
-	$("#wishlistyear").click(function(){
-	var index = $("#wishlistyear option").index($("#wishlistyear option:selected"));
-				alert(index);
-		$.ajax({
-			url:"/MovieHolic/mypage",
-			method:"GET",
-			data:"choice=year&time="+index,
-			/* success:function(result){
-				 $("section").html(result.trim()); 
-			} */
-		});
-		return false;
-	
-	}); 
-});  
+
 /* 
 $(function(){
 	$("#followings>page-link a").click(function(){
@@ -125,14 +124,14 @@ $(function(){
 				
 					<div class="col-lg-2 col-4-moblile">
 							<select class="form-control form-control-sm" id = "wishlistyear">
-								<option>기간별-전체</option>
-								<option>2015~2019</option>
-								<option>2010~2014</option>
-								<option>2005~2009</option>
-								<option>2000~2004</option>
-								<option>1995~1999</option>
-								<option>1990~1995</option>
-								<option>before1990s</option>
+								<option value = "all">기간별-전체</option>
+								<option value = "1">2015~2019</option>
+								<option value = "2">2010~2014</option>
+								<option value = "3">2005~2009</option>
+								<option value = "4">2000~2004</option>
+								<option value = "5">1995~1999</option>
+								<option value = "6">1990~1995</option>
+								<option value = "7">before1990s</option>
 							</select>
 					</div>
 					

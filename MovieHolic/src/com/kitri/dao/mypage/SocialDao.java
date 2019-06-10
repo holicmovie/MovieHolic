@@ -252,10 +252,58 @@ public class SocialDao {
 	}
 
 	public static List<WishlistDto> selectByRows3(int startRow, int endRow) {
-		List<WishlistDto> list = new ArrayList<WishlistDto>();
+		List<WishlistDto> list = new ArrayList<>();
+		String selectByRowsSQL = "select code, moviecodenaver, moviecodeyoung\\r\\n\" + \r\n" + 
+				"				\"    from mh_wishlist\\r\\n\" + \r\n" + 
+				"				\"    where userid = 'a179@gmail.com'\\r\\n\" + \r\n" + 
+				"				\"    order by postdate DESC";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		
-		
+		try {
+			conn = DBConnection.makeConnection();
+			pstmt = conn.prepareStatement(selectByRowsSQL);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				//검색 결과를  RepBoard 객체에 대입
+				WishlistDto wishlistDto= new WishlistDto();
+				
+				wishlistDto.setCode(rs.getInt("code"));
+				wishlistDto.setMovieCodeNaver(rs.getString("moviecodenaver"));
+				wishlistDto.setMovieCodeYoung(rs.getString("moviecodeyoung"));
+				wishlistDto.setPostDate(rs.getString("postdate"));
+//				wishlistDto.setUserId(rs.getString("userid")); session에서 받아온 userid값 등록
+				list.add(wishlistDto);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
 		return list;
+		
 	}
 
 	public static int selectTotalCnt3() {

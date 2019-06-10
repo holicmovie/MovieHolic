@@ -43,6 +43,7 @@ public class MyPageService {
 		return SocialDao.selectTotalCnt2();
 	}
 	
+	
 	public static List<WishlistDto> findByYear(int startRow, int endRow){
 		return SocialDao.selectByRows3(startRow, endRow);
 	}

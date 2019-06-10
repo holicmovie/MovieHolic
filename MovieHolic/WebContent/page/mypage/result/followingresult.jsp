@@ -4,6 +4,29 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script>
+$(function(){
+
+	$("#followingsection.deletef").click(function() {
+			var followingid = $(this).find("#followingsection.followingid").html();
+				alert(followingid);
+			
+			/* $.ajax({
+				url:"/MovieHolic/mypage?page=social",
+				method: "GET",
+				data:"deletefollowing=" + followingid,
+				success: function(result){
+					System.out.println(followingid);
+				}
+			});
+			return false; */
+		}); 
+});  	 
+
+</script>
+
+
+
 <div id="followings" class="container tab-pane active" role = "tabpanel">
 							<br>
 								<table class="table table-hover table-dark" id = "followingtable">

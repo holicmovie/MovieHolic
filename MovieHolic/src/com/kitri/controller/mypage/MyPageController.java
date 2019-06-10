@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kitri.dto.SocialDto;
+import com.kitri.dto.WishlistDto;
 import com.kitri.dto.mypage.PageBean;
 import com.kitri.service.mypage.MyPageService;
 
@@ -25,8 +26,9 @@ public class MyPageController {
 	
 	
 
-	public String showFollowings(HttpServletRequest request, HttpServletResponse response, String cp) {
-		
+	public String showFollowings(HttpServletRequest request, HttpServletResponse response) {
+		String cp = request.getParameter("followingpage");
+		System.out.println(cp);
 		int currentPage = 1; // 보여줄 현재페이지
 		if (cp != null) {
 			currentPage = Integer.parseInt(cp);
@@ -88,7 +90,30 @@ public String showFollowers(HttpServletRequest request, HttpServletResponse resp
 		return path;
 	}
 
-public String wishlistgenre() {
+public String wishlistgenre(HttpServletRequest request, HttpServletResponse response) {
+	
+	String cp = request.getParameter("genreno");
+	int currentPage = 1; // 보여줄 현재페이지
+	if (cp != null) {
+		currentPage = Integer.parseInt(cp);
+
+	}
+	int cntPerPage = 5;// 페이지별 보여줄 목록수
+	int totalCnt = MyPageService.getTotalCnt();
+	int cntPerPageGroup = 5;// 페이지 그룹에 보여 줄 페이지수
+	String url = "/MovieHolic/mypage?page=social&followingpage=";
+	
+	PageBean pb = new PageBean(currentPage, 
+								cntPerPage, 
+								cntPerPageGroup, 
+								totalCnt, 
+								url
+								);
+
+		/*
+		 * List<WishlistDto> list = MyPageService.(pb.getStartRow(), pb.getEndRow());
+		 * pb.set(list); request.setAttribute("pb", pb);
+		 */
 	
 	
 	
