@@ -30,13 +30,13 @@ for(int i = 0; i < size; i++) {
 					<div class="col-lg-2 col-4-mobile"
 						style="float: left; margin: 0.5em 0.5em 0.5em 0.5em; padding: 2px; border: 2px solid; border-color: white;">
 						
-						<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=favoritefilm.get(i).getMovieCdYoung()%>" class="image featured" style="margin: 0;">
+						<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=favoritefilm.get(i).getMovieCdYoung()%>&movieCdNaver=<%=favoritefilm.get(i).getMovieCdNaver()%>" class="image featured" style="margin: 0;">
 							<img src="<%=favoritefilm.get(i).getMovieImage()%>" alt="<%=favoritefilm.get(i).getMovieNm()%> 포스터 이미지">
 						</a>
 						
 						<header style="text-align: center; background-color: white; margin-top: 5px;">
 							<h6 style="background-color: black;">
-								<a style="font-size : 13px;" class="font_light_small" href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=favoritefilm.get(i).getMovieCdYoung()%>"><%=favoritefilm.get(i).getMovieNm()%></a>
+								<a style="font-size : 13px;" class="font_light_small" href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=favoritefilm.get(i).getMovieCdYoung()%>&movieCdNaver=<%=favoritefilm.get(i).getMovieCdNaver()%>"><%=favoritefilm.get(i).getMovieNm()%></a>
 							</h6>
 						</header>
 						
@@ -60,9 +60,7 @@ if(startPage != 1) {
 				</div>
 <%		
 }
-%>
 
-<%
 if(endPage != totalPage){
 %>
 				<div style="float: right; padding-right: 11em;">

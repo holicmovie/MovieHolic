@@ -1,3 +1,4 @@
+<%@page import="com.kitri.dto.film.PageBeanReview"%>
 <%@page import="com.kitri.dto.BoardDto"%>
 <%@page import="java.util.List"%>
 <%@page import="com.kitri.dto.FilmDetailDto"%>
@@ -6,7 +7,6 @@
 <%@ include file="/template/header.jsp"%>
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
-</head>
 <style>
 /* 별모양 */
 .fas {
@@ -67,6 +67,10 @@ hr.line_light_g {
 		display: none;
 	}
 }
+<%-- 마우스 올린 행 배경색 변경 --%>
+	.table-hover > tbody > tr:hover {
+	  background-color: #3a3a3a;
+	}
 </style>
 <%
 // [영화 상세 정보]
@@ -77,34 +81,138 @@ int actorLen = filmInfo.getActors().length;
 String[] actorNames = filmInfo.getActors();
 // 배우 이미지
 String[] actorImages = filmInfo.getActorImages();
-
+	
 // 예고편 videoId
 String videoId = filmInfo.getVideoId();
 
-// [리뷰]
-List<BoardDto> reviews = (List<BoardDto>) request.getAttribute("reviews");
+// [페이지에 맞는 리뷰 목록]
+PageBeanReview pb = (PageBeanReview) request.getAttribute("reviews");
+List<BoardDto> reviews = pb.getList();
 // 리뷰 수
 int reviewLen = reviews.size();
+
+int currentPage = pb.getCurrentPage();				 // 현재 페이지 index
+int startPage = pb.getStartPage();					 // 시작 페이지 index
+int endPage = pb.getEndPage();						 // 끝 페이지 index
+
+int cntPerPage = pb.getCntPerPage();				 // 한 페이지 내에 보여줄 최대 행 개수
+int totalPage = pb.getTotalPage();					 // 모든 페이지 개수
+int cntPerPageGroup = pb.getCntPerPageGroup();		 // 페이지 그룹 개수
+
 %>
 
-<script type="text/javascript">
-<%-- 위시리스트 추가 이벤트 --%>
-$(function() {
-	$("#wishlistAdd").click(function() {
-		alert("위시리스트에 추가되었습니다");
+<script>
+<%-- 페이지 선택한 경우 --%>
+$(function(){
+	$(document).on("click", ".test", function(){		
+		var conurl = $(this).attr("con-url");
+		if(conurl == "filmlist") {
+			var currentPage=$(this).attr("data-page");
+			var category = $(this).attr("cate");
+
+			$.ajax({
+				url:'/MovieHolic/film?act=viewfilmlist&category=' + category + '&currentPage1=' + currentPage,
+				method:'get',
+				success:function(result){
+					$("#filmlist").html(result.trim());
+				}
+			});
+			
+		}else if(conurl == "searchedlist"){
+			var currentPage=$(this).attr("data-page");
+			var srchKey = $(this).attr("srchKey");
+			
+			$.ajax({
+				url:'/MovieHolic/film?act=searchfilm&srchKey=' + srchKey + '&currentPage2=' + currentPage,
+				method:'get',
+				success:function(result){
+					$("#filmlist").html(result.trim());
+				}
+			});
+		}
+		
 		return false;
 	});
 });
 
-<%-- 리뷰쓰기 이벤트 --%>
+$(function(){
+	<%-- 회원 info 페이지 이동 이벤트 --%>	
+	$("div#review>table>tbody>tr>td>a").click(function(){
+		alert("사용자 사진 또는 id 눌림");
+		return false;
+	});
+});
+
+$(function(){
+	<%-- 리뷰 클릭 이벤트 --%>	
+	$("div#review>table>tbody>tr>td").click(function(){
+		alert("리뷰가 눌림");
+
+		$.ajax({
+			url:'/MovieHolic/mypage?page=reviewdetail&seq=',
+			method:'get',
+			success:function(result){
+				
+			}
+		});
+		
+		return false;
+	});
+});
+
 $(function() {
+		<%-- 위시리스트 추가 이벤트 --%>
+		$("#wishlistAdd").click(function(){
+		alert("위시리스트 추가 버튼");
+		var movieCdYoung = $(this).attr("movieCdYoung");
+		var movieCdNaver = $(this).attr("movieCdNaver");
+		
+		$.ajax({
+			url: '/MovieHolic/film?act=addwishlist&movieCdYoung=' + movieCdYoung + '&movieCdNaver=' + movieCdNaver,
+			method:'get',
+			success: function(result){
+				alert(result.trim());
+			},
+			error: function(error){
+				alert(error);
+			}
+		});
+		
+		return false;
+	});
+});
+
+$(function() {
+	
 	$("#writereview").click(function() {
 		alert("리뷰쓰기로 이동합니다.");
 		
+		<%-- 리뷰쓰기 이벤트 --%>
+<%-- 
+		var filmInfo = {
+				movieCodeYoung : <%=filmInfo.getMovieCdYoung()%>,
+				movieCodeNaver : <%=filmInfo.getMovieCdNaver()%>,
+				director : <%=filmInfo.getDirectors()%>,
+				actors : {
+					actor1 : <%=filmInfo.getActor1()%>,
+					actor2 : <%=filmInfo.getActor2()%>
+				},
+				movieName : <%=filmInfo.getMovieNm()%>,
+				category : 	<%=filmInfo.getCategory()%>
+		}
+
+		var jsonData = JSON.stringify(filmInfo);
+		JQuery.ajaxSettings.traditional = true;
+ --%>
 		$.ajax({
-			url: '/MovieHolic/mypage?page=writereview',  <%-- 뭘 넘겨줘야 할지 상의 필요! 영화코드만? 아님 영화상세정보 다? --%>
-			method:'get', 
-			success:function(result){
+			url: '/MovieHolic/mypage?page=writereview',
+			method:'post', 
+			dataType: 'json',
+			data: {"jsonData" : jsonData},
+			success: function(json){
+				
+			},
+			error: function(error){
 				
 			}
 		});
@@ -160,6 +268,7 @@ function onPlayerStateChange(event) {
     console.log('onPlayerStateChange 실행: ' + playerState);
 }
 </script>
+</head>
 
 <body class="left-sidebar is-preload">
 	
@@ -250,13 +359,16 @@ for(int i = 1;i<=5-filmInfo.getStarPoint();i++){
 									<ul style="list-style-type: none;">
 										
 										<li style="padding-left: 0px;">
-											<a id ="trailer" href="https://www.youtube.com" class="btn btn-success font_bold_small"" style="margin-right: 10px; width:200px;">
+											<button id ="trailer" class="btn btn-success font_bold_small" style="margin-right: 10px; width:200px;">
 											예고편 영상
-											</a>
-											<a id="writereview" href="/MovieHolic/page/mypage/writereview.jsp" class="btn btn-success font_bold_small"" style="margin-right: 10px; width:200px;">
-											리뷰 쓰기</a>
-											<a id="wishlistAdd" class="btn btn-success font_bold_small" style="color: #ffcd07; margin-right: 10px; width:200px;">
-											위시리스트 추가</a>
+											</button>
+											<button id="writereview" class="btn btn-success font_bold_small" style="margin-right: 10px; width:200px;">
+											리뷰 쓰기
+											</button>
+											<button id="wishlistAdd" class="btn btn-success font_bold_small"
+											movieCdYoung="<%=filmInfo.getMovieCdYoung()%>" movieCdNaver="<%=filmInfo.getMovieCdNaver()%>" style="color: #ffcd07; margin-right: 10px; width:200px;">
+											위시리스트 추가
+											</button>
 										</li>
 									</ul>
 				<!------------------------------------ 예고편, 리뷰쓰기 버튼 ----------------------------------------->
@@ -333,26 +445,30 @@ for(int i = 0; i < actorLen; i++){
 
 			    <!------------------------------------------------- 리 뷰 ------------------------------------------------->
 
-				<div class="font_bold_lg top_margin_lg" style="margin-bottom: 3em;">
+				<div class="row">
+				<div class="col-lg-12 col-mobile-12 font_bold_lg top_margin_lg" style="margin-bottom: 1em;">
 					<span>REVIEWS</span> (<span id="commentcount"><%=reviewLen%></span>)
 					<!-- 구분선 -->
 					<hr class="line_bold">
 				</div>
-				
-
-				<div class="row">
-					<table class="table table-hover col-lg-12 col-mobile-12" style="margin-top: 0;">
-
+				</div>
+					
+				<div class="row" id="review">
+					
+					<table class="table table-hover col-lg-12 col-mobile-12" style="margin-top: 0; width:200px;">
 <%
 if(reviewLen>0){
 
 	for(int i = 0; i < reviewLen; i ++){
+		
+		/* --------------------------------------------------------------------------------------------------- */
 %>
 						<tr>
-							<td style="vertical-align: middle;">
-							<a href="#"><img id="replywriter" class="profile_icon" alt="댓글작성자 프로필 사진" src="/MovieHolic/images/user2.jpg"></a> 
-								 <a id="replywriterId" class="font_bold_small" href="#" style="color: white; margin-right: 15px;"><%=reviews.get(i).getUserId()%></a>
-								 <span style="font-size: 1em;margin-right: 15px;">
+							<td style="vertical-align: middle; border-top:0px; border-bottom:1px solid white;">
+								<a href="#">
+									<img id="replywriter" class="profile_icon" alt="댓글작성자 프로필 사진" src="/MovieHolic/images/user2.jpg"></a> 
+								<a id="replywriterId" class="font_bold_small" href="#" style="color: white; margin-right: 15px;"><%=reviews.get(i).getUserId()%></a>
+								<span style="font-size: 1em;margin-right: 15px;">
 <%
 		for(int j =1;j<=reviews.get(i).getStarPoint(); j++){
 %>
@@ -376,8 +492,10 @@ if(reviewLen>0){
 							
 							</td>
 						</tr>
+						
 <%
 	}
+
 }
 %>
 						
@@ -385,25 +503,40 @@ if(reviewLen>0){
 
 					<%--pagination처리 --%>
 					<div class="col-lg-12">
+					
+<%
+// 시작 페이지가 1이 아닌 경우만 '이전' 표시
+if(startPage != 1) {
+%>
 						<div style="float: left">
-							<button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button>
+							<button class="btn btn-success font_bold_small" data-page="<%=startPage-1%>">이&nbsp;&nbsp;&nbsp;전</button>
 						</div>
+<%		
+}
 
+if(endPage != totalPage){
+%>
 						<div style="float: right">
-							<button class="btn btn-success font_bold_small">다&nbsp;&nbsp;&nbsp;음</button>
+							<button class="btn btn-success font_bold_small" data-page="<%=endPage+1%>">다&nbsp;&nbsp;&nbsp;음</button>
 						</div>
+<%		
+}
+%>
 
 						<ul class="pagination justify-content-center">
-							<li class="page-item"><a class="page-link a"
-								href="javascript:void(0);">1</a></li>
-							<li class="page-item"><a class="page-link a"
-								href="javascript:void(0);">2</a></li>
-							<li class="page-item"><a class="page-link a"
-								href="javascript:void(0);">3</a></li>
-							<li class="page-item"><a class="page-link a"
-								href="javascript:void(0);">4</a></li>
-							<li class="page-item"><a class="page-link a"
-								href="javascript:void(0);">5</a></li>
+<%
+ // 페이지 그룹 개수(5)만큼 반복
+for(int i = 0; i < cntPerPageGroup; i++) {
+    // 마지막 페이지에서, 
+    if(startPage+i <= totalPage){
+%>
+							<li class="page-item">
+								<a class="page-link a" href="#;" data-page="<%=startPage+i%>"><%=startPage+i%></a>
+							</li>
+<%
+    }
+}
+%>
 						</ul>
 						<%-- float clear용 빈 div --%>
 						<div style="clear: both;"></div>

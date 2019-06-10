@@ -22,11 +22,8 @@ public class MyPageFrontController extends HttpServlet {
 		System.out.println("서블릿");
 		String page = request.getParameter("page");
 		String path = "/page/mypage/mypage.jsp";
-//		String cp = request.getParameter("followingpage");
-//		String cpf = request.getParameter("followerpage");
 		String choice = request.getParameter("choice");
-		String genreno = request.getParameter("genreno");
-		String time = request.getParameter("time");
+		String tab = request.getParameter("tab");
 		System.out.println(choice);
 		
 		if ("mypage".equals(page)) {
@@ -41,9 +38,8 @@ public class MyPageFrontController extends HttpServlet {
 			MoveUrl.forward(request, response, "/page/mypage/diary.jsp");
 		} else if ("social".equals(page)) {
 			path = MyPageController.getMyPageController().showFollowings(request, response);
+//			MyPageController.getMyPageController().showFollowers(request, response);
 			MoveUrl.forward(request, response, path);
-			
-//			path = MyPageController.getMyPageController().showFollowers(request, response, cp);
 //			MoveUrl.forward(request, response, path);
 			
 		} else if ("setting".equals(page)) {
@@ -65,6 +61,12 @@ public class MyPageFrontController extends HttpServlet {
 		}else if ("year".equals(choice)) {
 //			System.out.println("genreno: "+genreno +", time : " + time);
 			
+		}else if ("followings".equals(tab)) {
+			path = MyPageController.getMyPageController().showFollowings(request, response);
+			MoveUrl.forward(request, response, path);
+		}else if ("followers".equals(tab)) {
+			path = MyPageController.getMyPageController().showFollowers(request, response);
+			MoveUrl.forward(request, response, path);
 		}
 	}
 
