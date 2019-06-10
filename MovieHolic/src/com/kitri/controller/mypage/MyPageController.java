@@ -28,7 +28,7 @@ public class MyPageController {
 
 	public String showFollowings(HttpServletRequest request, HttpServletResponse response) {
 		String cp = request.getParameter("followingpage");
-		System.out.println(cp);
+		System.out.println("C : following , 페이지 : " + cp);
 		int currentPage = 1; // 보여줄 현재페이지
 		if (cp != null) {
 			currentPage = Integer.parseInt(cp);
@@ -59,8 +59,9 @@ public class MyPageController {
 		return path;
 	}
 	
-public String showFollowers(HttpServletRequest request, HttpServletResponse response, String cp) {
-		
+public String showFollowers(HttpServletRequest request, HttpServletResponse response) {
+		String cp = request.getParameter("followerpage");
+		System.out.println("C : followers , 페이지 : " + cp);
 		int currentPage = 1; // 보여줄 현재페이지
 		if (cp != null) {
 			currentPage = Integer.parseInt(cp);
@@ -68,8 +69,9 @@ public String showFollowers(HttpServletRequest request, HttpServletResponse resp
 		}
 		int cntPerPage = 5;// 페이지별 보여줄 목록수
 		int totalCnt = MyPageService.getTotalCnt2();
+		System.out.println("팔로워 수 : " + totalCnt);
 		int cntPerPageGroup = 5;// 페이지 그룹에 보여 줄 페이지수
-		String url = "/MovieHolic/mypage";
+		String url = "/MovieHolic/mypage?tab=followers&followingpage=";
 		
 		PageBean pbf = new PageBean(currentPage, 
 									cntPerPage, 

@@ -42,15 +42,15 @@ public class MyPageService {
 	public static int getTotalCnt2() {
 		return SocialDao.selectTotalCnt2();
 	}
-	
-	
-	public static List<WishlistDto> findByYear(int startRow, int endRow){
-		return SocialDao.selectByRows3(startRow, endRow);
-	}
-	
-	public static int getTotalCnt3() {
-		return SocialDao.selectTotalCnt3();
-	}
+//	
+//	
+//	public static List<WishlistDto> findByYear(int startRow, int endRow){
+//		return SocialDao.selectByRows3(startRow, endRow);
+//	}
+//	
+//	public static int getTotalCnt3() {
+//		return SocialDao.selectTotalCnt3();
+//	}
 //	public int deleteFollowingId() {
 //		
 //		

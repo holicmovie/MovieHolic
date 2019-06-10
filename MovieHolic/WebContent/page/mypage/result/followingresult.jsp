@@ -7,11 +7,10 @@
 <script>
 $(function(){
 
-	$("#followingsection.deletef").click(function() {
-			var followingid = $(this).find("#followingsection.followingid").html();
+	$(".deletef").click(function() {
+			var followingid = $(this).find(".followingid").html();
 				alert(followingid);
-			
-			/* $.ajax({
+			$.ajax({
 				url:"/MovieHolic/mypage?page=social",
 				method: "GET",
 				data:"deletefollowing=" + followingid,
@@ -19,7 +18,7 @@ $(function(){
 					System.out.println(followingid);
 				}
 			});
-			return false; */
+			return false; 
 		}); 
 });  	 
 
@@ -44,7 +43,7 @@ $(function(){
 								<%PageBean pb = (PageBean)request.getAttribute("pb");
 									System.out.println(pb);
 								%>						  
-						
+								
 								<c:set var = "pb" value="${requestScope.pb}"/>
 								  
 								  <%--social following page 위한 for문 --%>
@@ -76,7 +75,7 @@ $(function(){
 					
 						<div style="float: left">
 							<c:if test="${pb.startPage > 1 }">
-								<a href="${pb.url}${pb.startPage - 1}"><button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button></a>
+								<a class = "btnmove" href="${pb.startPage - 1}"><button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button></a>
 								
 							</c:if>
 						</div>
@@ -85,7 +84,7 @@ $(function(){
 								
 						<div style="float: right;">
 							<c:if test="${pb.totalPage > pb.endPage }">
-							<a href="${pb.url}${pb.endPage+1}"><button class="btn btn-success font_bold_small">다&nbsp;&nbsp;&nbsp;음</button></a>
+							<a class = "btnmove" href="${pb.endPage+1}"><button class="btn btn-success font_bold_small">다&nbsp;&nbsp;&nbsp;음</button></a>
 							</c:if>
 						</div>
 				
@@ -94,13 +93,13 @@ $(function(){
 									<c:choose>
 
 										<c:when test="${pb.currentPage == i}">
-											<li class="page-item"><a class="page-link a">${i}</a></li>
+											<li class="page-item"><a class="page-link a 1">${i}</a></li>
 										</c:when>
 
 										<c:otherwise>
 											<li class="page-item">
 											<!-- /Movieholic/mypage?page=social&followingpage= -->
-											<a class="page-link a" id = "followingpaging" href="${pb.url}${i}">${i}</a></li>
+											<a class="page-link a 1" id = "followingpaging" href="${i}">${i}</a></li>
 										</c:otherwise>
 
 									</c:choose>
