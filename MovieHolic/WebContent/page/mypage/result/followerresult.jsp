@@ -19,10 +19,10 @@
 								    </tr>
 								  </thead>
 								  <tbody>
-								  <%PageBean pbf = (PageBean)request.getAttribute("pbf");
+								<%--   <%PageBean pbf = (PageBean)request.getAttribute("pbf");
 								  	System.out.println(pbf);
-								  %>	
-								   <c:set var = "pbf" value="${requestScope.pbf}"/>
+								  %>	 --%>
+								 
 								  
 								  <%--social following page 위한 for문 --%>
 								   
@@ -30,12 +30,12 @@
 								    <tr>
 								    
 								      <th scope="row">${pbf.no}</th>
-								      <td class = "followerid">${pbf.userId}</td>
+								      <td> <input type ="hidden" class="addfollow" value = "${pbf.userId}">${pbf.userId}</td>
 								      <td>${pbf.name}</td>
 								      <td><i class="fa fa-list" style="color:gold;"></i> ${pbf.best_count }</td>
 								      <td><i class="fa fa-heart" style="color:tomato;"></i>${pbf.list_count }</td>
 								      <td>
-								      	<button type="button" class="btn btn-secondary btn-circle btn-xl"><i class="fa fa-plus"></i></button>
+								      	<button type="button" class="btn btn-secondary btn-circle btn-xl plusfollower"><i class="fa fa-plus"></i></button>
 									  </td>
 								    </tr>
 								    
