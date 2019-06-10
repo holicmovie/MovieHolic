@@ -112,7 +112,6 @@ public class ListController {
 	public String selListBySeq(HttpServletRequest request, HttpServletResponse response) {
 		String path = "/error.jsp";
 		String seq = request.getParameter("seq");
-		
 		BoardDto board = ListService.getListService().selListBySeq(seq);
 		
 		if(board != null) {

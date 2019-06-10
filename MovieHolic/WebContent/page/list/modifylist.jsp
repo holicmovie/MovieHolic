@@ -118,6 +118,8 @@
 			var title = $('input[name="title"]').val();
 			var content = $('textarea[name="content"]').val();
 			var $imgArr = $('.movieImg');
+			var seq = $('input[name="title"]').attr("data-seq");
+			var postDate = $('input[name="title"]').attr("data-postDate");
 			if(title == '') {
 				alert("제목을 입력하세요.");
 				return;
@@ -131,7 +133,7 @@
 				if(confirm("작성한 List를 저장하시겠습니까?")) {
 					$.ajax({
 						url: "<%= request.getContextPath()%>/list",
-						data: $('form').serialize() + "&act=modifyList",
+						data: $('form').serialize() + "&act=modifyList&seq=" + seq + "&postDate=" + postDate,
 						method: 'post',
 						success:function(result){
 							if(result != 0) {
@@ -179,9 +181,7 @@
 		<div class="row" style="margin-top: 1em;">
 			<div class="col-lg-12">
 				<h3><label>YOUR LIST</label></h3>
-				<input type="hidden" name="seq" value="${requsetScope.board.seq}">
-				<input type="hidden" name="postDate" value="${requsetScope.board.postDate}">
-				<input type="text" class="form-control form-control-lg" style="width: 50%;" value="${requestScope.board.subject}" name="title">
+				<input type="text" class="form-control form-control-lg" style="width: 50%;" value="${requestScope.board.subject}" name="title" data-seq="${requestScope.board.seq}" data-postDate="${requestScope.board.postDate}">
 			</div>
 			<div class="col-lg-12" style="margin-top: 1em;">
 				<h3><label for="list-detail-description">ABOUT YOUR FAVORITE MOVIE</label></h3>

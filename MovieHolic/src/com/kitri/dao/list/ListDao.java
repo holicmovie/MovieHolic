@@ -50,8 +50,11 @@ public class ListDao {
 					
 //					3. user테이블 insert
 					result = ListDao.getListDao().updatetUser(board);
-					conn.commit();
-					conn.setAutoCommit(true);
+					
+					if(result != 0) {
+						conn.commit();
+						conn.setAutoCommit(true);
+					}
 				} else {
 					conn.rollback();
 				} //if-else문 종료
@@ -167,6 +170,7 @@ public class ListDao {
 					board.setWorst(rs.getInt("WORST"));
 					board.setViewCount(rs.getInt("VIEWCOUNT"));
 					
+					System.out.println("제목 넣어둠"+board.getMovieName());
 					conn.commit();
 					conn.setAutoCommit(true);
 				} // if문 종료
@@ -385,12 +389,14 @@ public class ListDao {
 			StringBuffer sql = new StringBuffer();
 			sql.append("UPDATE MH_LOG \n");
 			sql.append("SET SUBJECT = ? \n");
-			sql.append("WHERE to_char('logDate', 'YYYY.MM.DD HH24:MI:SS') = ? \n");
+			sql.append("WHERE to_char(LOGDATE, 'YYYY.MM.DD HH24:MI:SS') = ? AND LOGID = ? AND SEQ = ? \n");
 			pstmt = conn.prepareStatement(sql.toString());
 			
 			int idx = 0;
 			pstmt.setString(++idx, board.getSubject());
 			pstmt.setString(++idx, board.getPostDate());
+			pstmt.setString(++idx, board.getUserId());
+			pstmt.setInt(++idx, board.getSeq());
 			
 			result = pstmt.executeUpdate();
 		} finally {

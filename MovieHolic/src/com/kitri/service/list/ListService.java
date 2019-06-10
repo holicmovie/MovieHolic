@@ -161,6 +161,7 @@ public class ListService {
 			temp.setMovieImage(ListService.getListService().getImgURL(naver));
 			temp.setMovieCdNaver(naver);
 			temp.setMovieCdYoung(board.getMovieCodeYoung().get(i));
+			temp.setMovieNm(board.getMovieName().get(i));
 			
 			film.add(temp);
 		}
