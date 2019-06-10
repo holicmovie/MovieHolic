@@ -40,7 +40,7 @@ public class UserController {
 	}
 	
 	public void ReviewList(HttpServletRequest request, HttpServletResponse response) {
-		String page = request.getParameter("review");
+		String page = request.getParameter("seq");
 		int currentPage = 1;  					// 보여줄 현재 페이지
 		
 		if(page != null) {
@@ -51,7 +51,7 @@ public class UserController {
 		int totalCnt = UserService.getUserService().getTotalpage();  // 총 게시글 수
 		int cntPerPageGroup = 5;                // 그룹 페이지 수
 		
-		String url = "/MovieHolic/diary";
+		String url = "/MovieHolic/mypage?page=diary&";
 
 		PageBean pb = new PageBean(currentPage,
 								   cntPerPage,

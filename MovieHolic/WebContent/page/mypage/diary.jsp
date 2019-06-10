@@ -198,11 +198,11 @@
 									</td>
 									<td class="hide2" style="vertical-align: middle;"><span
 										style="font-size: 1em;"> <%
-										 	for (int j = 0; j <list.get(j).getStarPoint(); j++) {
+										 	for (int j = 0; j <list.get(i).getStarPoint(); j++) {
 										 %> <i class="fas fa-star" style="color: #ffca08;"></i> <%
 										 	}
 										 %> <%
-										 	for (int a = 0; a< 5-list.get(a).getStarPoint(); a++) {
+										 	for (int a = 0; a< 5-list.get(i).getStarPoint(); a++) {
 										 %> <i class="fas fa-star" style="color: #222222;"></i> <%
 										 	}
 										 %>
