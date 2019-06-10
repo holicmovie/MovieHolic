@@ -1,7 +1,5 @@
 package com.kitri.admin.dao;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -501,7 +499,8 @@ public class AdminDao  {
 		String index = request.getParameter("index");
 		String text = request.getParameter("text");
 		
-		
+		System.out.println(index);
+		System.out.println(text);
 		
 		
 		StringBuffer sql = new StringBuffer();

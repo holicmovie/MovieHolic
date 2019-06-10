@@ -30,6 +30,18 @@ public class AdminFrontController extends HttpServlet {
 			path = AdminController.getAdminController().NFandAll(request, response,cnt);
 			MoveUrl.forward(request, response, path);
 			
+		} else if ("notify".equals(notify) && "inactive".equals(act)) { // 휴면 화면에서 휴면처리후 페이징처리
+			
+			System.out.println("inactive 들어옴.");
+			int cnt = 2; 
+			path = AdminController.getAdminController().inactivePage(request, response,cnt);
+			MoveUrl.forward(request, response, path);
+			
+		} else if ("notify".equals(notify) && "search".equals(act)) { // 검색화면에서 검색처리 후 페이징처리
+			
+			path = AdminController.getAdminController().searchPage(request, response);
+			MoveUrl.forward(request, response, path);
+			
 		} else if ("notify".equals(notify)) { // 신고 게시판
 			
 			path = AdminController.getAdminController().NFselectByList(request, response);
@@ -63,21 +75,27 @@ public class AdminFrontController extends HttpServlet {
 			path = AdminController.getAdminController().deleteBoard(request, response);
 			MoveUrl.forward(request, response, path);
 			
-		} else if ("enable".equals(act)) { //전체페이지 휴면 변경
+		} else if ("enable".equals(act)) { // 전체페이지 휴면 변경
 			
 			path = AdminController.getAdminController().dormancy(request, response);
 			MoveUrl.forward(request, response, path);
 			
-		} else if ("search".equals(act)) {
+		} else if ("search".equals(act)) { // 회원 게시물 검색 and 페이징처리
 			
 			path = AdminController.getAdminController().search(request, response);
 			MoveUrl.forward(request, response, path);
 			
-		} 
-//		else if () {
-//			
-//		} 
-		else { // 이상하게 들어왔을때.
+		} else if ("enableinactive".equals(act)) { // 휴면화면에서 휴면설정
+			
+			path = AdminController.getAdminController().dormancyinactive(request, response);
+			MoveUrl.forward(request, response, path);
+			
+		} else if ("enablesearch".equals(act)) { // 검색화면에서 휴면설정
+			
+			path = AdminController.getAdminController().dormancysearch(request, response);
+			MoveUrl.forward(request, response, path);
+			
+		} else { // 이상하게 들어왔을때.
 			
 			int cnt = 4;
 			path = AdminController.getAdminController().selectByUserList(request, response, cnt);

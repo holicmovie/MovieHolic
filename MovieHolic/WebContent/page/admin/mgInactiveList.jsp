@@ -8,27 +8,13 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 
-
 <script>
-	$(function() {
-		
-		$(".page_inactive>a").click(function() {
-			var currentPage = $(this).attr("href");
-			$.ajax({
-				url : '/MovieHolic/admin?act=inactiveList&' + 'currentPage=' + currentPage ,
-				method : 'get',
-				/* data : 'alllist=' + alllist,  */
-				success : function(result) {
-					$("div.wrapper>div.container>div.member_search_result").html(result.trim());
-				}
-			});
-			return false;
-		});
-		
-	});
+
 </script>
 
-
+					<!-- 휴면후 탈퇴 적용시키기 위해 사용 -->
+					<input type="hidden" class="mgInactiveList" name="mgInactiveList" value="mgInactiveList">
+					<input type="hidden" class="searchresult" name="searchresult" value="no">
 <table class="table" style="border-bottom: 0.2em solid #fff;">
 	<br>
 	<thead>
@@ -75,7 +61,7 @@
 
 
 						<div class="dropdown-menu">
-							<span class="enable">
+							<span class="enableinactive">
 								<a class="dropdown-item" href="/MovieHolic/admin?act=enableinactive&ap_userId=${ap.userId}">
 									<c:if test="${ap.enable == 1}">활동</c:if> 
 									<c:if test="${ap.enable == 0}">휴면</c:if>

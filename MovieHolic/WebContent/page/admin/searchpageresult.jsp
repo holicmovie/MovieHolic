@@ -14,11 +14,10 @@
 
 
 <script>
-
-/* 회원관리 게시판 목록종류 */
+	/* 회원관리 게시판 목록종류 */
 $(function() {
-	$("div>span>span>a").click(function() {
-		
+	$("div>span>span>a").click(
+		function() {
 		$("div.wrapper>div.container>div.member_search_result").empty();
 		var url = $(this).attr("href");
 		$.ajax({
@@ -33,10 +32,11 @@ $(function() {
 	});
 });
 
+	
 /* 회원관리 게시판 목록종류(탈퇴) */
 $(function() {
-	$("div>span>span>span>a").click(function() {
-		
+	$("div>span>span>span>a").click(
+		function() {
 		$("div.wrapper>div.container>div.member_search_result").empty();
 		var url = $(this).attr("href");
 		$.ajax({
@@ -52,116 +52,88 @@ $(function() {
 	});
 });
 
-
-//.on으로 바꾸면 정적과 동적 둘다 사용 가능. notify
-$(document).on("click", ".page>a", function(){
+	//.on으로 바꾸면 정적과 동적 둘다 사용 가능. notify
+$(document).on("click",".page>a",function() {
 	var currentPage = $(this).attr("href");
 	$("div.wrapper>div.container>div.member_search_result").empty();
 	$.ajax({
-		url : '/MovieHolic/admin?act=alllist&' + 'currentPage='+currentPage,
+		url : '/MovieHolic/admin?act=alllist&'+'currentPage='+currentPage,
 		method : 'get',
 		success : function(result) {
-			$("div.wrapper>div.container>div.member_search_result").html(result.trim()); 
+			$("div.wrapper>div.container>div.member_search_result").html(result.trim());
 		}
 	});
 	return false;
 });
 
-
-
-
+	
+	
 // 휴면 페이징 처리.
-$(document).on("click", ".page_inactive>a", function(){
-	var currentPage = $(this).attr("href");
-	$("div.wrapper>div.container>div.member_search_result").empty();
+$(document).on("click",".page_inactive>a",function() {
+var currentPage = $(this).attr("href");
+$("div.wrapper>div.container>div.member_search_result").empty();
 	$.ajax({
-		url : '/MovieHolic/admin?act=inactiveList&' + 'currentPage=' + currentPage ,
+		url : '/MovieHolic/admin?act=inactiveList&'+'currentPage='+currentPage,
 		method : 'get',
 		success : function(result) {
-			$("div.wrapper>div.container>div.member_search_result").html(result.trim()); 
+		$("div.wrapper>div.container>div.member_search_result").html(result.trim());
 		}
 	});
 	return false;
 });
-
-
-
 
 
 
 // 신고게시물 페이징 처리
-$(document).on("click", ".page_notify>a", function(){
+$(document).on("click", ".page_notify>a", function() {
 	var currentPage = $(this).attr("href");
 	$(".notify_search_result").empty();
 	$.ajax({
-		url : '/MovieHolic/admin?notify=notify&currentPage='+currentPage,
-			method : 'get',
-			/* data : 'alllist=' + alllist,  */
-			success : function(result) {
-				$(".notify_search_result").html(result.trim());
-			}
-		});
+		url : '/MovieHolic/admin?notify=notify&currentPage=' + currentPage,
+		method : 'get',
+		/* data : 'alllist=' + alllist,  */
+		success : function(result) {
+			$(".notify_search_result").html(result.trim());
+		}
+	});
 	return false;
 });
 
 
 
 // 유저 전체선택
-$(document).on("click", ".allcheckbox", function(){
-        //클릭되었으면
-        if($(".ap_checkbox").prop("checked")){
-            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
-            $(".ap_checkbox").prop("checked",false);
-            //클릭이 안되있으면
-            return false;
-        }else{
-            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
-            $(".ap_checkbox").prop("checked",true);
-            return false;
-        }
+$(document).on("click", ".allcheckbox", function() {
+	//클릭되었으면
+	if ($(".ap_checkbox").prop("checked")) {
+		//input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
+		$(".ap_checkbox").prop("checked", false);
+		//클릭이 안되있으면
+		return false;
+	} else {
+		//input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
+		$(".ap_checkbox").prop("checked", true);
+		return false;
+	}
 });
-
 
 
 
 // 신고게시물 전체선택
-$(document).on("click", ".allcheckbox2", function(){
-        //클릭되었으면
-        if($(".np_checkbox").prop("checked")){
-            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
-            $(".np_checkbox").prop("checked",false);
-            //클릭이 안되있으면
-            return false;
-        }else{
-            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
-            $(".np_checkbox").prop("checked",true);
-            return false;
-        }
+$(document).on("click", ".allcheckbox2", function() {
+	//클릭되었으면
+	if ($(".np_checkbox").prop("checked")) {
+		//input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
+		$(".np_checkbox").prop("checked", false);
+		//클릭이 안되있으면
+		return false;
+	} else {
+		//input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
+		$(".np_checkbox").prop("checked", true);
+		return false;
+		}
 });
 
-/* if(test.indexOf('good')>-1)
-if (test == "good") { 
-  alert("성공"); 
-} 
-else { 
-  alert("실패"); 
-} 
- */
-/* if (mgInactiveList.eq("mgInactiveList")) {
-	location.href = "/MovieHolic/admin?act=inactive&notify=notify";
-} else if (searchresult.eq("searchresult")) {
-	location.href = "/MovieHolic/admin?act=search&notify=notify";
-} else {
-	location.href = "/MovieHolic/admin?act=alllist&notify=notify";
-} */
 
-/* if(mgInactiveList.indexOf('mgInactiveList')>-1){
-	location.href = "/MovieHolic/admin?act=inactive&notify=notify";
-} else if(searchresult.indexOf('searchresult')>-1){
-	location.href = "/MovieHolic/admin?act=search&notify=notify";
-} else if(mgInactiveList.indexOf('mgInactiveList')>-1){
-	location.href = "/MovieHolic/admin?act=alllist&notify=notify";
-} */
 
 // 체크박스 선택(탈퇴)
 $(document).on("click", ".secession", function(){	
@@ -179,39 +151,48 @@ $(document).on("click", ".secession", function(){
 });
 
 
+
 // 체크박스 선택시 신고게시물 삭제
-$(document).on("click", ".np_delete", function(){	
+$(document).on("click", ".np_delete", function() {
 	$.ajax({
-		url: '/MovieHolic/admin?act=np_delete',
-		method: 'post',
-		data: $('.np_checkbox').serialize(),
-		success:function(result){
+		url : '/MovieHolic/admin?act=np_delete',
+		method : 'post',
+		data : $('.np_checkbox').serialize(),
+		success : function(result) {
 			$(":input[name=np_checkbox]").prop("checked", false);
-			location.href = "/MovieHolic/admin?act=alllist&notify=notify";
+			
+			if(mgInactiveList.indexOf('mgInactiveList')>-1){
+				location.href = "/MovieHolic/admin?act=inactive&notify=notify";
+			} else if(searchresult.indexOf('searchresult')>-1){
+				location.href = "/MovieHolic/admin?act=search&notify=notify";
+			} else {
+				location.href = "/MovieHolic/admin?act=alllist&notify=notify";
+			}
+
 			alert("게시물 삭제에 성공하셨습니다.");
 		}
 	});
 	return false;
 });
 
- 
+
 // 휴면 처리 
 // Ajax 안쓰고 밑에서 처리함.
 
 
-
 // 검색 : 이름 - 0 아이디 - 1
-$(document).on("click", ".search", function(){
-	 
-	 var index = $(".searchType option").index($(".searchType option:selected"));
-	 var text = $("#usertext").val();
-	 $("div.wrapper>div.container>div.member_search_result").empty();
+$(document).on("click",".search",function() {
+
+	var index = $(".searchType option").index(
+	$(".searchType option:selected"));
+	var text = $("#usertext").val();
+	$("div.wrapper>div.container>div.member_search_result").empty();
 	
-	 $.ajax({
-		url: '/MovieHolic/admin?act=search&index='+index+'&text='+text,
-		method: 'post',
+	$.ajax({
+		url : '/MovieHolic/admin?act=search&index=' + index + '&text=' + text,
+		method : 'post',
 		//data: $('.np_checkbox').serialize()
-		success:function(result){
+		success : function(result) {
 			$("div.wrapper>div.container>div.member_search_result").html(result.trim());
 			$("#usertext").val("");
 		}
@@ -219,12 +200,26 @@ $(document).on("click", ".search", function(){
 	return false;
 });
 
+	
+//검색 게시물 페이징 처리
+$(function() {
+	var text = $("#text").val();
+	var index = $("#index").val();
+	$("span.page_search>a").click(function() {
+		var currentPage = $(this).attr("href");
+		$.ajax({
+			url : '/MovieHolic/admin?act=search&index=' + index + '&text=' + text + '&currentPage=' + currentPage,
+			method : 'get',
+			/* data : 'alllist=' + alllist,  */
+			success : function(result) {
+			$("div.wrapper>div.container>div.member_search_result").html(result.trim());
+			}
+		});
+	return false;
+	});
+});
 
- 
- 
-//   --------------------------------------------------
-    
-
+	//   --------------------------------------------------
 </script>
 
 
@@ -232,24 +227,22 @@ $(document).on("click", ".search", function(){
 
 
 <style>
-
-.searchType{
-
+.searchType {
 	width: 90px;
-    font-family: 'Noto Sans KR', sans-serif;
-    display: block;
-    height: calc(1.5em + .75rem + 2px);
-    padding: .375rem .75rem;
-    font-size: 15px;
-    font-weight: bold;
-    line-height: 1.5;
-    color: #ffcd07;
-    background-color: #034741;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: .25rem;
-    border-color: #28a745;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+	font-family: 'Noto Sans KR', sans-serif;
+	display: block;
+	height: calc(1.5em + .75rem + 2px);
+	padding: .375rem .75rem;
+	font-size: 15px;
+	font-weight: bold;
+	line-height: 1.5;
+	color: #ffcd07;
+	background-color: #034741;
+	background-clip: padding-box;
+	border: 1px solid #ced4da;
+	border-radius: .25rem;
+	border-color: #28a745;
+	transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
 tr>td>input {
@@ -323,26 +316,28 @@ hr.line_light_w {
 					<div class="col-lg-6">
 						<h2 align="left">회원 관리</h2>
 					</div>
-					
+
 					<div class="col-lg-1">
 						<select name="searchType" id="searchType" class="searchType">
 							<option value="name">이름</option>
 							<option value="id">아이디</option>
-						</select>						
+						</select>
 					</div>
-					
+
 					<div class="col-lg-5">
 						<div class="input-group mb-3" align="right">
-							
-							<input type="text" class="form-control" placeholder="검색" id="usertext" name="name">
-							
+
+							<input type="text" class="form-control" placeholder="검색"
+								id="usertext" name="name">
+
 							<div class="input-group-append">
-								<span class = "search"><button type="button" class="btn btn-success" style="z-index: 0">검색</button></span>
+								<span class="search"><button type="button"
+										class="btn btn-success" style="z-index: 0">검색</button></span>
 							</div>
-							
+
 						</div>
 					</div>
-					
+
 
 					<hr style="color: #fff">
 				</div>
@@ -352,15 +347,16 @@ hr.line_light_w {
 
 				<div align="right">
 					<span class="dropdown">
-						<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">목록</button> 
-						<span class="dropdown-menu">
+						<button type="button" class="btn btn-success dropdown-toggle"
+							data-toggle="dropdown">목록</button> <span class="dropdown-menu">
 							<a class="dropdown-item" href="/MovieHolic/admin?act=alllist">전체목록</a>
-							<%-- DB number값이 1일때 휴면. --%> 
-							<a class="dropdown-item" href="/MovieHolic/admin?act=inactiveList">휴면목록</a> 
-							<span class="btnUn"><a class="dropdown-item" href="/MovieHolic/admin?act=unsubscribelist">탈퇴목록</a></span>
-						</span>
+							<%-- DB number값이 1일때 휴면. --%> <a class="dropdown-item"
+							href="/MovieHolic/admin?act=inactiveList">휴면목록</a> <span
+							class="btnUn"><a class="dropdown-item"
+								href="/MovieHolic/admin?act=unsubscribelist">탈퇴목록</a></span>
 					</span>
-						<span class="secession"><button type="button" class="btn btn-success" style="z-index: 0">탈퇴</button></span>
+					</span> <span class="secession"><button type="button"
+							class="btn btn-success" style="z-index: 0">탈퇴</button></span>
 				</div>
 
 
@@ -371,21 +367,20 @@ hr.line_light_w {
 
 				<!-- <member_search_result> -->
 				<div class="member_search_result">
-				
-				
+
+					
 					<!-- 휴면후 탈퇴 적용시키기 위해 사용 -->
 					<input type="hidden" class="mgInactiveList" name="mgInactiveList" value="no">
-					<input type="hidden" class="searchresult" name="searchresult" value="no">
+					<input type="hidden" class="searchresult" name="searchresult" value="searchresult">
 					
 					
-					<table id="table1" class="table" style="border-bottom: 0.2em solid #fff;">
+					<table id="table1" class="table"
+						style="border-bottom: 0.2em solid #fff;">
 						<br>
 						<thead>
 							<tr>
-								<th>
-									<span class="allcheckbox"><button type="button" class="btn btn-success"
-											style="z-index: 0;">전체선택</button></span>
-								</th>
+								<th><span class="allcheckbox"><button type="button"
+											class="btn btn-success" style="z-index: 0;">전체선택</button></span></th>
 								<th>회원ID</th>
 								<th>이름</th>
 								<th>주민번호 앞자리</th>
@@ -397,56 +392,54 @@ hr.line_light_w {
 							</tr>
 						</thead>
 						<tbody>
-						
+
 							<c:forEach var="ap" items='${ap.list}'>
 								<tr>
-									<td>
-										<c:if test="${ap.outdate == null}">
-											<input type="checkbox" class="ap_checkbox" name="ap_checkbox" value="${ap.userId}"/>
-										</c:if>
-									</td>
+									<td><c:if test="${ap.outdate == null}">
+											<input type="checkbox" class="ap_checkbox" name="ap_checkbox"
+												value="${ap.userId}" />
+										</c:if></td>
 									<td>${ap.userId}</td>
 									<td>${ap.name }</td>
 									<td>${ap.birth }</td>
 									<td>${ap.phoneFirst }-${ap.phoneMid }-${ap.phoneLast }</td>
 									<td>${ap.gender }</td>
 									<td>${ap.joinDate }</td>
-									<td>${ap.outdate }</td>
+									<td>${ap.outdate } <input type="hidden" id="index"
+										name="index" value="${ap.index }"> <input
+										type="hidden" id="text" name="text" value="${ap.text }">
+									</td>
 									<td>
 
 
 
 
-									
+
 										<div>
-										
-											<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+											<button type="button" class="btn btn-success dropdown-toggle"
+												data-toggle="dropdown">
 												<c:if test="${ap.enable == 1}">휴면</c:if>
 												<c:if test="${ap.enable == 0}">활동</c:if>
 											</button>
-											
-											
+
+
 											<div class="dropdown-menu">
-												<span class="enable">
-													<a class="dropdown-item" href="/MovieHolic/admin?act=enable&ap_userId=${ap.userId}">
-														<c:if test="${ap.enable == 1}">활동</c:if> 
-														<c:if test="${ap.enable == 0}">휴면</c:if>
-													</a>
+												<span class="enable"> <a class="dropdown-item"
+													href="/MovieHolic/admin?act=enablesearch&ap_userId=${ap.userId}&index=${ap.index}&text=${ap.text}">
+														<c:if test="${ap.enable == 1}">활동</c:if> <c:if
+															test="${ap.enable == 0}">휴면</c:if>
+												</a>
 												</span>
 											</div>
-											
+
 										</div>
-
-
-
-
 
 									</td>
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
-					 
+
 
 
 					<div class="row">
@@ -455,10 +448,9 @@ hr.line_light_w {
 
 
 							<c:if test="${ap.startPage > 1 }">
-								<span class="page"> <a href="${ap.startPage - 1}"><button
-											class="btn btn-success">이전</button></a>
-								</span>
-
+								<span class="page_search"><a href="${ap.startPage - 1}">
+										<button class="btn btn-success">이전</button>
+								</a> </span>
 							</c:if>
 
 
@@ -468,7 +460,8 @@ hr.line_light_w {
 						<div class="col-lg-2"></div>
 
 						<div class="col-lg-4">
-							<ul class="pagination" style="width: 240px; margin-left: auto; margin-right: auto;">
+							<ul class="pagination"
+								style="width: 240px; margin-left: auto; margin-right: auto;">
 
 								<c:forEach begin="${ap.startPage}" end="${ap.endPage}" var="i">
 									<c:choose>
@@ -478,7 +471,7 @@ hr.line_light_w {
 										</c:when>
 
 										<c:otherwise>
-											<li class="page-item"><span class="page"><a
+											<li class="page-item"><span class="page_search"><a
 													class="page-link" href="${i}">${i}</a></span></li>
 										</c:otherwise>
 
@@ -500,7 +493,7 @@ hr.line_light_w {
 
 							<c:if test="${ap.totalPage > ap.endPage }">
 
-								<span class="page"> <a href="${ap.endPage+1}"><button
+								<span class="page_search"> <a href="${ap.endPage+1}"><button
 											class="btn btn-success">다음</button></a>
 								</span>
 
@@ -513,7 +506,8 @@ hr.line_light_w {
 
 
 
-				</div><!-- member_search_result -->
+				</div>
+				<!-- member_search_result -->
 
 			</div>
 			<br> <br> <br>
@@ -561,10 +555,8 @@ hr.line_light_w {
 						<br>
 						<thead>
 							<tr>
-								<th>
-								<span class="allcheckbox2"><button type="button" class="btn btn-success"
-											style="z-index: 0;">전체선택</button></span>
-								</th>
+								<th><span class="allcheckbox2"><button type="button"
+											class="btn btn-success" style="z-index: 0;">전체선택</button></span></th>
 								<th>글번호</th>
 								<th>분류</th>
 								<th>작성자ID</th>
@@ -579,9 +571,8 @@ hr.line_light_w {
 
 							<c:forEach var="np" items='${np.list}'>
 								<tr>
-									<td>
-											<input type="checkbox" class="np_checkbox" name="np_checkbox" value="${np.seq }"/>
-									</td>
+									<td><input type="checkbox" class="np_checkbox"
+										name="np_checkbox" value="${np.seq }" /></td>
 									<td>${np.seq }</td>
 									<td>${np.boardName }</td>
 									<td>${np.userId }</td>
@@ -658,7 +649,11 @@ hr.line_light_w {
 				<!-- notify_search_result -->
 
 
-			</div><br><br><br><br>
+			</div>
+			<br>
+			<br>
+			<br>
+			<br>
 
 
 		</div>

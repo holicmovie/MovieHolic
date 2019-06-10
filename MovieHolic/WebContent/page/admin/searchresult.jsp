@@ -31,7 +31,9 @@ $(function() {
 </script>
 
 
-
+					<!-- 휴면후 탈퇴 적용시키기 위해 사용 -->
+					<input type="hidden" class="mgInactiveList" name="mgInactiveList" value="no">
+					<input type="hidden" class="searchresult" name="searchresult" value="searchresult">
 
 <table id="table1" class="table"
 	style="border-bottom: 0.2em solid #fff;">
@@ -69,8 +71,8 @@ $(function() {
 				<td>${ap.joinDate }</td>
 				<td>
 					${ap.outdate }
-					<input type="hidden" id="index" name="index" value="${ap.index }">
-					<input type="hidden" id="text" name="text" value="${ap.text }">
+					<input type="hidden" id="index" name="index" value="${ap.index}">
+					<input type="hidden" id="text" name="text" value="${ap.text}">
 				</td>
 				<td>
 
@@ -88,7 +90,7 @@ $(function() {
 
 						<div class="dropdown-menu">
 							<span class="enable"> <a class="dropdown-item"
-								href="/MovieHolic/admin?act=enable&ap_userId=${ap.userId}">
+								href="/MovieHolic/admin?act=enablesearch&ap_userId=${ap.userId}&index=${ap.index}&text=${ap.text}">
 									<c:if test="${ap.enable == 1}">활동</c:if> <c:if
 										test="${ap.enable == 0}">휴면</c:if>
 							</a>
