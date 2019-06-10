@@ -1,18 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/template/header.jsp" %>
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp" %>
-
-<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css'>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <style>
-p, span, a{
-	color: white;
+<%-- 영화 포스터 --%>
+.movieImg {
+	border: solid 1px white;
+	width: 22.5vh;
+	margin: 0.3em;
+	margin-bottom: 0.8em;
 }
-div{
-padding: 0;
-}
-<!-- 좋아요 둥근 버튼을 위해 필요 -->
+<%-- 좋아요 둥근 버튼을 위해 필요 --%>
 .btn-circle.btn-xl {
     width: 50px;
     height: 50px;
@@ -34,237 +34,170 @@ padding: 0;
 	border-right-color: lightgray;
 	border-right-style: solid;
 }
-
-/* 구분선 굵은 것 */
-hr.line_bold {
-	background-color: white;
-	height: 2px;
-    position: static;
-}
-
-/* 구분선 얇은 것 (흰색) */
-hr.line_light_w {
-	background-color: white;
-	position: static;
-}
-
-/* 구분선 얇은 것 (회색) */
-hr.line_light_g {
-	background-color: gray;
-	position: static;
-}
-
 </style>
-</head>
-<body class="left-sidebar is-preload" style="margin: 0; padding: 0;">
+<script>
+<%-- 이전 버튼 클릭시 --%>
+	$(function(){
+		$('#back').click(function(){
+			history.back();
+			return false;
+		});
+	});
 
-<!-- Header -->
-	<div id="header"  style="background-image: none;">
+<%-- list 수정 버튼 클릭시 --%>
+	$(function(){
+		$('#modify').click(function(){
+			location.href="list?act=selList&seq=" + $(this).attr('data-seq');
+			return false;
+		});
+	});
+<%-- list 삭제 버튼 클릭시 --%>
+	$(function(){
+		$('#del').click(function(){
+			var cnt = $('#cnt').text();
+			$.ajax({
+				url: "list",
+				data: "act=delete&seq="+ $(this).attr('data-seq') + "&postDate=" + $('#writedate').text() + "&cnt=" + cnt,
+				method: 'post',
+				success:function(result){
+					if(result != 0) {
+						alert("삭제 되었습니다.");
+						location.href = "/MovieHolic/page/list/movielist.jsp";
+					} else {
+						alert("시스템 에러로 인해 삭제 처리에 실패하였습니다. 나중에 다시 시도하세요.");
+					}
+				}
+			});
+			return false;
+		});
+	});
+<%-- list 삭제 버튼 클릭시 --%>
+</script>
+</head>
+<body class="left-sidebar is-preload">
+<div id="page-wrapper">
+<%-- Header --%>
+	<div id="header"  style="background-image: none; margin-bottom: 0px; padding-bottom:0; height: 10px;">
 <%@ include file="/template/nav.jsp"%>
 	</div>
+<%-- 변수 설정 --%>
+<c:set var="board" value="${requestScope.board}"/>
+<c:set var="user" value="${requestScope.user}"/>
+<c:set var="comment" value="${requestScope.comment}"/>
+<%-- Main --%>
+<div class="wrapper style1">
 
-<!-- Main -->
-<div class="wrapper style1" style = "margin: 0;padding: 0;">
-	<div class = "row">
-	
-	<!-- 버튼 -->
-	<div class = "col-lg-2"></div>
-	<div class = "col-lg-8" id = "listdetail-title">
-		<div class="row" style="margin-bottom:30px;">
-						<div class="col-lg-12 col-12-mobile font_light_small">
-							<span>✱&nbsp;&nbsp;</span>
-							<a href="/MovieHolic/page/mypage/mypage.jsp" style="color:white;">LIST</a>
-						</div>
+	<div class="container">
+
+		
+		<%-- 리스트 제목 및 작성자 정보 --%>
+		<div class="font_bold_mid" style="width:100%; margin-bottom: 2em;">
+			<c:if test="${sessionScope.userID != null }">
+				<c:if test="${sessionScope.userID == board.userId}">
+			<button class="btn btn-success font_bold_small" style="float: right;" id="del" data-seq="${board.seq }">삭&nbsp;&nbsp;&nbsp;제</button>
+			<button class="btn btn-success font_bold_small" style="float: right; margin-right: 10px;" id="modify" data-seq="${board.seq }">수&nbsp;&nbsp;&nbsp;정</button>
+				</c:if>
+			</c:if>
+			<button class="btn btn-success font_bold_small" style="float: left; margin-right: 10px;" id="back">이&nbsp;&nbsp;&nbsp;전</button>
+			<div style="clear: both;"></div>
+		</div>
+		<div class="font_bold_mid" style="width:100%; margin-bottom: 1em;">
+			<span class="font_bold_lg">${board.subject}</span> 
+		</div>
+		<div class="font_bold_mid" style="width:100%; border-bottom: 2.5px solid #fff; margin-bottom: 0; padding-bottom: 0.8em;">
+			<div style="float: left">
+				<a href="#"><img id="replywriter" class="profile_icon" alt="댓글작성자 프로필 사진" src="/MovieHolic/images/${user[0].profile}"></a>
+				&nbsp;&nbsp;
+			</div>
+			<div style="float: left">
+				<a id="replywriterId" class="font_bold_small" href="#" style="color: white">${user[0].userId}</a><br>
+			</div>
+			<div class="font_light_small" style="float: right;">
+				<span class="font_bold_lg">&nbsp;</span>
+				조회수 : <span id="viewcount">${board.viewCount}</span>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<span id="writedate">${board.postDate}</span>
+			</div>
+			<div style="clear: both;"></div>
+		</div>
+		
+		
+		<%-- 리스트 내용 --%>
+		<div class="row" style="margin-top: 1.5em;">
+			<div class="col-lg-12">
+				<div style="padding: 0 1em 3em 1em; font-size: 1.2em">${board.content}</div>
+				<div class="font_bold_mid" style="width:100%; padding: 1em 1.1em 3em 1.1em;">
+					<c:forEach var="film" items="${requestScope.film}">
+					<tr>
+						<a id="movie" href="img=${film.movieImage}&movieCdYoung=${film.movieCdYoung}&movieCdNaver="${film.movieCdNaver}"><img class="movieImg" src="${film.movieImage}" ></a>
+					</tr>
+					</c:forEach>
+				</div>
+				<div class="rounded-lg" style="background-color: #555; width:20vh; height: 100px; padding-top: 15px; margin:auto; text-align: center;">
+					<div style="float:left; margin-left: 0.8em;">
+						<a href="best" class="btnCnt"><img alt="좋아요 아이콘" src="/MovieHolic/images/like.png"></a>
+						<span style="display: block;">${board.best}</span>
 					</div>
-		<div style="float: left">
-							<button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button>
-						</div>
-						<div style="float: right">
-							<button class="btn btn-success font_bold_small">삭&nbsp;&nbsp;&nbsp;제</button>
-						</div>
-						<div style="float: right; width: 20px; height: 1px;"></div>
-						<div style="float: right">
-							<button class="btn btn-success font_bold_small">수&nbsp;&nbsp;&nbsp;정</button>
-						</div>
-						<br><br>
-						
-						
-						<!-- float clear용 빈 div -->
-						<div style="clear: both;"></div>
-						<%--LIST 제목 --%>
-						<div class="movietitle">
-								<span class="font_bold_lg">우울할때 보면 좋은 영화 10선</span> 
-							</div>
-							<br>
-						<%--아이디, 조회수, LIST 등록 시간 --%>
-							<div class="movietitle" style="float: left;">
-							<div style="float: left">
-								<a href="#"><img id="replywriter" class="profile_icon"
-									alt="댓글작성자 프로필 사진" src="/MovieHolic/images/user2.jpg"></a>
-								&nbsp;&nbsp;
-							</div>
-							<div style="float: left">
-								<a id="replywriterId" class="font_bold_small" href="#"
-									style="color: white">abc123</a><br>
-							</div>
-							
-							
-							</div>
-							<div class="writeinfo" style="float: right;">
-								<span class="font_light_small">
-									<span class="font_bold_lg">&nbsp;</span>
-									조회수 : <span id="viewcount">22</span>
-									&nbsp;&nbsp;|&nbsp;&nbsp;
-									<span id="writedate">2019.05.25 &nbsp;오후 05:45</span>
-								</span>
-							</div>
-							
-							<!-- float clear용 빈 div -->
-							<div style="clear: both;"></div>
-							<hr class = "line_bold">
-	</div>
-	
-	<div class = "col-lg-2"></div>
-	</div>
-	<%--상태바 끝 --%>
-	
-	<div class = "row">
-	<!-- 리스트 상세 내용  포스터 + 글 내용 -->
-	<div class = "col-lg-2"></div>	
-	<div class = "col-lg-8">
-	<div style="clear:both;">
-	<p><font>지극히 주관적으로 선정한 우울할 때 보면 좋은 영화 10선 입니다. 
-	주인공들의 대사가 개인적으로 너무 마음에 들었구요,
-	감독들이 의도를 가지고 표현한 각 장면이 너무 감명 깊었습니다.</font></p>
-	<img src = "/MovieHolic/images/avengers.png" width = "200px">
-	<img src = "/MovieHolic/images/benisback.jpg" width = "200px">
-	<img src = "/MovieHolic/images/girlcops.jpg" width = "200px">
-	<img src = "/MovieHolic/images/myspecialbrother.jpg" width = "200px">
-	<br>
-	 <font style = "color : gray">#한시반감성#울고싶을때보는영화#감동</font>
-	</div>
-	</div>	
-	<div class = "col-lg-2"></div>	
-	</div>
-
-	<div class = "row">
-	<!--가운데에 좋아요 누르는 기능 -->
-	<div class = "col-lg-5"></div>
-	<div class = "col-lg-2">
-		<section id="likeunlike">
-			<ul style="list-style: none; padding: 0px;">
-				<li style="float: left; position: relative; text-align: center; margin-right: 50px;">
-					<a href="#"><img alt="좋아요 아이콘" src="/MovieHolic/images/like.png"></a> <span style="display: block;">1000</span>
-				</li>
-				<li style="float: left; text-align: center;"><a href="#"><img alt="싫어요 아이콘" src="/MovieHolic/images/unlike.png"></a>
-				<span style="display: block;">1000</span></li>
-			<!-- float clear용 빈 li -->
-			<li style="clear: both;"></li>
-			</ul>
-		</section>
-	
-	
-	</div>
-	<div class = "col-lg-5"></div>		
-	</div>	
-	<br><br>
-	
-	
-	<div class = "row">
-	<!-- 댓글 보기 -->
-	<div class = "col-lg-2"></div>	
-	<div class = "col-lg-8">
-	<!-- 구분선 -->
-	<div class="top_margin_lg">
-							<div class="font_light_small" style="float: right">
-								<a class="report" href="#">신고하기</a>
-							</div>
-							<!-- float clear용 빈 div -->
-							<div style="clear: both;"></div>
-						</div>
-						<hr class="line_bold">
-
-						<!-- 댓글 start -->
-						<div class="font_bold_small top_margin_lg">
-							<span>COMMENTS</span>(<span id="commentcount">2</span>)
-						</div>
-
-						<!-- 구분선 -->
-						<hr class="line_light_w">
-
-						<!-- 댓글 한 개 -->
-						<div class="font_light_small">
-							<div style="float: left">
-								<a href="#"><img id="replywriter" class="profile_icon"
-									alt="댓글작성자 프로필 사진" src="/MovieHolic/images/user2.jpg"></a>
-								&nbsp;&nbsp;
-							</div>
-							<div style="float: left">
-								<a id="replywriterId" class="font_bold_small" href="#"
-									style="color: white">abc123</a><br> <span>3시간 전</span>
-							</div>
-							<div style="float: left; margin-left: 20px;">
-								<p id="replycontent">리뷰에서 오랜 팬심이 느껴져서 공감가네요. ㅎㅎ 좋아요 누르고 갑니다!
-								</p>
-							</div>
-							<div style="float: right">
-								<button type="button" id="replydelete" class="close"
-									style="color: white">&times;</button>
-							</div>
-
-							<!-- float clear용 빈 div -->
-							<div style="clear: both;"></div>
-							<!-- 구분선 -->
-							<hr class="line_light_g">
-
-						</div>
-
-						<!-- 댓글 한 개 -->
-						<div class="font_light_small">
-							<div style="float: left">
-								<a href="#"><img id="replywriter" class="profile_icon"
-									alt="댓글작성자 프로필 사진" src="/MovieHolic/images/user2.jpg"></a>
-								&nbsp;&nbsp;
-							</div>
-							<div style="float: left">
-								<a id="replywriterId" class="font_bold_small" href="#"
-									style="color: white">abc123</a><br> <span>3시간 전</span>
-							</div>
-							<div style="float: left; margin-left: 20px;">
-								<p id="replycontent">리뷰에서 오랜 팬심이 느껴져서 공감가네요. ㅎㅎ 좋아요 누르고 갑니다!
-								</p>
-							</div>
-							<div style="float: right">
-								<button type="button" id="replydelete" class="close"
-									style="color: white">&times;</button>
-							</div>
-
-							<!-- float clear용 빈 div -->
-							<div style="clear: both;"></div>
-							<!-- 구분선 -->
-							<hr class="line_light_g">
-
-						</div>
-
-						<!-- 댓글 입력칸 -->
-						<div class="font_light_small top_margin_lg">
-							<textarea class="form-control" rows="4" id="mycomment"
-								placeholder="댓글을 입력해주세요." style="resize: none;"></textarea>
-							<button class="btn btn-success font_bold_small top_margin"
-								style="float: right">등 록</button>
-							<!-- float clear용 빈 div -->
-							<div style="clear: both;"></div>
-							<br><br><br><br>
-						</div>
-
-						<!-- 댓글 end -->
-
+					<div style="float:right; margin-right: 0.8em;">
+						<a href="worst" class="btnCnt"><img alt="싫어요 아이콘" src="/MovieHolic/images/unlike.png"></a>
+						<span style="display: block;">${board.worst}</span>
 					</div>
-					<!-- 오른쪽 내용 end -->
-	<div class = "col-lg-2"></div>	
-	
-	<%--댓글 작성 row--%>	
+					<div style="clear: both;"></div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="font_bold_mid" style="width:100%; border-bottom: 2.5px solid #fff; margin: 3em 0 2em 0; padding-bottom: 1em;">
+			<a class="font_light_small" href="#" style="float: right;">신고하기</a>
+			<div style="clear: both;"></div>
+		</div>
+		
+		
+		
+		<div class="row" >
+			<%-- 댓글 작성 --%>
+			<div class="col-lg-12">
+				<textarea class="form-control" rows="5" placeholder="댓글을 입력해주세요." style="float: left; width: 90%; margin: 0 0.5em 0.5em 0;"></textarea>
+				<button class="btn btn-success font_bold_small" id="save">등&nbsp;&nbsp;&nbsp;록</button>
+				<!-- float clear용 빈 div -->
+				<div style="clear: both;"></div>
+			</div>
 
+			<%-- 댓글 내용 --%>
+			<div class="col-lg-12 font_bold_mid" style="border-bottom: 1px solid #fff; margin: 3em 0 0 0; padding-bottom: 1em;">
+				<span>COMMENTS</span>(<span id="cnt"><c:choose><c:when test="${fn:length(comment) != 0}">${fn:length(comment)-1}</c:when><c:otherwise>0</c:otherwise></c:choose></span>)			
+			</div>
+			<div class="col-lg-12 font_light_small" style="margin: 0 0 20em 0; height: 500px; overflow-y: auto;">
+				<table class="table table-hover" id="modalTable" >
+					<col width="5%">
+					<col width="20%">
+					<col width="70%">
+					<col width="5%">
+					<tbody>
+						<c:forEach begin="1" end="${fn:length(comment)-1}" var="i">
+						<tr>
+							<td style="text-align: center">
+								<a href="#"><img class="profile_icon" src="/MovieHolic/images/${user[i].profile}"></a>
+							</td>
+							<td style="vertical-align: middle;">
+								<div>${comment[i].userId}</div>
+								<div>${comment[i].postDate}</div>
+							</td>
+							<td class="font_bold_small" style="vertical-align: middle;">${comment[i].content}</td>
+							<td style="vertical-align: middle;">
+							<c:if test="${sessionScope.userID != null }">
+								<c:if test="${sessionScope.userID == comment[i].userId}">
+							<button type="button" id="replydelete" class="close" style="color: white">&times;</button>
+								</c:if>
+							</c:if>
+							</td>
+						</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
 	</div>
 </div>
 

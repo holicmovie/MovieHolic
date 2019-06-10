@@ -13,6 +13,8 @@
   <script>
   
 
+  
+  
 
 /* 처음 로딩할 때 followingID출력 */
  
