@@ -175,6 +175,17 @@ public class ListController {
 	
 	
 //	#### list 좋아요&싫어요 update ####
+	public int evaluate(HttpServletRequest request, HttpServletResponse response) {
+		int result = 0;	// 화면에 뿌릴 좋아요&싫어요 수
+		String btnStr = request.getParameter("btnStr");
+		String seq = request.getParameter("seq");
+		HttpSession session = request.getSession();
+		String id = session.getAttribute("userID").toString();
+		
+		result = ListService.getListService().evaluate(btnStr, seq, id);
+		
+		return result;
+	}
 	
 	
 	

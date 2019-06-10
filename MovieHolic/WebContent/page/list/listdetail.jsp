@@ -71,13 +71,13 @@
 			return false;
 		});
 	});
-<%-- list 삭제 버튼 클릭시 --%>
+<%-- 좋아요&싫어요 버튼 클릭시 --%>
 	$(function(){
 		$('.btnCnt').click(function(){
 			var btnStr = $(this).attr('href');
 			$.ajax({
 				url: 'list',
-				data: 'act=eval&btnStr=' + btnStr + '&seq=' + $('#del').attr('data-seq'),
+				data: 'act=evaluate&btnStr=' + btnStr + '&seq=' + $('#del').attr('data-seq'),
 				method: 'post',
 				success: function(result){
 					if(result != 0) {

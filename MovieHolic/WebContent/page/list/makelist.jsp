@@ -178,7 +178,8 @@
 				<span>✱&nbsp;&nbsp;</span>
 				<a href="/MovieHolic/page/mypage/mypage.jsp" style="color:white;">My Page</a>
 				<span>&nbsp;&nbsp;❱❱&nbsp;&nbsp;</span>
-				<a href="/MovieHolic/page/mypage/diary.jsp" class="font_bold_small">Diary</a>
+				<a href="/
+				MovieHolic/page/mypage/diary.jsp" class="font_bold_small">Diary</a>
 			</div>
 		</div>
 		

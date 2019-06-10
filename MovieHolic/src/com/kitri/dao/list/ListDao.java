@@ -130,7 +130,7 @@ public class ListDao {
 			conn.setAutoCommit(false);
 			
 			if(flag) {
-				result = ListDao.getListDao().updateCount("mh_board", "viewCount", "seq", seq, "+ 1");
+				result = ListDao.getListDao().updateCount("mh_board", "viewCount = viewCount + 1", "seq = " + seq);
 			} else {
 				result = 1;
 			}
@@ -199,7 +199,74 @@ public class ListDao {
 	
 	
 //	#### 좋아요&싫어요 update 후 select ####
-
+	public int evaluate(String btnStr, String seq, String id) {
+		int result = 0;
+		try {
+			conn = DBConnection.makeConnection();
+			conn.setAutoCommit(false);
+			result = ListDao.getListDao().updateCount("MH_BOARD", btnStr + " = " + btnStr + " + 1", "seq = " + seq);
+			if(result != 0) {
+				StringBuffer sql = new StringBuffer();
+				sql.append("SELECT SEQ, USERID, SUBJECT, " + btnStr + " \n");
+				sql.append("FROM MH_BOARD \n");
+				sql.append("WHERE SEQ = " + seq + " \n");
+				pstmt = conn.prepareStatement(sql.toString());
+				
+				rs = pstmt.executeQuery();
+				rs.next();
+				BoardDto board = new BoardDto();
+				
+				// dto에 set
+				board.setSeq(rs.getInt("SEQ"));
+				board.setUserId(rs.getString("USERID"));
+				board.setSubject(rs.getString("SUBJECT"));
+				int cnt = rs.getInt(4);
+				
+				if("best".equals(btnStr)) {	// 좋아요인 경우 user & log 테이블 update
+					if(rs != null)
+						rs.close();
+					if(pstmt != null)
+						pstmt.close();
+					
+					result = ListDao.getListDao().updateCount("MH_USER", "BEST_COUNT = BEST_COUNT + 1", "USERID = '" + id + "'");
+					
+					if(result != 0) {
+						sql = new StringBuffer();
+						sql.append("INSERT INTO MH_LOG (LOGDATE, LOGID, USERID, LOGCATE, SUBJECT, SEQ) \n");
+						sql.append("VALUES (SYSDATE, '" + id + "', ?, 1, ?, ?) \n");
+						pstmt = conn.prepareStatement(sql.toString());
+						
+						int idx = 0;
+						pstmt.setString(++idx, board.getUserId());
+						pstmt.setString(++idx, board.getSubject());
+						pstmt.setInt(++idx, board.getSeq());
+						
+						result = pstmt.executeUpdate();
+						
+						if(result != 0) {
+							conn.commit();
+							conn.setAutoCommit(true);
+							result = cnt;
+						}
+					}
+				} else { // 싫어요인 경우
+					conn.commit();
+					conn.setAutoCommit(true);
+					result = cnt;
+				}
+			}
+		} catch (SQLException e) {
+			try {
+				conn.rollback();
+				conn.setAutoCommit(true);
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+		} finally {
+			DBClose.close(conn, pstmt);
+		}
+		return result;
+	}
 	
 	
 //---------------------------------------------------------------------------------------------------------- select
@@ -296,7 +363,7 @@ public class ListDao {
 //					3. 리스트 삭제 (기준: 글번호)
 					result = ListDao.getListDao().delete("MH_BOARD", "SEQ", seq);
 					if(result != 0) {
-						result = ListDao.getListDao().updateCount("MH_USER", "LIST_COUNT", "USERID", id, "- 1");
+						result = ListDao.getListDao().updateCount("MH_USER", "LIST_COUNT = LIST_COUNT - 1", "USERID = " + id);
 						
 						if(result != 0) {
 							conn.commit();
@@ -379,7 +446,7 @@ public class ListDao {
 	}
 	
 	
-//	list 테이블 update
+//	#### list 테이블 update ####
 	private int updateList(BoardDto board) throws SQLException {
 		int result = 0;
 		String name = "";
@@ -448,7 +515,7 @@ public class ListDao {
 	}
 	
 	
-//	log 테이블 update
+//	#### log 테이블 subject update ####
 	private int updateLog(BoardDto board) throws SQLException {
 		int result = 0;
 		
@@ -499,17 +566,16 @@ public class ListDao {
 	
 	
 //	#### Count update ####
-	public int updateCount(String table, String col1, String col2, String condition, String value) throws SQLException {
+	public int updateCount(String table, String column, String condition) throws SQLException {
 		int result = 0;
 		
 		try {
 			StringBuffer sql = new StringBuffer();
 			sql.append("UPDATE " + table + " \n");
-			sql.append("SET " + col1 + " = " + col1 + value + " \n");
-			sql.append("WHERE " + col2 + " = ? \n");
+			sql.append("SET " + column + " \n");
+			sql.append("WHERE " + condition + " \n");
 			pstmt = conn.prepareStatement(sql.toString());
 			
-			pstmt.setString(1, condition);
 			
 			result = pstmt.executeUpdate();
 			
@@ -520,6 +586,10 @@ public class ListDao {
 		
 		return result;
 	}
+	
+	
+	
+	
 	
 	
 //	#### delete ####

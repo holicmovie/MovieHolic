@@ -433,6 +433,12 @@ public class ListService {
 	
 	
 //	#### list 좋아요&싫어요 update ####
+	public int evaluate(String btnStr, String seq, String id) {
+		int result = 0;
+		result = ListDao.getListDao().evaluate(btnStr, seq, id);
+		
+		return result;
+	}
 	
 	
 	
