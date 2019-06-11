@@ -88,7 +88,9 @@ String videoId = filmInfo.getVideoId();
 // [페이지에 맞는 리뷰 목록]
 PageBeanReview pb = (PageBeanReview) request.getAttribute("reviews");
 List<BoardDto> reviews = pb.getList();
-// 리뷰 수
+// 리뷰 총 수
+int reviewTotalLen = pb.getTotalCnt();
+// 현재 페이지의 리뷰 수
 int reviewLen = reviews.size();
 
 int currentPage = pb.getCurrentPage();				 // 현재 페이지 index
@@ -99,71 +101,49 @@ int cntPerPage = pb.getCntPerPage();				 // 한 페이지 내에 보여줄 최�
 int totalPage = pb.getTotalPage();					 // 모든 페이지 개수
 int cntPerPageGroup = pb.getCntPerPageGroup();		 // 페이지 그룹 개수
 
+// [페이지 눌릴 시, 사용할 영화코드]
+String movieCdYoung = (String) request.getAttribute("movieCdYoung");
+String movieCdNaver = (String) request.getAttribute("movieCdNaver");
+
 %>
 
 <script>
-<%-- 페이지 선택한 경우 --%>
+<%-- 리뷰 페이지 선택한 경우 --%>
 $(function(){
-	$(document).on("click", ".test", function(){		
-		var conurl = $(this).attr("con-url");
-		if(conurl == "filmlist") {
+	$(document).on("click", ".test", function(){
+		
 			var currentPage=$(this).attr("data-page");
-			var category = $(this).attr("cate");
-
+			var movieCdYoung = $(this).attr("movieCdYoung");
+						
 			$.ajax({
-				url:'/MovieHolic/film?act=viewfilmlist&category=' + category + '&currentPage1=' + currentPage,
+				url:'/MovieHolic/film?act=viewreviewlist&movieCdYoung=' + movieCdYoung + '&currentPage=' + currentPage,
 				method:'get',
 				success:function(result){
-					$("#filmlist").html(result.trim());
+					$("#reviewlist").html(result);
 				}
 			});
-			
-		}else if(conurl == "searchedlist"){
-			var currentPage=$(this).attr("data-page");
-			var srchKey = $(this).attr("srchKey");
-			
-			$.ajax({
-				url:'/MovieHolic/film?act=searchfilm&srchKey=' + srchKey + '&currentPage2=' + currentPage,
-				method:'get',
-				success:function(result){
-					$("#filmlist").html(result.trim());
-				}
-			});
-		}
 		
 		return false;
 	});
 });
 
-$(function(){
-	<%-- 회원 info 페이지 이동 이벤트 --%>	
-	$("div#review>table>tbody>tr>td>a").click(function(){
-		alert("사용자 사진 또는 id 눌림");
-		return false;
-	});
-});
 
 $(function(){
-	<%-- 리뷰 클릭 이벤트 --%>	
-	$("div#review>table>tbody>tr>td").click(function(){
-		alert("리뷰가 눌림");
+	<%-- 리뷰 클릭 이벤트 --%>
+	$(document).on("click", ".reviewitems", function(){
 
-		$.ajax({
-			url:'/MovieHolic/mypage?page=reviewdetail&seq=',
-			method:'get',
-			success:function(result){
-				
-			}
-		});
+		var seq = $(this).attr("seq");
 		
-		return false;
+		location.href = '/MovieHolic/mypage?page=reviewdetail&seq='+seq;
+		
 	});
+		return false;
 });
 
+ 
 $(function() {
 		<%-- 위시리스트 추가 이벤트 --%>
 		$("#wishlistAdd").click(function(){
-		alert("위시리스트 추가 버튼");
 		var movieCdYoung = $(this).attr("movieCdYoung");
 		var movieCdNaver = $(this).attr("movieCdNaver");
 		
@@ -188,27 +168,11 @@ $(function() {
 		alert("리뷰쓰기로 이동합니다.");
 		
 		<%-- 리뷰쓰기 이벤트 --%>
-<%-- 
-		var filmInfo = {
-				movieCodeYoung : <%=filmInfo.getMovieCdYoung()%>,
-				movieCodeNaver : <%=filmInfo.getMovieCdNaver()%>,
-				director : <%=filmInfo.getDirectors()%>,
-				actors : {
-					actor1 : <%=filmInfo.getActor1()%>,
-					actor2 : <%=filmInfo.getActor2()%>
-				},
-				movieName : <%=filmInfo.getMovieNm()%>,
-				category : 	<%=filmInfo.getCategory()%>
-		}
-
-		var jsonData = JSON.stringify(filmInfo);
-		JQuery.ajaxSettings.traditional = true;
- --%>
 		$.ajax({
-			url: '/MovieHolic/mypage?page=writereview',
-			method:'post', 
-			dataType: 'json',
-			data: {"jsonData" : jsonData},
+			url: '/MovieHolic/mypage?page=writereview&movieCdYoung='+<%=filmInfo.getMovieCdYoung()%> + '&movieCdNaver='+<%=filmInfo.getMovieCdNaver()%> 
+			+ '&director=' + <%=filmInfo.getDirectors()%> + '&actor1=' + <%=filmInfo.getActor1()%> + '&actor2=' + <%=filmInfo.getActor2()%>
+			+ '&movieName=' + <%=filmInfo.getMovieNm()%> + '&category=' + <%=filmInfo.getCategory()%>,
+			method:'post',
 			success: function(json){
 				
 			},
@@ -445,15 +409,16 @@ for(int i = 0; i < actorLen; i++){
 
 			    <!------------------------------------------------- 리 뷰 ------------------------------------------------->
 
+				<div id = "reviewlist">
 				<div class="row">
 				<div class="col-lg-12 col-mobile-12 font_bold_lg top_margin_lg" style="margin-bottom: 1em;">
-					<span>REVIEWS</span> (<span id="commentcount"><%=reviewLen%></span>)
+					<span>REVIEWS</span> (<span id="commentcount"><%=reviewTotalLen%></span>)
 					<!-- 구분선 -->
 					<hr class="line_bold">
 				</div>
 				</div>
 					
-				<div class="row" id="review">
+				<div class="row">
 					
 					<table class="table table-hover col-lg-12 col-mobile-12" style="margin-top: 0; width:200px;">
 <%
@@ -464,10 +429,10 @@ if(reviewLen>0){
 		/* --------------------------------------------------------------------------------------------------- */
 %>
 						<tr>
-							<td style="vertical-align: middle; border-top:0px; border-bottom:1px solid white;">
-								<a href="#">
+							<td class="reviewitems" style="vertical-align: middle; border-top:0px; border-bottom:1px solid white;" seq="<%=reviews.get(i).getSeq()%>" >
+								<a href="/MovieHolic/mypage?page=viewuserinfo&userid=<%=reviews.get(i).getUserId()%>">
 									<img id="replywriter" class="profile_icon" alt="댓글작성자 프로필 사진" src="/MovieHolic/images/user2.jpg"></a> 
-								<a id="replywriterId" class="font_bold_small" href="#" style="color: white; margin-right: 15px;"><%=reviews.get(i).getUserId()%></a>
+								<a href="/MovieHolic/mypage?page=viewuserinfo&userid=<%=reviews.get(i).getUserId()%>" id="replywriterId" class="font_bold_small" style="color: white; margin-right: 15px;"><%=reviews.get(i).getUserId()%></a>
 								<span style="font-size: 1em;margin-right: 15px;">
 <%
 		for(int j =1;j<=reviews.get(i).getStarPoint(); j++){
@@ -509,7 +474,7 @@ if(reviewLen>0){
 if(startPage != 1) {
 %>
 						<div style="float: left">
-							<button class="btn btn-success font_bold_small" data-page="<%=startPage-1%>">이&nbsp;&nbsp;&nbsp;전</button>
+							<button class="btn btn-success font_bold_small test" movieCdYoung="<%=movieCdYoung%>" movieCdNaver = "<%=movieCdNaver%>" data-page="<%=startPage-1%>">이&nbsp;&nbsp;&nbsp;전</button>
 						</div>
 <%		
 }
@@ -517,7 +482,7 @@ if(startPage != 1) {
 if(endPage != totalPage){
 %>
 						<div style="float: right">
-							<button class="btn btn-success font_bold_small" data-page="<%=endPage+1%>">다&nbsp;&nbsp;&nbsp;음</button>
+							<button class="btn btn-success font_bold_small test" movieCdYoung="<%=movieCdYoung%>" movieCdNaver = "<%=movieCdNaver%>" data-page="<%=endPage+1%>">다&nbsp;&nbsp;&nbsp;음</button>
 						</div>
 <%		
 }
@@ -531,7 +496,7 @@ for(int i = 0; i < cntPerPageGroup; i++) {
     if(startPage+i <= totalPage){
 %>
 							<li class="page-item">
-								<a class="page-link a" href="#;" data-page="<%=startPage+i%>"><%=startPage+i%></a>
+								<a class="page-link a test" href="#" movieCdYoung="<%=movieCdYoung%>" movieCdNaver = "<%=movieCdNaver%>" data-page="<%=startPage+i%>"><%=startPage+i%></a>
 							</li>
 <%
     }
@@ -543,6 +508,7 @@ for(int i = 0; i < cntPerPageGroup; i++) {
 					</div>
 				</div>
 				
+				 </div>
 				<!------------------------------------------------- 리 뷰 ------------------------------------------------->
 				
 
