@@ -1,5 +1,7 @@
 package com.kitri.admin.chart.dto;
 
+import java.util.List;
+
 public class AdminChartDto {
 
 	private String teens;
@@ -7,23 +9,42 @@ public class AdminChartDto {
 	private String thirties;
 	private String fourties;
 	private String fifties;
+	private List<AdminChartDto> list;
 	
 	public AdminChartDto() {
 		super();
 	}
 	
 	
-	public AdminChartDto(String teens, String twenties, String thirties, String fourties, String fifties) {
+	
+
+
+	public AdminChartDto(String teens, String twenties, String thirties, String fourties, String fifties,
+			List<AdminChartDto> list) {
 		super();
 		this.teens = teens;
 		this.twenties = twenties;
 		this.thirties = thirties;
 		this.fourties = fourties;
 		this.fifties = fifties;
-
+		this.list = list;
 	}
 
 
+	
+
+
+
+	public List<AdminChartDto> getList() {
+		return list;
+	}
+
+	
+	public void setList(List<AdminChartDto> list) {
+		this.list = list;
+	}
+
+	
 	public String getTeens() {
 		return teens;
 	}

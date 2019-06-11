@@ -4,18 +4,22 @@
 <%@ include file="/template/header.jsp"%>
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <script type="text/javascript"
 	src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-
 
 <!-- 그래프 -->
 <link id="themecss" rel="stylesheet" type="text/css" href="/MovieHolic/css/all.min.css">
 <script type="text/javascript" src="//www.shieldui.com/shared/components/latest/js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="//www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
 
-
+<c:set var="acdte" value="${requestScope.acdte}" />
+<c:set var="acdtw" value="${requestScope.acdtw}" />
+<c:set var="acdth" value="${requestScope.acdth}" />
+<c:set var="acdfo" value="${requestScope.acdfo}" />
+<c:set var="acdfi" value="${requestScope.acdfi}" />
 
 
 <script type="text/javascript"
@@ -200,9 +204,7 @@ hr.line_light_w {
 
 
 
-
 <%-- ajax --%>
-
 <script type="text/javascript">
 
 
@@ -232,15 +234,16 @@ $(document).on("click", ".barsearch>button", function(){
 });
 
 
-
-
-
-
-
-
 </script>
 
 
+
+
+<%-- 값 빼오기 --%>
+
+
+
+<%-- 값 빼오기 --%>
 
 
 
