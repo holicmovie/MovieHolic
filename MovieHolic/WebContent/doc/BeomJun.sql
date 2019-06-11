@@ -114,3 +114,46 @@ delete from mh_board
 where seq = 6;
 
 ROLLBACK;
+
+
+
+
+
+
+
+
+
+		--list에 담기
+		-- 샘플
+		-- 가입년도 (2000 년도 이하는 안뎀) 20대
+		select COUNT(*)
+		from mh_user
+		-- 2017년도
+		where to_char(joindate,'yyyy') = ?
+		-- 20대 가입하고 있는 수
+		and (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) >= 20 and (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) < 30;
+
+		--빼주기
+		
+		-- 20대 탈퇴날짜 명수
+		select COUNT(*)
+		from mh_user
+		-- 20대
+		where (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) >= 20 and (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) < 30
+		-- 탈퇴날짜
+		and to_number(to_char(outdate,'yyyy')) = ?;
+		
+		
+		
+select (select COUNT(*)
+        from mh_user
+        where to_char(joindate,'yyyy') = 2017
+        and (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) >= 20 and (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) < 30)
+        -
+        (select COUNT(*)
+        from mh_user
+        where (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) >= 20 and (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) < 30
+        and to_number(to_char(outdate,'yyyy')) = 2017)   
+from dual;
+
+

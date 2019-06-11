@@ -78,7 +78,7 @@ hr.line_light_w {
 				dataSeries : [
 						{
 							seriesType : "bar",
-							collectionAlias : "10대",
+							collectionAlias : "10대 이하",
 							data : [ 265000, 130400, 243000, 310200, 270200, 183000 ]
 						},
 						{
@@ -205,31 +205,38 @@ hr.line_light_w {
 
 <script type="text/javascript">
 
+
+
+
 // 막대 그래프 (년도)
 $(document).on("click", ".barsearch>button", function(){
 	var barnewlyyear = $(".barnewlyyear>select").val();
 	var baroldyear = $(".baroldyear>select").val();
 	
-	if (baroldyear > barnewlyyear) {
+	if (baroldyear >= barnewlyyear) {
 		alert("날짜를 확인해 주세요");
 		return false;
 	}
 	
-	
 	// 년도별 보내서 디비딴에서 처리.
-	/* var currentPage = $(this).attr("href");
-	$("div.wrapper>div.container>div.member_search_result").empty();
+	//var currentPage = $(this).attr("href");
+	$("div.uservariance").empty();
 	$.ajax({
-		url : '/MovieHolic/admin?act=alllist&' + 'currentPage='+currentPage,
+		url : '/MovieHolic/chart?act=chart&barnewlyyear='+barnewlyyear+'&baroldyear='+baroldyear,
 		method : 'get',
 		success : function(result) {
-			$("div.wrapper>div.container>div.member_search_result").html(result.trim()); 
+			$("div.uservariance").html(result.trim()); 
 		}
 	});
-	return false; */
-	
-	
+	return false; 
 });
+
+
+
+
+
+
+
 
 </script>
 
@@ -250,7 +257,12 @@ $(document).on("click", ".barsearch>button", function(){
 		<!-- Main -->
 		<div class="wrapper style1">
 
-
+		
+		
+		
+		
+		<div class="uservariance">
+		
 			<!-- 연령대별 막대그래프 -->
 			<div class="container" style="margin-bottom: 10em">
 				<div class="row" style="padding-right: 0em">
@@ -261,15 +273,30 @@ $(document).on("click", ".barsearch>button", function(){
 					<div class="col-lg-2"></div>
 
 
-
-					<div class="col-lg-2" style="margin-right: 0em;">
+					<!-- html에서 현재 날짜 앞부분 가져온뒤 - 2000 해서 for문 돌려줌. -->
+					<div class="col-lg-2" style="margin-right: 0em; ">
 						<span class="barnewlyyear">
-							<select class="form-control">
+							<select style="overflow:scroll;" class="form-control">
 								<option>2019</option>
 								<option>2018</option>
 								<option>2017</option>
 								<option>2016</option>
 								<option>2015</option>
+								<option>2014</option>
+								<option>2013</option>
+								<option>2012</option>
+								<option>2011</option>
+								<option>2010</option>
+								<!-- <option>2009</option>
+								<option>2008</option>
+								<option>2007</option>
+								<option>2006</option>
+								<option>2005</option>
+								<option>2004</option>
+								<option>2003</option>
+								<option>2002</option>
+								<option>2001</option>
+								<option>2000</option> -->
 							</select>
 						</span>
 					</div>
@@ -288,6 +315,21 @@ $(document).on("click", ".barsearch>button", function(){
 								<option>2017</option>
 								<option>2016</option>
 								<option>2015</option>
+								<option>2014</option>
+								<option>2013</option>
+								<option>2012</option>
+								<option>2011</option>
+								<option>2010</option>
+								<!-- <option>2009</option>
+								<option>2008</option>
+								<option>2007</option>
+								<option>2006</option>
+								<option>2005</option>
+								<option>2004</option>
+								<option>2003</option>
+								<option>2002</option>
+								<option>2001</option>
+								<option>2000</option> -->
 							</select>
 						</span>
 					</div>
@@ -313,6 +355,9 @@ $(document).on("click", ".barsearch>button", function(){
 				</div>
 
 			</div>
+
+		</div><!-- Ajax - uservariance  -->
+
 
 
 
@@ -377,11 +422,12 @@ $(document).on("click", ".barsearch>button", function(){
 
 
 
-			<!-- 연령대별 막대그래프 -->
+
+			<!-- 남녀 성별 비율 그래프 -->
 			<div class="container" style="margin-bottom: 10em">
 				<div class="row">
 					<div class="col-lg-4">
-						<h2 style="color: white;">리뷰 수 순위</h2>
+						<h2 style="color: white;">남녀 성별 비율</h2>
 					</div>
 
 					<div class="col-lg-8"></div>
