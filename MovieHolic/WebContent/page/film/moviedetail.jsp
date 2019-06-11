@@ -167,11 +167,19 @@ $(function() {
 	$("#writereview").click(function() {
 		alert("리뷰쓰기로 이동합니다.");
 		
+		var movieCdYoung = $(this).attr("movieCdYoung");
+		var movieCdNaver = $(this).attr("movieCdNaver");
+		var director = $(this).attr("director");
+		var actor1 = $(this).attr("actor1");
+		var actor2 = $(this).attr("actor2");
+		var movieName = $(this).attr("movieName");
+		var category = $(this).attr("category");
+		
 		<%-- 리뷰쓰기 이벤트 --%>
 		$.ajax({
-			url: '/MovieHolic/mypage?page=writereview&movieCdYoung='+<%=filmInfo.getMovieCdYoung()%> + '&movieCdNaver='+<%=filmInfo.getMovieCdNaver()%> 
-			+ '&director=' + <%=filmInfo.getDirectors()%> + '&actor1=' + <%=filmInfo.getActor1()%> + '&actor2=' + <%=filmInfo.getActor2()%>
-			+ '&movieName=' + <%=filmInfo.getMovieNm()%> + '&category=' + <%=filmInfo.getCategory()%>,
+			url: '/MovieHolic/mypage?page=writereview&movieCdYoung='+ movieCdYoung + '&movieCdNaver='+ movieCdNaver
+			+ '&director=' + director + '&actor1=' + actor1 + '&actor2=' + actor2
+			+ '&movieName=' + movieName + '&category=' + category,
 			method:'post',
 			success: function(json){
 				
@@ -326,7 +334,10 @@ for(int i = 1;i<=5-filmInfo.getStarPoint();i++){
 											<button id ="trailer" class="btn btn-success font_bold_small" style="margin-right: 10px; width:200px;">
 											예고편 영상
 											</button>
-											<button id="writereview" class="btn btn-success font_bold_small" style="margin-right: 10px; width:200px;">
+											<button id="writereview" class="btn btn-success font_bold_small" style="margin-right: 10px; width:200px;"
+											movieCdYoung="<%=filmInfo.getMovieCdYoung()%>" movieCdNaver= "<%=filmInfo.getMovieCdNaver()%>" 
+											director="<%=filmInfo.getDirectors()%>" actor1= "<%=filmInfo.getActor1()%>" actor2="<%=filmInfo.getActor2()%>"
+											movieName="<%=filmInfo.getMovieNm()%>" category="<%=filmInfo.getCategory()%>">
 											리뷰 쓰기
 											</button>
 											<button id="wishlistAdd" class="btn btn-success font_bold_small"

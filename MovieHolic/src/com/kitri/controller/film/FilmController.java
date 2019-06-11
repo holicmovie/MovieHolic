@@ -52,9 +52,11 @@ public class FilmController {
 		
 		// 선호 장르 영화 목록 get
 		List<FilmDto> list = FilmService.getFilmService().getFavoriteFilm("액션");
+		List<FilmDto> list2 = FilmService.getFilmService().getFavoriteFilm("뮤지컬");
 		
 		// 선호 장르 영화 목록 set
 		request.setAttribute("favoritefilm", list);
+		request.setAttribute("favoritefilm2", list2);
 		
 	}
 	

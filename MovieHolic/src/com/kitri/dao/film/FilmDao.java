@@ -39,11 +39,13 @@ public class FilmDao {
 			conn = DBConnection.makeConnection();
 			
 			StringBuffer sql = new StringBuffer();
-			sql.append("select movieName, movieCodeYoung, movieCodeNaver, movieImage, category, prdtYear, openYear, starPointNaver \n");
-			sql.append("from mh_films \n");
-			sql.append("where category like '%'||?||'%' \n");
-			sql.append("and rownum < 11 \n");
-			sql.append("order by starpointnaver desc");
+			sql.append("select * \n");
+			sql.append("from (select rownum r, f.moviename, f.moviecodeyoung, f.moviecodenaver, f.movieImage, f.category, f.prdtyear, f.openyear, f.starpointnaver \n");
+			sql.append("		from (select movieName, movieCodeYoung, movieCodeNaver, movieImage, category, prdtYear, openYear, starPointNaver \n");
+			sql.append("				from mh_films \n");
+			sql.append("				where category like '%'||?||'%' \n");
+			sql.append("				order by starpointnaver desc) f) rf \n");
+			sql.append("where rf.r < 11");
 			
 			pstmt = conn.prepareStatement(sql.toString());
 			pstmt.setString(1, category);

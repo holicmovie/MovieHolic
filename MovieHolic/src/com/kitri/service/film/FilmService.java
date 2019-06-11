@@ -105,6 +105,7 @@ public class FilmService {
 					    String movieImage = "";
 					    if(film != null) {
 					    	movieImage = film.getMovieImage();
+					    	filmDto.setMovieCdNaver(film.getMovieCdNaver());
 				    	} else {
 				    		movieImage = "/MovieHolic/images/noMovieImage.png";
 				    	}
