@@ -75,16 +75,9 @@ $(function(){
 				
 				<%-- 탭 페이지 2개 구성 --%>
 				<div class="tab-content">
-				
-				<section id = "mainsection"></section>
+			  		<section id = "mainsection"></section>
 				</div>
-				<%-- 탭 메뉴 끝 --%>
-				
-				
 			</div>
 		</div>
-			
 	</div>
-
-</div>
 <%@ include file="/template/footer.jsp" %>

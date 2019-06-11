@@ -216,16 +216,19 @@ public class SocialDao {
 
 	public List<WishlistDto> selectWishlist(String userid) {
 		List<WishlistDto> list = new ArrayList<>();
-		String SQL = "select * \r\n" + 
-				"from mh_wishlist\r\n" + 
-				"where userid = ?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		try {
+			StringBuffer SQL = new StringBuffer();
+			SQL.append("select * "); 
+			SQL.append("from mh_films f, mh_wishlist w "); 
+			SQL.append("where f.moviecodenaver = w.moviecodenaver ");
+			SQL.append("and w.userid = ? "); 
+			SQL.append("order by w.postdate DESC ");
 			conn = DBConnection.makeConnection();
-			pstmt = conn.prepareStatement(SQL);
+			pstmt = conn.prepareStatement(SQL.toString());
 			pstmt.setString(1, userid);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
@@ -237,6 +240,9 @@ public class SocialDao {
 				wishlistDto.setMovieCodeNaver(rs.getString("moviecodenaver"));
 				wishlistDto.setMovieCodeYoung(rs.getString("moviecodeyoung"));
 				wishlistDto.setPostDate(rs.getString("postdate"));
+				wishlistDto.setMovieNm(rs.getString("moviename"));
+				wishlistDto.setPrdtYear(rs.getString("prdtyear"));
+				wishlistDto.setCategory(rs.getString("category"));
 				list.add(wishlistDto);
 			}
 			
@@ -246,9 +252,56 @@ public class SocialDao {
 			DBClose.close(conn, pstmt, rs);
 		}
 		
-		System.out.println("dao : " + list);
+//		System.out.println("dao : " + list);
 		return list;
 		
+	}
+
+	public List<WishlistDto> selectSearchedWishlist(String userid, String srchKey) {
+		List<WishlistDto>list = new ArrayList<>();
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			conn = DBConnection.makeConnection();
+			StringBuffer sql = new StringBuffer();
+			sql.append("select * \r\n" + 
+					"from mh_films f, mh_wishlist w \n" + 
+					"where f.moviecodenaver = w.moviecodenaver \n" + 
+					"and w.userid = ? \n" + 
+					"and movieName like '%'||?||'%' \n" + 
+					"order by w.postdate DESC"); 
+
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1, userid);
+			pstmt.setString(2, srchKey);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				WishlistDto wishlistDto = new WishlistDto();
+				wishlistDto.setUserId(rs.getString("userid")); //session에서 받아온 userid값 등록
+				wishlistDto.setCode(rs.getInt("code"));
+				wishlistDto.setMovieCodeNaver(rs.getString("moviecodenaver"));
+				wishlistDto.setMovieCodeYoung(rs.getString("moviecodeyoung"));
+				wishlistDto.setPostDate(rs.getString("postdate"));
+				wishlistDto.setMovieNm(rs.getString("moviename"));
+				wishlistDto.setPrdtYear(rs.getString("prdtyear"));
+				wishlistDto.setCategory(rs.getString("category"));
+				list.add(wishlistDto);		
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		System.out.println("dao : " + list);
+		return list;
 	}
 
 

@@ -144,9 +144,15 @@ hr.line_light_g {
 						<div class="title">
 							<div class="movietitle" style="float: left;">
 								<span class="font_bold_lg">${dto.movieName}</span> <span
-									class="font_light_mid">&nbsp;${dto.postDateY}</span> &nbsp;&nbsp;<img
-									alt="잠금 여부 표시 아이콘" src="/MovieHolic/images/lock.png"
-									style="margin-bottom: 12px;">
+									class="font_light_mid">&nbsp;${dto.postDateY}</span> &nbsp;&nbsp;
+									<c:choose>
+									<c:when test="${dto.enable==0}">
+										<img alt="잠금 여부 표시 아이콘" src="/MovieHolic/images/lock.png"	style="margin-bottom: 12px;">
+									</c:when>
+									<c:when test="${dto.enable==1}">
+										<img alt="" src=""style="margin-bottom: 12px;">
+									</c:when>									
+									</c:choose>
 							</div>
 							<div class="writeinfo" style="float: right;">
 								<span class="font_light_small">
@@ -200,7 +206,14 @@ hr.line_light_g {
 						<!--신고하기 -->
 						<div class="top_margin_lg">
 							<div class="font_light_small" style="float: right">
+							<c:choose>
+							<c:when test="${dto.enable==0}">
+								<a class="report" href="#" style="display:none">신고하기</a>
+								</c:when>
+								<c:otherwise>
 								<a class="report" href="#">신고하기</a>
+								</c:otherwise>
+								</c:choose>
 							</div>
 							<!-- float clear용 빈 div -->
 							<div style="clear: both;"></div>

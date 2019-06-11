@@ -24,6 +24,7 @@ hr.line_bold {
 %>
 
 <script>
+/* 처음 로딩할때 위시리스트 보여주기 */
 $(function(){
 	$.ajax({
 		url:"/MovieHolic/mypage",
@@ -31,12 +32,62 @@ $(function(){
 		data:"page=wishlist",
 		 success:function(result){
 				 $("#wishlistsection").html(result.trim());
-			alert("wishlist 잘넘어옴");
+		/* 	alert("wishlist 잘넘어옴"); */
 		} 
 	
 	});
 		return false;
 });
+/* 위시리스트 제목으로 검색 */
+$(function(){
+	var searchmovie = $('#searchmovie');
+	$(searchmovie).keypress(function(event){
+		/* alert("검색시작!"); */
+	    if (event.which == 13 ) {
+			if(searchmovie.val() != "") {	<%-- 검색어가 공백이 아닌 경우 srchKey로 받아옴 --%>
+				var srchKey = searchmovie.val();
+				$.ajax({
+					url: "/MovieHolic/mypage?wishlist=search&srchKey=" + srchKey,  
+					method:'get', 
+					success:function(result){
+						$("#wishlistsection").html(result);
+						/* alert("검색 완료 !!!"); */
+					}
+				});
+			}
+	    return false;
+	    }
+	});
+});
+
+
+
+$('input:checkbox[name=wishlistdelete]').each(function() {
+
+    this.checked = true; //checked 처리
+
+    if(this.checked){//checked 처리된 항목의 값
+
+         alert(this.value); 
+
+    }
+
+});
+
+
+
+
+
+
+/* $(document).ready(function() {
+    $(window).endlessScroll({
+        inflowPixels: 300,
+        callback: function() {
+            var $img = $('#images li:nth-last-child(5)').clone();
+            $('#images').append($img);
+        }
+    });
+}); */
 
 /* $(function(){
 	
@@ -88,7 +139,7 @@ $(function(){
 							<span>✱&nbsp;&nbsp;</span>
 							<a href="/MovieHolic/page/mypage/mypage.jsp" style="color:white;">My Page</a>
 							<span>&nbsp;&nbsp;>>&nbsp;&nbsp;</span>
-							<a href="/MovieHolic/page/mypage/wishlist.jsp" class="font_bold_small" ">Wish List</a>
+							<a href="/MovieHolic/page/mypage/wishlist.jsp" class="font_bold_small" >Wish List</a>
 						</div>
 					</div>
 				<!-- **첫번째 행 시작 -->
@@ -108,7 +159,7 @@ $(function(){
 					<!-- 조회 조건 -->
 					<div class="col-lg-6 col-12-moblile"></div>
 				
-					<div class="col-lg-2 col-4-moblile">
+					<div class="col-lg-3 col-4-moblile">
 							<!-- <select class="form-control form-control-sm" id = "wishlistyear">
 								<option value = "all">기간별-전체</option>
 								<option value = "1">2015~2019</option>
@@ -121,7 +172,8 @@ $(function(){
 							</select> -->
 					</div>
 					
-					<div class="col-lg-2 col-4-moblile">
+					<div class="col-lg-1 col-4-moblile" style ="float: right;clear : both;">
+					<button class="btn btn-success font_bold_small" id= "btndelete">삭제</button>
 							<!-- <select class="form-control form-control-sm" id = "wishlistgenre">
 								<option value = "all">전체</option>
 								<option value = "1">액션</option>

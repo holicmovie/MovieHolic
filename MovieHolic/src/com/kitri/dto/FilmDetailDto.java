@@ -8,7 +8,7 @@ public class FilmDetailDto extends FilmDto{
 	private String openDt;				// 개봉날짜
 	private String nations;				// 제작국가
 	private String showTm;				// 상영시간
-	private String directors;				// 감독명 (맨 앞 한명만 받기)
+	private String directors;			// 감독명 (맨 앞 한명만 받기)
 	private String actor1;				// 주연배우1
 	private String actor2;				// 주연배우2
 	private String watchGradeNm;	// 관람등급

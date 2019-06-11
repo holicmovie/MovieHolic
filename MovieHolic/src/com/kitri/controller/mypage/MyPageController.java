@@ -91,34 +91,41 @@ public class MyPageController {
 		MyPageService.getMyPageService().addFollowId(followid);
 	}
 	
+	
+	
+	
+	
+	
 	//----------------------------wishlist-----------------------------------------
 	public String showWishList(HttpServletRequest request, HttpServletResponse response) {
 		
-		String userid = "a149@gmail.com";
+		String userid = "a125@gmail.com";
 		List<WishlistDto> list = MyPageService.getMyPageService().showWishlist(userid);
-		System.out.println("c : " + list);
+//		System.out.println("c : " + list);
 
 		request.setAttribute("wishlist", list);
-		/*
-		 * String cp = request.getParameter("genreno"); int currentPage = 1; // 보여줄
-		 * 현재페이지 if (cp != null) { currentPage = Integer.parseInt(cp);
-		 * 
-		 * } int cntPerPage = 5;// 페이지별 보여줄 목록수 int totalCnt =
-		 * MyPageService.getTotalCnt(); int cntPerPageGroup = 5;// 페이지 그룹에 보여 줄 페이지수
-		 * String url = "/MovieHolic/mypage?page=social&followingpage=";
-		 * 
-		 * PageBean pb = new PageBean(currentPage, cntPerPage, cntPerPageGroup,
-		 * totalCnt, url);
-		 */
-		/*
-		 * List<WishlistDto> list = MyPageService.(pb.getStartRow(), pb.getEndRow());
-		 * pb.set(list); request.setAttribute("pb", pb);
-		 */
 
 		String path = "/page/mypage/result/wishlistresult.jsp";
 		return path;
 	}
-
+	
+	
+	public String searchWishList(HttpServletRequest request, HttpServletResponse response) {
+		String path = "page/mypage/result/wishlistsearch.jsp";
+		
+		String srchKey = request.getParameter("srchKey");
+		String userid = "a125@gmail.com";
+		List<WishlistDto> list = MyPageService.getMyPageService().showSearchedWishlist(userid, srchKey);
+		System.out.println("C : " + list);
+		request.setAttribute("searchwishlist", list);
+		return path;
+	}
+	
+	
+	
+//----------------------------------mypage-------------------------------------------
+	
+	
 	public String showMine(HttpServletRequest request, HttpServletResponse response) {
 		String path = "/page/mypage/result/mine.jsp";
 		
