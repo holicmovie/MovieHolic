@@ -363,7 +363,7 @@ public class ListDao {
 //					3. 리스트 삭제 (기준: 글번호)
 					result = ListDao.getListDao().delete("MH_BOARD", "SEQ", seq);
 					if(result != 0) {
-						result = ListDao.getListDao().updateCount("MH_USER", "LIST_COUNT = LIST_COUNT - 1", "USERID = " + id);
+						result = ListDao.getListDao().updateCount("MH_USER", "LIST_COUNT = LIST_COUNT - 1", "USERID = " + "'" + id + "'");
 						
 						if(result != 0) {
 							conn.commit();

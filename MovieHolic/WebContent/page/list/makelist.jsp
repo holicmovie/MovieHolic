@@ -27,6 +27,7 @@
 	$(function(){
 		$('#movieModal .close').click(function(){
 			modalClear();
+			return false;
 		});
 	});
 	<%-- modal 초기화 function --%>
@@ -155,7 +156,7 @@
 
 </script>
 <script>
-	
+
 </script>
 </head>
 <body class="left-sidebar is-preload">

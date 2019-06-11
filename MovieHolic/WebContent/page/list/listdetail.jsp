@@ -73,23 +73,52 @@
 	});
 <%-- 좋아요&싫어요 버튼 클릭시 --%>
 	$(function(){
+			var a = ${session.userID}; 
 		$('.btnCnt').click(function(){
+			alert(a);
 			var btnStr = $(this).attr('href');
-			$.ajax({
-				url: 'list',
-				data: 'act=evaluate&btnStr=' + btnStr + '&seq=' + $('#del').attr('data-seq'),
-				method: 'post',
-				success: function(result){
-					if(result != 0) {
-						$('.btnCnt[href="'+ btnStr +'"]').next().text(result);
-					} else {
-						alert("시스템 에러로 인해 작업 처리에 실패하였습니다. 나중에 다시 시도하세요.");
+			var check = '해당 게시물을 평가(' + ((btnStr == "best") ? "좋아요" : "싫어요" ) + ')하시겠습니까?';
+			if(confirm(check)) {
+				$.ajax({
+					url: 'list',
+					data: 'act=evaluate&btnStr=' + btnStr + '&seq=' + $('#del').attr('data-seq'),
+					method: 'post',
+					success: function(result){
+						if(result != 0) {
+							$('.btnCnt[href="'+ btnStr +'"]').next().text(result);
+						} else {
+							alert("시스템 에러로 인해 작업 처리에 실패하였습니다. 나중에 다시 시도하세요.");
+						}
 					}
-				}
-			});
+				});
+			}
 			return false;
 		});
 	});
+<%-- 신고하기 버튼 클릭시 --%>
+	$(function(){
+		$('#notify').click(function(){
+			if(confirm("해당 게시물을 신고하시겠습니까?")) {
+				$.ajax({
+					url: 'list',
+					data: 'act=notify&' + $('#del').attr('data-seq'),
+					method: 'post',
+					success: function(result){
+						if(result != 0) {
+							alert("게시물 신고 처리가 완료되었습니다.");
+						} else {
+							alert("시스템 에러로 인해 작업 처리에 실패하였습니다. 나중에 다시 시도하세요.");
+						}
+					}
+				});
+			}
+			return false;
+		});
+	});
+</script>
+<script>
+<%-- 임시 세션 --%>
+<% session.setAttribute("userID", "a125@gmail.com"); %>
 </script>
 </head>
 <body class="left-sidebar is-preload">
@@ -166,7 +195,7 @@
 		</div>
 		
 		<div class="font_bold_mid" style="width:100%; border-bottom: 2.5px solid #fff; margin: 3em 0 2em 0; padding-bottom: 1em;">
-			<a class="font_light_small" href="#" style="float: right;">신고하기</a>
+			<a id="notify" class="font_light_small" href="#" style="float: right;">신고하기</a>
 			<div style="clear: both;"></div>
 		</div>
 		
