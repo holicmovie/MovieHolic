@@ -41,13 +41,36 @@ public class AdminChartController {
 		
 		String path = "/page/adminchart/statistics.jsp";
 		
-		for (int i = 0; i < listteen.size(); i++) {
-			System.out.println("listteen = " + listteen.get(i));
-			System.out.println("listtwenties = " + listtwenties.get(i));
-			System.out.println("listthirties = " + listthirties.get(i));
-			System.out.println("listfourties = " + listfourties.get(i));
-			System.out.println("listfifties = " + listfifties.get(i));
+		if (listteen.size() != 0) {
+			for (int i = 0; i < listteen.size(); i++) {
+				System.out.println("listteen = " + listteen.get(i));
+			}
 		}
+		if (listtwenties.size() != 0) {
+			for (int i = 0; i < listtwenties.size(); i++) {
+				System.out.println("listtwenties = " + listtwenties.get(i));
+			}
+		}
+		if (listthirties.size() != 0) {
+			for (int i = 0; i < listthirties.size(); i++) {
+				System.out.println("listthirties = " + listthirties.get(i));
+			}
+		}
+		if (listfourties.size() != 0) {
+			for (int i = 0; i < listfourties.size(); i++) {
+				System.out.println("listfourties = " + listfourties.get(i));
+			}
+		}
+		if (listfifties.size() != 0) {
+			for (int i = 0; i < listfifties.size(); i++) {
+				System.out.println("listfifties = " + listfifties.get(i));
+			}
+		}
+		
+		
+		
+		
+		
 		
 		return path;
 		
@@ -63,25 +86,25 @@ public class AdminChartController {
 
 	// 20대 년도별 인원
 	public List<AdminChartDto> ageGroupTwenties(HttpServletRequest request, HttpServletResponse response) {
-		int age = 1;
+		int age = 2;
 		return AdminChartService.getAdminChartService().ageGroup(request, response, age);
 	}
 
 	// 30대 년도별 인원
 	public List<AdminChartDto> ageGroupThirties(HttpServletRequest request, HttpServletResponse response) {
-		int age = 1;
+		int age = 3;
 		return AdminChartService.getAdminChartService().ageGroup(request, response, age);
 	}
 
 	// 40대 년도별 인원
 	public List<AdminChartDto> ageGroupFourties(HttpServletRequest request, HttpServletResponse response) {
-		int age = 1;
+		int age = 4;
 		return AdminChartService.getAdminChartService().ageGroup(request, response, age);
 	}
 
 	// 50대 이상 년도별 인원
 	public List<AdminChartDto> ageGroupFifties(HttpServletRequest request, HttpServletResponse response) {
-		int age = 1;
+		int age = 5;
 		return AdminChartService.getAdminChartService().ageGroup(request, response, age);
 	}
 

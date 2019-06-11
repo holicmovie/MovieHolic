@@ -80,7 +80,7 @@ public class AdminChartDao {
 			} else if (age == 4) {
 				sql.append(" where (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) >= 40 and (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) < 50");
 			} else if (age == 5) {
-				sql.append(" where (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) > 50)");
+				sql.append(" where (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) > 50");
 			}
 			sql.append(" and to_number(to_char(outdate,'yyyy')) <= ?))");
 			sql.append(" from dual");
@@ -91,9 +91,10 @@ public class AdminChartDao {
 				conn = DBConnection.makeConnection();
 				pstmt = conn.prepareStatement(sql.toString());			
 				
-				AdminChartDto adminChartDto = new AdminChartDto();
 				
 				for (int i = 0; i < (barnewlyyear - baroldyear) + 1; i++) {
+
+					AdminChartDto adminChartDto = new AdminChartDto(); // 안에있어야뎀. 할때마다 생성해야지 아니면 덮어쓰게됨.
 					
 					pstmt.setString(1, Integer.toString(baroldyear+i));
 					pstmt.setString(2, Integer.toString(baroldyear+i));
