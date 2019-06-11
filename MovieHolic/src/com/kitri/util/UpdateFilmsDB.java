@@ -147,8 +147,6 @@ public class UpdateFilmsDB {
 			for(int i = 0; i < len; i++) {
 				
 				System.out.println(i);
-				System.out.println("DB영화코드영진원 : " + list.get(i).getMovieCdYoung());
-				System.out.println("DB영화이름영진원 : " + list.get(i).getMovieNm());
 				pstmt.setString(idx++, list.get(i).getMovieCdYoung());
 				pstmt.setString(idx++, list.get(i).getMovieNm());
 				pstmt.setString(idx++, list.get(i).getMovieCdNaver());
@@ -161,6 +159,7 @@ public class UpdateFilmsDB {
 				idx = 1;
 				
 				pstmt.executeUpdate();
+				System.out.println("################# insert 완료 #################");
 			}
 			
 			} catch (SQLException e) {
@@ -195,7 +194,7 @@ public class UpdateFilmsDB {
 		
 		////////////////////////////////// 영진원 영화목록 년도별 50페이지씩 조회 ////////////////////////////////////////
 		//for(int y = startYear; y > endYear; y--) {
-			String y = "2014";
+			String y = "2013";
 			// 50페이지 조회
 			for(int p = 1; p < 51; p++) {
 				
@@ -212,7 +211,6 @@ public class UpdateFilmsDB {
 					
 					// DB에 영화 목록 삽입
 					updateDB.insertFilms(list);
-					System.out.println("#################" + y + "년 "+ len +"개 insert 완료(" + p + "페이지) #################");
 					
 				} else {
 					// 해당 페이지에 영화목록이 없는 경우, for문 종료 (다음 년도로 넘어감)

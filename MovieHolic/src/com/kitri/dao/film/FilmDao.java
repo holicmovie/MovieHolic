@@ -289,13 +289,19 @@ public class FilmDao {
 			sql.append("where category like '%'||?||'%' \n");
 			sql.append("order by openYear desc, starPointNaver desc");
 			
+			
 			pstmt = conn.prepareStatement(sql.toString());
+			
+			System.out.println("dao : category : " + category);
 			
 			// 장르 = 전체
 			if(category == null) {
-					pstmt.setString(1, "");
+				pstmt.setString(1, "");
+			// 페이지 눌렸을 때, 장르 = 전체 (null이 문자열이 됨)
+			}else if("null".equals(category)){
+				pstmt.setString(1, "");
 			}else {
-				// 장르 = 선택 장르
+			// 장르 = 선택 장르
 				pstmt.setString(1, category);
 			}
 			
@@ -467,7 +473,6 @@ public class FilmDao {
 			sql.append("			from mh_board \n");
 			sql.append("			where to_char(moviecodeyoung) = ?||'||' \n");
 			sql.append("			and boardcode = 1 \n");
-			sql.append("			and enable = 1 \n");
 			sql.append("			and enable = 1 \n");
 			sql.append("			order by postdate desc) b \n");
 			sql.append("	   order by r) \n");
