@@ -13,9 +13,6 @@ import com.kitri.util.MoveUrl;
 public class MyPageFrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public MyPageFrontController() {
-		super();
-	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -40,13 +37,10 @@ public class MyPageFrontController extends HttpServlet {
 			MoveUrl.forward(request, response, path);
 //			MoveUrl.forward(request, response, path);
 		} else if ("setting".equals(page)) {
+			UserController.getUserController().settingUser(request, response);
+			UserController.getUserController().settingProfile(request, response);
 			MoveUrl.forward(request, response, "/page/mypage/setting.jsp");
-		} 
-
-		else if("writereview".equals(page)) {
-			UserController.getUserController().ReviewRegister(request, response);
-			MoveUrl.forward(request, response, "/page/mypage/writereview.jsp");
-		} else if("reviewdetail".equals(page)) {
+		}  else if("reviewdetail".equals(page)) {
 			UserController.getUserController().ReviewDetail(request, response);
 			MoveUrl.forward(request, response, "/page/mypage/diaryDetail.jsp");
 		} else if("reviewcomment".equals(page)) {

@@ -6,6 +6,7 @@
 <%@ include file="/template/header.jsp"%>
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
+
 <style>
 <%--
 체크박스 --%> .form-check-input {
@@ -68,17 +69,24 @@
 }
 </style>
 
-<script>
-	
-<%-- new review 클릭시 페이지 이동 --%>
-	$(function() {
-		$("#newReview").click(function() {
-			location.href = '/MovieHolic/page/mypage/writereview.jsp';
-		});
-	});
-</script>
+
 </head>
 <body class="left-sidebar is-preload">
+<%
+		PageBean pb = (PageBean) request.getAttribute("reviewList");
+		List<BoardDto> list = pb.getBoard();
+		int size = list.size(); //한 페이지 내에 보여줄 실제 행 개수
+
+		int currentPage =pb.getCurrentPage(); // 현재 페이지 index
+		int startPage = pb.getStartPage(); // 시작 페이지 index
+		int endPage = pb.getEndPage(); // 끝 페이지 index
+
+		int cntPerPage = pb.getCntPerPage(); // 한 페이지 내에 보여줄 최대 행 개수
+		int totalPage = pb.getTotalPage(); // 모든 페이지 개수
+		int cntPerPageGroup = pb.getCntPerPageGroup(); // 페이지 그룹 개수
+	%>
+	<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 	<script>
 		$(function() {
 			var $aObj = $("table>tr>td>span>a");
@@ -94,34 +102,25 @@
 				return false;
 			});
 		});
-		$("div>div#pagegroup>ul>li>a").click(function(){
-			var currentPage=$(this).attr("href");
-				alert(currentPage+"페이지를 보여줍니다.");
+
+
+		$(document).on("click",".pageSelect",function(){
+			var currentPage=$(this).attr("data-page");
+			alert(currentPage + "페이지입니다");
 			$.ajax({
-				url:'/MovieHolic/mypage?page=diary&'+ currentPage,
+				url:'/MovieHolic/mypage?page=diary&currentPage='+currentPage,
 				method:'get',
-				data:'page=diary&'+currentPage,
 				success:function(result){
-					$("tbody").html(result.trim());
+					$("#page-wrapper").html(result.trim());
 				}
 			});
 			return false;
+			
 		});
+		
 	</script>
 	<%--List<BoardDto> list = (List<BoardDto>)request.getAttribute("reviewList");--%>
-	<%
-		PageBean pb = (PageBean) request.getAttribute("reviewList");
-		List<BoardDto> list = pb.getBoard();
-		int size = list.size(); //한 페이지 내에 보여줄 실제 행 개수
-
-		int currentPage = pb.getCurrentPage(); // 현재 페이지 index
-		int startPage = pb.getStartPage(); // 시작 페이지 index
-		int endPage = pb.getEndPage(); // 끝 페이지 index
-
-		int cntPerPage = pb.getCntPerPage(); // 한 페이지 내에 보여줄 최대 행 개수
-		int totalPage = pb.getTotalPage(); // 모든 페이지 개수
-		int cntPerPageGroup = pb.getCntPerPageGroup(); // 페이지 그룹 개수
-	%>
+	
 	<div id="page-wrapper">
 		<%-- Header --%>
 		<div id="header"
@@ -131,9 +130,9 @@
 
 
 		<%-- Main --%>
-		<div class="wrapper style1">
+		<div class="wrapper style1" id="reviewpage">
 
-			<div class="container">
+			<div class="container" >
 
 				<%-- 페이지 이동경로 --%>
 				<div class="row" style="margin-bottom: 30px;">
@@ -147,9 +146,9 @@
 
 				<div class="font_bold_mid"
 					style="width: 100%; border-bottom: 2.5px solid #fff; margin-bottom: 0; padding-bottom: 0.8em;">
-					<button class="btn btn-success font_bold_small"
+					<!-- <button class="btn btn-success font_bold_small"
 						style="float: right; width: 120px;" id="newReview">New
-						Review</button>
+						Review</button> -->
 					<div style="float: left;">나의 리뷰</div>
 					<div style="clear: both;"></div>
 				</div>
@@ -218,26 +217,26 @@
 						</table>
 					</div>
 					<div class="col-12" id="pagegroup">
-						<div style="float: left">
 							<%
 								if (startPage != 1) {
 							%>
-							<button class="btn btn-success font_bold_small"
+						<div style="float: left">
+							<button class="btn btn-success font_bold_small pageSelect"
 								data-page="<%=startPage - 1%>">이&nbsp;&nbsp;&nbsp;전</button>
+						</div>
 							<%
 								}
 							%>
-						</div>
-						<div style="float: right;">
 							<%
 								if (endPage != totalPage) {
 							%>
-							<button class="btn btn-success font_bold_small"
+						<div style="float: right;">
+							<button class="btn btn-success font_bold_small pageSelect"
 								data-page="<%=endPage + 1%>">다&nbsp;&nbsp;&nbsp;음</button>
+						</div>
 							<%
 								}
 							%>
-						</div>
 						<ul class="pagination justify-content-center">
 							<%
 								// 페이지 그룹 개수(5)만큼 반복
@@ -245,8 +244,8 @@
 									// 마지막 페이지에서, 
 									if (startPage + i <= totalPage) {
 							%>
-							<li class="page-item"><a class="page-link a"
-								href="/MovieHolic/mypage?page=diary&<%=startPage + i%>"><%=startPage + i%></a></li>
+							<li class="page-item"><a  data-page="<%=startPage + i%>" class="page-link a pageSelect"
+								href="#"><%=startPage + i%></a></li>
 							<%
 								}
 								}

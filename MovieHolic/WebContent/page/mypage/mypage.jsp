@@ -80,7 +80,7 @@
 									<article>
 										<a href="#" class="image featured"><img src="/MovieHolic/images/brother.jpg" alt="" /></a>
 									</article>
-									<\article>
+									<article>
 										<a href="#" class="image featured"><img src="/MovieHolic/images/capma.jpg" alt="" /></a>
 									</article>
 									<article>

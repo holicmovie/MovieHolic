@@ -44,4 +44,8 @@ private static UserService userService; // 2번째 전역변수 만들기
 		public int getTotalpage() {
 			return ReviewAddDao.getReviewAdd().selectTotalReview();
 		}
+	//리뷰쓰기
+		public int writeReview(BoardDto boardDto) {
+			return ReviewAddDao.getReviewAdd().reviewAdd(boardDto);
+		}
 }

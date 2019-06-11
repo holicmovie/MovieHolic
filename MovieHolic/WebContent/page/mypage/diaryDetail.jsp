@@ -206,7 +206,14 @@ hr.line_light_g {
 						<!--신고하기 -->
 						<div class="top_margin_lg">
 							<div class="font_light_small" style="float: right">
+							<c:choose>
+							<c:when test="${dto.enable==0}">
+								<a class="report" href="#" style="display:none">신고하기</a>
+								</c:when>
+								<c:otherwise>
 								<a class="report" href="#">신고하기</a>
+								</c:otherwise>
+								</c:choose>
 							</div>
 							<!-- float clear용 빈 div -->
 							<div style="clear: both;"></div>

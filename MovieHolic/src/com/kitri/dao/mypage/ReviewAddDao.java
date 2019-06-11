@@ -36,8 +36,8 @@ public class ReviewAddDao {
 			StringBuffer sql = new StringBuffer();
 			sql.append("insert \n");
 			sql.append(
-					"	into holic_board (seq,userId,boardCode,subject,postDate, content, starPoint,movieName,movieCodeNaver,movieCodeYoung,category,enable) \n");
-			sql.append("	values(seq.nextval,?,1,?,sysdate,?,?,?,?,?,?,1 ) \n");
+					"	into holic_board (seq,userId,boardCode,subject,postDate, content,actor1,actor2, starPoint,movieName,movieCodeNaver,movieCodeYoung,category,enable) \n");
+			sql.append("	values(seq.nextval,?,1,?,sysdate,?,?,?,?,?,?,?,?,1 ) \n");
 			pstmt = conn.prepareStatement(sql.toString());
 			int idx = 0;
 			pstmt.setInt(++idx, boardDto.getSeq());
@@ -47,6 +47,7 @@ public class ReviewAddDao {
 			pstmt.setString(++idx, boardDto.getPostDate());
 			pstmt.setString(++idx, boardDto.getContent());
 			pstmt.setInt(++idx, boardDto.getStarPoint());
+			pstmt.setString(++idx, boardDto.getActors());
 			pstmt.setString(++idx, boardDto.getMovieName().toString());
 			pstmt.setString(++idx, boardDto.getDirector().toString());
 			pstmt.setString(++idx, boardDto.getMovieCodeYoung().toString());
@@ -75,12 +76,14 @@ public class ReviewAddDao {
 		try {
 			conn = DBConnection.makeConnection();
 			StringBuffer sql = new StringBuffer();
-			sql.append("select * \n");
-			sql.append("from(select rownum r , seq,userid, movieName,content,starPoint,postDate d1, to_char(postDate, 'YYYY') d2, to_char(postDate, 'MM-DD') d3 , viewcount,enable \n");
-			sql.append("from mh_board \n");
-			sql.append("where boardCode = 1 \n");
-			sql.append("order by postDate desc) \n");
-			sql.append("where r between ? and ? \n");
+			sql.append("select  * \n");
+			sql.append("from(select rownum, f.seq, f.userid, f.moviename, f.content, f.starpoint, f.d1, f.d2, f.d3, f.viewcount, f.enable \n");
+			sql.append("		from(select seq,userid, movieName,content,starPoint,postDate d1, to_char(postDate, 'YYYY') d2, to_char(postDate, 'MM-DD') d3 , viewcount,enable \n");
+			sql.append("				from mh_board \n");
+			sql.append("				where boardCode = 1 \n");
+			sql.append("				order by postDate desc) f \n");
+			sql.append("		order by rownum) \n");
+			sql.append("where rownum between ? and ? \n");
 			pstmt = conn.prepareStatement(sql.toString());
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
@@ -107,7 +110,6 @@ public class ReviewAddDao {
 				boardDto.setPostDate(rs.getString("d1"));
 				boardDto.setPostDateY(rs.getString("d2"));
 				boardDto.setPostDateM(rs.getString("d3"));
-				boardDto.setContent(rs.getString("content"));
 				boardDto.setEnable(rs.getInt("enable"));
 				
 				list.add(boardDto);
@@ -155,8 +157,6 @@ public List<BoardDto> listList(String content) {
 
 		return list;
 	}
-	
-	// 페이징 처리
 
 
 	//comment

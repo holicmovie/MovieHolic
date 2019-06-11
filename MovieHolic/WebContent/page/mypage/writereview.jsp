@@ -180,10 +180,10 @@ Set yellow color when star hover  --%> <%-- 체크박스 --%> .form-check-input
 					style="margin-top: 40px; border-top: 2.5px solid #fff;">
 					<div class="col-12">
 						<div style="float: right;">
-							<button class="btn btn-success font_bold_small">저&nbsp;&nbsp;&nbsp;장</button>
+							<button class="btn btn-success font_bold_small reviewsave">저&nbsp;&nbsp;&nbsp;장</button>
 						</div>
 						<div style="float: right; margin-right: 20px;">
-							<button class="btn btn-success font_bold_small">취&nbsp;&nbsp;&nbsp;소</button>
+							<button class="btn btn-success font_bold_small reviewcancle">취&nbsp;&nbsp;&nbsp;소</button>
 						</div>
 					</div>
 				</div>
