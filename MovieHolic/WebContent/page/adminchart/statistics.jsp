@@ -220,14 +220,16 @@ $(document).on("click", ".barsearch>button", function(){
 		return false;
 	}
 	
+	// 리절트 페이지 만들어서 거기다가 차트 넣어주기.
+	// 처음 들어왔을때 차트 어떻게 뿌려줄건지 생각해보기. 년도부터 고르라고 하던지
 	// 년도별 보내서 디비딴에서 처리.
 	//var currentPage = $(this).attr("href");
-	$("div.uservariance").empty();
+	//$("div.uservariance").empty();
 	$.ajax({
 		url : '/MovieHolic/chart?act=chart&barnewlyyear='+barnewlyyear+'&baroldyear='+baroldyear,
 		method : 'get',
 		success : function(result) {
-			//$("div.uservariance").html(result.trim()); 
+			$("div.uservariance").html(result.trim()); 
 		}
 	});
 	return false; 
