@@ -1,9 +1,12 @@
 package com.kitri.admin.chart.service;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kitri.admin.chart.dao.AdminChartDao;
+import com.kitri.admin.chart.dto.AdminChartDto;
 
 public class AdminChartService {
 	
@@ -23,9 +26,9 @@ public class AdminChartService {
 	
 	
 	
-	public void ageGroupTwenties(HttpServletRequest request, HttpServletResponse response) {
+	public List<AdminChartDto> ageGroup(HttpServletRequest request, HttpServletResponse response, int age) {
 		
-		AdminChartDao.getChartDao().ageGroupTwenties(request, response);
+		return AdminChartDao.getChartDao().ageGroup(request, response, age);
 		
 	}
 	

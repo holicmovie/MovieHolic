@@ -30,68 +30,111 @@ public class AdminChartDao {
 	
 	
 	
-	// 년도별로 20대 구하기
-	public void ageGroupTwenties(HttpServletRequest request, HttpServletResponse response) {
+	// 년도별로 나이대 인원 구하기
+	public List<AdminChartDto> ageGroup(HttpServletRequest request, HttpServletResponse response, int age) {
+		
 		
 		String barnewlyyearS = request.getParameter("barnewlyyear");
 		String baroldyearS = request.getParameter("baroldyear");
-		int barnewlyyear = Integer.parseInt(barnewlyyearS);
-		int baroldyear = Integer.parseInt(baroldyearS);
+		int barnewlyyear = 0; // for문에서 계속 생성되니 밖에 빼줘야뎀.
+		int baroldyear = 0;
 		
+		//for (int age = 1; age <= 5; age++) { // 10~50대 구분하기 위해 사용 아니면 메소드 5개 만들어야뎀. 결론 꼬임 안됌. 못씀 젠장
 		
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		
-		List<AdminChartDto> list = new ArrayList<AdminChartDto>();
+			barnewlyyear = Integer.parseInt(barnewlyyearS);
+			baroldyear = Integer.parseInt(baroldyearS);
+			
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			List<AdminChartDto> list = new ArrayList<AdminChartDto>();
+			
+			StringBuffer sql = new StringBuffer();
 
-		StringBuffer sql = new StringBuffer();
-		
-		// 그 년도에 20대 가입한 총 인원 - 그년도에 20대 탈퇴한 총 인원 대신  / 그 년도에 탈퇴한 포함 안함.  
-		sql.append(" select (select COUNT(*) count");
-		sql.append(" from mh_user");
-		sql.append(" where to_char(joindate,'yyyy') = ?"); // 찾을 년도
-		sql.append(" and (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) >= 20 and (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) < 30)");
-		sql.append(" -");
-		sql.append(" (select COUNT(*)");
-		sql.append(" from mh_user");
-		sql.append(" where (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) >= 20 and (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) < 30");
-		sql.append(" and to_number(to_char(outdate,'yyyy')) = ?)");
-		sql.append(" from dual");
-		
-		
-		try {
+			// 그 년도에 20대 가입한 총 인원 - 그년도에 20대 탈퇴한 총 인원 대신  / 그 년도에 탈퇴한 포함 안함.
+			// <= 인 이유는 총인원에서 탈퇴한 사람을 빼야 남아있는 사람이 됌.
+			sql.append(" select ((select COUNT(*)");
+			sql.append(" from mh_user");
+			sql.append(" where to_char(joindate,'yyyy') <= ?"); // 찾을 년도
+			if (age == 1) {
+				sql.append(" and (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) < 20)");
+			} else if (age == 2) {
+				sql.append(" and (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) >= 20 and (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) < 30)");
+			} else if (age == 3) {
+				sql.append(" and (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) >= 30 and (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) < 40)");
+			} else if (age == 4) {
+				sql.append(" and (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) >= 40 and (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) < 50)");
+			} else if (age == 5) {
+				sql.append(" and (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) > 50)");
+			}
+			sql.append(" -");
+			sql.append(" (select COUNT(*)");
+			sql.append(" from mh_user");
+			if (age == 1) {
+				sql.append(" where (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) < 20");
+			} else if (age == 2) {
+				sql.append(" where (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) >= 20 and (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) < 30");
+			} else if (age == 3) {
+				sql.append(" where (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) >= 30 and (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) < 40");
+			} else if (age == 4) {
+				sql.append(" where (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) >= 40 and (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) < 50");
+			} else if (age == 5) {
+				sql.append(" where (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) > 50)");
+			}
+			sql.append(" and to_number(to_char(outdate,'yyyy')) <= ?))");
+			sql.append(" from dual");
 			
-			conn = DBConnection.makeConnection();
-			pstmt = conn.prepareStatement(sql.toString());			
 			
-			AdminChartDto adminChartDto = new AdminChartDto();
-			
-			for (int i = 0; i < (barnewlyyear - baroldyear); i++) {
+			try {
 				
-				pstmt.setString(1, Integer.toString(baroldyear+i));
-				pstmt.setString(2, Integer.toString(baroldyear+i));
-				rs = pstmt.executeQuery();
+				conn = DBConnection.makeConnection();
+				pstmt = conn.prepareStatement(sql.toString());			
 				
-				if (rs.next()) {
+				AdminChartDto adminChartDto = new AdminChartDto();
+				
+				for (int i = 0; i < (barnewlyyear - baroldyear) + 1; i++) {
 					
-					adminChartDto.setTwenties(rs.getString(1));
-					System.out.println(adminChartDto.getTwenties());
+					pstmt.setString(1, Integer.toString(baroldyear+i));
+					pstmt.setString(2, Integer.toString(baroldyear+i));
+					rs = pstmt.executeQuery();
+					
+					if (rs.next()) {
+						
+						if (age == 1) {
+							adminChartDto.setTeens(rs.getString(1));
+							list.add(adminChartDto);
+						} else if (age == 2) {
+							adminChartDto.setTwenties(rs.getString(1));
+							list.add(adminChartDto);
+						} else if (age == 3) {
+							adminChartDto.setThirties(rs.getString(1));
+							list.add(adminChartDto);
+						} else if (age == 4) {
+							adminChartDto.setFourties(rs.getString(1));
+							list.add(adminChartDto);
+						} else if (age == 5) {
+							adminChartDto.setFifties(rs.getString(1));
+							list.add(adminChartDto);
+						}
+						
+					}
 					
 				}
-				
+					
+			} catch (SQLException e) {
+					
+				e.printStackTrace();
+					
+			} finally {
+				DBClose.close(conn, pstmt, rs);
 			}
-				
-		} catch (SQLException e) {
-				
-			e.printStackTrace();
-				
-		} finally {
-			DBClose.close(conn, pstmt, rs);
-		}
-		
-	}
+			
+		//}
+			
+			return list;
 	
+	}
 	
 	
 	

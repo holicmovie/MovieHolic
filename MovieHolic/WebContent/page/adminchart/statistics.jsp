@@ -225,7 +225,7 @@ $(document).on("click", ".barsearch>button", function(){
 		url : '/MovieHolic/chart?act=chart&barnewlyyear='+barnewlyyear+'&baroldyear='+baroldyear,
 		method : 'get',
 		success : function(result) {
-			$("div.uservariance").html(result.trim()); 
+			//$("div.uservariance").html(result.trim()); 
 		}
 	});
 	return false; 

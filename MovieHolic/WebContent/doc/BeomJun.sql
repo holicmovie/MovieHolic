@@ -145,15 +145,15 @@ ROLLBACK;
 		
 		
 		
-select (select COUNT(*)
+select ((select COUNT(*)
         from mh_user
-        where to_char(joindate,'yyyy') = 2017
+        where to_char(joindate,'yyyy') <= 2019
         and (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) >= 20 and (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) < 30)
         -
         (select COUNT(*)
         from mh_user
         where (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) >= 20 and (to_char(sysdate,'yyyy') - to_number(substr(birth,1,4)) + 1) < 30
-        and to_number(to_char(outdate,'yyyy')) = 2017)   
+        and to_number(to_char(outdate,'yyyy')) <= 2019))   
 from dual;
 
 

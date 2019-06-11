@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kitri.util.MoveUrl;
+
 @WebServlet("/chart")
 public class AdminChartFrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -21,7 +23,8 @@ public class AdminChartFrontController extends HttpServlet {
 		
 		if ("chart".equals(act)) {
 			
-			AdminChartController.getAdminChartController().ageGroup(request, response);
+			String path = AdminChartController.getAdminChartController().ageGroup(request, response);
+			MoveUrl.forward(request, response, path);
 			
 		}
 	
