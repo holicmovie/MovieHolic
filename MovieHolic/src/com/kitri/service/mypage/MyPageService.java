@@ -47,14 +47,12 @@ public class MyPageService {
 		
 		SocialDao.getSocialDao().deleteFollowing(followingid);
 	}
-//	
-//	
-//	public static List<WishlistDto> findByYear(int startRow, int endRow){
-//		return SocialDao.selectByRows3(startRow, endRow);
-//	}
-//	
-//	public static int getTotalCnt3() {
-//		return SocialDao.selectTotalCnt3();
-//	}
-//	
+	public void addFollowId(String followid) {
+		SocialDao.getSocialDao().addFollow(followid);
+	}
+	
+	public List<WishlistDto> showWishlist(String userid){
+		return SocialDao.getSocialDao().selectWishlist(userid);
+	}
+
 }
