@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -12,11 +15,12 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.kitri.dao.film.FilmDao;
-import com.kitri.dto.*;
+import com.kitri.dto.BoardDto;
+import com.kitri.dto.FilmDetailDto;
+import com.kitri.dto.FilmDto;
 import com.kitri.service.list.ListService;
 import com.kitri.util.CallAPI;
 
@@ -275,10 +279,10 @@ public class FilmService {
 			String httpUrl = url + "?" + paramYoung1 + "&" + paramYoung2;
 
 			// ② API 호출 (GET)
-			String responseFilmInfo = CallAPI.APIHttpGet(httpUrl, null);
+			String responseFilmInfo = CallAPI.APIHttpGet(httpUrl, false);
 			
-			// ③ responseBoxOffice (JSON) 파싱
-			// *박스오피스 JSON 구조 : { {movieInfoResult} - {movieInfo} - key1 : "" 여러 개 }
+			// ③ movieInfoResult (JSON) 파싱
+			// *movieInfoResult JSON 구조 : { {movieInfoResult} - {movieInfo} - key1 : "" 여러 개 }
 			try {
 							
 					JSONParser jsonParser = new JSONParser();
@@ -288,10 +292,10 @@ public class FilmService {
 					JSONObject movieInfo = (JSONObject) movieInfoResult.get("movieInfo");
 					
 					JSONArray nations = (JSONArray) movieInfo.get("nations");			// 제작국가
-					JSONArray genres = (JSONArray) movieInfo.get("genres");			// 장르
+					JSONArray genres = (JSONArray) movieInfo.get("genres");				// 장르
 					JSONArray directors = (JSONArray) movieInfo.get("directors");		// 감독
 					JSONArray actors = (JSONArray) movieInfo.get("actors");				// 배우
-					JSONArray companys = (JSONArray) movieInfo.get("companys");	// 제작사
+					JSONArray companys = (JSONArray) movieInfo.get("companys");			// 제작사
 					JSONArray audits = (JSONArray) movieInfo.get("audits"); 			// 관람등급
 
 					// ④ DTO 세팅
@@ -304,7 +308,7 @@ public class FilmService {
 					String prdtYear = movieInfo.get("prdtYear").toString();
 					result.setPrdtYear(prdtYear);
 					// 영화코드(영진원) set
-					result.setMovieCdYoung((movieInfo.get("movieCd").toString()));
+					result.setMovieCdYoung(movieCdYoung);
 					// 개봉년도 set
 					String OpenDate = movieInfo.get("openDt").toString();
 					if(!"".equals(OpenDate)) {
