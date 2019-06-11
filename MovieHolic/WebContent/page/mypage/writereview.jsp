@@ -71,6 +71,7 @@ Set yellow color when star hover  --%> <%-- 체크박스 --%> .form-check-input
 	margin: 1.5em 1em 0em 0.6em;
 }
 </style>
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <script>
 	
 <%-- 영화검색 모달 띄우기 --%>
@@ -92,6 +93,10 @@ Set yellow color when star hover  --%> <%-- 체크박스 --%> .form-check-input
 		} else if (document.getElementById("reviewContent").value == "") {
 			alert("리뷰 내용을 입력하세요");
 			return;
+		} else {
+			document.getElementById("starRating").value
+			document.getElementById("reviewContent").value
+			
 		}
 	}
 </script>
@@ -180,10 +185,10 @@ Set yellow color when star hover  --%> <%-- 체크박스 --%> .form-check-input
 					style="margin-top: 40px; border-top: 2.5px solid #fff;">
 					<div class="col-12">
 						<div style="float: right;">
-							<button class="btn btn-success font_bold_small reviewsave">저&nbsp;&nbsp;&nbsp;장</button>
+							<button class="btn btn-success font_bold_small" id="reviewsave">저&nbsp;&nbsp;&nbsp;장</button>
 						</div>
 						<div style="float: right; margin-right: 20px;">
-							<button class="btn btn-success font_bold_small reviewcancle">취&nbsp;&nbsp;&nbsp;소</button>
+							<button class="btn btn-success font_bold_small" id="reviewcancle">취&nbsp;&nbsp;&nbsp;소</button>
 						</div>
 					</div>
 				</div>

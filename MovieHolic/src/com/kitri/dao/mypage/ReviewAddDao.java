@@ -36,7 +36,7 @@ public class ReviewAddDao {
 			StringBuffer sql = new StringBuffer();
 			sql.append("insert \n");
 			sql.append(
-					"	into holic_board (seq,userId,boardCode,subject,postDate, content,actor1,actor2, starPoint,movieName,movieCodeNaver,movieCodeYoung,category,enable) \n");
+					"	into mh_board (seq,userId,boardCode,subject,postDate, content,actor1,actor2, starPoint,movieName,movieCodeNaver,movieCodeYoung,category,enable) \n");
 			sql.append("	values(seq.nextval,?,1,?,sysdate,?,?,?,?,?,?,?,?,1 ) \n");
 			pstmt = conn.prepareStatement(sql.toString());
 			int idx = 0;
@@ -47,7 +47,8 @@ public class ReviewAddDao {
 			pstmt.setString(++idx, boardDto.getPostDate());
 			pstmt.setString(++idx, boardDto.getContent());
 			pstmt.setInt(++idx, boardDto.getStarPoint());
-			pstmt.setString(++idx, boardDto.getActors());
+			pstmt.setString(++idx, boardDto.getActor1());
+			pstmt.setString(++idx, boardDto.getActor2());
 			pstmt.setString(++idx, boardDto.getMovieName().toString());
 			pstmt.setString(++idx, boardDto.getDirector().toString());
 			pstmt.setString(++idx, boardDto.getMovieCodeYoung().toString());

@@ -97,8 +97,7 @@ public class FilmController {
 		int totalCnt = FilmService.getFilmService().getTotalPage(category); 	// 총 게시글 수
 		int cntPerPageGroup = 5;                					 			// 그룹 페이지 수
 		
-		System.out.println("현재 페이지 게시글 수 = " + totalCnt);
-		String url = "film";  // ??? 뭐지
+		String url = "film";
 
 		PageBean pb = new PageBean(currentPage,
 									cntPerPage,
@@ -138,7 +137,7 @@ public class FilmController {
 		int totalCnt = FilmService.getFilmService().getSearchTotalPage(srchKey); 	// 총 게시글 수
 		int cntPerPageGroup = 5;                					 				// 그룹 페이지 수
 						
-		String url = "film";  // ??? 뭐지
+		String url = "film";
 
 		PageBean pb = new PageBean(currentPage,
 									cntPerPage,
@@ -179,14 +178,14 @@ public class FilmController {
 		list.setStarPoint(starPoint);
 		
 		// #1 페이징 처리
-		String cp = request.getParameter("currentPage");   //@@@@@@@@@@@@@@@@@@@@@@@@@@
+		String cp = request.getParameter("currentPage");
 		int currentPage = 1;  // 기본은 1페이지
 								
 		if(cp != null) {
 			currentPage = Integer.parseInt(cp); // 페이지 눌린 값있다면, 해당 페이지
 		}
 								
-		int cntPerPage = 10;  										 					// 페이지 별 보여줄 목록 수
+		int cntPerPage = 5;  										 					// 페이지 별 보여줄 목록 수
 		int totalCnt = FilmService.getFilmService().getReviewTotalPage(movieCdYoung); 	// 총 게시글 수
 		int cntPerPageGroup = 5;                					 					// 그룹 페이지 수
 								
@@ -205,14 +204,62 @@ public class FilmController {
 		pb.setList(reviews);
 		request.setAttribute("reviews", pb);
 		
-		// 영화 상세정보 set		(C -> FC)
+		// 영화 상세정보 set			(C -> FC)
 		request.setAttribute("filmInfo", list);
+		
+		// 영화 영진원 코드, 네이버 코드 set (C -> FC)
+		request.setAttribute("movieCdYoung", movieCdYoung);
+		request.setAttribute("movieCdNaver", movieCdNaver);
 	
 		return path;
 		
 	}
 	
 	// 7
+	// 선택된 페이지의 리뷰 get
+	
+	public String getReviewList(HttpServletRequest request, HttpServletResponse response) {
+
+		String path = "/page/film/result/reviewresult.jsp";
+		String movieCdYoung = request.getParameter("movieCdYoung");
+		
+		System.out.println("C : 눌린 페이지의 상세페이지 볼 영화 코드(영진원) : " + movieCdYoung);
+		
+		// #1 페이징 처리
+		String cp = request.getParameter("currentPage");
+		
+		int currentPage = 1;  // 기본은 1페이지
+		
+		if(cp != null) {
+			currentPage = Integer.parseInt(cp); // 페이지 눌린 값있다면, 해당 페이지
+		}
+								
+		int cntPerPage = 5;  										 					// 페이지 별 보여줄 목록 수
+		int totalCnt = FilmService.getFilmService().getReviewTotalPage(movieCdYoung); 	// 총 게시글 수
+		int cntPerPageGroup = 5;                					 					// 그룹 페이지 수
+								
+		String url = "film";  // ??? 뭐지
+
+		PageBeanReview pb = new PageBeanReview(currentPage,
+											cntPerPage,
+											cntPerPageGroup,
+											totalCnt,
+											url);
+				
+		// 영화 리뷰 get (S -> C)
+		List<BoardDto> reviews = FilmService.getFilmService().getReviews(movieCdYoung, pb.getStartRow(), pb.getEndRow());
+
+		// 페이지에 맞는 리뷰 목록 set
+		pb.setList(reviews);
+		request.setAttribute("reviews", pb);
+		
+		// 영화 영진원 코드, 네이버 코드 set (C -> FC)
+		request.setAttribute("movieCdYoung", movieCdYoung);
+		
+		return path;
+	}
+	
+	// 8
 	// 위시리스트 추가
 	public String addWishList(HttpServletRequest request, HttpServletResponse response) {
 
@@ -221,10 +268,10 @@ public class FilmController {
 
 		String movieCdYoung = request.getParameter("movieCdYoung");
 		String movieCdNaver = request.getParameter("movieCdNaver");
-		
+			
 		// 세션에서 id 얻기로 바꾸기 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 		String id = "a125@gmail.com";
-		
+			
 		// 위시리스트 추가 여부 확인
 		int isWishedBefore = FilmService.getFilmService().isWished(movieCdYoung, id);
 		if(isWishedBefore == 0) {
@@ -232,12 +279,11 @@ public class FilmController {
 			FilmService.getFilmService().insertWishList(movieCdYoung, movieCdNaver, id);
 			isWished = "위시리스트에 등록되었습니다.";
 		}
-		
+			
 		// 위시리스트 추가 완료 여부 set (C -> FC)
 		request.setAttribute("isWished", isWished);
-		
+			
 		return path;
 	}
-	
 	
 }

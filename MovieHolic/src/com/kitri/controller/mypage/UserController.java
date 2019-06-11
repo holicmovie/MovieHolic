@@ -41,6 +41,7 @@ public class UserController {
 		name.add(a);
 		String path = "/page/mypage/writereview.jsp";
 		BoardDto boardDto = new BoardDto();
+		
 		boardDto.setUserId(request.getParameter("userid"));
 		boardDto.setSeq(Integer.parseInt(request.getParameter("seq")));
 		boardDto.setBoardCode(Integer.parseInt(request.getParameter("boardcode")));

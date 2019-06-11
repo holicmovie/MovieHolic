@@ -83,9 +83,19 @@ public class FilmFrontController extends HttpServlet {
 			path = FilmController.getUserController().getFilmInfo(request, response); // attr : filmInfo, reviews
 						
 			MoveUrl.forward(request, response, path);
-
 		} 
 		// #6
+		// 리뷰 페이지 클릭
+		else if ("viewreviewlist".equals(act)) {
+			System.out.println("FilmFrontConteroller : act=viewreviewlist");
+			
+			// 경로 get
+			// request(setted 선택된 페이지의 리뷰 목록) get
+			path = FilmController.getUserController().getReviewList(request, response); // attr : pagedreviews
+			
+			MoveUrl.forward(request, response, path);
+		}
+		// #7
 		// 위시리스트 추가
 		else if ("addwishlist".equals(act)) {
 			System.out.println("FilmFrontConteroller : act=addwishlist");

@@ -7,7 +7,7 @@ import com.kitri.dto.BoardDto;
 public class PageBeanReview {
 
 	// [필드]
-		private int cntPerPage = 10;		// 페이지별 보여줄 글 수
+		private int cntPerPage = 5;		// 페이지별 보여줄 글 수
 		private int startRow = 1;			// 시작 행
 		private int endRow = 1;				// 끝 행
 		private List<BoardDto> list;		// 목록
