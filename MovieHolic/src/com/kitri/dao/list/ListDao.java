@@ -79,6 +79,67 @@ public class ListDao {
 		return result;
 	}
 	
+
+//	#### 댓글 저장 ####
+	public int saveComment(String id, String seq, String content, String subject, String writerId) {
+		int result = 0;
+		String postDate = null;
+		try {
+			conn = DBConnection.makeConnection();
+			conn.setAutoCommit(false);
+			
+			StringBuffer sql = new StringBuffer();
+			sql.append("INSERT INTO MH_COMMENT (POSTDATE, USERID, SEQ, CONTENT) \n");
+			sql.append("VALUES (to_date((to_char(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')), 'YYYY-MM-DD HH24:MI:SS')), ?, ?, ?) \n");
+			String seqArr[] = {"POSTDATE"};	// 작성일 컬럼이름
+			pstmt = conn.prepareStatement(sql.toString(), seqArr);
+	        
+			pstmt.setString(1, id);
+			pstmt.setInt(2, Integer.parseInt(seq));
+			pstmt.setString(3, content);
+			
+			result = pstmt.executeUpdate();
+			rs = pstmt.getGeneratedKeys();	//insert 후 작성일 받아오기
+
+			rs.next();
+			postDate = rs.getString(1);	
+			System.out.println("postDate: " + postDate);
+			if(result != 0) {
+				sql = new StringBuffer();
+				sql.append("INSERT INTO MH_LOG (LOGDATE, LOGID, USERID, LOGCATE, SUBJECT, SEQ) \n");
+				sql.append("VALUES (to_date((to_char(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')), 'YYYY-MM-DD HH24:MI:SS')), ?, ?, 3, ?, ?) \n");
+				pstmt = conn.prepareStatement(sql.toString());
+				
+				int idx = 0;
+				pstmt.setString(++idx, postDate);
+				pstmt.setString(++idx, id);
+				pstmt.setString(++idx, writerId);
+				pstmt.setString(++idx, subject);
+				pstmt.setInt(++idx, Integer.parseInt(seq));
+				
+				result = pstmt.executeUpdate();
+				
+				if(result != 0) {
+					conn.commit();
+					conn.setAutoCommit(true);
+					
+				}
+			}
+			
+		} catch (SQLException e) {
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		
+		return result;
+	}
+	
 	
 //--------------------------------------------------------------------------------------------------------- update
 	
@@ -269,11 +330,28 @@ public class ListDao {
 	}
 	
 	
+	
+//	#### list 신고 ####
+	public int notify(String seq) {
+		int result = 0;
+		try {
+			conn = DBConnection.makeConnection();
+			System.out.println(seq);
+			result = ListDao.getListDao().updateCount("MH_BOARD", "NOTIFY = NOTIFY + 1", "SEQ = " + seq);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt);
+		}
+		return result;
+	}
+	
+	
 //---------------------------------------------------------------------------------------------------------- select
 	
 	
 //	#### Comment Select ####
-	public List<CommentDto> selCommentBySeq(String seq) {
+	public List<CommentDto> selCommentBySeq(String seq, boolean flag) {
 		List<CommentDto> comment = null;
 		
 		try {
@@ -282,6 +360,7 @@ public class ListDao {
 			sql.append("SELECT SEQ, to_char(POSTDATE, 'YYYY.MM.DD HH24:MI:SS'), USERID, CONTENT \n");
 			sql.append("FROM MH_COMMENT \n");
 			sql.append("WHERE SEQ = ? \n");
+			sql.append("ORDER BY POSTDATE DESC \n");
 			pstmt = conn.prepareStatement(sql.toString());
 			
 			pstmt.setInt(1, Integer.parseInt(seq));
@@ -289,7 +368,9 @@ public class ListDao {
 			
 			comment = new ArrayList<CommentDto>();
 			CommentDto temp = new CommentDto();
-			comment.add(temp);
+			if(flag) {
+				comment.add(temp);
+			}
 			while(rs.next()) {
 				temp = new CommentDto();
 				
@@ -431,7 +512,7 @@ public class ListDao {
 			pstmt.setString(++idx, naver);
 			
 			result = pstmt.executeUpdate();
-	        rs = pstmt.getGeneratedKeys();	//insert 후 글번호, 작성일 받아오기
+			rs = pstmt.getGeneratedKeys();	//insert 후 글번호, 작성일 받아오기
 	        
 	        rs.next();
 	        board.setSeq(rs.getInt(1));	// 받아온 글번호 dto에 set
@@ -616,7 +697,10 @@ public class ListDao {
 	}
 	
 	
-
+	
+	
+	
+	
 	
 
 }

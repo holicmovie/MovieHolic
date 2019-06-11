@@ -166,8 +166,6 @@
 <%@ include file="/template/nav.jsp"%>
 	</div>
 
-<%-- 임시 세션 --%>
-<% session.setAttribute("userID", "a125@gmail.com"); %>
 <%-- Main --%>
 <div class="wrapper style1">
 
