@@ -5,28 +5,11 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <script>
-$(function(){
-
-	$("#followingsection.deletef").click(function() {
-			var followingid = $(this).find("#followingsection.followingid").html();
-				alert(followingid);
-			
-			/* $.ajax({
-				url:"/MovieHolic/mypage?page=social",
-				method: "GET",
-				data:"deletefollowing=" + followingid,
-				success: function(result){
-					System.out.println(followingid);
-				}
-			});
-			return false; */
-		}); 
-});  	 
 
 </script>
 
 
-
+<%PageBean pb = (PageBean)request.getAttribute("pb"); %>
 <div id="followings" class="container tab-pane active" role = "tabpanel">
 							<br>
 								<table class="table table-hover table-dark" id = "followingtable">
@@ -41,11 +24,11 @@ $(function(){
 								    </tr>
 								  </thead>
 								  <tbody>
-								<%PageBean pb = (PageBean)request.getAttribute("pb");
+								<%-- <%PageBean pb = (PageBean)request.getAttribute("pb");
 									System.out.println(pb);
-								%>						  
-						
-								<c:set var = "pb" value="${requestScope.pb}"/>
+								%>		 --%>				  
+								
+								
 								  
 								  <%--social following page 위한 for문 --%>
 								   
@@ -53,12 +36,12 @@ $(function(){
 								    <tr>
 								    
 								      <th scope="row">${pb.no}</th>
-								      <td class = "followingid">${pb.followingId}</td>
+								      <td><input type ="hidden" class = "followingid" value = "${pb.followingId}">${pb.followingId}</td>
 								      <td>${pb.name}</td>
 								      <td><i class="fa fa-list" style="color:gold;"></i> ${pb.best_count }</td>
 								      <td><i class="fa fa-heart" style="color:tomato;"></i>${pb.list_count }</td>
 								      <td>
-								      	<button type="button" class="btn btn-danger btn-circle btn-xl deletef" ><i class="fa fa-times"></i></button>
+								      	<button type="button" class="btn btn-danger btn-circle btn-xl deletef"><i class="fa fa-times"></i></button>
 									  </td>
 								    </tr>
 								    
@@ -76,7 +59,7 @@ $(function(){
 					
 						<div style="float: left">
 							<c:if test="${pb.startPage > 1 }">
-								<a href="${pb.url}${pb.startPage - 1}"><button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button></a>
+								<a class = "btnmove" href="${pb.startPage - 1}"><button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button></a>
 								
 							</c:if>
 						</div>
@@ -85,7 +68,7 @@ $(function(){
 								
 						<div style="float: right;">
 							<c:if test="${pb.totalPage > pb.endPage }">
-							<a href="${pb.url}${pb.endPage+1}"><button class="btn btn-success font_bold_small">다&nbsp;&nbsp;&nbsp;음</button></a>
+							<a class = "btnmove" href="${pb.endPage+1}"><button class="btn btn-success font_bold_small">다&nbsp;&nbsp;&nbsp;음</button></a>
 							</c:if>
 						</div>
 				
@@ -94,13 +77,13 @@ $(function(){
 									<c:choose>
 
 										<c:when test="${pb.currentPage == i}">
-											<li class="page-item"><a class="page-link a">${i}</a></li>
+											<li class="page-item"><a class="page-link a 1">${i}</a></li>
 										</c:when>
 
 										<c:otherwise>
 											<li class="page-item">
 											<!-- /Movieholic/mypage?page=social&followingpage= -->
-											<a class="page-link a" id = "followingpaging" href="${pb.url}${i}">${i}</a></li>
+											<a class="page-link a 1" id = "followingpaging" href="${i}">${i}</a></li>
 										</c:otherwise>
 
 									</c:choose>

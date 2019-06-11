@@ -19,10 +19,10 @@
 								    </tr>
 								  </thead>
 								  <tbody>
-								  <%PageBean pbf = (PageBean)request.getAttribute("pbf");
+								<%--   <%PageBean pbf = (PageBean)request.getAttribute("pbf");
 								  	System.out.println(pbf);
-								  %>	
-								   <c:set var = "pbf" value="${requestScope.pbf}"/>
+								  %>	 --%>
+								 
 								  
 								  <%--social following page 위한 for문 --%>
 								   
@@ -30,12 +30,12 @@
 								    <tr>
 								    
 								      <th scope="row">${pbf.no}</th>
-								      <td class = "followerid">${pbf.userId}</td>
+								      <td> <input type ="hidden" class="addfollow" value = "${pbf.userId}">${pbf.userId}</td>
 								      <td>${pbf.name}</td>
 								      <td><i class="fa fa-list" style="color:gold;"></i> ${pbf.best_count }</td>
 								      <td><i class="fa fa-heart" style="color:tomato;"></i>${pbf.list_count }</td>
 								      <td>
-								      	<button type="button" class="btn btn-secondary btn-circle btn-xl"><i class="fa fa-plus"></i></button>
+								      	<button type="button" class="btn btn-secondary btn-circle btn-xl plusfollower"><i class="fa fa-plus"></i></button>
 									  </td>
 								    </tr>
 								    
@@ -51,7 +51,7 @@
 						  		
 						<div style="float: left">
 							<c:if test="${pbf.startPage > 1 }">
-								<a href="/MovieHolic/mypage?page=social&followerpage=${pb.startPage - 1}"><button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button></a>
+								<a class= "btnmove2" href="${pbf.url}${pb.startPage - 1}"><button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button></a>
 								
 							</c:if>
 						</div>
@@ -60,7 +60,7 @@
 								
 						<div style="float: right;">
 							<c:if test="${pbf.totalPage > pbf.endPage }">
-							<a href="/MovieHolic/mypage?page=social&followerpage=${pbf.endPage+1}"><button class="btn btn-success font_bold_small">다&nbsp;&nbsp;&nbsp;음</button></a>
+							<a class= "btnmove2" href="${pbf.url}${pbf.endPage+1}"><button class="btn btn-success font_bold_small">다&nbsp;&nbsp;&nbsp;음</button></a>
 							</c:if>
 						</div>
 							  	<ul class="pagination justify-content-center">
@@ -68,12 +68,12 @@
 									<c:choose>
 
 										<c:when test="${pbf.currentPage == i}">
-											<li class="page-item"><a class="page-link a a">${i}</a></li>
+											<li class="page-item"><a class="page-link a 2">${i}</a></li>
 										</c:when>
 
 										<c:otherwise>
 											<li class="page-item">
-											<a class="page-link a a" href="/MovieHolic/mypage?page=social&followerpage=${i}">${i}</a></li>
+											<a class="page-link a 2" href="${i}">${i}</a></li>
 										</c:otherwise>
 
 									</c:choose>

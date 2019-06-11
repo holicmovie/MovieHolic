@@ -10,72 +10,153 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <!-- 소셜 페이지 눌렀을 때 출력 -->
-  <script>
-  
+<%--   <%
+ 	PageBean pb = (PageBean)request.getAttribute("pb");
+	PageBean pbf = (PageBean)request.getAttribute("pbf");
+	%>
+  <c:set var = "pb" value="${requestScope.pb}"/>
+  <c:set var = "pbf" value="${requestScope.pbf}"/> --%>
+<script>
 
-
+/* 처음 로딩할 때 followingID출력 */
+ 
 
 $(function(){
-	 
+
 	$.ajax({
 		url:'/MovieHolic/mypage?page=social',
 		method:"GET",
 		success:function(result){
-			$("#followingsection").html(result.trim());
+			$("section").html(result.trim());
 		}
 	});
 	return false;
 });
 
-$(function(){
-	$(".a").click(function(){
+
+/* followingID 페이지 */
+$(document).on("click", ".1", function(){
 		alert("눌렸다!");
 		 var currentpage=$(this).attr("href");
-		alert(currentpage+"페이지를 보여줍니다.");
 		 $.ajax({
-			url:'/MovieHolic/mypage?page=social',
+			url:'/MovieHolic/mypage',
 			method:"GET",
-			data:'followingpage=' + currentpage,
+			data:'page=social&followingpage=' + currentpage,
 			success:function(result){
 				$("section").html(result.trim());
+		alert(currentpage+"페이지를 보여줍니다.");
 			}
 		});
 		return false;
 	});  
-});   
+	
+$(document).on("click", ".btnmove", function(){
+	alert("눌렸다!");
+	 var currentpage=$(this).attr("href");
+	 $.ajax({
+		url:'/MovieHolic/mypage',
+		method:"GET",
+		data:'page=social&followingpage=' + currentpage,
+		success:function(result){
+			$("section").html(result.trim());
+		/* alert(currentpage+"페이지를 보여줍니다."); */
+		}
+	});
+	return false;
+});  
 
+/* followerID page */
+$(document).on("click", ".2", function(){
+	alert("눌렸다!");
+	 var currentpage=$(this).attr("href");
+	 $.ajax({
+		url:'/MovieHolic/mypage',
+		method:"GET",
+		data:'tab=followers&followerpage=' + currentpage,
+		success:function(result){
+			$("section").html(result.trim());
+				/* alert(currentpage+"페이지를 보여줍니다."); */
+		}
+	});
+	return false;
+});  
 
- 
-/* $(function(){
-	$("#btnfollowers").click(function() {
-		$("#followersection").empty();
+$(document).on("click", ".btnmove2", function(){
+	alert("눌렸다!");
+		 var currentpage=$(this).attr("href");
 		 $.ajax({
-			url:'/MovieHolic/mypage?page=social',
+			url:'/MovieHolic/mypage',
 			method:"GET",
+			data:'tab=followers&followerpage=' + currentpage,
 			success:function(result){
-				alert("follower"),
-				$("#followersection").html(result.trim());
+				$("section").html(result.trim());
+			alert(currentpage+"페이지를 보여줍니다.");
+			}
+	});
+	return false;
+});
+
+$(document).on("click", "#btnfollowers", function(){
+	
+		/* alert("follower"); */
+		/* $("#followingsection").empty(); */
+		  $.ajax({
+			url:'/MovieHolic/mypage',
+			method:"GET",
+			data:'tab=followers',
+			success:function(result){
+				$("section").html(result.trim());
+				/* alert("follwer ajax확인!"); */
 			}
 		});
 		return false;
-	});
-}); */
+});
 
-/* $(function(){
-	$("#btnfollowers").click(function() {
-		$("#followingsection").empty();
-		 $.ajax({
-			url:'/MovieHolic/mypage?page=social',
-			method:"GET",
-			success:function(result){
-				alert("follower"),
-				$("#followersection").html(result.trim());
+$(document).on("click", "#btnfollowings", function(){
+	
+	/* alert("following"); */
+	/* $("#followingsection").empty(); */
+	  $.ajax({
+		url:'/MovieHolic/mypage',
+		method:"GET",
+		data:'page=social',
+		success:function(result){
+			$("section").html(result.trim());
+			/* alert("follwing ajax확인!"); */
+		}
+	});
+	return false;
+});
+
+$(document).on('click', '.deletef', function(){
+	var followingid = $('.followingid').val();
+	alert(followingid);
+		$.ajax({
+			url:'/MovieHolic/mypage',
+			method: 'GET',
+			data:'page=social&deletefollowing=' + followingid,
+			success: function(result){
+	alert(followingid +"삭제");
+			/* 	location.href="/MovieHolic/mypage?page=social" */
 			}
-		});
-		return false;
 	});
-}); */
+	return false; 
+}); 
 
+$(document).on("click", ".plusfollower", function(){
+		alert("눌렸다.");
+	var followerid = $(".addfollow").val();
+	alert(followerid);
+		$.ajax({
+			url:"/MovieHolic/mypage",
+			method: "GET",
+			data:"tab=followers&follow=" + followerid,
+			success: function(result){
+				
+			}
+	});
+	return false; 
+}); 
 </script>
 <style>
 <!-- 좋아요 둥근 버튼을 위해 필요 -->
@@ -133,8 +214,7 @@ $(function(){
 					<button class="btn btn-success font_bold_small" id= "btnfollowings">Followings</button>
 					<button class="btn btn-success font_bold_small" id = "btnfollowers">Followers</button>
 					  <div class="tab-content">
-					  <section id = "followingsection"></section>
-					  <section id = "followersection"></section>
+					  <section id = "section"></section>
   					   		
 					  </div>
 					<!-- 탭 메뉴 끝 -->

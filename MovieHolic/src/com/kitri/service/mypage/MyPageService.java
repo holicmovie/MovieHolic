@@ -43,18 +43,18 @@ public class MyPageService {
 		return SocialDao.selectTotalCnt2();
 	}
 	
-	
-	public static List<WishlistDto> findByYear(int startRow, int endRow){
-		return SocialDao.selectByRows3(startRow, endRow);
+	public void deleteFollowingId(String followingid) {
+		
+		SocialDao.getSocialDao().deleteFollowing(followingid);
 	}
-	
-	public static int getTotalCnt3() {
-		return SocialDao.selectTotalCnt3();
-	}
-//	public int deleteFollowingId() {
-//		
-//		
-//		return SocialDao.getSocialDao().updateUnable();
+//	
+//	
+//	public static List<WishlistDto> findByYear(int startRow, int endRow){
+//		return SocialDao.selectByRows3(startRow, endRow);
+//	}
+//	
+//	public static int getTotalCnt3() {
+//		return SocialDao.selectTotalCnt3();
 //	}
 //	
 }
