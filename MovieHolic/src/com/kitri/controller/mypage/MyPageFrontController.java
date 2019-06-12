@@ -62,10 +62,14 @@ public class MyPageFrontController extends HttpServlet {
 //			-----------------------[diary]---------------------------------------
 			
 		} else if ("diary".equals(page)) {
-			UserController.getUserController().ReviewList(request, response);
-			MoveUrl.forward(request, response, "/page/mypage/diary.jsp");
-			
-			
+			path  = UserController.getUserController().ReviewList(request, response);
+			MoveUrl.forward(request, response, path);
+		} else if("diarypage".equals(page)) {
+			path = UserController.getUserController().ReviewPage(request, response);
+			MoveUrl.forward(request, response, path);
+		}else if("diaryselect".equals(page)) {
+			path = UserController.getUserController().getSearchReview(request, response);
+			MoveUrl.forward(request, response, path);
 			
 //			-----------------------[social]---------------------------------------
 			

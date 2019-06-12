@@ -86,19 +86,19 @@ Set yellow color when star hover  --%> <%-- 체크박스 --%> .form-check-input
 			uiLibrary : 'bootstrap4'
 		});
 	});
-	function register() {
-		if (document.getElementById("starRating").value == "") {
-			alert("별점을 선택하세요");
-			return;
-		} else if (document.getElementById("reviewContent").value == "") {
-			alert("리뷰 내용을 입력하세요");
-			return;
-		} else {
-			document.getElementById("starRating").value
-			document.getElementById("reviewContent").value
-			
-		}
+<%-- 저장 --%>
+function register() {
+	if(document.getElementById("starRating").value ==""){
+		alert("별점 입력하세요!");
+		return;
+	}else if(document.getElementById("reviewContent").value == ""){
+		alert("id 입력");
+		return;
+	}else{
+		document.getElementById("reviewsave").action = "<%=root%>mypage";
+		document.getElementById("reviewsave").submit();
 	}
+}
 </script>
 </head>
 <body class="left-sidebar is-preload">
@@ -115,7 +115,7 @@ Set yellow color when star hover  --%> <%-- 체크박스 --%> .form-check-input
 		<!-- Main -->
 		<div class="wrapper style1">
 			<div class="container">
-
+			<form action="">
 				<%--  페이지 제목 --%>
 				<div class="row" style="margin-top: 0; margin-top: 10px;">
 					<div
@@ -138,7 +138,7 @@ Set yellow color when star hover  --%> <%-- 체크박스 --%> .form-check-input
 							<a href="#" id="srchMovie"><img class="movieImg"
 								src="/MovieHolic/images/getposter.png" width="235vh"></a>
 						</div>
-
+						
 						<div id="likeunlike" class="rounded-lg"
 							style="background-color: #555; margin-top: 20px; height: 100px; padding-top: 8px; text-align: center;">
 							<span class="font_light_small">영화를 평가해주세요.</span>
@@ -158,7 +158,7 @@ Set yellow color when star hover  --%> <%-- 체크박스 --%> .form-check-input
 						</div>
 
 						<div id="likeunlike" class="rounded-lg"
-							style="background-color: #555; margin-top: 10px; height: 60px; text-align: center;">
+							style="background-color: #555; margin-top: 10px; height: 80px; text-align: center;">
 							<input type="checkbox" class="form-check-input" id="public"><label
 								for="public" class="font_light_small">이 리뷰를 공개합니다.</label>
 						</div>
@@ -185,14 +185,14 @@ Set yellow color when star hover  --%> <%-- 체크박스 --%> .form-check-input
 					style="margin-top: 40px; border-top: 2.5px solid #fff;">
 					<div class="col-12">
 						<div style="float: right;">
-							<button class="btn btn-success font_bold_small" id="reviewsave">저&nbsp;&nbsp;&nbsp;장</button>
+							<button class="btn btn-success font_bold_small" id="reviewsave" onclick="javascript:register();">저&nbsp;&nbsp;&nbsp;장</button>
 						</div>
 						<div style="float: right; margin-right: 20px;">
 							<button class="btn btn-success font_bold_small" id="reviewcancle">취&nbsp;&nbsp;&nbsp;소</button>
 						</div>
 					</div>
 				</div>
-
+				</form>
 			</div>
 		</div>
 
