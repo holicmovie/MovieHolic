@@ -185,14 +185,20 @@ public class ListDao {
 
 
 //	#### 조회수 올리고 List Select ####
-	public BoardDto selBoardBySeq(String seq, boolean flag) {
+//	seq == null && flag == false && id != null	: 아이디로 검색하여 최신순으로 정렬 하고 여러건 반환
+//	seq != null && flag == true && id == null	: 리스트 조회수 올리고 글번호로 검색하여 1건 반환
+//	seq != null && flag == false && id == null	: 글번호로 검색하여 1건 반환
+	public List<BoardDto> selBoardBySeq(String seq, boolean flag, String id) {
+		List<BoardDto> boardList = null;
 		BoardDto board = null;
+		
 		int result = 0;
 		
 		try {
 			conn = DBConnection.makeConnection();
 			conn.setAutoCommit(false);
 			
+			// flag가 true인 경우, 조회수 올림
 			if(flag) {
 				result = ListDao.getListDao().updateCount("mh_board", "viewCount = viewCount + 1", "seq = " + seq);
 			} else {
@@ -204,13 +210,20 @@ public class ListDao {
 				sql.append("SELECT SEQ, USERID, SUBJECT, TO_CHAR(POSTDATE, 'YYYY.MM.DD HH24:MI:SS'), CONTENT, \n");
 				sql.append("MOVIENAME, MOVIECODEYOUNG, MOVIECODENAVER, BEST, WORST, VIEWCOUNT \n");
 				sql.append("FROM MH_BOARD \n");
-				sql.append("WHERE SEQ = ? \n");
+				
+				// id가 있는 경우 >> id로 검색  ||  id없는 경우 >> seq로 검색
+				if(id != null) {
+					sql.append("WHERE USERID = " + id + " \n");
+					sql.append("ORDER BY SEQ DESC \n");
+				} else {
+					sql.append("WHERE SEQ = " + seq + " \n");
+				}
 				pstmt = conn.prepareStatement(sql.toString());
 				
-				pstmt.setInt(1, Integer.parseInt(seq));
 				rs = pstmt.executeQuery();
 				
-				if(rs.next()) {
+				boardList = new ArrayList<BoardDto>();
+				while(rs.next()) {
 					board = new BoardDto();
 					
 					// 영화 정보 || 단위로 나누기
@@ -241,9 +254,13 @@ public class ListDao {
 					board.setWorst(rs.getInt("WORST"));
 					board.setViewCount(rs.getInt("VIEWCOUNT"));
 					
-					conn.commit();
-					conn.setAutoCommit(true);
-				} // if문 종료
+					boardList.add(board);
+					
+				} // while문 종료
+				
+				conn.commit();
+				conn.setAutoCommit(true);
+				
 			} // if문 종료
 			
 		} catch (SQLException e) {
@@ -257,7 +274,7 @@ public class ListDao {
 			DBClose.close(conn, pstmt, rs);
 		}
 		
-		return board;
+		return boardList;
 	}
 	
 	

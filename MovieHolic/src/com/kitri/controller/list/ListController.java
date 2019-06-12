@@ -113,9 +113,13 @@ public class ListController {
 	public String selListBySeq(HttpServletRequest request, HttpServletResponse response) {
 		String path = "/error.jsp";
 		String seq = request.getParameter("seq");
-		BoardDto board = ListService.getListService().selListBySeq(seq);
+		// DB에서 select해서 BoardDto로 받아옴
+		List<BoardDto> boardList = ListService.getListService().selListBySeq(seq, null);
+		BoardDto board = boardList.get(0);
+		
 		
 		if(board != null) {
+			// 영화 이미지 가져오기
 			List<FilmDto> film = ListService.getListService().getMvImg(board);
 			
 			if(film != null) {
