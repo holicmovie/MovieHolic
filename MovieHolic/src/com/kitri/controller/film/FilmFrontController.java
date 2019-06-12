@@ -33,10 +33,12 @@ public class FilmFrontController extends HttpServlet {
 		if (act == null) {
 			System.out.println("FilmFrontConteroller : act=null");
 			
-			// 경로 get 				 		  		   	 						 (C -> FC)
-			// request(setted 박스오피스 & 추천영화목록) get   	 (C -> FC)
-			path = FilmController.getUserController().getBoxOffice(request, response);	// attr1 : box
-			FilmController.getUserController().getFavoriteFilm(request, response);		// attr2 : favoritefilm
+			// 경로 get 				 		  		   	(C -> FC)
+			// request(setted 박스오피스 & 추천영화목록) get  (C -> FC)
+			path = FilmController.getUserController().getBoxOffice(request, response);	// attr1    : box
+			FilmController.getUserController().getFavoriteFilm(request, response);		// attr2, 3 : favoritefilm, favoritefilm2 (로그인)
+			FilmController.getUserController().getVariousFilm(request, response);		// attr4, 5 : variousfilm, variousfilm2   (비로그인)
+			
 			
 			MoveUrl.forward(request, response, path);
 		}
