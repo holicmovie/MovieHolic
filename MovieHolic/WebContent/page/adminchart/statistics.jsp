@@ -181,10 +181,10 @@ $(document).on("click", ".barsearch>button", function(){
 		method : 'get',
 		success : function(result) {
 			//$("div.uservariance").html(result.trim());
-			var checkArr = checkArr.push($("input.a").val());
+			//var checkArr = checkArr.push($("input.a").val());
 			//checkArr = $("input.a").val();
-			alert(checkArr[0]);
-			console.log(checkArr[0]);
+			//alert(checkArr[0]);
+			//console.log(checkArr[0]);
 			
 		}
 	});
