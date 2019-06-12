@@ -16,41 +16,99 @@ public class MyPageFrontController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("서블릿");
+		System.out.println("서블릿진입");
 		String page = request.getParameter("page");
 		String tab = request.getParameter("tab");
 		String path = "";
+		String wishlist = request.getParameter("wishlist");
+//----------------------------------[mypage]----------------------------------------
 		if ("mypage".equals(page)) {
-			path = "/page/mypage/mypage.jsp";
+			path = MyPageController.getMyPageController().showMine(request, response);
 			MoveUrl.forward(request, response, path);
+			
+			
+			
+//--------------------------------[취향 분석]-----------------------------------------------
+			
 		} else if ("preference".equals(page)) {
 			MoveUrl.forward(request, response, "/page/mypage/preference.jsp");
+			
+			
+			
+			
+//			-----------------------[wishlist]---------------------------------------
 		} else if ("wishlist".equals(page)) {
-			MoveUrl.forward(request, response, "/page/mypage/wishlist.jsp");
+			path = MyPageController.getMyPageController().showWishList(request, response);
+			MoveUrl.forward(request, response, path);
+			
+			
+		} else if ("search".equals(wishlist)) {	
+			path = MyPageController.getMyPageController().searchWishList(request, response);
+			MoveUrl.forward(request, response, path);
+			
+			
+			
+			
+			
+//			-----------------------[diary]---------------------------------------
+			
 		} else if ("diary".equals(page)) {
 			UserController.getUserController().ReviewList(request, response);
 			MoveUrl.forward(request, response, "/page/mypage/diary.jsp");
+			
+			
+			
+//			-----------------------[social]---------------------------------------
+			
 		} else if ("social".equals(page)) {
 			path = MyPageController.getMyPageController().showFollowings(request, response);
-//			MyPageController.getMyPageController().showFollowers(request, response);
 			MyPageController.getMyPageController().deleteFollowings(request, response);
 			MoveUrl.forward(request, response, path);
-//			MoveUrl.forward(request, response, path);
+			
+			
+			
+			
+//			-----------------------[setting]---------------------------------------
 		} else if ("setting".equals(page)) {
 			UserController.getUserController().settingUser(request, response);
 			UserController.getUserController().settingProfile(request, response);
 			MoveUrl.forward(request, response, "/page/mypage/setting.jsp");
+			
+			
+			
+			
+			
+//			-----------------------[review작성]---------------------------------------
+		} else if("writereview".equals(page)) {
+			UserController.getUserController().ReviewRegister(request, response);
+			MoveUrl.forward(request, response, "/page/mypage/writereview.jsp");
+			
+			
+			
+			
+			
+//			-----------------------[review 상세 확인]---------------------------------------
+			
 		}  else if("reviewdetail".equals(page)) {
 			UserController.getUserController().ReviewDetail(request, response);
 			MoveUrl.forward(request, response, "/page/mypage/diaryDetail.jsp");
+			
+			
+			
+			
+			
+//			-----------------------[review 댓글]---------------------------------------
 		} else if("reviewcomment".equals(page)) {
 			UserController.getUserController().ReviewComment(request, response);
 			MoveUrl.forward(request, response, "/page/mypage/diaryDetail.jsp");
-		} else if ("followings".equals(tab)) {
-			path = MyPageController.getMyPageController().showFollowings(request, response);
-			MoveUrl.forward(request, response, path);
+			
+			
+			
+			
+//			-----------------------[소셜-follower기능]---------------------------------------
 		} else if ("followers".equals(tab)) {
 			path = MyPageController.getMyPageController().showFollowers(request, response);
+			MyPageController.getMyPageController().addFollower(request, response);
 			MoveUrl.forward(request, response, path);
 		}
 	}

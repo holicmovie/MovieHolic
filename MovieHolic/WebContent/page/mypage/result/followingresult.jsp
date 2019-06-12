@@ -36,11 +36,12 @@
 								    <tr>
 								    
 								      <th scope="row">${pb.no}</th>
-								      <td><input type ="hidden" class = "followingid" value = "${pb.followingId}">${pb.followingId}</td>
+								      <td>${pb.followingId}</td>
 								      <td>${pb.name}</td>
 								      <td><i class="fa fa-list" style="color:gold;"></i> ${pb.best_count }</td>
 								      <td><i class="fa fa-heart" style="color:tomato;"></i>${pb.list_count }</td>
 								      <td>
+								      <input type ="hidden" class = "followingid" value = "${pb.followingId}">
 								      	<button type="button" class="btn btn-danger btn-circle btn-xl deletef"><i class="fa fa-times"></i></button>
 									  </td>
 								    </tr>

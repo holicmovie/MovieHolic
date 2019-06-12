@@ -10,19 +10,13 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <!-- 소셜 페이지 눌렀을 때 출력 -->
-<%--   <%
- 	PageBean pb = (PageBean)request.getAttribute("pb");
-	PageBean pbf = (PageBean)request.getAttribute("pbf");
-	%>
-  <c:set var = "pb" value="${requestScope.pb}"/>
-  <c:set var = "pbf" value="${requestScope.pbf}"/> --%>
+
 <script>
 
 /* 처음 로딩할 때 followingID출력 */
  
 
 $(function(){
-
 	$.ajax({
 		url:'/MovieHolic/mypage?page=social',
 		method:"GET",
@@ -128,31 +122,51 @@ $(document).on("click", "#btnfollowings", function(){
 	return false;
 });
 
-$(document).on('click', '.deletef', function(){
-	var followingid = $('.followingid').val();
-	alert(followingid);
+$(document).on('click', '.deletef', function(){ 
+	var str = "";
+    var tdArr = new Array();    // 배열 선언
+    var checkBtn = $(this);
+    var tr = checkBtn.parent().parent();
+    var td = tr.children();
+
+    
+    /* var no = td.eq(0).text(); */
+    var followingid = td.eq(1).text().trim();
+    /* var name = td.eq(2).text();
+    var lists = td.eq(3).text();
+	var likes = td.eq(4).text(); */
+	
 		$.ajax({
 			url:'/MovieHolic/mypage',
 			method: 'GET',
 			data:'page=social&deletefollowing=' + followingid,
 			success: function(result){
-	alert(followingid +"삭제");
-			/* 	location.href="/MovieHolic/mypage?page=social" */
-			}
-	});
-	return false; 
+				alert(followingid +"삭제");
+				location.reload();
+			 	/* location.href="/MovieHolic/mypage?page=social"  */
+			 	}
+			});
+	return false;   
 }); 
 
-$(document).on("click", ".plusfollower", function(){
+$(document).on('click', '.plusfollower', function(){
 		alert("눌렸다.");
-	var followerid = $(".addfollow").val();
-	alert(followerid);
+		var str = "";
+		    var tdArr = new Array();    // 배열 선언
+		    var checkBtn = $(this);
+		    var tr = checkBtn.parent().parent();
+		    var td = tr.children();
+
+		    /* var no = td.eq(0).text(); */
+		    var followerid = td.eq(1).text().trim();		
+		
+		alert(followerid);
 		$.ajax({
 			url:"/MovieHolic/mypage",
 			method: "GET",
 			data:"tab=followers&follow=" + followerid,
 			success: function(result){
-				
+				alert(followerid +"추가성공");
 			}
 	});
 	return false; 
@@ -214,6 +228,7 @@ $(document).on("click", ".plusfollower", function(){
 					<button class="btn btn-success font_bold_small" id= "btnfollowings">Followings</button>
 					<button class="btn btn-success font_bold_small" id = "btnfollowers">Followers</button>
 					  <div class="tab-content">
+					  
 					  <section id = "section"></section>
   					   		
 					  </div>
