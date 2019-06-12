@@ -61,8 +61,11 @@ public class ListFrontController extends HttpServlet {
 		} else if("selComment".equals(act)) {
 			String path = ListController.getListController().selComment(request, response);
 			MoveUrl.forward(request, response, path);
-		} else if("".equals(act)) {
-			
+		} else if("delComment".equals(act)) {
+			int result = ListController.getListController().delComment(request, response);
+			response.setContentType("text/plain; charset=UTF-8"); 
+			PrintWriter out = response.getWriter();
+			out.print(result);
 		} else if("".equals(act)) {
 			
 		} else if("".equals(act)) {

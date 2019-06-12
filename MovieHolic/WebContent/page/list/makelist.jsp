@@ -159,6 +159,7 @@
 
 </script>
 </head>
+
 <body class="left-sidebar is-preload">
 <div id="page-wrapper">
 <%-- Header --%>

@@ -16,7 +16,8 @@
 	<td style="vertical-align: middle;">
 	<c:if test="${sessionScope.userID != null }">
 		<c:if test="${sessionScope.userID == comment[i].userId}">
-	<button type="button" id="replydelete" class="close" style="color: white">&times;</button>
+	<a id="modCommment" class="font-light-small" style="color: white;">수정&nbsp;&#124;</a>
+	<a id="delCommment" class="font-light-small" style="color: white;">삭제</a>
 		</c:if>
 	</c:if>
 	</td>

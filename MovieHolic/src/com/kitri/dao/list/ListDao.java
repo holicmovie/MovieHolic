@@ -33,9 +33,8 @@ public class ListDao {
 	
 	
 
-//--------------------------------------------------------------------------------------------------- insert
 	
-//	#### List Insert ####
+//---------------------------------------------------------------------------------------------------	#### List Insert ####
 	public int saveList(BoardDto board) {
 		int result = 0;
 		
@@ -43,6 +42,7 @@ public class ListDao {
 			conn = DBConnection.makeConnection();
 			conn.setAutoCommit(false);
 			
+			// 1. 게시판 테이블 insert
 			result = ListDao.getListDao().insertList(board);
 			
 			if(result != 0) {
@@ -57,13 +57,15 @@ public class ListDao {
 					if(result != 0) {
 						conn.commit();
 						conn.setAutoCommit(true);
+					} else {
+						conn.rollback();
 					}
 				} else {
 					conn.rollback();
 				} //if-else문 종료
 			} else {
 				conn.rollback();
-			} //if-else문 종료
+			} conn.rollback();
 		} catch (SQLException e) {
 			try {
 				result = 0;
@@ -88,12 +90,13 @@ public class ListDao {
 			conn = DBConnection.makeConnection();
 			conn.setAutoCommit(false);
 			
+			// 댓글 테이블에 insert
 			StringBuffer sql = new StringBuffer();
 			sql.append("INSERT INTO MH_COMMENT (POSTDATE, USERID, SEQ, CONTENT) \n");
-			sql.append("VALUES (to_date((to_char(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')), 'YYYY-MM-DD HH24:MI:SS')), ?, ?, ?) \n");
+			sql.append("VALUES (SYSDATE, ?, ?, ?) \n");
 			String seqArr[] = {"POSTDATE"};	// 작성일 컬럼이름
 			pstmt = conn.prepareStatement(sql.toString(), seqArr);
-	        
+
 			pstmt.setString(1, id);
 			pstmt.setInt(2, Integer.parseInt(seq));
 			pstmt.setString(3, content);
@@ -103,11 +106,11 @@ public class ListDao {
 
 			rs.next();
 			postDate = rs.getString(1);	
-			System.out.println("postDate: " + postDate);
 			if(result != 0) {
+				// log 테이블에 insert
 				sql = new StringBuffer();
 				sql.append("INSERT INTO MH_LOG (LOGDATE, LOGID, USERID, LOGCATE, SUBJECT, SEQ) \n");
-				sql.append("VALUES (to_date((to_char(SYSDATE, 'YYYY-MM-DD HH24:MI:SS')), 'YYYY-MM-DD HH24:MI:SS')), ?, ?, 3, ?, ?) \n");
+				sql.append("VALUES (to_date(?, 'YYYY-MM-DD HH24:MI:SS'), ?, ?, 3, ?, ?) \n");
 				pstmt = conn.prepareStatement(sql.toString());
 				
 				int idx = 0;
@@ -118,7 +121,7 @@ public class ListDao {
 				pstmt.setInt(++idx, Integer.parseInt(seq));
 				
 				result = pstmt.executeUpdate();
-				
+				System.out.println("log테이블에 저장 완료");
 				if(result != 0) {
 					conn.commit();
 					conn.setAutoCommit(true);
@@ -265,8 +268,11 @@ public class ListDao {
 		try {
 			conn = DBConnection.makeConnection();
 			conn.setAutoCommit(false);
+			
+//			게시판 테이블의 좋아요/싫어요 update
 			result = ListDao.getListDao().updateCount("MH_BOARD", btnStr + " = " + btnStr + " + 1", "seq = " + seq);
 			if(result != 0) {
+//				게시판 테이블 select
 				StringBuffer sql = new StringBuffer();
 				sql.append("SELECT SEQ, USERID, SUBJECT, " + btnStr + " \n");
 				sql.append("FROM MH_BOARD \n");
@@ -433,16 +439,16 @@ public class ListDao {
 			conn.setAutoCommit(false);
 			
 //			1. 로그 삭제 (기준: 글번호)
-			result = ListDao.getListDao().delete("MH_LOG", "SEQ", seq);
+			result = ListDao.getListDao().delete("MH_LOG", "SEQ = '" + seq + "'");
 			if(result != 0) {
 //				2. 댓글 삭제 (기준: 글번호)
 				if(cnt != 0) {
-					result = ListDao.getListDao().delete("MH_COMMENT", "SEQ", seq);
+					result = ListDao.getListDao().delete("MH_COMMENT", "SEQ = '" + seq + "'");
 				}
 				if(result != 0) {
 					
 //					3. 리스트 삭제 (기준: 글번호)
-					result = ListDao.getListDao().delete("MH_BOARD", "SEQ", seq);
+					result = ListDao.getListDao().delete("MH_BOARD", "SEQ = '" + seq + "'");
 					if(result != 0) {
 						result = ListDao.getListDao().updateCount("MH_USER", "LIST_COUNT = LIST_COUNT - 1", "USERID = " + "'" + id + "'");
 						
@@ -476,6 +482,50 @@ public class ListDao {
 		return result;
 	}
 	
+	
+	
+//	#### 댓글 삭제 ####
+	public int delComment(String id, String postDate) {
+		int result = 0;
+		
+		try {
+			conn = DBConnection.makeConnection();
+			conn.setAutoCommit(false);
+			
+			// 댓글 테이블의 데이터 삭제
+			result = delete("MH_COMMENT", "to_char(POSTDATE, 'YYYY.MM.DD HH24:MI:SS') = '" + postDate + "' and USERID = '" + id + "'");
+			System.out.println("dao 1단계 통과");
+			System.out.println("result :" + result);
+			if(result != 0) {
+				
+				System.out.println("dao 2단계 통과");
+				System.out.println("result :" + result);
+				// 로그 테이블의 데이터 삭제
+				result = delete("MH_LOG", "to_char(LOGDATE, 'YYYY.MM.DD HH24:MI:SS') = '" + postDate + "' and LOGID = '" + id + "'");
+				
+				System.out.println("dao 3단계 통과");
+				System.out.println("result :" + result);
+				if(result != 0) {
+					System.out.println("dao 4단계 통과");
+					System.out.println("result :" + result);
+					conn.commit();
+					conn.setAutoCommit(true);
+				}
+			}
+			
+		} catch (SQLException e) {
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt);
+		}
+		
+		return result;
+	}
 	
 	
 	
@@ -631,9 +681,8 @@ public class ListDao {
 			sql.append("SET LIST_COUNT = LIST_COUNT + 1 \n");
 			sql.append("WHERE USERID = ? \n");
 			pstmt = conn.prepareStatement(sql.toString());
-			
-			int idx = 0;
-			pstmt.setString(++idx, board.getUserId());
+			System.out.println("dao 690] userId :" + board.getUserId());
+			pstmt.setString(1, board.getUserId());
 			
 			result = pstmt.executeUpdate();
 		} finally {
@@ -674,7 +723,7 @@ public class ListDao {
 	
 	
 //	#### delete ####
-	private int delete(String table, String column, String condition) throws SQLException {
+	public int delete(String table, String condition) throws SQLException {
 		
 		int result = 0;
 		
@@ -682,10 +731,9 @@ public class ListDao {
 			
 			StringBuffer sql = new StringBuffer();
 			sql.append("DELETE " + table + " \n");
-			sql.append("WHERE " + column + " = ? \n");
+			sql.append("WHERE " + condition + " \n");
 			pstmt = conn.prepareStatement(sql.toString());
 			
-			pstmt.setInt(1, Integer.parseInt(condition));
 			result = pstmt.executeUpdate();
 			
 		} finally {
@@ -695,6 +743,7 @@ public class ListDao {
 		
 		return result;
 	}
+	
 	
 	
 	

@@ -67,6 +67,8 @@ public class ListController {
 		board.setMovieCodeYoung(young);
 		board.setMovieCodeNaver(naver);
 		
+		System.out.println("con 70] board.getUserId():" + board.getUserId());
+		
 //		2. BoardDto에 담아서 service로 전달하고 result 받음
 		result = ListService.getListService().saveList(board);
 
@@ -229,12 +231,21 @@ public class ListController {
 				path = "/page/list/result/commentResult.jsp";
 				request.setAttribute("comment", comment);
 				request.setAttribute("user", user);
-				System.out.println("comment.size() :" + comment.size());
-				System.out.println("user.size() :" + user.size());
 			} // if문 종료
 		} // if문 종료
 
 		return path;
+	}
+	
+	
+	
+//	#### 댓글 삭제 ####
+	public int delComment(HttpServletRequest request, HttpServletResponse response) {
+		String postDate = request.getParameter("postDate");
+		HttpSession session = request.getSession();
+		String id = session.getAttribute("userID").toString(); 
+		
+		return ListService.getListService().delComment(id, postDate);
 	}
 	
 	

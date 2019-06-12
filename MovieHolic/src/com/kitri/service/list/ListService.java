@@ -222,6 +222,10 @@ public class ListService {
 	}
 	
 	
+//	#### 댓글 삭제 ####
+	public int delComment(String id, String postDate) {
+		return ListDao.getListDao().delComment(id, postDate);
+	}
 	
 //	----------------------------------------------------------------------------------------- Util
 	
@@ -450,6 +454,7 @@ public class ListService {
 		}
 		return movieImage;
 	}
+	
 	
 	
 

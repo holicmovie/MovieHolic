@@ -54,20 +54,22 @@
 <%-- list 삭제 버튼 클릭시 --%>
 	$(function(){
 		$('#del').click(function(){
-			var cnt = $('#cnt').text();
-			$.ajax({
-				url: "list",
-				data: "act=delete&seq="+ seq + "&postDate=" + $('#writedate').text() + "&cnt=" + cnt,
-				method: 'post',
-				success:function(result){
-					if(result != 0) {
-						alert("삭제 되었습니다.");
-						location.href = "/MovieHolic/page/list/movielist.jsp";
-					} else {
-						alert("시스템 에러로 인해 삭제 처리에 실패하였습니다. 나중에 다시 시도하세요.");
+			if(confirm("해당 리스트를 삭제하시겠습니까?")) {
+				var cnt = $('#cnt').text();	<%--댓글 삭제여부를 판단하기 위해 댓글 개수 가져감--%>
+				$.ajax({
+					url: "list",
+					data: "act=delete&seq="+ seq + "&postDate=" + $('#writedate').text() + "&cnt=" + cnt,
+					method: 'post',
+					success:function(result){
+						if(result != 0) {
+							alert("리스트가 삭제 되었습니다.");
+							location.href = "/MovieHolic/page/list/movielist.jsp";
+						} else {
+							alert("시스템 에러로 인해 삭제 처리에 실패하였습니다. 나중에 다시 시도하세요.");
+						}
 					}
-				}
-			});
+				});
+			}
 			return false;
 		});
 	});
@@ -76,6 +78,7 @@
 		$('.btnCnt').click(function(){
 			if($.ckID()){
 				var btnStr = $(this).attr('href');
+				alert(postDate);
 				var check = '해당 게시물을 평가(' + ((btnStr == "best") ? "좋아요" : "싫어요" ) + ')하시겠습니까?';
 				if(confirm(check)) {
 					$.ajax({
@@ -154,9 +157,42 @@
 			return false;
 		});
 	});
+<%-- 댓글 삭제 --%>
+	$(function(){
+		$(document).on("click", "#delCommment", function(){
+			var postDate = $(this).parents('tr').attr('data-date');
+			if(confirm("해당 게시물을 삭제하시겠습니까?")) {
+				$.ajax({
+					url: 'list',
+					data: 'act=delComment&postDate=' + postDate,
+					method: 'post',
+					success: function(result){
+						if(result != 0) {
+							alert("댓글이 삭제되었습니다.");
+							$.ajax({
+								url: "<%= request.getContextPath()%>/list",
+								data: "act=selComment&seq=" + seq,
+								method: 'post',
+								success:function(result){
+									alert(result);
+									$('textarea').val('');
+									$('tbody').empty();
+									$('tbody').html(result);
+									$('#cnt').text($('#commenCnt').attr("data-cnt"));
+								}
+							});
+						} else {
+							alert("시스템 에러로 인해 작업 처리에 실패하였습니다. 나중에 다시 시도하세요.");
+						}
+					}
+				});
+			}
+			return false;
+		});
+	});
 </script>
 <script>
-<% session.setAttribute("userID", "a155@gmail.com"); %>
+<% session.setAttribute("userID", "a138@gmail.com"); %>
 <%-- <% session.removeAttribute("userID");%> --%>
 $(function(){
 	seq = $('#back').attr('data-seq');
@@ -270,13 +306,13 @@ $(function(){
 			</div>
 			<div class="col-lg-12 font_light_small" style="margin: 0 0 20em 0; height: 500px; overflow-y: auto;">
 				<table class="table table-hover" id="modalTable" >
-					<col width="5%">
-					<col width="20%">
-					<col width="70%">
-					<col width="5%">
+					<col width="">
+					<col width="">
+					<col width="60%">
+					<col width="100px">
 					<tbody>
 						<c:forEach begin="1" end="${fn:length(comment)-1}" var="i">
-						<tr>
+						<tr data-date="${comment[i].postDate}">
 							<td style="text-align: center">
 								<a href="#"><img class="profile_icon" src="/MovieHolic/images/profile/${user[i].profile}"></a>
 							</td>
@@ -288,7 +324,8 @@ $(function(){
 							<td style="vertical-align: middle;">
 							<c:if test="${sessionScope.userID != null }">
 								<c:if test="${sessionScope.userID == comment[i].userId}">
-							<button type="button" id="replydelete" class="close" style="color: white">&times;</button>
+							<a id="modCommment" class="font-light-small" style="color: white;">수정&nbsp;&#124;</a>
+							<a id="delCommment" class="font-light-small" style="color: white;">삭제</a>
 								</c:if>
 							</c:if>
 							</td>
