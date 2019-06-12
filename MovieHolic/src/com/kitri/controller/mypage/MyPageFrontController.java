@@ -38,7 +38,8 @@ public class MyPageFrontController extends HttpServlet {
 //--------------------------------[취향 분석]-----------------------------------------------
 			
 		} else if ("preference".equals(page)) {
-			MoveUrl.forward(request, response, "/page/mypage/preference.jsp");
+			path = PreferenceController.getPreferenceController().showPreference(request, response);
+			MoveUrl.forward(request, response, path);
 			
 			
 			
