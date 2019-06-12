@@ -208,7 +208,7 @@ public class FilmController {
 		int totalCnt = FilmService.getFilmService().getReviewTotalPage(movieCdYoung); 	// 총 게시글 수
 		int cntPerPageGroup = 5;                					 					// 그룹 페이지 수
 								
-		String url = "film";  // ??? 뭐지
+		String url = "film";
 
 		PageBeanReview pb = new PageBeanReview(currentPage,
 											cntPerPage,

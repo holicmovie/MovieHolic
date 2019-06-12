@@ -161,7 +161,7 @@ if(userStars != null){
 	for(int i = 0; i < userStars.size(); i++){
 %>
 	{
-  "country": <%=(i+1)%>,
+  "country": <%=(i+1)%>+" 별점",
   "value": <%=userStars.get(i)%>
 	}
 
@@ -246,11 +246,29 @@ series.columns.template.adapter.add("fill", (fill, target) => {
 			<div class = "col-lg-12 top_margin preference_bold_font" style="font-size : 30px; border-bottom: thin solid gray;"><h3>선호 장르</h3></div>
 			
 			<div class = "col-lg-12">
-				<span><i class='fas fa-crown preference_title_name' style='margin-bottom:10px;'> 스릴러</i></span><br><br>
-				<span><i class='fas fa-medal preference_bold_font' style="font-size:28px;"> 로맨스&nbsp;&nbsp;&nbsp;</i></span>
-				<span><i class='fas fa-medal preference_bold_font' style="font-size:28px;"> 공포&nbsp;&nbsp;&nbsp;</i></span>
-				<span><i class='fas fa-medal preference_bold_font' style="font-size:28px;"> 가족&nbsp;&nbsp;&nbsp;</i></span>
-				<span><i class='fas fa-medal preference_bold_font' style="font-size:28px;"> 애니메이션</i></span>
+<%
+	if(userCategory.size() == 1){
+%>
+
+				<span><i class='fas fa-crown preference_title_name' style='margin-bottom:10px;'><%=userCategory.get(0).getCategory()%></i></span><br><br>
+
+<%
+	} else {
+%>
+
+		<span><i class='fas fa-crown preference_title_name' style='margin-bottom:10px;'><%=userCategory.get(0).getCategory()%></i></span><br><br>
+
+<%
+		for(int i = 1; i < userCategory.size(); i++) {
+%>
+
+		<span><i class='fas fa-medal preference_bold_font' style="font-size:28px;"> <%=userCategory.get(i).getCategory()%>&nbsp;&nbsp;&nbsp;</i></span>
+
+<%
+	}
+}
+%>
+				
 			</div>
 
 			<div class = "col-lg-12" id="chartdiv"></div>
@@ -263,15 +281,18 @@ series.columns.template.adapter.add("fill", (fill, target) => {
 			<div class = "col-lg-1"></div>
 			<div class = "col-lg-10">
 			<div class="list-group">
-		  	<a href="#" class="list-group-item list-group-item-action list-group-item-dark" style="background-color: rgb(40,40,40)">
-			  <img src="/MovieHolic/images/song.jpg" alt="배우 사진" class="mr-3 mt-3 rounded-circle" style="width:60px;"/> 
-			 <font class = "font_light_small"> 송강호</font></a>
-			  <a href="#" class="list-group-item list-group-item-action list-group-item-dark" style="background-color: rgb(40,40,40)">
-			 <img src="/MovieHolic/images/anne.jpg" alt="배우 사진" class="mr-3 mt-3 rounded-circle" style="width:60px;"/> 
-			<font class = "font_light_small">  앤 해서웨이</font></a>
-			  <a href="#" class="list-group-item list-group-item-action list-group-item-dark" style="background-color: rgb(40,40,40)">
-			 <img src="/MovieHolic/images/lee.jpg" alt="배우 사진" class="mr-3 mt-3 rounded-circle" style="width:60px;"/>  
-			 <font class = "font_light_small"> 이병헌</font></a>
+<%
+for(int i = 0; i < userActors.size(); i ++){
+%>
+
+	<a class="list-group-item list-group-item-action list-group-item-dark" style="background-color: rgb(40,40,40)">
+			  <img src="<%=userActors.get(i).getActorImage()%>" alt="배우 사진" class="mr-3 mt-3 rounded-circle" style="width:60px;"/> 
+			 <font class = "font_light_small"> <%=userActors.get(i).getActor()%></font></a>
+
+<%
+}
+%>
+
 			  </div>
 				</div>	
 				<div class = "col-lg-1"></div>
@@ -285,25 +306,29 @@ series.columns.template.adapter.add("fill", (fill, target) => {
 			<div class = "col-lg-1"></div>
 			<div class = "col-lg-10">
 			<div class="list-group">
-			 
+			
+<%
+for(int i = 0; i < userDirectors.size(); i ++){
+%> 
+
 			  <a href="#" class="list-group-item list-group-item-action " style="background-color: rgb(40,40,40)">
-			  <img src="/MovieHolic/images/nhj.jpg" alt="감독사진" class="mr-3 mt-3 rounded-circle" style="width:60px;"> 
-			  <font class = "font_light_small">나홍진 :곡성	5편</font></a>
-			  <a href="#" class="list-group-item list-group-item-action list-group-item-dark" style="background-color: rgb(40,40,40)">
-			 <img src="/MovieHolic/images/christ.jpg" alt="감독사진" class="mr-3 mt-3 rounded-circle" style="width:60px;"/> 
-			 <font class = "font_light_small"> 크리스토퍼 놀란</font></a>
-			  <a href="#" class="list-group-item list-group-item-action list-group-item-dark" style="background-color: rgb(40,40,40)">
-			 <img src="/MovieHolic/images/john.jpg" alt="감독 사진" class="mr-3 mt-3 rounded-circle" style="width:60px;"/> 
-			  <font class = "font_light_small">존 카니</font></a>
-			  
+			  <img src="<%=userDirectors.get(i).getDirectorImage()%>" alt="감독사진" class="mr-3 mt-3 rounded-circle" style="width:60px;"> 
+			  <font class = "font_light_small"><%=userDirectors.get(i).getDirector()%></font></a>
+
+<%
+}
+%>
+	  
 			</div>
 			</div>
 			<div class = "col-lg-1"></div>
 		</div>
+	
+	
 			
-			<%--평균 별점 --%>
+			<%-- 별점 분포 --%>
 		<div class="row">
-			<div class = "col-lg-12 top_margin preference_bold_font" style="font-size : 30px; border-bottom: thin solid gray;"><span>평균 별점</span></div>
+			<div class = "col-lg-12 top_margin preference_bold_font" style="font-size : 30px; border-bottom: thin solid gray;"><span>별점 분포</span></div>
 			
 			<div class = "col-lg-12" id="chartdiv2"></div>
 			
