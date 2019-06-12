@@ -6,9 +6,11 @@
 <%@ include file="/template/boot_431.jsp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<script type="text/javascript"
-	src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.css"></script> 
+
+
 
 <!-- 그래프 -->
 <link id="themecss" rel="stylesheet" type="text/css" href="/MovieHolic/css/all.min.css">
@@ -59,62 +61,9 @@ hr.line_light_w {
 </style>
 
 
-<script type="text/javascript">
 
-	$(function() {
-		$("#bargraph").shieldChart({
-				theme : "light",
-				primaryHeader : {
-					text : "Internet usage statistics"
-				},
-				exportOptions : {
-					image : false,
-					print : false
-				},
-				axisX : {
-					categoricalValues : [ "2019", "2018", "2017", "2016", "2015", "2014" ]
-				},
-				axisY : {
-					title : {
-						text : "Visitor statistics"
-					}
-				},
-				dataSeries : [
-						{
-							seriesType : "bar",
-							collectionAlias : "10대 이하",
-							data : [ 265000, 130400, 243000, 310200, 270200, 183000 ]
-						},
-						{
-							seriesType : "bar",
-							collectionAlias : "20대",
-							data : [ 152000, 234000, 123000, 348000, 267000, 383000 ]
-						},
-						{
-							seriesType : "bar",
-							collectionAlias : "30대",
-							data : [ 152000, 334000, 113000, 348000, 167000, 283000 ]
-						},
-						{
-							seriesType : "bar",
-							collectionAlias : "40대",
-							data : [ 152000, 234000, 223000, 348000, 267000, 183000 ]
-						},
-						{
-							seriesType : "bar",
-							collectionAlias : "50대 이상",
-							data : [ 352000, 234000, 113000, 148000, 367000, 283000 ]
-						}]
-			});
-	});
-</script>
-
-
-
+	
 <%-- 남녀 가입 비율 현황 --%>
-
-
-
 <script type="text/javascript">
 	$(function() {
 		$("#piechart").shieldChart({
@@ -242,16 +191,16 @@ $(document).on("click", ".barsearch>button", function(){
 
 
 
-
-<%-- 값 빼오기 --%>
-
-
-
-<%-- 값 빼오기 --%>
-
-
-
 </head>
+
+<%-- 값 빼오기 --%>
+<c:forEach begin="${ap.startPage}" end="${ap.endPage}" var="i">
+	<inpu
+</c:forEach>
+
+
+<%-- 값 빼오기 --%>
+
 
 <body class="left-sidebar is-preload">
 	<div id="page-wrapper">
@@ -269,9 +218,11 @@ $(document).on("click", ".barsearch>button", function(){
 		
 		
 		<div class="uservariance">
+		<!-- 연령대별 막대그래프 -->
 		
-			<!-- 연령대별 막대그래프 -->
+		
 			<div class="container" style="margin-bottom: 10em">
+				
 				<div class="row" style="padding-right: 0em">
 					<div class="col-lg-4">
 						<h2 style="color: white;">연령대별 회원 변동</h2>
@@ -352,16 +303,64 @@ $(document).on("click", ".barsearch>button", function(){
 				</div>
 
 				<hr class="line_light_w">
-
+				
 
 				<div class="card">
 					<div align="center">
-						<div id="bargraph" style="width: 58vw; height: 28vw;"
-							align="center"></div>
+						
+						<canvas id="myChart" width="300" height="500"></canvas>
+						
+						<script>
+						var ctx = document.getElementById('myChart');
+						var myChart = new Chart(ctx, {
+						    type: 'bar',
+						    data: {
+						        labels: ['2019', '2018', '2017', '2016', '2015', '2014'],
+						        datasets: [{
+						            label: '총 인원',
+						            data: [12, 19, 3, 5, 2, 3],
+						            
+						            
+						            backgroundColor: [
+						                'rgba(255, 99, 132, 0.2)',
+						                'rgba(54, 162, 235, 0.2)',
+						                'rgba(255, 206, 86, 0.2)',
+						                'rgba(75, 192, 192, 0.2)',
+						                'rgba(153, 102, 255, 0.2)',
+						                'rgba(255, 159, 64, 0.2)'
+						            ],
+						            borderColor: [
+						                'rgba(255, 99, 132, 1)',
+						                'rgba(54, 162, 235, 1)',
+						                'rgba(255, 206, 86, 1)',
+						                'rgba(75, 192, 192, 1)',
+						                'rgba(153, 102, 255, 1)',
+						                'rgba(255, 159, 64, 1)'
+						            ],
+						            borderWidth: 2
+						            
+						        }]
+						    },
+						    
+						    options: { 
+						    	maintainAspectRatio: false,
+						        scales: {
+						            yAxes: [{
+						                ticks: {
+						                    beginAtZero: true
+						                }
+						            }]
+						        }
+						    }
+						});
+						</script>
+						
+						<!-- <div id="bargraph" style="width: 58vw; height: 28vw;"
+							align="center"></div> -->
 					</div>
 				</div>
-
 			</div>
+			
 
 		</div><!-- Ajax - uservariance  -->
 
