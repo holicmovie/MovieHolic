@@ -23,7 +23,9 @@ public class MyPageService {
 
 		return myPageService;
 	}
-
+	
+	
+//---------------------------------[social.jsp]----------------------------
 	// social.jsp following페이지
 	public static List<SocialDto> findByRows(int startRow, int endRow) {
 		return SocialDao.selectByRows(startRow, endRow);
@@ -52,7 +54,12 @@ public class MyPageService {
 	public void addFollowId(String followid) {
 		SocialDao.getSocialDao().addFollow(followid);
 	}
-	// ----------------------------wishlist 필요 메소드----------------------------
+	
+	
+	
+	
+	
+// ----------------------------wishlist 필요 메소드----------------------------
 
 	public List<WishlistDto> showWishlist(String userid) {
 
@@ -67,7 +74,8 @@ public class MyPageService {
 //		System.out.println("service : " + list);
 		return list;
 	}
-
+	
+//		wishlist 검색 기능
 	public List<WishlistDto> showSearchedWishlist(String userid, String srchKey) {
 		
 		List<WishlistDto> list = SocialDao.getSocialDao().selectSearchedWishlist(userid, srchKey);
@@ -79,6 +87,11 @@ public class MyPageService {
 			list.get(i).setMovieURL(movieURL);
 		}
 		return list;
+	}
+	
+// 	wishlist 삭제 기능 
+	public void deleteWishList(String userid, String[] wishlistdelete) {
+		SocialDao.getSocialDao().deleteWishList(userid, wishlistdelete);
 	}
 
 }
