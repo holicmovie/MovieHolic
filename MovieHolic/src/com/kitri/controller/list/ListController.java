@@ -85,7 +85,7 @@ public class ListController {
 		if(board != null) {
 			
 //			2. 댓글 내용 가져오기
-			List<CommentDto> comment = ListService.getListService().selCommentBySeq(seq);
+			List<CommentDto> comment = ListService.getListService().selCommentBySeq(seq, true);
 			if(comment != null) {
 			
 //				3. 유저 프로필사진 가져오기	(0번은 리스트 유저, 이후 댓글 유저)
@@ -128,7 +128,7 @@ public class ListController {
 		return path;
 	}
 	
-	
+//	#### 리스트 수정 ####
 	public int modifyList(HttpServletRequest request, HttpServletResponse response) {
 		int result = 0;
 		
@@ -174,8 +174,87 @@ public class ListController {
 	}
 	
 	
+//	#### list 좋아요&싫어요 update ####
+	public int evaluate(HttpServletRequest request, HttpServletResponse response) {
+		int result = 0;	// 화면에 뿌릴 좋아요&싫어요 수
+		String btnStr = request.getParameter("btnStr");
+		String seq = request.getParameter("seq");
+		HttpSession session = request.getSession();
+		String id = session.getAttribute("userID").toString();
+		
+		result = ListService.getListService().evaluate(btnStr, seq, id);
+		
+		return result;
+	}
 	
 	
+//	#### list 신고 ####
+	public int notify(HttpServletRequest request, HttpServletResponse response) {
+		int result = 0;
+		String seq = request.getParameter("seq");
+		result = ListService.getListService().notify(seq);
+		return result;
+	}
+	
+	
+//	#### 댓글 저장 & log update ####
+	public int saveComment(HttpServletRequest request, HttpServletResponse response) {
+		String content = request.getParameter("content");
+		String seq = request.getParameter("seq");
+		String subject = request.getParameter("subject");
+		String writerId = request.getParameter("writerId");
+		HttpSession session = request.getSession();
+		String id = session.getAttribute("userID").toString();
+		
+		return ListService.getListService().saveComment(id, seq, content, subject, writerId);
+	}
+	
+	
+	
+//	#### 댓글만 조회 ####
+	public String selComment(HttpServletRequest request, HttpServletResponse response) {
+		String path = "/error.jsp";
+		String seq = request.getParameter("seq");
+		
+//		1. 댓글 내용 가져오기
+		List<CommentDto> comment = ListService.getListService().selCommentBySeq(seq, false);
+		
+		if(comment != null) {
+		
+//			2. 유저 프로필사진 가져오기	(0번은 리스트 유저, 이후 댓글 유저)
+			
+			
+			List<UserDto> user = ListService.getListService().selProfileById(null, comment);
+			if(user != null) {
+				path = "/page/list/result/commentResult.jsp";
+				request.setAttribute("comment", comment);
+				request.setAttribute("user", user);
+			} // if문 종료
+		} // if문 종료
+
+		return path;
+	}
+	
+	
+	
+//	#### 댓글 삭제 ####
+	public int delComment(HttpServletRequest request, HttpServletResponse response) {
+		String postDate = request.getParameter("postDate");
+		HttpSession session = request.getSession();
+		String id = session.getAttribute("userID").toString(); 
+		
+		return ListService.getListService().delComment(id, postDate);
+	}
+	
+	
+//	#### 댓글 수정 ####
+	public String modCommment(HttpServletRequest request, HttpServletResponse response) {
+		String postDate = request.getParameter("postDate");
+		HttpSession session = request.getSession();
+		String id = session.getAttribute("userID").toString(); 
+		
+		return ListService.getListService().modCommment(id, postDate);
+	}
 	
 	
 	

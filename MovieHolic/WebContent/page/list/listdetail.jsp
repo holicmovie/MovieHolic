@@ -37,41 +37,206 @@
 </style>
 <script>
 <%-- 이전 버튼 클릭시 --%>
-	$(function(){
-		$('#back').click(function(){
-			history.back();
-			return false;
-		});
+$(function(){
+	$('#back').click(function(){
+		history.back();
+		return false;
 	});
+});
 
 <%-- list 수정 버튼 클릭시 --%>
-	$(function(){
-		$('#modify').click(function(){
-			location.href="list?act=selList&seq=" + $(this).attr('data-seq');
-			return false;
-		});
+$(function(){
+	$('#modify').click(function(){
+		location.href="list?act=selList&seq=" + seq;
+		return false;
 	});
+});
+	
 <%-- list 삭제 버튼 클릭시 --%>
-	$(function(){
-		$('#del').click(function(){
-			var cnt = $('#cnt').text();
+$(function(){
+	$('#del').click(function(){
+		if(confirm("해당 리스트를 삭제하시겠습니까?")) {
+			var cnt = $('#cnt').text();	<%--댓글 삭제여부를 판단하기 위해 댓글 개수 가져감--%>
 			$.ajax({
 				url: "list",
-				data: "act=delete&seq="+ $(this).attr('data-seq') + "&postDate=" + $('#writedate').text() + "&cnt=" + cnt,
+				data: "act=delete&seq="+ seq + "&postDate=" + $('#writedate').text() + "&cnt=" + cnt,
 				method: 'post',
 				success:function(result){
 					if(result != 0) {
-						alert("삭제 되었습니다.");
+						alert("리스트가 삭제 되었습니다.");
 						location.href = "/MovieHolic/page/list/movielist.jsp";
 					} else {
 						alert("시스템 에러로 인해 삭제 처리에 실패하였습니다. 나중에 다시 시도하세요.");
 					}
 				}
 			});
-			return false;
-		});
+		}
+		return false;
 	});
-<%-- list 삭제 버튼 클릭시 --%>
+});
+	
+<%-- 좋아요&싫어요 버튼 클릭시 --%>
+$(function(){
+	$('.btnCnt').click(function(){
+		if($.ckID()){
+			var btnStr = $(this).attr('href');
+			var check = '해당 게시물을 평가(' + ((btnStr == "best") ? "좋아요" : "싫어요" ) + ')하시겠습니까?';
+			if(confirm(check)) {
+				$.ajax({
+					url: 'list',
+					data: 'act=evaluate&btnStr=' + btnStr + '&seq=' + seq,
+					method: 'post',
+					success: function(result){
+						if(result != 0) {
+							$('.btnCnt[href="'+ btnStr +'"]').next().text(result);
+						} else {
+							alert("시스템 에러로 인해 작업 처리에 실패하였습니다. 나중에 다시 시도하세요.");
+						}
+					}
+				});
+			}
+		}
+		return false;
+	});
+});
+	
+<%-- 신고하기 버튼 클릭시 --%>
+$(function(){
+	$('#notify').click(function(){
+		if($.ckID()){
+			if(confirm("해당 게시물을 신고하시겠습니까?")) {
+				$.ajax({
+					url: 'list',
+					data: 'act=notify&seq=' + seq,
+					method: 'post',
+					success: function(result){
+						if(result != 0) {
+							alert("게시물 신고 처리가 완료되었습니다.");
+						} else {
+							alert("시스템 에러로 인해 작업 처리에 실패하였습니다. 나중에 다시 시도하세요.");
+						}
+					}
+				});
+			}
+		}
+		return false;
+	});
+});
+	
+<%-- 댓글 작성 --%>
+$(function(){
+	$('#save').click(function(){
+		if($.ckID()){
+			var comment = $('textarea').val().trim();
+			if(comment == ''){
+				alert("내용을 입력하세요.");
+				return;
+			} else {
+				if(confirm("작성한 댓글을 저장하시겠습니까?")) {
+					$.ajax({
+						url: "<%= request.getContextPath()%>/list",
+						data: "act=saveComment&seq=" + seq + "&content=" + comment +  "&subject=" + $('#subject').text() + "&writerId=" + $('#writerId').text(),
+						method: 'post',
+						success:function(result){
+							if(result != 0) {
+								alert("저장 되었습니다.");
+								$.ajax({
+									url: "<%= request.getContextPath()%>/list",
+									data: "act=selComment&seq=" + seq,
+									method: 'post',
+									success:function(result){
+										$('textarea').val('');
+										$('tbody').empty();
+										$('tbody').html(result);
+										$('#cnt').text($('#commenCnt').attr("data-cnt"));
+									}
+								});
+							} else {
+								alert("시스템 에러로 인해 저장에 실패하였습니다. 나중에 다시 시도하세요.");
+							}
+						}
+					});
+				} 
+			}
+		}
+		return false;
+	});
+});
+	
+<%-- 댓글 삭제 --%>
+$(function(){
+	$(document).on("click", "#delCommment", function(){
+		var postDate = $(this).parents('tr').attr('data-date');
+		if(confirm("해당 댓글을 삭제하시겠습니까?")) {
+			$.ajax({
+				url: 'list',
+				data: 'act=delComment&postDate=' + postDate,
+				method: 'post',
+				success: function(result){
+					if(result != 0) {
+						alert("댓글이 삭제되었습니다.");
+						$.ajax({
+							url: "<%= request.getContextPath()%>/list",
+							data: "act=selComment&seq=" + seq,
+							method: 'post',
+							success:function(result){
+								alert(result);
+								$('textarea').val('');
+								$('tbody').empty();
+								$('tbody').html(result);
+								$('#cnt').text($('#commenCnt').attr("data-cnt"));
+							}
+						});
+					} else {
+						alert("시스템 에러로 인해 댓글 삭제에 실패하였습니다. 나중에 다시 시도하세요.");
+					}
+				}
+			});
+		}
+		return false;
+	});
+});
+
+<%-- 댓글 수정 --%>
+$(function(){
+	$(document).on("click", "#modCommment", function(){
+		var postDate = $(this).parents('tr').attr('data-date');
+		if(confirm("해당 댓글을 수정하시겠습니까?")) {
+			$.ajax({
+				url: 'list',
+				data: 'act=modComment&postDate=' + postDate,
+				method: 'post',
+				success: function(result){
+					if(result != null) {
+						$('textarea').val(result);
+					} else {
+						alert("시스템 에러로 인해 작업 처리에 실패하였습니다. 나중에 다시 시도하세요.");
+					}
+				}
+			});
+		}
+		return false;
+	});
+});
+</script>
+<script>
+<% session.setAttribute("userID", "a124@gmail.com"); %>
+<%-- <% session.removeAttribute("userID");%> --%>
+$(function(){
+	seq = $('#back').attr('data-seq');
+	$.ckID = function() {
+		var userID = "${sessionScope.userID}";
+		if(userID == "") {
+			if(confirm("로그인이 필요한 서비스입니다. 로그인하시겠습니까?")) {
+				location.href="#";
+			} else {
+				return false;
+			}
+		} else {
+			return true;
+		}
+	}
+});
 </script>
 </head>
 <body class="left-sidebar is-preload">
@@ -94,23 +259,23 @@
 		<div class="font_bold_mid" style="width:100%; margin-bottom: 2em;">
 			<c:if test="${sessionScope.userID != null }">
 				<c:if test="${sessionScope.userID == board.userId}">
-			<button class="btn btn-success font_bold_small" style="float: right;" id="del" data-seq="${board.seq }">삭&nbsp;&nbsp;&nbsp;제</button>
-			<button class="btn btn-success font_bold_small" style="float: right; margin-right: 10px;" id="modify" data-seq="${board.seq }">수&nbsp;&nbsp;&nbsp;정</button>
+			<button class="btn btn-success font_bold_small" style="float: right;" id="del" >삭&nbsp;&nbsp;&nbsp;제</button>
+			<button class="btn btn-success font_bold_small" style="float: right; margin-right: 10px;" id="modify" >수&nbsp;&nbsp;&nbsp;정</button>
 				</c:if>
 			</c:if>
-			<button class="btn btn-success font_bold_small" style="float: left; margin-right: 10px;" id="back">이&nbsp;&nbsp;&nbsp;전</button>
+			<button class="btn btn-success font_bold_small" style="float: left; margin-right: 10px;" id="back" data-seq="${board.seq }">이&nbsp;&nbsp;&nbsp;전</button>
 			<div style="clear: both;"></div>
 		</div>
 		<div class="font_bold_mid" style="width:100%; margin-bottom: 1em;">
-			<span class="font_bold_lg">${board.subject}</span> 
+			<span class="font_bold_lg" id="subject">${board.subject}</span> 
 		</div>
 		<div class="font_bold_mid" style="width:100%; border-bottom: 2.5px solid #fff; margin-bottom: 0; padding-bottom: 0.8em;">
 			<div style="float: left">
-				<a href="#"><img id="replywriter" class="profile_icon" alt="댓글작성자 프로필 사진" src="/MovieHolic/images/${user[0].profile}"></a>
+				<a href="#"><img id="replywriter" class="profile_icon" alt="프로필 사진" src="/MovieHolic/images/profile/${user[0].profile}"></a>
 				&nbsp;&nbsp;
 			</div>
 			<div style="float: left">
-				<a id="replywriterId" class="font_bold_small" href="#" style="color: white">${user[0].userId}</a><br>
+				<a id="writerId" class="font_bold_small" href="#" style="color: white">${user[0].userId}</a><br>
 			</div>
 			<div class="font_light_small" style="float: right;">
 				<span class="font_bold_lg">&nbsp;</span>
@@ -148,7 +313,7 @@
 		</div>
 		
 		<div class="font_bold_mid" style="width:100%; border-bottom: 2.5px solid #fff; margin: 3em 0 2em 0; padding-bottom: 1em;">
-			<a class="font_light_small" href="#" style="float: right;">신고하기</a>
+			<a id="notify" class="font_light_small" href="#" style="float: right;">신고하기</a>
 			<div style="clear: both;"></div>
 		</div>
 		
@@ -169,15 +334,16 @@
 			</div>
 			<div class="col-lg-12 font_light_small" style="margin: 0 0 20em 0; height: 500px; overflow-y: auto;">
 				<table class="table table-hover" id="modalTable" >
-					<col width="5%">
-					<col width="20%">
-					<col width="70%">
-					<col width="5%">
+					<col width="">
+					<col width="">
+					<col width="60%">
+					<col width="100px">
 					<tbody>
+					<c:if test="${fn:length(comment) > 0}">
 						<c:forEach begin="1" end="${fn:length(comment)-1}" var="i">
-						<tr>
+						<tr data-date="${comment[i].postDate}">
 							<td style="text-align: center">
-								<a href="#"><img class="profile_icon" src="/MovieHolic/images/${user[i].profile}"></a>
+								<a href="#"><img class="profile_icon" src="/MovieHolic/images/profile/${user[i].profile}"></a>
 							</td>
 							<td style="vertical-align: middle;">
 								<div>${comment[i].userId}</div>
@@ -187,12 +353,14 @@
 							<td style="vertical-align: middle;">
 							<c:if test="${sessionScope.userID != null }">
 								<c:if test="${sessionScope.userID == comment[i].userId}">
-							<button type="button" id="replydelete" class="close" style="color: white">&times;</button>
+							<a id="modCommment" href="#" class="font-light-small" style="color: white;">수정&nbsp;&#124;</a>
+							<a id="delCommment" href="#" class="font-light-small" style="color: white;">삭제</a>
 								</c:if>
 							</c:if>
 							</td>
 						</tr>
 						</c:forEach>
+					</c:if>
 					</tbody>
 				</table>
 			</div>
