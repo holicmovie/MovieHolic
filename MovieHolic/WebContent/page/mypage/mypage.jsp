@@ -6,8 +6,8 @@
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
 <script>
+//----------------처음 로딩할 때----------
 $(function(){
-	alert("mypage 접속");
 	$.ajax({
 		url:'/MovieHolic/mypage?page=mypage',
 		method:"GET",
@@ -16,6 +16,32 @@ $(function(){
 		}
 	});
 	return false;
+});
+
+//--------------following버튼 눌렀을 때----------
+$(function(){
+	$('#btnfollowers').click(function () {
+		$.ajax({
+			url:'/MovieHolic/mypage?page=showfollowing',
+			method:"GET",
+			success:function(result){
+				$('#mainsection').html(result.trim());
+			}
+		});
+		return false;
+	});
+	
+	$('#btnmine').click(function () {
+		$.ajax({
+			url:'/MovieHolic/mypage?page=mypage',
+			method:"GET",
+			success:function(result){
+				$('#mainsection').html(result.trim());
+			}
+		});
+		return false;
+	});
+	
 });
 </script>
 
@@ -70,11 +96,11 @@ $(function(){
 			<div class="aaa col-lg-12 col-mobile-12">
 			<%-- 탭 메뉴 시작--%>
 				<%-- 탭 2개 선언 --%>
-				<button class="btn btn-success font_bold_small" id= "btnfollowings">Mine</button>
+				<button class="btn btn-success font_bold_small" id= "btnmine">Mine</button>
 				<button class="btn btn-success font_bold_small" id = "btnfollowers">Following</button>
 				
 				<%-- 탭 페이지 2개 구성 --%>
-				<div class="tab-content">
+				<div>
 			  		<section id = "mainsection"></section>
 				</div>
 			</div>

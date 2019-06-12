@@ -22,8 +22,8 @@
 		%>
 		<div class="col-lg-2 col-6-mobile movieposter">
 			<input type="checkbox" name = "wishlistdelete" value ="<%=list.get(i).getMovieCodeYoung()%>" class = "wishlistcheckbox">
-			<a href=" /MovieHolic/film?act=viewfilmdetail&movieCdYoung=<%=list.get(i).getMovieCodeYoung() %>&movieCdNaver=<%=list.get(i).getMovieCodeNaver() %>" class="image featured"><img
-				src="<%=list.get(i).getMovieURL()%>" alt="lalaland poster"
+			<a href="/MovieHolic/film?act=viewfilmdetail&movieCdYoung=<%=list.get(i).getMovieCodeYoung() %>&movieCdNaver=<%=list.get(i).getMovieCodeNaver() %>" class="image featured"><img
+				src="<%=list.get(i).getMovieURL()%>" alt="<%=list.get(i).getMovieNm() %> poster"
 				data-toggle="tooltip" data-placement="top" title="<%=list.get(i).getMovieNm()%>(<%=list.get(i).getOpenYear()%>)"/></a>
 		</div>
 		<%

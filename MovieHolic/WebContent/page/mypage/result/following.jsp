@@ -1,7 +1,10 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.kitri.dto.WishlistDto"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%-- 두번째 탭 페이지 --%>
-					<div id="following" class="container tab-pane fade"><br>
+				<div id="following" class="container"><br>
 						<%-- 친구들이 '좋아요'한 영화 --%>
 						<div class="row" style="margin-top: 1em;">
 							<div class="font_bold_mid" style="width:100%; border-bottom: 2.5px solid #fff; margin-bottom: 0; padding-bottom: 0.8em;">
@@ -9,6 +12,7 @@
 							</div>
 							<section class="carousel">
 								<div class="reel">
+							
 									<article>
 										<a href="#" class="image featured"><img src="/MovieHolic/images/brother.jpg" alt="" /></a>
 									</article>
