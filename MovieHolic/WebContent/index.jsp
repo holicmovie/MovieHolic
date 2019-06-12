@@ -96,7 +96,11 @@ List<FilmDto> box = (List<FilmDto>)request.getAttribute("box");
 int rank=1;
 
 // 선호장르 추천 영화 목록 결과
+// 선호장르 1
 List<FilmDto> favoritefilm = (List<FilmDto>)request.getAttribute("favoritefilm");
+
+// 선호장르 2
+List<FilmDto> favoritefilm2 = (List<FilmDto>)request.getAttribute("favoritefilm2");
 
 // 로그인 세션 ##### 임시
 String id = "abc123";
@@ -153,13 +157,13 @@ for(FilmDto dto : box){
 				<article style="background-color: rgb(3, 39, 49);">
 			<div class="interated_network_movie_info_img">
 				<span class="movie_ranking_number" id="rankNum"><%=rank++%></span>
-					<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>"  class="image featured">
+					<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>&movieCdNaver=<%=dto.getMovieCdNaver()%>"  class="image featured">
 						<img style="height:320px;" src="<%=dto.getMovieImage()%>" alt="<%=dto.getMovieNm()%> 포스터" />
 					</a>
 			</div>
 					<header>
 						<h5>
-							<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>"  class="film_title">
+							<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>&movieCdNaver=<%=dto.getMovieCdNaver()%>"  class="film_title">
 								<%=dto.getMovieNm()%>
 							</a>
 						</h5>
@@ -188,7 +192,7 @@ for(FilmDto dto : box){
 			
 		</section>
 
-		<!-- ②-1. 회원 선호장르 영화 추천 start -->
+		<!-- ②-1. 회원 선호장르1 영화 추천 start -->
 		<div class="tab-content">
 			<div class="tab-pane active">
 				<section class="carousel" id="category">
@@ -198,12 +202,12 @@ for(FilmDto dto : box){
 for(FilmDto dto : favoritefilm){
 %>					
 						<article style="margin: ; height: 410px; background-color: rgb(3, 39, 49);">
-							<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>"  class="image featured">
+							<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>&movieCdNaver=<%=dto.getMovieCdNaver()%>"  class="image featured">
 								<img style="height:320px;" src="<%=dto.getMovieImage()%>" alt="<%=dto.getMovieNm()%> 포스터" />
 							</a>
 							<header>
 								<h5>
-									<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>"  class="film_title">
+									<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>&movieCdNaver=<%=dto.getMovieCdNaver()%>"  class="film_title">
 										<%=dto.getMovieNm()%>
 									</a>
 								</h5>
@@ -217,37 +221,45 @@ for(FilmDto dto : favoritefilm){
 				</section>
 			</div>
 		</div>
-		<!-- 회원 선호장르 영화 추천 end -->
+		<!-- 회원 선호장르1 영화 추천 end -->
 
+				<div class="mid_title" align="left">
+					<span style="color:rgb(240, 195, 15)"><%=name%></span>님이 좋아하는 뮤지컬 영화
+				</div>
 
-		<!-- ②-2. 또 뭐하지 start -->
-		<!-- Banner -->
-		<section id="banner" style="padding: 2em 0 2em 0;">
-			<header class="top_margin">
-				<h2 class="big_title">
-					<strong>랜덤 유저 위시리스트</strong>
-				</h2>
-			</header>
-		</section>
+		<!-- ②-2. 회원 선호장르2 영화 추천 start -->
+		<div class="tab-content">
+			<div class="tab-pane active">
+				<section class="carousel" id="category">
+					<div class="reel" id="romance">
 
-		<!-- user movie list -->
-		<section class="carousel">
-			<div class="reel">
-
-				<article style="background-color: rgb(3, 39, 49);">
-					<a href="#" class="image featured">
-						<img style="height:320px;" src="images/brother.jpg" alt="" />
-					</a>
-					<header>
-						<h5>
-							<a href="#">나의 특별한 형제</a>
-						</h5>
-					</header>
-					<p>머리 좀 쓰는 형 x 몸 좀 쓰는 동생! 세상엔 이런 형제도 있다!</p>
-				</article>
-
+<%
+for(FilmDto dto : favoritefilm2){
+%>					
+						<article style="margin: ; height: 410px; background-color: rgb(3, 39, 49);">
+							<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>&movieCdNaver=<%=dto.getMovieCdNaver()%>"  class="image featured">
+								<img style="height:320px;" src="<%=dto.getMovieImage()%>" alt="<%=dto.getMovieNm()%> 포스터" />
+							</a>
+							<header>
+								<h5>
+									<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>&movieCdNaver=<%=dto.getMovieCdNaver()%>"  class="film_title">
+										<%=dto.getMovieNm()%>
+									</a>
+								</h5>
+							</header>
+						</article>
+<%
+}
+%>
+	
+					</div>
+				</section>
 			</div>
-		</section>
-		<!-- 또 뭐하지 end -->
+		</div>
+		<!-- 회원 선호장르2 영화 추천 end -->
+ 
+ 
+ <br><br><br><br><br><br><br><br><br><br><br><br>
+
 		
 		<%@ include file="/template/footer.jsp"%>
