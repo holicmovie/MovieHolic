@@ -4,7 +4,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%
-		PageBean pb = (PageBean) request.getAttribute("reviewList2");
+    	String searchKey = (String)request.getAttribute("searchKey");
+		PageBean pb = (PageBean) request.getAttribute("reviewList3");
 		List<BoardDto> list = pb.getBoard();
 		int size = list.size(); //한 페이지 내에 보여줄 실제 행 개수
 
@@ -18,17 +19,8 @@
 	%>
 	<script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-<%-- Header --%>
-		<div id="header"
-			style="background-image: none; margin-bottom: 0px; padding-bottom: 0; height: 10px;">
-			<%@ include file="/template/nav.jsp"%>
-		</div>
-
-
-		<%-- Main --%>
-		<div class="wrapper style1" id="reviewpage">
-
-			<div class="container" >
+		
+			<div class="container" id="reviewpage">
 
 				<%-- 페이지 이동경로 --%>
 				<div class="row" style="margin-bottom: 30px;">
@@ -52,14 +44,14 @@
 				<div class="row" style="margin-top: 0;">
 					<div class="col-lg-12 col-12-mobile">
 						<div style="float: left">
-							<button class="btn btn-success font_bold_small">삭&nbsp;&nbsp;&nbsp;제</button>
+							<button class="btn btn-success font_bold_small btndelete">삭&nbsp;&nbsp;&nbsp;제</button>
 						</div>
 						<div style="float: right">
-							<button class="btn btn-success font_bold_small">검&nbsp;&nbsp;&nbsp;색</button>
+							<button class="btn btn-success font_bold_small search">검&nbsp;&nbsp;&nbsp;색</button>
 						</div>
 						<div style="float: right; width: 20px; height: 1px;"></div>
 						<div style="float: right">
-							<input type="text" class="form-control">
+							<input type="text" class="form-control inputsearch search">
 						</div>
 						<%-- float clear용 빈 div --%>
 						<div style="clear: both;"></div>
@@ -117,7 +109,7 @@
 								if (startPage != 1) {
 							%>
 						<div style="float: left">
-							<button class="btn btn-success font_bold_small pageSelect" con-url="search"
+							<button class="btn btn-success font_bold_small pageSelect" con-url="search" searchKey="<%=searchKey %>"
 								data-page="<%=startPage - 1%>">이&nbsp;&nbsp;&nbsp;전</button>
 						</div>
 							<%
@@ -127,7 +119,7 @@
 								if (endPage != totalPage) {
 							%>
 						<div style="float: right;">
-							<button class="btn btn-success font_bold_small pageSelect" con-url="search"
+							<button class="btn btn-success font_bold_small pageSelect" con-url="search" searchKey="<%=searchKey %>"
 								data-page="<%=endPage + 1%>">다&nbsp;&nbsp;&nbsp;음</button>
 						</div>
 							<%
@@ -140,7 +132,7 @@
 									// 마지막 페이지에서, 
 									if (startPage + i <= totalPage) {
 							%>
-							<li class="page-item"><a con-url="search" data-page="<%=startPage + i%>" class="page-link a pageSelect"
+							<li class="page-item"><a searchKey="<%=searchKey %>" con-url="search" data-page="<%=startPage + i%>" class="page-link a pageSelect"
 								href="#"><%=startPage + i%></a></li>
 							<%
 								}

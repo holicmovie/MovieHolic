@@ -18,17 +18,10 @@
 	%>
 	<script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-<%-- Header --%>
-		<div id="header"
-			style="background-image: none; margin-bottom: 0px; padding-bottom: 0; height: 10px;">
-			<%@ include file="/template/nav.jsp"%>
-		</div>
-
 
 		<%-- Main --%>
-		<div class="wrapper style1" id="reviewpage">
 
-			<div class="container" >
+			<div class="container" id="reviewpage">
 
 				<%-- 페이지 이동경로 --%>
 				<div class="row" style="margin-bottom: 30px;">
@@ -52,14 +45,14 @@
 				<div class="row" style="margin-top: 0;">
 					<div class="col-lg-12 col-12-mobile">
 						<div style="float: left">
-							<button class="btn btn-success font_bold_small">삭&nbsp;&nbsp;&nbsp;제</button>
+							<button class="btn btn-success font_bold_small btndelete">삭&nbsp;&nbsp;&nbsp;제</button>
 						</div>
 						<div style="float: right">
-							<button class="btn btn-success font_bold_small">검&nbsp;&nbsp;&nbsp;색</button>
+							<button class="btn btn-success font_bold_small search">검&nbsp;&nbsp;&nbsp;색</button>
 						</div>
 						<div style="float: right; width: 20px; height: 1px;"></div>
 						<div style="float: right">
-							<input type="text" class="form-control">
+							<input type="text" class="form-control search inputsearch">
 						</div>
 						<%-- float clear용 빈 div --%>
 						<div style="clear: both;"></div>

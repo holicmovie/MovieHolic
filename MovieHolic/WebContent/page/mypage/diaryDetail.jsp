@@ -80,7 +80,14 @@ hr.line_light_g {
 <%@ include file="/template/boot_431.jsp"%>
 
 </head>
+<script>
+$(document).ready(function(){
 
+			$("#back").click(function(){
+				window.history.back();
+			});
+		});
+</script>
 <body class="left-sidebar is-preload">
 <c:set var ="dto" value="${requestScope.reviewdetail}"/>
 <%BoardDto dto = (BoardDto)request.getAttribute("reviewdetail");%>
@@ -111,7 +118,7 @@ hr.line_light_g {
 				<div class="row">
 					<div class="col-lg-12 col-12-mobile">
 						<div style="float: left">
-							<button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button>
+							<button class="btn btn-success font_bold_small" id="back">이&nbsp;&nbsp;&nbsp;전</button>
 						</div>
 						<div style="float: right">
 							<button class="btn btn-success font_bold_small">삭&nbsp;&nbsp;&nbsp;제</button>

@@ -407,6 +407,34 @@ public List<BoardDto> searchReviewList(int startRow, int endRow, String search,S
 		return cnt;
 		
 	}
+//	review 삭제 메소드
+	public void deletereview(String userid ,String[] reviewdelete) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			StringBuffer sql = new StringBuffer();
+			sql.append("delete mh_board where userid=? and moviename=?");
+			conn = DBConnection.makeConnection();
+			pstmt = conn.prepareStatement(sql.toString());
+			if(reviewdelete != null) {
+				
+				for(int i = 0; i < reviewdelete.length; i++) {
+					pstmt.setString(1, userid);
+					pstmt.setString(2, reviewdelete[i]);
+					pstmt.executeUpdate();
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("삭제를 실패했습니다.");
+		} finally {
+			DBClose.close(conn, pstmt);
+			System.out.println("삭제되었습니다.");
+		}
+		
+	}
 	public UserDto selectId(String userid) {
 		UserDto userDto =null;
 		

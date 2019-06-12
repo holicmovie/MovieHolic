@@ -127,7 +127,7 @@ public class UserController {
 			currentPage = Integer.parseInt(cp);
 		}
 		String id = "a125@gmail.com";
-		String search = request.getParameter("search");
+		String search = request.getParameter("searchReview");
 		int cntPerPage = 5;  					// 페이지 별 보여줄 목록 수
 		int totalCnt = UserService.getUserService().getSearchReview(search,id);  // 총 게시글 수
 		int cntPerPageGroup = 5;                // 그룹 페이지 수
@@ -144,6 +144,7 @@ public class UserController {
 		System.out.println(list.size() + "페이지일때");
 		pb.setBoard(list);
 		System.out.println(totalCnt);
+		System.out.println(search);
 		request.setAttribute("reviewList3", pb);
 		request.setAttribute("searchKey", search);
 		
@@ -157,6 +158,11 @@ public class UserController {
 		String seq = request.getParameter("seq");
 		BoardDto result = UserService.getUserService().selectByNo(seq);
 		request.setAttribute("reviewdetail", result);
+	}
+	public void deleteReview(HttpServletRequest request, HttpServletResponse response) {
+		String userid = "a125@gmail.com";
+		String reviewdelete[] = request.getParameterValues("reviewdelete");
+		UserService.getUserService().deleteReview(userid, reviewdelete);
 	}
 	public void ReviewComment(HttpServletRequest request, HttpServletResponse response) {
 		String seq = request.getParameter("seq");

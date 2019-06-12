@@ -101,7 +101,8 @@ public class FilmDao {
 			sql.append("				from mh_board \n");
 			sql.append("				where userid = ? \n");
 			sql.append("				and category is not null \n");
-			sql.append("				group by category) f ) \n");
+			sql.append("				group by category \n");
+			sql.append("				order by count(*)) f ) \n");
 			sql.append("where r = ?");
 			
 			pstmt = conn.prepareStatement(sql.toString());

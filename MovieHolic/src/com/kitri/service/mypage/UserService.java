@@ -56,4 +56,8 @@ private static UserService userService; // 2번째 전역변수 만들기
 		public List<BoardDto> selectSearchReview(int startRow, int endRow, String userid, String search) {
 			return ReviewAddDao.getReviewAdd().searchReviewList(startRow, endRow, search, userid);
 		}
+	//리뷰삭제
+		public void deleteReview(String userid, String[] reviewdelete) {
+			ReviewAddDao.getReviewAdd().deletereview(userid, reviewdelete);
+		}
 }
