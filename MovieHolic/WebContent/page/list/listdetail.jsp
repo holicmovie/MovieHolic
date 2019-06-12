@@ -37,92 +37,96 @@
 </style>
 <script>
 <%-- 이전 버튼 클릭시 --%>
-	$(function(){
-		$('#back').click(function(){
-			history.back();
-			return false;
-		});
+$(function(){
+	$('#back').click(function(){
+		history.back();
+		return false;
 	});
+});
 
 <%-- list 수정 버튼 클릭시 --%>
-	$(function(){
-		$('#modify').click(function(){
-			location.href="list?act=selList&seq=" + seq;
-			return false;
-		});
+$(function(){
+	$('#modify').click(function(){
+		location.href="list?act=selList&seq=" + seq;
+		return false;
 	});
+});
+	
 <%-- list 삭제 버튼 클릭시 --%>
-	$(function(){
-		$('#del').click(function(){
-			if(confirm("해당 리스트를 삭제하시겠습니까?")) {
-				var cnt = $('#cnt').text();	<%--댓글 삭제여부를 판단하기 위해 댓글 개수 가져감--%>
+$(function(){
+	$('#del').click(function(){
+		if(confirm("해당 리스트를 삭제하시겠습니까?")) {
+			var cnt = $('#cnt').text();	<%--댓글 삭제여부를 판단하기 위해 댓글 개수 가져감--%>
+			$.ajax({
+				url: "list",
+				data: "act=delete&seq="+ seq + "&postDate=" + $('#writedate').text() + "&cnt=" + cnt,
+				method: 'post',
+				success:function(result){
+					if(result != 0) {
+						alert("리스트가 삭제 되었습니다.");
+						location.href = "/MovieHolic/page/list/movielist.jsp";
+					} else {
+						alert("시스템 에러로 인해 삭제 처리에 실패하였습니다. 나중에 다시 시도하세요.");
+					}
+				}
+			});
+		}
+		return false;
+	});
+});
+	
+<%-- 좋아요&싫어요 버튼 클릭시 --%>
+$(function(){
+	$('.btnCnt').click(function(){
+		if($.ckID()){
+			var btnStr = $(this).attr('href');
+			var check = '해당 게시물을 평가(' + ((btnStr == "best") ? "좋아요" : "싫어요" ) + ')하시겠습니까?';
+			if(confirm(check)) {
 				$.ajax({
-					url: "list",
-					data: "act=delete&seq="+ seq + "&postDate=" + $('#writedate').text() + "&cnt=" + cnt,
+					url: 'list',
+					data: 'act=evaluate&btnStr=' + btnStr + '&seq=' + seq,
 					method: 'post',
-					success:function(result){
+					success: function(result){
 						if(result != 0) {
-							alert("리스트가 삭제 되었습니다.");
-							location.href = "/MovieHolic/page/list/movielist.jsp";
+							$('.btnCnt[href="'+ btnStr +'"]').next().text(result);
 						} else {
-							alert("시스템 에러로 인해 삭제 처리에 실패하였습니다. 나중에 다시 시도하세요.");
+							alert("시스템 에러로 인해 작업 처리에 실패하였습니다. 나중에 다시 시도하세요.");
 						}
 					}
 				});
 			}
-			return false;
-		});
+		}
+		return false;
 	});
-<%-- 좋아요&싫어요 버튼 클릭시 --%>
-	$(function(){
-		$('.btnCnt').click(function(){
-			if($.ckID()){
-				var btnStr = $(this).attr('href');
-				alert(postDate);
-				var check = '해당 게시물을 평가(' + ((btnStr == "best") ? "좋아요" : "싫어요" ) + ')하시겠습니까?';
-				if(confirm(check)) {
-					$.ajax({
-						url: 'list',
-						data: 'act=evaluate&btnStr=' + btnStr + '&seq=' + seq,
-						method: 'post',
-						success: function(result){
-							if(result != 0) {
-								$('.btnCnt[href="'+ btnStr +'"]').next().text(result);
-							} else {
-								alert("시스템 에러로 인해 작업 처리에 실패하였습니다. 나중에 다시 시도하세요.");
-							}
-						}
-					});
-				}
-			}
-			return false;
-		});
-	});
+});
+	
 <%-- 신고하기 버튼 클릭시 --%>
-	$(function(){
-		$('#notify').click(function(){
-			if($.ckID()){
-				if(confirm("해당 게시물을 신고하시겠습니까?")) {
-					$.ajax({
-						url: 'list',
-						data: 'act=notify&seq=' + seq,
-						method: 'post',
-						success: function(result){
-							if(result != 0) {
-								alert("게시물 신고 처리가 완료되었습니다.");
-							} else {
-								alert("시스템 에러로 인해 작업 처리에 실패하였습니다. 나중에 다시 시도하세요.");
-							}
+$(function(){
+	$('#notify').click(function(){
+		if($.ckID()){
+			if(confirm("해당 게시물을 신고하시겠습니까?")) {
+				$.ajax({
+					url: 'list',
+					data: 'act=notify&seq=' + seq,
+					method: 'post',
+					success: function(result){
+						if(result != 0) {
+							alert("게시물 신고 처리가 완료되었습니다.");
+						} else {
+							alert("시스템 에러로 인해 작업 처리에 실패하였습니다. 나중에 다시 시도하세요.");
 						}
-					});
-				}
+					}
+				});
 			}
-			return false;
-		});
+		}
+		return false;
 	});
+});
+	
 <%-- 댓글 작성 --%>
-	$(function(){
-		$('#save').click(function(){
+$(function(){
+	$('#save').click(function(){
+		if($.ckID()){
 			var comment = $('textarea').val().trim();
 			if(comment == ''){
 				alert("내용을 입력하세요.");
@@ -154,45 +158,69 @@
 					});
 				} 
 			}
-			return false;
-		});
+		}
+		return false;
 	});
+});
+	
 <%-- 댓글 삭제 --%>
-	$(function(){
-		$(document).on("click", "#delCommment", function(){
-			var postDate = $(this).parents('tr').attr('data-date');
-			if(confirm("해당 게시물을 삭제하시겠습니까?")) {
-				$.ajax({
-					url: 'list',
-					data: 'act=delComment&postDate=' + postDate,
-					method: 'post',
-					success: function(result){
-						if(result != 0) {
-							alert("댓글이 삭제되었습니다.");
-							$.ajax({
-								url: "<%= request.getContextPath()%>/list",
-								data: "act=selComment&seq=" + seq,
-								method: 'post',
-								success:function(result){
-									alert(result);
-									$('textarea').val('');
-									$('tbody').empty();
-									$('tbody').html(result);
-									$('#cnt').text($('#commenCnt').attr("data-cnt"));
-								}
-							});
-						} else {
-							alert("시스템 에러로 인해 작업 처리에 실패하였습니다. 나중에 다시 시도하세요.");
-						}
+$(function(){
+	$(document).on("click", "#delCommment", function(){
+		var postDate = $(this).parents('tr').attr('data-date');
+		if(confirm("해당 댓글을 삭제하시겠습니까?")) {
+			$.ajax({
+				url: 'list',
+				data: 'act=delComment&postDate=' + postDate,
+				method: 'post',
+				success: function(result){
+					if(result != 0) {
+						alert("댓글이 삭제되었습니다.");
+						$.ajax({
+							url: "<%= request.getContextPath()%>/list",
+							data: "act=selComment&seq=" + seq,
+							method: 'post',
+							success:function(result){
+								alert(result);
+								$('textarea').val('');
+								$('tbody').empty();
+								$('tbody').html(result);
+								$('#cnt').text($('#commenCnt').attr("data-cnt"));
+							}
+						});
+					} else {
+						alert("시스템 에러로 인해 댓글 삭제에 실패하였습니다. 나중에 다시 시도하세요.");
 					}
-				});
-			}
-			return false;
-		});
+				}
+			});
+		}
+		return false;
 	});
+});
+
+<%-- 댓글 수정 --%>
+$(function(){
+	$(document).on("click", "#modCommment", function(){
+		var postDate = $(this).parents('tr').attr('data-date');
+		if(confirm("해당 댓글을 수정하시겠습니까?")) {
+			$.ajax({
+				url: 'list',
+				data: 'act=modComment&postDate=' + postDate,
+				method: 'post',
+				success: function(result){
+					if(result != null) {
+						$('textarea').val(result);
+					} else {
+						alert("시스템 에러로 인해 작업 처리에 실패하였습니다. 나중에 다시 시도하세요.");
+					}
+				}
+			});
+		}
+		return false;
+	});
+});
 </script>
 <script>
-<% session.setAttribute("userID", "a138@gmail.com"); %>
+<% session.setAttribute("userID", "a124@gmail.com"); %>
 <%-- <% session.removeAttribute("userID");%> --%>
 $(function(){
 	seq = $('#back').attr('data-seq');
@@ -311,6 +339,7 @@ $(function(){
 					<col width="60%">
 					<col width="100px">
 					<tbody>
+					<c:if test="${fn:length(comment) > 0}">
 						<c:forEach begin="1" end="${fn:length(comment)-1}" var="i">
 						<tr data-date="${comment[i].postDate}">
 							<td style="text-align: center">
@@ -324,13 +353,14 @@ $(function(){
 							<td style="vertical-align: middle;">
 							<c:if test="${sessionScope.userID != null }">
 								<c:if test="${sessionScope.userID == comment[i].userId}">
-							<a id="modCommment" class="font-light-small" style="color: white;">수정&nbsp;&#124;</a>
-							<a id="delCommment" class="font-light-small" style="color: white;">삭제</a>
+							<a id="modCommment" href="#" class="font-light-small" style="color: white;">수정&nbsp;&#124;</a>
+							<a id="delCommment" href="#" class="font-light-small" style="color: white;">삭제</a>
 								</c:if>
 							</c:if>
 							</td>
 						</tr>
 						</c:forEach>
+					</c:if>
 					</tbody>
 				</table>
 			</div>

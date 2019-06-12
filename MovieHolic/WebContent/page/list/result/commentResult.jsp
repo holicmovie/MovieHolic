@@ -3,23 +3,25 @@
 <c:set var="comment" value="${requestScope.comment}"/>
 <c:set var="cnt" value="${fn:length(comment)}"/>
 <input type="hidden" id="commenCnt" data-cnt=${cnt}>
-<c:forEach begin="0" end="${cnt-1}" var="i">
-<tr>
-	<td style="text-align: center">
-		<a href="#"><img class="profile_icon" src="/MovieHolic/images/profile/${user[i].profile}"></a>
-	</td>
-	<td style="vertical-align: middle;">
-		<div>${comment[i].userId}</div>
-		<div>${comment[i].postDate}</div>
-	</td>
-	<td class="font_bold_small" style="vertical-align: middle;">${comment[i].content}</td>
-	<td style="vertical-align: middle;">
-	<c:if test="${sessionScope.userID != null }">
-		<c:if test="${sessionScope.userID == comment[i].userId}">
-	<a id="modCommment" class="font-light-small" style="color: white;">수정&nbsp;&#124;</a>
-	<a id="delCommment" class="font-light-small" style="color: white;">삭제</a>
+<c:if test="${fn:length(comment) > 0}">
+	<c:forEach begin="0" end="${cnt-1}" var="i">
+	<tr>
+		<td style="text-align: center">
+			<a href="#"><img class="profile_icon" src="/MovieHolic/images/profile/${user[i].profile}"></a>
+		</td>
+		<td style="vertical-align: middle;">
+			<div>${comment[i].userId}</div>
+			<div>${comment[i].postDate}</div>
+		</td>
+		<td class="font_bold_small" style="vertical-align: middle;">${comment[i].content}</td>
+		<td style="vertical-align: middle;">
+		<c:if test="${sessionScope.userID != null }">
+			<c:if test="${sessionScope.userID == comment[i].userId}">
+		<a href="#" id="modCommment" class="font-light-small" style="color: white;">수정&nbsp;&#124;</a>
+		<a href="#" id="delCommment" class="font-light-small" style="color: white;">삭제</a>
+			</c:if>
 		</c:if>
-	</c:if>
-	</td>
-</tr>
-</c:forEach>
+		</td>
+	</tr>
+	</c:forEach>
+</c:if>

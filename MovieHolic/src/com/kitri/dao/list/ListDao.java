@@ -300,7 +300,7 @@ public class ListDao {
 					if(result != 0) {
 						sql = new StringBuffer();
 						sql.append("INSERT INTO MH_LOG (LOGDATE, LOGID, USERID, LOGCATE, SUBJECT, SEQ) \n");
-						sql.append("VALUES (SYSDATE, '" + id + "', ?, 1, ?, ?) \n");
+						sql.append("VALUES (SYSDATE, '" + id + "', ?, 4, ?, ?) \n");
 						pstmt = conn.prepareStatement(sql.toString());
 						
 						int idx = 0;
@@ -529,6 +529,35 @@ public class ListDao {
 	
 	
 	
+//	#### 댓글 수정 ####
+	public String modCommment(String id, String postDate) {
+		String result = null;
+		
+		try {
+			conn = DBConnection.makeConnection();
+			conn.setAutoCommit(false);
+			
+			StringBuffer sql = new StringBuffer();
+			sql.append("SELECT CONTENT \n");
+			sql.append("FROM MH_COMMENT \n");
+			sql.append("WHERE POSTDATE = " + postDate + " and USERID = ? \n");
+			
+			pstmt = conn.prepareStatement(sql.toString());
+			
+			pstmt.setString(1, id);
+			
+			rs = pstmt.executeQuery();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		
+		return result;
+	}
+	
+	
 	
 //------------------------------------------------------------------------------------------- util
 //	#### List테이블에 insert ####
@@ -743,6 +772,7 @@ public class ListDao {
 		
 		return result;
 	}
+
 	
 	
 	

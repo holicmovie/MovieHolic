@@ -166,7 +166,6 @@
 	<div id="header"  style="background-image: none; margin-bottom: 0px; padding-bottom:0; height: 10px;">
 <%@ include file="/template/nav.jsp"%>
 	</div>
-
 <%-- Main --%>
 <div class="wrapper style1">
 

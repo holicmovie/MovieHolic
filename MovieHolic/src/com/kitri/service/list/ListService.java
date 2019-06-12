@@ -457,6 +457,13 @@ public class ListService {
 	
 	
 	
+//	#### 댓글 수정 ####
+	public String modCommment(String id, String postDate) {
+		return ListDao.getListDao().modCommment(id, postDate);
+	}
+	
+	
+	
 
 	
 	

@@ -66,8 +66,11 @@ public class ListFrontController extends HttpServlet {
 			response.setContentType("text/plain; charset=UTF-8"); 
 			PrintWriter out = response.getWriter();
 			out.print(result);
-		} else if("".equals(act)) {
-			
+		} else if("modCommment".equals(act)) {
+			String result = ListController.getListController().modCommment(request, response);
+			response.setContentType("text/plain; charset=UTF-8"); 
+			PrintWriter out = response.getWriter();
+			out.print(result);
 		} else if("".equals(act)) {
 			
 		} else if("".equals(act)) {

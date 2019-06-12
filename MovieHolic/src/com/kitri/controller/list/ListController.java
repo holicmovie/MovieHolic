@@ -67,8 +67,6 @@ public class ListController {
 		board.setMovieCodeYoung(young);
 		board.setMovieCodeNaver(naver);
 		
-		System.out.println("con 70] board.getUserId():" + board.getUserId());
-		
 //		2. BoardDto에 담아서 service로 전달하고 result 받음
 		result = ListService.getListService().saveList(board);
 
@@ -246,6 +244,16 @@ public class ListController {
 		String id = session.getAttribute("userID").toString(); 
 		
 		return ListService.getListService().delComment(id, postDate);
+	}
+	
+	
+//	#### 댓글 수정 ####
+	public String modCommment(HttpServletRequest request, HttpServletResponse response) {
+		String postDate = request.getParameter("postDate");
+		HttpSession session = request.getSession();
+		String id = session.getAttribute("userID").toString(); 
+		
+		return ListService.getListService().modCommment(id, postDate);
 	}
 	
 	
