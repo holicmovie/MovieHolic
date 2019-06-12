@@ -26,11 +26,21 @@ public class BoardDto { // 게시판
 	private int viewCount; // 조회수
 	private int enable; // 공개여부
 	private int notify; // 신고수
-
+	private String url;
+	
+	
 	///// 생성자 /////
 
 	public BoardDto() {
 		super();
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 	public BoardDto(int seq) {
@@ -225,8 +235,13 @@ public class BoardDto { // 게시판
 				+ content + ", movieCodeYoung=" + movieCodeYoung + ", movieCodeNaver=" + movieCodeNaver + ", director="
 				+ director + ", actors=" + actors + ", actor1=" + actor1 + ", actor2=" + actor2 + ", movieName="
 				+ movieName + ", starPoint=" + starPoint + ", category=" + category + ", best=" + best + ", worst="
-				+ worst + ", viewCount=" + viewCount + ", enable=" + enable + ", notify=" + notify + "]";
+				+ worst + ", viewCount=" + viewCount + ", enable=" + enable + ", notify=" + notify + ", url=" + url
+				+ "]";
 	}
+
+
+
+	
 
 	
 

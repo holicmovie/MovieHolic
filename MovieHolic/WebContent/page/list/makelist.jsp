@@ -27,6 +27,7 @@
 	$(function(){
 		$('#movieModal .close').click(function(){
 			modalClear();
+			return false;
 		});
 	});
 	<%-- modal 초기화 function --%>
@@ -155,18 +156,16 @@
 
 </script>
 <script>
-	
+
 </script>
 </head>
+
 <body class="left-sidebar is-preload">
 <div id="page-wrapper">
 <%-- Header --%>
 	<div id="header"  style="background-image: none; margin-bottom: 0px; padding-bottom:0; height: 10px;">
 <%@ include file="/template/nav.jsp"%>
 	</div>
-
-<%-- 임시 세션 --%>
-<% session.setAttribute("userID", "a125@gmail.com"); %>
 <%-- Main --%>
 <div class="wrapper style1">
 
@@ -178,7 +177,8 @@
 				<span>✱&nbsp;&nbsp;</span>
 				<a href="/MovieHolic/page/mypage/mypage.jsp" style="color:white;">My Page</a>
 				<span>&nbsp;&nbsp;❱❱&nbsp;&nbsp;</span>
-				<a href="/MovieHolic/page/mypage/diary.jsp" class="font_bold_small">Diary</a>
+				<a href="/
+				MovieHolic/page/mypage/diary.jsp" class="font_bold_small">Diary</a>
 			</div>
 		</div>
 		
