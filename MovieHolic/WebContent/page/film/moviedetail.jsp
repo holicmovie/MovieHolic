@@ -105,6 +105,13 @@ int cntPerPageGroup = pb.getCntPerPageGroup();		 // 페이지 그룹 개수
 String movieCdYoung = (String) request.getAttribute("movieCdYoung");
 String movieCdNaver = (String) request.getAttribute("movieCdNaver");
 
+
+//###################################### 로그인 세션 ###################################### 임시
+
+//TODO : session에서 id 받기로 변경하기! @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//String id = "abc123"; // 로그인
+String id = null; // 비로그인
+
 %>
 
 <script>
@@ -334,6 +341,9 @@ for(int i = 1;i<=5-filmInfo.getStarPoint();i++){
 											<button id ="trailer" class="btn btn-success font_bold_small" style="margin-right: 10px; width:200px;">
 											예고편 영상
 											</button>
+<%
+if(id != null) {
+%>
 											<button id="writereview" class="btn btn-success font_bold_small" style="margin-right: 10px; width:200px;"
 											movieCdYoung="<%=filmInfo.getMovieCdYoung()%>" movieCdNaver= "<%=filmInfo.getMovieCdNaver()%>" 
 											director="<%=filmInfo.getDirectors()%>" actor1= "<%=filmInfo.getActor1()%>" actor2="<%=filmInfo.getActor2()%>"
@@ -344,6 +354,9 @@ for(int i = 1;i<=5-filmInfo.getStarPoint();i++){
 											movieCdYoung="<%=filmInfo.getMovieCdYoung()%>" movieCdNaver="<%=filmInfo.getMovieCdNaver()%>" style="color: #ffcd07; margin-right: 10px; width:200px;">
 											위시리스트 추가
 											</button>
+<%
+}
+%>
 										</li>
 									</ul>
 				<!------------------------------------ 예고편, 리뷰쓰기 버튼 ----------------------------------------->

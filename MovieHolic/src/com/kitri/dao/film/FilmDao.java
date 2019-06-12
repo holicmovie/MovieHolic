@@ -59,6 +59,165 @@ public class FilmDao {
 				film.setMovieCdYoung(rs.getString("movieCodeYoung"));
 				film.setMovieCdNaver(rs.getString("movieCodeNaver"));
 				film.setMovieImage(rs.getString("movieImage"));
+				film.setCategory(category);
+				film.setPrdtYear(rs.getString("prdtYear"));
+				film.setOpenYear(rs.getString("openYear"));
+				film.setStarPointNaver(rs.getString("starPointNaver"));
+				
+				list.add(film);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		
+		return list;
+		
+	}
+	
+	// 2
+	// <회원 선호 장르 select> 메소드
+	// 인자값 : 선호 장르 순위
+	public String selectFavoriteCategory(String userId, int rank) {
+		
+		String category = "";
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			conn = DBConnection.makeConnection();
+			
+			StringBuffer sql = new StringBuffer();
+			sql.append("select * \n");
+			sql.append("from (select rownum r, f.category \n");
+			sql.append("		from (select category , count(*) \n");
+			sql.append("				from mh_board \n");
+			sql.append("				where userid = ? \n");
+			sql.append("				and category is not null \n");
+			sql.append("				group by category) f ) \n");
+			sql.append("where r = ?");
+			
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1, userId);
+			pstmt.setInt(2, rank);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				category = rs.getString("category");
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		
+		return category;
+				
+	}
+	
+	// 3
+	// <최신 영화 10개 select> 메소드
+	// 개봉일 최신순
+	public List<FilmDto> selectLatestFilm() {
+
+		List<FilmDto> list = new ArrayList<FilmDto>();
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			conn = DBConnection.makeConnection();
+			
+			StringBuffer sql = new StringBuffer();
+			sql.append("select * \n");
+			sql.append("from (select rownum r, f.moviename, f.moviecodeyoung, f.moviecodenaver, f.movieImage, f.category, f.prdtyear, f.openyear, f.starpointnaver \n");
+			sql.append("		from (select movieName, movieCodeYoung, movieCodeNaver, movieImage, category, prdtYear, openYear, starPointNaver \n");
+			sql.append("				from mh_films \n");
+			sql.append("				where openyear is not null \n");
+			sql.append("				order by openyear desc) f) rf \n");
+			sql.append("where rf.r < 11");
+			
+			
+			
+			pstmt = conn.prepareStatement(sql.toString());
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				FilmDto film = new FilmDto();
+				film.setMovieNm(rs.getString("movieName"));
+				film.setMovieCdYoung(rs.getString("movieCodeYoung"));
+				film.setMovieCdNaver(rs.getString("movieCodeNaver"));
+				film.setMovieImage(rs.getString("movieImage"));
+				film.setCategory(rs.getString("category"));
+				film.setPrdtYear(rs.getString("prdtYear"));
+				film.setOpenYear(rs.getString("openYear"));
+				film.setStarPointNaver(rs.getString("starPointNaver"));
+				
+				list.add(film);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		
+		return list;
+		
+	}
+	
+	// 4
+	// <별점 높은 영화 10개 select> 메소드
+	// 별점순
+	public List<FilmDto> selectBestStarFilm() {
+
+	List<FilmDto> list = new ArrayList<FilmDto>();
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			conn = DBConnection.makeConnection();
+			
+			StringBuffer sql = new StringBuffer();
+			sql.append("select * \n");
+			sql.append("from (select rownum r, f.moviename, f.moviecodeyoung, f.moviecodenaver, f.movieImage, f.category, f.prdtyear, f.openyear, f.starpointnaver \n");
+			sql.append("		from (select movieName, movieCodeYoung, movieCodeNaver, movieImage, category, prdtYear, openYear, starPointNaver \n");
+			sql.append("				from mh_films \n");
+			sql.append("				order by starpointnaver desc) f) rf \n");
+			sql.append("where rf.r < 11");
+			
+			pstmt = conn.prepareStatement(sql.toString());
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				FilmDto film = new FilmDto();
+				film.setMovieNm(rs.getString("movieName"));
+				film.setMovieCdYoung(rs.getString("movieCodeYoung"));
+				film.setMovieCdNaver(rs.getString("movieCodeNaver"));
+				film.setMovieImage(rs.getString("movieImage"));
 				film.setCategory(rs.getString("category"));
 				film.setPrdtYear(rs.getString("prdtYear"));
 				film.setOpenYear(rs.getString("openYear"));
@@ -80,11 +239,9 @@ public class FilmDao {
 	}
 	
 	
-	
-	
 	// ------------------------------------------------------- [ moviefilm.jsp ] -------------------------------------------------------
 	
-	// 2
+	// 5
 	// <주간 인기 영화 목록 select> 메소드
 	//  최근 일주일간 리뷰 개수 순 10개
 	public List<FilmDto> selectFilmListByReviewCount() {
@@ -136,7 +293,7 @@ public class FilmDao {
 		return list;
 	}
 	
-	// 3
+	// 6
 	// <장르별 영화 목록 select> 메소드
 	//  개봉연도 최신순 & 네이버 별점순
 	public List<FilmDto> selectFilmListByCategory(String category, int startRow, int endRow) {
@@ -210,7 +367,7 @@ public class FilmDao {
 		
 	}
 	
-	// 4
+	// 7
 	// <검색 결과 영화 목록 select> 메소드
 	// 개봉연도 최신순 & 네이버 별점순
 	public List<FilmDto> selectBySrchKey(String srchKey, int startRow, int endRow) {
@@ -271,7 +428,7 @@ public class FilmDao {
 		
 	}
 	
-	// 5
+	// 8
 	// <장르별 영화 목록 개수 select> 메소드
 	// 개봉연도 최신순 & 네이버 별점순
 	public int selectFilmCountByCategory(String category) {
@@ -326,7 +483,7 @@ public class FilmDao {
 		return cnt;
 	}
 	
-	// 6
+	// 9
 	// <검색한 영화 목록 개수 select> 메소드
 	// 개봉연도 최신순 & 네이버 별점순
 	public int selectFilmCountBySrchKey(String srchKey) {
@@ -373,7 +530,7 @@ public class FilmDao {
 	
 	// ------------------------------------------------------- [ moviedetail.jsp ] -------------------------------------------------------
 
-	// 7
+	// 10
 	// <선택한 영화 별점 select> 메소드
 	// 무비홀릭 회원들의 별점 평균
 	public int selectByMovieCdYoung(String movieCdYoung) {
@@ -411,7 +568,7 @@ public class FilmDao {
 		
 	}
 	
-	// 8
+	// 11
 	// <선택된 영화 리뷰 개수 select> 메소드
 	public int selectReviewCountByMovieCdYoung(String movieCdYoung) {
 		
@@ -454,7 +611,7 @@ public class FilmDao {
 		return cnt;
 	}
 	
-	// 9
+	// 12
 	// <선택한 영화 리뷰 select> 메소드
 	// 무비홀릭 회원들의 리뷰
 	public List<BoardDto> selectReviewsByMovieCdYoung(String movieCdYoung, int startRow, int endRow) {
@@ -508,7 +665,7 @@ public class FilmDao {
 		return list;
 	}
 	
-	// 10
+	// 13
 	// <선택된 영화 위시리스트 등록 여부 select> 메소드
 	// 해당 회원의 위시리스트 등록 여부 확인
 	// 이미 등록됨 : 1
@@ -549,7 +706,7 @@ public class FilmDao {
 		return isWished;
 	}
 	
-	// 11
+	// 14
 	// <선택된 영화 위시리스트 insert> 메소드
 	// 해당 회원의 위시리스트로 등록
 	public void insertWishList(String movieCdYoung, String movieCdNaver, String id) {

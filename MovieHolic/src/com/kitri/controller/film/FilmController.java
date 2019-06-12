@@ -50,9 +50,13 @@ public class FilmController {
 	// 선호 장르 영화 목록 get
 	public void getFavoriteFilm(HttpServletRequest request, HttpServletResponse response) {
 		
+		
+		// TODO : session에서 id 받기로 변경하기! @@@@@@@@@@@@@@@@@@@@@@@@@@@
+		String userId = "a125@gmail.com";
+		
 		// 선호 장르 영화 목록 get
-		List<FilmDto> list = FilmService.getFilmService().getFavoriteFilm("액션");
-		List<FilmDto> list2 = FilmService.getFilmService().getFavoriteFilm("뮤지컬");
+		List<FilmDto> list = FilmService.getFilmService().getFavoriteFilm(userId, 1);   // 회원의 선호 장르 1위 영화목록 get
+		List<FilmDto> list2 = FilmService.getFilmService().getFavoriteFilm(userId, 2);  // 회원의 선호 장르 2위 영화목록 get
 		
 		// 선호 장르 영화 목록 set
 		request.setAttribute("favoritefilm", list);
@@ -61,11 +65,24 @@ public class FilmController {
 	}
 	
 	
+	// 3
+	// 최신 영화 목록, 별점 높은 영화 목록 get
+	public void getVariousFilm(HttpServletRequest request, HttpServletResponse response) {
+
+		// 영화 목록 get
+		List<FilmDto> list = FilmService.getFilmService().getLatestFilm();
+		List<FilmDto> list2 = FilmService.getFilmService().getBestStarFilm();
+		
+		// 영화 목록 set
+		request.setAttribute("variousfilm", list);
+		request.setAttribute("variousfilm2", list2);
+		
+	}
 	
 	
 	// ------------------------------------------------------- [ moviefilm.jsp ] -------------------------------------------------------
 	
-	// 3
+	// 4
 	// 주간 인기 영화 목록 get
 	public String getWeekBestFilmList(HttpServletRequest request, HttpServletResponse response) {
 		
@@ -80,7 +97,7 @@ public class FilmController {
 				
 	}
 	
-	// 4
+	// 5
 	// 장르별 영화 목록 get
 	public String getFilmList(HttpServletRequest request, HttpServletResponse response) {
 
@@ -119,7 +136,7 @@ public class FilmController {
 	}
 
 	
-	// 5
+	// 6
 	// 검색된 영화 목록 get
 	public String getSearchedFilmList(HttpServletRequest request, HttpServletResponse response) {
 			
@@ -162,7 +179,7 @@ public class FilmController {
 	// ------------------------------------------------------- [ moviedetail.jsp ] -------------------------------------------------------
 	
 	
-	// 6
+	// 7
 	// 선택된 영화 상세정보 get
 	public String getFilmInfo(HttpServletRequest request, HttpServletResponse response) {
 
@@ -217,7 +234,7 @@ public class FilmController {
 		
 	}
 	
-	// 7
+	// 8
 	// 선택된 페이지의 리뷰 get
 	
 	public String getReviewList(HttpServletRequest request, HttpServletResponse response) {
@@ -261,7 +278,7 @@ public class FilmController {
 		return path;
 	}
 	
-	// 8
+	// 9
 	// 위시리스트 추가
 	public String addWishList(HttpServletRequest request, HttpServletResponse response) {
 
@@ -271,7 +288,7 @@ public class FilmController {
 		String movieCdYoung = request.getParameter("movieCdYoung");
 		String movieCdNaver = request.getParameter("movieCdNaver");
 			
-		// 세션에서 id 얻기로 바꾸기 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		// TODO : session에서 id 받기로 변경하기!  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 		String id = "a125@gmail.com";
 			
 		// 위시리스트 추가 여부 확인
@@ -287,5 +304,6 @@ public class FilmController {
 			
 		return path;
 	}
+
 	
 }
