@@ -123,40 +123,17 @@ $(function(){
 	});
 });
 	
-<%-- 댓글 작성 --%>
+<%-- 댓글 작성/수정 --%>
 $(function(){
 	$('#save').click(function(){
 		if($.ckID()){
+			var commentSave = $(this).text();
+			var postDate = $('textarea').attr('data-postDate');
 			var comment = $('textarea').val().trim();
-			if(comment == ''){
-				alert("내용을 입력하세요.");
-				return;
+			if(commentSave != '수   정') {
+				$.saveComment(comment);
 			} else {
-				if(confirm("작성한 댓글을 저장하시겠습니까?")) {
-					$.ajax({
-						url: "<%= request.getContextPath()%>/list",
-						data: "act=saveComment&seq=" + seq + "&content=" + comment +  "&subject=" + $('#subject').text() + "&writerId=" + $('#writerId').text(),
-						method: 'post',
-						success:function(result){
-							if(result != 0) {
-								alert("저장 되었습니다.");
-								$.ajax({
-									url: "<%= request.getContextPath()%>/list",
-									data: "act=selComment&seq=" + seq,
-									method: 'post',
-									success:function(result){
-										$('textarea').val('');
-										$('tbody').empty();
-										$('tbody').html(result);
-										$('#cnt').text($('#commenCnt').attr("data-cnt"));
-									}
-								});
-							} else {
-								alert("시스템 에러로 인해 저장에 실패하였습니다. 나중에 다시 시도하세요.");
-							}
-						}
-					});
-				} 
+				$.updateComment(postDate, comment);
 			}
 		}
 		return false;
@@ -180,11 +157,10 @@ $(function(){
 							data: "act=selComment&seq=" + seq,
 							method: 'post',
 							success:function(result){
-								alert(result);
 								$('textarea').val('');
 								$('tbody').empty();
 								$('tbody').html(result);
-								$('#cnt').text($('#commenCnt').attr("data-cnt"));
+								$('#cnt').text($('#commentCnt').attr("data-cnt"));
 							}
 						});
 					} else {
@@ -204,11 +180,14 @@ $(function(){
 		if(confirm("해당 댓글을 수정하시겠습니까?")) {
 			$.ajax({
 				url: 'list',
-				data: 'act=modComment&postDate=' + postDate,
+				data: 'act=modCommment&postDate=' + postDate,
 				method: 'post',
 				success: function(result){
 					if(result != null) {
 						$('textarea').val(result);
+						$('textarea').attr('data-postDate', postDate);
+						$('#save').html('수&nbsp;&nbsp;&nbsp;정');
+						$('#save').after('<button class="btn btn-success font_bold_small" id="cancle" style="margin-top: 1em;">취&nbsp;&nbsp;&nbsp;소</button>');
 					} else {
 						alert("시스템 에러로 인해 작업 처리에 실패하였습니다. 나중에 다시 시도하세요.");
 					}
@@ -218,12 +197,26 @@ $(function(){
 		return false;
 	});
 });
+
+<%-- 댓글 수정 취소 --%>
+$(function(){
+	$(document).on("click", "#cancle", function(){
+		if(confirm("댓글 수정을 취소하시겠습니까?")) {
+			$('textarea').val('');
+			$('textarea').attr('data-postDate', '');
+			$('#save').html('등&nbsp;&nbsp;&nbsp;록');
+			$(this).remove();
+		}
+		return false;
+	});
+});
 </script>
-<script>
+<script>	<%-- util --%>
 <% session.setAttribute("userID", "a124@gmail.com"); %>
 <%-- <% session.removeAttribute("userID");%> --%>
 $(function(){
 	seq = $('#back').attr('data-seq');
+<%-- 로그인 상태인지 확인 함수--%>
 	$.ckID = function() {
 		var userID = "${sessionScope.userID}";
 		if(userID == "") {
@@ -234,6 +227,70 @@ $(function(){
 			}
 		} else {
 			return true;
+		}
+	}
+<%-- 댓글 저장 함수 --%>
+	$.saveComment = function(comment){
+		if(comment == ''){
+			alert("내용을 입력하세요.");
+			return;
+		} else {
+			if(confirm("작성한 댓글을 저장하시겠습니까?")) {
+				$.ajax({
+					url: "<%= request.getContextPath()%>/list",
+					data: "act=saveComment&seq=" + seq + "&content=" + comment +  "&subject=" + $('#subject').text() + "&writerId=" + $('#writerId').text(),
+					method: 'post',
+					success:function(result){
+						if(result != 0) {
+							alert("저장 되었습니다.");
+							$.ajax({
+								url: "<%= request.getContextPath()%>/list",
+								data: "act=selComment&seq=" + seq,
+								method: 'post',
+								success:function(result){
+									$('textarea').val('');
+									$('tbody').empty();
+									$('tbody').html(result);
+									$('#cnt').text($('#commentCnt').attr("data-cnt"));
+								}
+							});
+						} else {
+							alert("시스템 에러로 인해 저장에 실패하였습니다. 나중에 다시 시도하세요.");
+						}
+					}
+				});
+			} 
+		}
+	}
+<%-- 댓글 수정완료 함수 --%>
+	$.updateComment = function(postDate, comment){
+		if(confirm("작성한 댓글을 저장하시겠습니까?")) {
+			$.ajax({
+				url: "<%= request.getContextPath()%>/list",
+				data: "act=updateComment&content=" + comment + "&postDate=" + postDate,
+				method: 'post',
+				success:function(result){
+					if(result != 0) {
+						alert("저장 되었습니다.");
+						$.ajax({
+							url: "<%= request.getContextPath()%>/list",
+							data: "act=selComment&seq=" + seq,
+							method: 'post',
+							success:function(result){
+								$('textarea').val('');
+								$('tbody').empty();
+								$('tbody').html(result);
+								$('#cnt').text($('#commentCnt').attr("data-cnt"));
+								$('textarea').attr('data-postDate', '');
+								$('#save').html('등&nbsp;&nbsp;&nbsp;록');
+								$('#cancle').remove();
+							}
+						});
+					} else {
+						alert("시스템 에러로 인해 저장에 실패하였습니다. 나중에 다시 시도하세요.");
+					}
+				}
+			});
 		}
 	}
 });
@@ -322,8 +379,8 @@ $(function(){
 		<div class="row" >
 			<%-- 댓글 작성 --%>
 			<div class="col-lg-12">
-				<textarea class="form-control" rows="5" placeholder="댓글을 입력해주세요." style="float: left; width: 90%; margin: 0 0.5em 0.5em 0;"></textarea>
-				<button class="btn btn-success font_bold_small" id="save">등&nbsp;&nbsp;&nbsp;록</button>
+				<textarea class="form-control" rows="5" placeholder="댓글을 입력해주세요." data-postDate="" style="float: left; width: 90%; margin: 0 0.5em 0.5em 0;"></textarea>
+				<button class="btn btn-success font_bold_small" id="save" style="margin-top: 1em;">등&nbsp;&nbsp;&nbsp;록</button>
 				<!-- float clear용 빈 div -->
 				<div style="clear: both;"></div>
 			</div>
