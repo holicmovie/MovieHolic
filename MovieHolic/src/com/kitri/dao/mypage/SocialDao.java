@@ -28,7 +28,8 @@ public class SocialDao {
 
 		return socialDao;
 	}
-
+	
+//-----------------------------[social.jsp]-----------------------
 //	게시해야하는 TotalCnt 구하는 메소드
 	public static int selectTotalCnt() {
 		String selectTotalCntSQL = "select count(*)\r\n"
@@ -174,7 +175,7 @@ public class SocialDao {
 			conn = DBConnection.makeConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, followingid);
-			pstmt.executeQuery();
+			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -211,9 +212,14 @@ public class SocialDao {
 
 	}
 
+	
+	
+	
+	
+	
 	// ------------------------------wishilist---------------------------
 
-
+//wishlist 첫 화면에 출력하는 메소드
 	public List<WishlistDto> selectWishlist(String userid) {
 		List<WishlistDto> list = new ArrayList<>();
 		Connection conn = null;
@@ -257,6 +263,8 @@ public class SocialDao {
 		
 	}
 
+	
+	// wishlist 검색하는 메소드
 	public List<WishlistDto> selectSearchedWishlist(String userid, String srchKey) {
 		List<WishlistDto>list = new ArrayList<>();
 		
@@ -291,6 +299,7 @@ public class SocialDao {
 				wishlistDto.setMovieNm(rs.getString("moviename"));
 				wishlistDto.setPrdtYear(rs.getString("prdtyear"));
 				wishlistDto.setCategory(rs.getString("category"));
+				wishlistDto.setOpenYear(rs.getString("openyear"));
 				list.add(wishlistDto);		
 			}
 			
@@ -302,6 +311,36 @@ public class SocialDao {
 		}
 		System.out.println("dao : " + list);
 		return list;
+	}
+	
+	
+//	wishlist 삭제 메소드
+	public void deleteWishList(String userid ,String[] wishlistdelete) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			StringBuffer sql = new StringBuffer();
+			sql.append("delete mh_wishlist where userid=? and moviecodeyoung=?");
+			conn = DBConnection.makeConnection();
+			pstmt = conn.prepareStatement(sql.toString());
+			if(wishlistdelete != null) {
+				
+				for(int i = 0; i < wishlistdelete.length; i++) {
+					pstmt.setString(1, userid);
+					pstmt.setString(2, wishlistdelete[i]);
+					pstmt.executeUpdate();
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("삭제를 실패했습니다.");
+		} finally {
+			DBClose.close(conn, pstmt);
+			System.out.println("삭제되었습니다.");
+		}
+		
 	}
 
 
