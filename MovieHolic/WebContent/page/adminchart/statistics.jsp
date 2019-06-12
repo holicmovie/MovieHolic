@@ -220,6 +220,8 @@ $(document).on("click", ".barsearch>button", function(){
 		return false;
 	}
 	
+	$("div.uservariance").empty();
+	
 	// 리절트 페이지 만들어서 거기다가 차트 넣어주기.
 	// 처음 들어왔을때 차트 어떻게 뿌려줄건지 생각해보기. 년도부터 고르라고 하던지
 	// 년도별 보내서 디비딴에서 처리.

@@ -60,7 +60,7 @@ public class AdminChartController {
 		acdfi.setList(listteen);
 		request.setAttribute("acdfi", acdfi);
 		
-		String path = "/page/adminchart/statistics.jsp";
+		String path = "/page/adminchart/NewFile.jsp";
 		
 //		if (listteen.size() != 0) {
 //			for (int i = 0; i < listteen.size(); i++) {
