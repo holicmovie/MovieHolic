@@ -56,6 +56,9 @@ $(function() {
 				/* alert("검색 완료 !!!"); */
 			}
 		});
+	} else {
+		alert("검색결과가 없습니다");
+		return;
 	}
 	return false;
 		}
