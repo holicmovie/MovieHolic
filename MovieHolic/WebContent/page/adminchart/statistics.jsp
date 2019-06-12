@@ -180,7 +180,12 @@ $(document).on("click", ".barsearch>button", function(){
 		url : '/MovieHolic/chart?act=chart&barnewlyyear='+barnewlyyear+'&baroldyear='+baroldyear,
 		method : 'get',
 		success : function(result) {
-			$("div.uservariance").html(result.trim()); 
+			//$("div.uservariance").html(result.trim());
+			var checkArr = checkArr.push($("input.a").val());
+			//checkArr = $("input.a").val();
+			alert(checkArr[0]);
+			console.log(checkArr[0]);
+			
 		}
 	});
 	return false; 
@@ -193,16 +198,28 @@ $(document).on("click", ".barsearch>button", function(){
 
 </head>
 
-<%-- 값 빼오기 --%>
-<c:forEach begin="${ap.startPage}" end="${ap.endPage}" var="i">
-	<inpu
-</c:forEach>
-
-
-<%-- 값 빼오기 --%>
 
 
 <body class="left-sidebar is-preload">
+
+
+
+
+
+
+
+<%-- 값 빼오기 --%>
+<c:forEach var="ac" items="${acdtw}">
+	<input type="hidden" class="a" name="a" value="${ac.twenties}">
+</c:forEach> 
+<%-- 값 빼오기 --%>
+<script type="text/javascript">
+	
+</script>
+
+
+
+
 	<div id="page-wrapper">
 
 		<!-- Header -->
@@ -312,33 +329,58 @@ $(document).on("click", ".barsearch>button", function(){
 						
 						<script>
 						var ctx = document.getElementById('myChart');
+						
 						var myChart = new Chart(ctx, {
 						    type: 'bar',
 						    data: {
 						        labels: ['2019', '2018', '2017', '2016', '2015', '2014'],
 						        datasets: [{
-						            label: '총 인원',
+						            label: '10대',
 						            data: [12, 19, 3, 5, 2, 3],
-						            
 						            
 						            backgroundColor: [
 						                'rgba(255, 99, 132, 0.2)',
-						                'rgba(54, 162, 235, 0.2)',
+						                'rgba(255, 99, 132, 0.2)'
+						                /* 'rgba(54, 162, 235, 0.2)',
 						                'rgba(255, 206, 86, 0.2)',
 						                'rgba(75, 192, 192, 0.2)',
 						                'rgba(153, 102, 255, 0.2)',
-						                'rgba(255, 159, 64, 0.2)'
+						                'rgba(255, 159, 64, 0.2)' */
 						            ],
 						            borderColor: [
 						                'rgba(255, 99, 132, 1)',
-						                'rgba(54, 162, 235, 1)',
+						                'rgba(255, 99, 132, 1)',
+						                'rgba(255, 99, 132, 1)',
+						                'rgba(255, 99, 132, 1)',
+						                'rgba(255, 99, 132, 1)'
+						                /* 'rgba(54, 162, 235, 1)',
 						                'rgba(255, 206, 86, 1)',
 						                'rgba(75, 192, 192, 1)',
 						                'rgba(153, 102, 255, 1)',
-						                'rgba(255, 159, 64, 1)'
+						                'rgba(255, 159, 64, 1)' */
 						            ],
 						            borderWidth: 2
 						            
+						        },
+						        {
+						            label: '20대',
+						            data: [12, 19, 3, 5, 2, 3],
+						        	
+						        },
+						        {
+						            label: '30대',
+						            data: [12, 19, 3, 5, 2, 3],
+						        	
+						        },
+						        {
+						            label: '40대',
+						            data: [12, 19, 3, 5, 2, 3],
+						        	
+						        },
+						        {
+						            label: '50대',
+						            data: [12, 19, 3, 5, 2, 3],
+						        	
 						        }]
 						    },
 						    

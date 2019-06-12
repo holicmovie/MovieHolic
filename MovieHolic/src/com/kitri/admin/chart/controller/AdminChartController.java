@@ -45,48 +45,48 @@ public class AdminChartController {
 		AdminChartDto acdfo = new AdminChartDto();
 		AdminChartDto acdfi = new AdminChartDto();
 		
-		acdte.setList(listteen);
-		request.setAttribute("acdte", acdte);
+		//acdte.setList(listteen);
+		request.setAttribute("acdte", listteen);
 		
-		acdtw.setList(listteen);
-		request.setAttribute("acdtw", acdtw);
+		//acdtw.setList(listteen);
+		request.setAttribute("acdtw", listtwenties);
 		
-		acdth.setList(listteen);
-		request.setAttribute("acdth", acdth);
+		//acdth.setList(listteen);
+		request.setAttribute("acdth", listthirties);
 		
-		acdfo.setList(listteen);
-		request.setAttribute("acdfo", acdfo);
+		//acdfo.setList(listteen);
+		request.setAttribute("acdfo", listfourties);
 		
-		acdfi.setList(listteen);
-		request.setAttribute("acdfi", acdfi);
+		//acdfi.setList(listteen);
+		request.setAttribute("acdfi", listfifties);
 		
-		String path = "/page/adminchart/NewFile.jsp";
+		String path = "/page/adminchart/statistics.jsp";
 		
-//		if (listteen.size() != 0) {
-//			for (int i = 0; i < listteen.size(); i++) {
-//				System.out.println("listteen = " + listteen.get(i));
-//			}
-//		}
-//		if (listtwenties.size() != 0) {
-//			for (int i = 0; i < listtwenties.size(); i++) {
-//				System.out.println("listtwenties = " + listtwenties.get(i));
-//			}
-//		}
-//		if (listthirties.size() != 0) {
-//			for (int i = 0; i < listthirties.size(); i++) {
-//				System.out.println("listthirties = " + listthirties.get(i));
-//			}
-//		}
-//		if (listfourties.size() != 0) {
-//			for (int i = 0; i < listfourties.size(); i++) {
-//				System.out.println("listfourties = " + listfourties.get(i));
-//			}
-//		}
-//		if (listfifties.size() != 0) {
-//			for (int i = 0; i < listfifties.size(); i++) {
-//				System.out.println("listfifties = " + listfifties.get(i));
-//			}
-//		}
+		if (listteen.size() != 0) {
+			for (int i = 0; i < listteen.size(); i++) {
+				System.out.println("listteen = " + listteen.get(i));
+			}
+		}
+		if (listtwenties.size() != 0) {
+			for (int i = 0; i < listtwenties.size(); i++) {
+				System.out.println("listtwenties = " + listtwenties.get(i));
+			}
+		}
+		if (listthirties.size() != 0) {
+			for (int i = 0; i < listthirties.size(); i++) {
+				System.out.println("listthirties = " + listthirties.get(i));
+			}
+		}
+		if (listfourties.size() != 0) {
+			for (int i = 0; i < listfourties.size(); i++) {
+				System.out.println("listfourties = " + listfourties.get(i));
+			}
+		}
+		if (listfifties.size() != 0) {
+			for (int i = 0; i < listfifties.size(); i++) {
+				System.out.println("listfifties = " + listfifties.get(i));
+			}
+		}
 		
 		
 		
