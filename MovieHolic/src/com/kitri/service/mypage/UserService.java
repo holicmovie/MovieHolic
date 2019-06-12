@@ -3,8 +3,7 @@ package com.kitri.service.mypage;
 import java.util.List;
 
 import com.kitri.dao.mypage.ReviewAddDao;
-import com.kitri.dto.BoardDto;
-import com.kitri.dto.CommentDto;
+import com.kitri.dto.*;
 
 public class UserService {
 
@@ -21,9 +20,9 @@ private static UserService userService; // 2번째 전역변수 만들기
 	}
 	
 	// 리뷰목록
-		public List<BoardDto> reviewlist(String movieName) {
+		public List<BoardDto> reviewlist(int startRow, int endRow, String userid) {
 			
-			return ReviewAddDao.getReviewAdd().reviewlist(movieName);
+			return ReviewAddDao.getReviewAdd().reviewlist(startRow, endRow,userid);
 		}
 	//리스트목록
 		public List<BoardDto> listList(String content){
@@ -36,5 +35,29 @@ private static UserService userService; // 2번째 전역변수 만들기
 	//코멘트
 		public List<CommentDto> findByCo(String seq){
 			return ReviewAddDao.getReviewAdd().reviewContent(seq);
+		}
+	//회원정보
+		public UserDto selectById(String userid) {
+			return ReviewAddDao.getReviewAdd().selectId(userid);
+		}
+	//리뷰총갯수
+		public int getTotalpage(String id) {
+			return ReviewAddDao.getReviewAdd().selectTotalReview(id);
+		}
+	//리뷰쓰기
+		public int writeReview(BoardDto boardDto) {
+			return ReviewAddDao.getReviewAdd().reviewAdd(boardDto);
+		}
+	//리뷰검색페이지
+		public int getSearchReview(String search, String id) {
+			return ReviewAddDao.getReviewAdd().selectReviewSearch(search, id);
+		}
+	//리뷰검색select
+		public List<BoardDto> selectSearchReview(int startRow, int endRow, String userid, String search) {
+			return ReviewAddDao.getReviewAdd().searchReviewList(startRow, endRow, search, userid);
+		}
+	//리뷰삭제
+		public void deleteReview(String userid, String[] reviewdelete) {
+			ReviewAddDao.getReviewAdd().deletereview(userid, reviewdelete);
 		}
 }

@@ -16,6 +16,8 @@ public class BoardDto { // 게시판
 	private List<String> movieCodeNaver; // 영화코드(네이버)
 	private List<String> director; // 감독명
 	private List<String> actors; // 배우
+	private String actor1;
+	private String actor2;
 	private List<String> movieName; // 영화명
 	private int starPoint; // 별점
 	private String category; // 장르
@@ -30,6 +32,13 @@ public class BoardDto { // 게시판
 	public BoardDto() {
 		super();
 	}
+
+	public BoardDto(int seq) {
+		super();
+		this.seq = seq;
+	}
+
+
 
 	///// getter & setter /////
 
@@ -129,6 +138,22 @@ public class BoardDto { // 게시판
 		this.actors = actors;
 	}
 
+	public String getActor1() {
+		return actor1;
+	}
+
+	public void setActor1(String actor1) {
+		this.actor1 = actor1;
+	}
+
+	public String getActor2() {
+		return actor2;
+	}
+
+	public void setActor2(String actor2) {
+		this.actor2 = actor2;
+	}
+
 	public List<String> getMovieName() {
 		return movieName;
 	}
@@ -198,9 +223,11 @@ public class BoardDto { // 게시판
 		return "BoardDto [seq=" + seq + ", boardCode=" + boardCode + ", subject=" + subject + ", userId=" + userId
 				+ ", postDate=" + postDate + ", postDateY=" + postDateY + ", postDateM=" + postDateM + ", content="
 				+ content + ", movieCodeYoung=" + movieCodeYoung + ", movieCodeNaver=" + movieCodeNaver + ", director="
-				+ director + ", actors=" + actors + ", movieName=" + movieName + ", starPoint=" + starPoint
-				+ ", category=" + category + ", best=" + best + ", worst=" + worst + ", viewCount=" + viewCount
-				+ ", enable=" + enable + ", notify=" + notify + "]";
+				+ director + ", actors=" + actors + ", actor1=" + actor1 + ", actor2=" + actor2 + ", movieName="
+				+ movieName + ", starPoint=" + starPoint + ", category=" + category + ", best=" + best + ", worst="
+				+ worst + ", viewCount=" + viewCount + ", enable=" + enable + ", notify=" + notify + "]";
 	}
+
+	
 
 }

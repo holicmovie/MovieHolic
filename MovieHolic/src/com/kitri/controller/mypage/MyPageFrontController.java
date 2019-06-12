@@ -13,56 +13,125 @@ import com.kitri.util.MoveUrl;
 public class MyPageFrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public MyPageFrontController() {
-		super();
-	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("서블릿");
+		System.out.println("서블릿진입");
 		String page = request.getParameter("page");
-		String path = "/page/mypage/mypage.jsp";
-		String cp = request.getParameter("followingpage");
-		
-
-		
-		
+		String tab = request.getParameter("tab");
+		String path = "";
+		String wishlist = request.getParameter("wishlist");
+//		String wishlistdelete[] = request.getParameterValues("wishlistdelete");
+//		
+//		if(wishlistdelete != null) {
+//			for(int i = 0; i < wishlistdelete.length;i++) {
+//			System.out.println("FC 체크한 영화 코드 : " + wishlistdelete[i]);
+//			}
+//		}
+//----------------------------------[mypage]----------------------------------------
 		if ("mypage".equals(page)) {
-			path = "/page/mypage/mypage.jsp";
+			path = MyPageController.getMyPageController().showMine(request, response);
 			MoveUrl.forward(request, response, path);
+			
+			
+			
+//--------------------------------[취향 분석]-----------------------------------------------
+			
 		} else if ("preference".equals(page)) {
-			MoveUrl.forward(request, response, "/page/mypage/preference.jsp");
-		} else if ("wishlist".equals(page)) {
-			MoveUrl.forward(request, response, "/page/mypage/wishlist.jsp");
-		} else if ("diary".equals(page)) {
-			UserController.getUserController().ReviewList(request, response);
-			MoveUrl.forward(request, response, "/page/mypage/diary.jsp");
-		} else if ("social".equals(page)) {
-			path = MyPageController.getMyPageController().showFollowings(request, response, cp);
+			path = PreferenceController.getPreferenceController().showPreference(request, response);
 			MoveUrl.forward(request, response, path);
-			/*
-			 * path = MyPageController.getMyPageController().showFollowers(request,
-			 * response, cp); MoveUrl.forward(request, response, path);
-			 */
-		
-		} else if ("setting".equals(page)) {
-			MoveUrl.forward(request, response, "/page/mypage/setting.jsp");
-		} 
+			
+			
+			
+			
+//			-----------------------[wishlist]---------------------------------------
+		} else if ("wishlist".equals(page)) {
+			path = MyPageController.getMyPageController().showWishList(request, response);
+			MyPageController.getMyPageController().deleteWishList(request, response);
+			MoveUrl.forward(request, response, path);
+			
+			
+		} else if ("search".equals(wishlist)) {	
+			path = MyPageController.getMyPageController().searchWishList(request, response);
+			MoveUrl.forward(request, response, path);
+			
 
-		else if("writereview".equals(page)) {
+			
+			
+			
+//			-----------------------[diary]---------------------------------------
+			
+		} else if ("diary".equals(page)) {
+			path  = UserController.getUserController().ReviewList(request, response);
+			MoveUrl.forward(request, response, path);
+		} else if("diarypage".equals(page)) {
+			path = UserController.getUserController().ReviewPage(request, response);
+			MoveUrl.forward(request, response, path);
+		}else if("diaryselect".equals(page)) {
+			path = UserController.getUserController().getSearchReview(request, response);
+			MoveUrl.forward(request, response, path);
+			
+//			-----------------------[social]---------------------------------------
+			
+		} else if ("social".equals(page)) {
+			path = MyPageController.getMyPageController().showFollowings(request, response);
+			MyPageController.getMyPageController().deleteFollowings(request, response);
+			MoveUrl.forward(request, response, path);
+			
+			
+			
+			
+//			-----------------------[setting]---------------------------------------
+		} else if ("setting".equals(page)) {
+			UserController.getUserController().settingUser(request, response);
+			UserController.getUserController().settingProfile(request, response);
+			MoveUrl.forward(request, response, "/page/mypage/setting.jsp");
+			
+			
+			
+			
+			
+//			-----------------------[review작성]---------------------------------------
+		} else if("writereview".equals(page)) {
 			UserController.getUserController().ReviewRegister(request, response);
 			MoveUrl.forward(request, response, "/page/mypage/writereview.jsp");
-		} else if("reviewdetail".equals(page)) {
+			
+			
+			
+			
+			
+//			-----------------------[review 상세 확인]---------------------------------------
+			
+		}  else if("reviewdetail".equals(page)) {
 			UserController.getUserController().ReviewDetail(request, response);
 			MoveUrl.forward(request, response, "/page/mypage/diaryDetail.jsp");
+			
+			
+			
+			
+			
+//			-----------------------[review 댓글]---------------------------------------
 		} else if("reviewcomment".equals(page)) {
 			UserController.getUserController().ReviewComment(request, response);
 			MoveUrl.forward(request, response, "/page/mypage/diaryDetail.jsp");
+			
+			
+			
+			
+//			-----------------------[소셜-follower기능]---------------------------------------
+		} else if ("followers".equals(tab)) {
+			path = MyPageController.getMyPageController().showFollowers(request, response);
+			MyPageController.getMyPageController().addFollower(request, response);
+			MoveUrl.forward(request, response, path);
 		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		
+			
+					
 		doGet(request, response);
 	}
 

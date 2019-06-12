@@ -10,94 +10,167 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <!-- 소셜 페이지 눌렀을 때 출력 -->
-  <script>
- $(function(){
 
-	<%--following 아이디 목록 --%>
+<script>
+
+/* 처음 로딩할 때 followingID출력 */
+ 
+
+$(function(){
 	$.ajax({
-		url: '/MovieHolic/mypage?page=social', 
-		method:'get', 
+		url:'/MovieHolic/mypage?page=social',
+		method:"GET",
 		success:function(result){
-			alert("following");
-			$("#followingsection").html(result.trim());
+			$("section").html(result.trim());
 		}
 	});
-	
 	return false;
-	
-});  
-  
-  
-  
- 
-  
-$(function(){
-	
-	$(".deletef").click(function() {
-			
-			var followingid = $(this).find("table>tbody>td.followingid").html();
-				
-			$.ajax({
-				url:"/MovieHolic/mypage?page=social",
-				method: "GET",
-				data:"deletefollowing=" + followingid,
-				success: function(result){
-					System.out.println(followingid);
-				}
-			});
-			return false;
-		});
-	
-	
-	$("followingpaging").click(function(){
-	
-		var currentpage=$(this).attr("href");
-		alert(currentPage+"페이지를 보여줍니다.");
+});
+
+
+/* followingID 페이지 */
+$(document).on("click", ".1", function(){
+		alert("눌렸다!");
+		 var currentpage=$(this).attr("href");
 		 $.ajax({
-			url:url,
+			url:'/MovieHolic/mypage',
 			method:"GET",
+			data:'page=social&followingpage=' + currentpage,
 			success:function(result){
 				$("section").html(result.trim());
+		alert(currentpage+"페이지를 보여줍니다.");
 			}
 		});
 		return false;
-	}); 
+	});  
 	
-});	
- $(function(){
-	$("followerpaging").click(function(){
-		
-		var currentpage=$(this).attr("href");
-		alert(currentPage+"페이지를 보여줍니다.");
-		 $.ajax({
-			url:url,
-			method:"GET",
-			success:function(result){
-				$("section").html(result.trim());
-			}
-		});
-		return false;
+$(document).on("click", ".btnmove", function(){
+	alert("눌렸다!");
+	 var currentpage=$(this).attr("href");
+	 $.ajax({
+		url:'/MovieHolic/mypage',
+		method:"GET",
+		data:'page=social&followingpage=' + currentpage,
+		success:function(result){
+			$("section").html(result.trim());
+		/* alert(currentpage+"페이지를 보여줍니다."); */
+		}
 	});
+	return false;
+});  
+
+/* followerID page */
+$(document).on("click", ".2", function(){
+	alert("눌렸다!");
+	 var currentpage=$(this).attr("href");
+	 $.ajax({
+		url:'/MovieHolic/mypage',
+		method:"GET",
+		data:'tab=followers&followerpage=' + currentpage,
+		success:function(result){
+			$("section").html(result.trim());
+				/* alert(currentpage+"페이지를 보여줍니다."); */
+		}
+	});
+	return false;
+});  
+
+$(document).on("click", ".btnmove2", function(){
+	alert("눌렸다!");
+		 var currentpage=$(this).attr("href");
+		 $.ajax({
+			url:'/MovieHolic/mypage',
+			method:"GET",
+			data:'tab=followers&followerpage=' + currentpage,
+			success:function(result){
+				$("section").html(result.trim());
+			alert(currentpage+"페이지를 보여줍니다.");
+			}
+	});
+	return false;
+});
+
+$(document).on("click", "#btnfollowers", function(){
+	
+		/* alert("follower"); */
+		/* $("#followingsection").empty(); */
+		  $.ajax({
+			url:'/MovieHolic/mypage',
+			method:"GET",
+			data:'tab=followers',
+			success:function(result){
+				$("section").html(result.trim());
+				/* alert("follwer ajax확인!"); */
+			}
+		});
+		return false;
+});
+
+$(document).on("click", "#btnfollowings", function(){
+	
+	/* alert("following"); */
+	/* $("#followingsection").empty(); */
+	  $.ajax({
+		url:'/MovieHolic/mypage',
+		method:"GET",
+		data:'page=social',
+		success:function(result){
+			$("section").html(result.trim());
+			/* alert("follwing ajax확인!"); */
+		}
+	});
+	return false;
+});
+
+$(document).on('click', '.deletef', function(){ 
+	var str = "";
+    var tdArr = new Array();    // 배열 선언
+    var checkBtn = $(this);
+    var tr = checkBtn.parent().parent();
+    var td = tr.children();
+
+    
+    /* var no = td.eq(0).text(); */
+    var followingid = td.eq(1).text().trim();
+    /* var name = td.eq(2).text();
+    var lists = td.eq(3).text();
+	var likes = td.eq(4).text(); */
+	
+		$.ajax({
+			url:'/MovieHolic/mypage',
+			method: 'GET',
+			data:'page=social&deletefollowing=' + followingid,
+			success: function(result){
+				alert(followingid +"삭제");
+				location.reload();
+			 	/* location.href="/MovieHolic/mypage?page=social"  */
+			 	}
+			});
+	return false;   
 }); 
 
-$(function(){
-	$(".deletef").click(function() {
-			
-			var followingid = $(this).find("table>tbody>td.followingid").html();
-				
-			$.ajax({
-				url:"/MovieHolic/mypage?page=social",
-				method: "GET",
-				data:"deletefollowing=" + followingid,
-				success: function(result){
-					System.out.println(followingid);
-				}
-			});
-			return false;
-		});
-});
-	 
-	
+$(document).on('click', '.plusfollower', function(){
+		alert("눌렸다.");
+		var str = "";
+		    var tdArr = new Array();    // 배열 선언
+		    var checkBtn = $(this);
+		    var tr = checkBtn.parent().parent();
+		    var td = tr.children();
+
+		    /* var no = td.eq(0).text(); */
+		    var followerid = td.eq(1).text().trim();		
+		
+		alert(followerid);
+		$.ajax({
+			url:"/MovieHolic/mypage",
+			method: "GET",
+			data:"tab=followers&follow=" + followerid,
+			success: function(result){
+				alert(followerid +"추가성공");
+			}
+	});
+	return false; 
+}); 
 </script>
 <style>
 <!-- 좋아요 둥근 버튼을 위해 필요 -->
@@ -150,207 +223,17 @@ $(function(){
 			
 				<!-- **첫번째 행 시작 -->
 				<div class="row" style="margin-bottom: 5%">
-					<%		String test = (String)request.getAttribute("test"); %>
 					<div class="col-lg-12 col-12-mobile">
 					
-					<!-- 탭 메뉴 시작-->
-						<!-- 탭 2개 선언 -->
-						<button class="btn btn-success font_bold_small" id = "btnFollowing">Followings</button>
-						<button class="btn btn-success font_bold_small" id = "btnFollowers">Followers</button>
-						
-<!-- 						<ul class="nav nav-tabs" role="tablist" id="myTab">
- 						  
- 						   	<li class="nav-item" id="myTab1">
- 						    	<a class="nav-link active"  data-toggle="tab" href="#followings">Followings</a>
- 						    </li>
- 						    <li class="nav-item" id="myTab2">
-						    	<a class="nav-link" data-toggle="tab" href="#followers">Followers</a>
-						    </li>
-						   
-					  	</ul>
- -->					  
-					<section id = "followingsection">	</section>
-					
-					  <!-- 탭 페이지 2개 구성 -->
-				<!-- 	  <div class="tab-content"> -->
+					<button class="btn btn-success font_bold_small" id= "btnfollowings">Followings</button>
+					<button class="btn btn-success font_bold_small" id = "btnfollowers">Followers</button>
+					  <div class="tab-content">
 					  
-						  <!-- 첫번째 탭 페이지 -->
-							<%-- <div id="followings" class="container tab-pane active" role = "tabpanel">
-							<br>
-								<table class="table table-hover table-dark">
-								  <thead>
-								    <tr>
-								      <th scope="col">no.</th>
-								      <th scope="col">ID</th>
-								      <th scope="col">Name</th>
-								      <th scope="col">Lists</th>
-								      <th scope="col">Likes</th>
-								      <th scope="col"></th>
-								    </tr>
-								  </thead>
-								  <tbody>
-								<%PageBean pb = (PageBean)request.getAttribute("pb");
-									System.out.println(pb);
-								%>						  
-						
-								<c:set var = "pb" value="${requestScope.pb}"/>
-								  
-								  social following page 위한 for문
-								   
-								    <c:forEach var="pb" items='${pb.list}'>
-								    <tr>
-								    
-								      <th scope="row">${pb.no}</th>
-								      <td class = "followingid">${pb.followingId}</td>
-								      <td>${pb.name}</td>
-								      <td><i class="fa fa-list" style="color:gold;"></i> ${pb.best_count }</td>
-								      <td><i class="fa fa-heart" style="color:tomato;"></i>${pb.list_count }</td>
-								      <td>
-								      	<button type="button" class="btn btn-danger btn-circle btn-xl deletef" ><i class="fa fa-times"></i></button>
-									  </td>
-								    </tr>
-								    
-								    
-								   </c:forEach>
-								  </tbody>
-								</table>
-								
-								
-								
-								<!-- 페이지 처리 -->
-								<div class="row">
-									<div class="col-lg-12 col-12-mobile" id = "">
-									
-					
-						<div style="float: left">
-							<c:if test="${pb.startPage > 1 }">
-								<a href="/MovieHolic/mypage?page=social&followingpage=${pb.startPage - 1}"><button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button></a>
-								
-							</c:if>
-						</div>
-								
-								
-								
-						<div style="float: right;">
-							<c:if test="${pb.totalPage > pb.endPage }">
-							<a href="/MovieHolic/mypage?page=social&followingpage=${pb.endPage+1}"><button class="btn btn-success font_bold_small">다&nbsp;&nbsp;&nbsp;음</button></a>
-							</c:if>
-						</div>
-				
-							  	<ul class="pagination justify-content-center">
-							  	<c:forEach begin="${pb.startPage}" end="${pb.endPage}" var="i">
-									<c:choose>
-
-										<c:when test="${pb.currentPage == i}">
-											<li class="page-item"><a class="page-link a">${i}</a></li>
-										</c:when>
-
-										<c:otherwise>
-											<li class="page-item">
-											<a class="page-link a" href="/MovieHolic/mypage?page=social&followingpage=${i}">${i}</a></li>
-										</c:otherwise>
-
-									</c:choose>
-								</c:forEach>
-							  	 
-							 	 
-							 	 </ul>
-								float clear용 빈 div
-								<div style="clear: both;"></div>
-						 		</div>
-								</div>
-  					   		</div>
-  					   		 --%>
+					  <section id = "section"></section>
   					   		
-  					   		
-  					   		
-  					   		
-  					   		
-  					   		 <!-- 두번째 탭 페이지 -->
-							<%-- <div id="followers" class="container tab-pane" role = "tabpanel">
-							<br>
-								<table class="table table-hover table-dark">
-								  <thead>
-								    <tr>
-								      <th scope="col">no.</th>
-								      <th scope="col">ID</th>
-								      <th scope="col">Name</th>
-								      <th scope="col">Lists</th>
-								      <th scope="col">Likes</th>
-								      <th scope="col"></th>
-								    </tr>
-								  </thead>
-								  <tbody>
-								  <%PageBean pbf = (PageBean)request.getAttribute("pbf");
-								  	System.out.println(pbf);
-								  %>	
-								   <c:set var = "pbf" value="${requestScope.pbf}"/>
-								  
-								  social following page 위한 for문
-								   
-								    <c:forEach var="pbf" items='${pbf.list}'>
-								    <tr>
-								    
-								      <th scope="row">${pbf.no}</th>
-								      <td class = "followerid">${pbf.userId}</td>
-								      <td>${pbf.name}</td>
-								      <td><i class="fa fa-list" style="color:gold;"></i> ${pbf.best_count }</td>
-								      <td><i class="fa fa-heart" style="color:tomato;"></i>${pbf.list_count }</td>
-								      <td>
-								      	<button type="button" class="btn btn-secondary btn-circle btn-xl"><i class="fa fa-plus"></i></button>
-									  </td>
-								    </tr>
-								    
-								    
-								   </c:forEach>
-								   
-								   
-								</table>
-								
-								<!-- 페이지 처리 -->
-								<div class="row">
-									<div class="col-lg-12 col-12-mobile" id = "followerpaging">
-						  		
-						<div style="float: left">
-							<c:if test="${pbf.startPage > 1 }">
-								<a href="/MovieHolic/mypage?page=social&followerpage=${pb.startPage - 1}"><button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button></a>
-								
-							</c:if>
-						</div>
-								
-								
-								
-						<div style="float: right;">
-							<c:if test="${pbf.totalPage > pbf.endPage }">
-							<a href="/MovieHolic/mypage?page=social&followerpage=${pbf.endPage+1}"><button class="btn btn-success font_bold_small">다&nbsp;&nbsp;&nbsp;음</button></a>
-							</c:if>
-						</div>
-							  	<ul class="pagination justify-content-center">
-								    <c:forEach begin="${pbf.startPage}" end="${pbf.endPage}" var="i">
-									<c:choose>
-
-										<c:when test="${pbf.currentPage == i}">
-											<li class="page-item"><a class="page-link a a">${i}</a></li>
-										</c:when>
-
-										<c:otherwise>
-											<li class="page-item">
-											<a class="page-link a a" href="/MovieHolic/mypage?page=social&followerpage=${i}">${i}</a></li>
-										</c:otherwise>
-
-									</c:choose>
-								</c:forEach>
-							 	 </ul>
-								float clear용 빈 div
-								<div style="clear: both;"></div>
-						 		</div>
-								</div>
-								
-  					   		</div> --%>
-  					   		
-					<!--   </div> -->
+					  </div>
 					<!-- 탭 메뉴 끝 -->
-				
+					
 					</div>
 				</div>
 				<!-- **첫번째 행 끝 -->

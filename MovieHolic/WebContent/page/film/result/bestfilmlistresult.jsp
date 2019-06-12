@@ -10,14 +10,17 @@ String root = request.getContextPath();
 for(int i = 0; i < bestfilm.size(); i++){
 %>
 
+
 				<article style="background-color: rgb(3, 39, 49); color: white;">
-					<a href="/MovieHolic/page/film/moviedetail.jsp"
-						class="image featured">
-						<img src="<%=bestfilm.get(i).getMovieImage()%>" alt="<%=bestfilm.get(i).getMovieNm()%> 포스터" />
+	<div class="interated_network_movie_info_img">
+		<span class="movie_ranking_number" id="rankNum"><%=(i+1)%></span>
+					<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=bestfilm.get(i).getMovieCdYoung()%>&movieCdNaver=<%=bestfilm.get(i).getMovieCdNaver()%>" class="image featured">
+						<img style="vertical-align: middle;" src="<%=bestfilm.get(i).getMovieImage()%>" alt="<%=bestfilm.get(i).getMovieNm()%> 포스터" />
 					</a>
+	</div>
 					<header>
-						<h5>
-							<a href="/MovieHolic/page/film/moviedetail.jsp"
+						<h5 class="font_bold_small">
+							<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=bestfilm.get(i).getMovieCdYoung()%>&movieCdNaver=<%=bestfilm.get(i).getMovieCdNaver()%>" 
 								style="color: white;"><%=bestfilm.get(i).getMovieNm()%></a>
 						</h5>
 					</header>

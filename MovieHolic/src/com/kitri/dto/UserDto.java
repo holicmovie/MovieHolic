@@ -24,6 +24,13 @@ public class UserDto {	//회원정보
 	}
 
 
+	public UserDto(String userId, String profile) {
+		super();
+		this.userId = userId;
+		this.profile = profile;
+	}
+
+
 
 	public void setList_count(int list_count) {
 		this.list_count = list_count;

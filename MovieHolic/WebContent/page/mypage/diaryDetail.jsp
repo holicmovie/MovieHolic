@@ -80,7 +80,14 @@ hr.line_light_g {
 <%@ include file="/template/boot_431.jsp"%>
 
 </head>
+<script>
+$(document).ready(function(){
 
+			$("#back").click(function(){
+				window.history.back();
+			});
+		});
+</script>
 <body class="left-sidebar is-preload">
 <c:set var ="dto" value="${requestScope.reviewdetail}"/>
 <%BoardDto dto = (BoardDto)request.getAttribute("reviewdetail");%>
@@ -111,7 +118,7 @@ hr.line_light_g {
 				<div class="row">
 					<div class="col-lg-12 col-12-mobile">
 						<div style="float: left">
-							<button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button>
+							<button class="btn btn-success font_bold_small" id="back">이&nbsp;&nbsp;&nbsp;전</button>
 						</div>
 						<div style="float: right">
 							<button class="btn btn-success font_bold_small">삭&nbsp;&nbsp;&nbsp;제</button>
@@ -144,9 +151,15 @@ hr.line_light_g {
 						<div class="title">
 							<div class="movietitle" style="float: left;">
 								<span class="font_bold_lg">${dto.movieName}</span> <span
-									class="font_light_mid">&nbsp;${dto.postDateY}</span> &nbsp;&nbsp;<img
-									alt="잠금 여부 표시 아이콘" src="/MovieHolic/images/lock.png"
-									style="margin-bottom: 12px;">
+									class="font_light_mid">&nbsp;${dto.postDateY}</span> &nbsp;&nbsp;
+									<c:choose>
+									<c:when test="${dto.enable==0}">
+										<img alt="잠금 여부 표시 아이콘" src="/MovieHolic/images/lock.png"	style="margin-bottom: 12px;">
+									</c:when>
+									<c:when test="${dto.enable==1}">
+										<img alt="" src=""style="margin-bottom: 12px;">
+									</c:when>									
+									</c:choose>
 							</div>
 							<div class="writeinfo" style="float: right;">
 								<span class="font_light_small">
@@ -177,7 +190,7 @@ hr.line_light_g {
 						<!-- 작성자 프사, 아이디 -->
 						<div class="" style="float: right">
 							<a href="#">
-								<img class="profile_icon" alt="작성자 프로필 사진" src="/MovieHolic/images/user.jpg">
+								<img class="profile_icon" alt="작성자 프로필 사진" src="/MovieHolic/images/profile/user.jpg">
 							</a>
 							&nbsp;
 							<span class="font_light_small">by&nbsp;
@@ -200,7 +213,14 @@ hr.line_light_g {
 						<!--신고하기 -->
 						<div class="top_margin_lg">
 							<div class="font_light_small" style="float: right">
+							<c:choose>
+							<c:when test="${dto.enable==0}">
+								<a class="report" href="#" style="display:none">신고하기</a>
+								</c:when>
+								<c:otherwise>
 								<a class="report" href="#">신고하기</a>
+								</c:otherwise>
+								</c:choose>
 							</div>
 							<!-- float clear용 빈 div -->
 							<div style="clear: both;"></div>
@@ -211,7 +231,7 @@ hr.line_light_g {
 						<hr class="line_bold">
 						
 						<!-- 댓글 start -->
-						<c:set var="dto" value="${requestScope.reviewcomment}"/>
+						<%-- <c:set var="dto" value="${requestScope.reviewcomment}"/>
 						<div class="font_bold_small top_margin_lg">
 							<span>COMMENTS</span>(<span id="commentcount">2</span>)
 						</div>
@@ -258,7 +278,7 @@ hr.line_light_g {
 							<div style="clear: both;"></div>
 						</div>
 
-						<!-- 댓글 end -->
+						<!-- 댓글 end --> --%>
 
 					</div>
 					<!-- 오른쪽 내용 end -->

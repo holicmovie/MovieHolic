@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.kitri.dto.BoardDto;
 import com.kitri.dto.FilmDto;
 import com.kitri.util.DBClose;
 import com.kitri.util.DBConnection;
@@ -38,14 +39,176 @@ public class FilmDao {
 			conn = DBConnection.makeConnection();
 			
 			StringBuffer sql = new StringBuffer();
-			sql.append("select movieName, movieCodeYoung, movieCodeNaver, movieImage, category, prdtYear, openYear, starPointNaver \n");
-			sql.append("from mh_films \n");
-			sql.append("where category like '%'||?||'%' \n");
-			sql.append("and rownum < 11 \n");
-			sql.append("order by starpointnaver desc");
+			sql.append("select * \n");
+			sql.append("from (select rownum r, f.moviename, f.moviecodeyoung, f.moviecodenaver, f.movieImage, f.category, f.prdtyear, f.openyear, f.starpointnaver \n");
+			sql.append("		from (select movieName, movieCodeYoung, movieCodeNaver, movieImage, category, prdtYear, openYear, starPointNaver \n");
+			sql.append("				from mh_films \n");
+			sql.append("				where category like '%'||?||'%' \n");
+			sql.append("				order by starpointnaver desc) f) rf \n");
+			sql.append("where rf.r < 11");
 			
 			pstmt = conn.prepareStatement(sql.toString());
 			pstmt.setString(1, category);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				FilmDto film = new FilmDto();
+				film.setMovieNm(rs.getString("movieName"));
+				film.setMovieCdYoung(rs.getString("movieCodeYoung"));
+				film.setMovieCdNaver(rs.getString("movieCodeNaver"));
+				film.setMovieImage(rs.getString("movieImage"));
+				film.setCategory(category);
+				film.setPrdtYear(rs.getString("prdtYear"));
+				film.setOpenYear(rs.getString("openYear"));
+				film.setStarPointNaver(rs.getString("starPointNaver"));
+				
+				list.add(film);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		
+		return list;
+		
+	}
+	
+	// 2
+	// <회원 선호 장르 select> 메소드
+	// 인자값 : 선호 장르 순위
+	public String selectFavoriteCategory(String userId, int rank) {
+		
+		String category = "";
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			conn = DBConnection.makeConnection();
+			
+			StringBuffer sql = new StringBuffer();
+			sql.append("select * \n");
+			sql.append("from (select rownum r, f.category \n");
+			sql.append("		from (select category , count(*) \n");
+			sql.append("				from mh_board \n");
+			sql.append("				where userid = ? \n");
+			sql.append("				and category is not null \n");
+			sql.append("				group by category \n");
+			sql.append("				order by count(*)) f ) \n");
+			sql.append("where r = ?");
+			
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1, userId);
+			pstmt.setInt(2, rank);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				category = rs.getString("category");
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		
+		return category;
+				
+	}
+	
+	// 3
+	// <최신 영화 10개 select> 메소드
+	// 개봉일 최신순
+	public List<FilmDto> selectLatestFilm() {
+
+		List<FilmDto> list = new ArrayList<FilmDto>();
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			conn = DBConnection.makeConnection();
+			
+			StringBuffer sql = new StringBuffer();
+			sql.append("select * \n");
+			sql.append("from (select rownum r, f.moviename, f.moviecodeyoung, f.moviecodenaver, f.movieImage, f.category, f.prdtyear, f.openyear, f.starpointnaver \n");
+			sql.append("		from (select movieName, movieCodeYoung, movieCodeNaver, movieImage, category, prdtYear, openYear, starPointNaver \n");
+			sql.append("				from mh_films \n");
+			sql.append("				where openyear is not null \n");
+			sql.append("				order by openyear desc) f) rf \n");
+			sql.append("where rf.r < 11");
+			
+			
+			
+			pstmt = conn.prepareStatement(sql.toString());
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				FilmDto film = new FilmDto();
+				film.setMovieNm(rs.getString("movieName"));
+				film.setMovieCdYoung(rs.getString("movieCodeYoung"));
+				film.setMovieCdNaver(rs.getString("movieCodeNaver"));
+				film.setMovieImage(rs.getString("movieImage"));
+				film.setCategory(rs.getString("category"));
+				film.setPrdtYear(rs.getString("prdtYear"));
+				film.setOpenYear(rs.getString("openYear"));
+				film.setStarPointNaver(rs.getString("starPointNaver"));
+				
+				list.add(film);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		
+		return list;
+		
+	}
+	
+	// 4
+	// <별점 높은 영화 10개 select> 메소드
+	// 별점순
+	public List<FilmDto> selectBestStarFilm() {
+
+	List<FilmDto> list = new ArrayList<FilmDto>();
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			conn = DBConnection.makeConnection();
+			
+			StringBuffer sql = new StringBuffer();
+			sql.append("select * \n");
+			sql.append("from (select rownum r, f.moviename, f.moviecodeyoung, f.moviecodenaver, f.movieImage, f.category, f.prdtyear, f.openyear, f.starpointnaver \n");
+			sql.append("		from (select movieName, movieCodeYoung, movieCodeNaver, movieImage, category, prdtYear, openYear, starPointNaver \n");
+			sql.append("				from mh_films \n");
+			sql.append("				order by starpointnaver desc) f) rf \n");
+			sql.append("where rf.r < 11");
+			
+			pstmt = conn.prepareStatement(sql.toString());
 			
 			rs = pstmt.executeQuery();
 			
@@ -77,11 +240,9 @@ public class FilmDao {
 	}
 	
 	
-	
-	
 	// ------------------------------------------------------- [ moviefilm.jsp ] -------------------------------------------------------
 	
-	// 2
+	// 5
 	// <주간 인기 영화 목록 select> 메소드
 	//  최근 일주일간 리뷰 개수 순 10개
 	public List<FilmDto> selectFilmListByReviewCount() {
@@ -118,7 +279,7 @@ public class FilmDao {
 				FilmDto film = new FilmDto();
 				
 				film.setMovieNm(rs.getString(1));				// 영화명
-				film.setMovieCdYoung(rs.getString(2));		// 영화코드(영진원)
+				film.setMovieCdYoung(rs.getString(2));			// 영화코드(영진원)
 				
 				list.add(film);
 			}
@@ -133,7 +294,7 @@ public class FilmDao {
 		return list;
 	}
 	
-	// 3
+	// 6
 	// <장르별 영화 목록 select> 메소드
 	//  개봉연도 최신순 & 네이버 별점순
 	public List<FilmDto> selectFilmListByCategory(String category, int startRow, int endRow) {
@@ -207,7 +368,7 @@ public class FilmDao {
 		
 	}
 	
-	// 4
+	// 7
 	// <검색 결과 영화 목록 select> 메소드
 	// 개봉연도 최신순 & 네이버 별점순
 	public List<FilmDto> selectBySrchKey(String srchKey, int startRow, int endRow) {
@@ -268,7 +429,7 @@ public class FilmDao {
 		
 	}
 	
-	// 5
+	// 8
 	// <장르별 영화 목록 개수 select> 메소드
 	// 개봉연도 최신순 & 네이버 별점순
 	public int selectFilmCountByCategory(String category) {
@@ -288,13 +449,19 @@ public class FilmDao {
 			sql.append("where category like '%'||?||'%' \n");
 			sql.append("order by openYear desc, starPointNaver desc");
 			
+			
 			pstmt = conn.prepareStatement(sql.toString());
+			
+			System.out.println("dao : category : " + category);
 			
 			// 장르 = 전체
 			if(category == null) {
-					pstmt.setString(1, "");
+				pstmt.setString(1, "");
+			// 페이지 눌렸을 때, 장르 = 전체 (null이 문자열이 됨)
+			}else if("null".equals(category)){
+				pstmt.setString(1, "");
 			}else {
-				// 장르 = 선택 장르
+			// 장르 = 선택 장르
 				pstmt.setString(1, category);
 			}
 			
@@ -317,7 +484,7 @@ public class FilmDao {
 		return cnt;
 	}
 	
-	// 6
+	// 9
 	// <검색한 영화 목록 개수 select> 메소드
 	// 개봉연도 최신순 & 네이버 별점순
 	public int selectFilmCountBySrchKey(String srchKey) {
@@ -363,6 +530,212 @@ public class FilmDao {
 	
 	
 	// ------------------------------------------------------- [ moviedetail.jsp ] -------------------------------------------------------
+
+	// 10
+	// <선택한 영화 별점 select> 메소드
+	// 무비홀릭 회원들의 별점 평균
+	public int selectByMovieCdYoung(String movieCdYoung) {
+		
+		int star = 0;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			conn = DBConnection.makeConnection();
+			StringBuffer sql = new StringBuffer();
+			sql.append("select avg(starpoint) \n");
+			sql.append("from mh_board \n");
+			sql.append("where to_char(moviecodeyoung) = ?||'||'");
+			
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1, movieCdYoung);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {					
+				star = rs.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		
+		return star;
+		
+	}
 	
+	// 11
+	// <선택된 영화 리뷰 개수 select> 메소드
+	public int selectReviewCountByMovieCdYoung(String movieCdYoung) {
+		
+		int cnt = 0;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			conn = DBConnection.makeConnection();
+			StringBuffer sql = new StringBuffer();
+			sql.append("select count(*) \n");
+			sql.append("from mh_board \n");
+			sql.append("where to_char(moviecodeyoung) = ?||'||' \n");
+			sql.append("and boardcode = 1 \n");
+			sql.append("and enable = 1 \n");
+			sql.append("order by postdate desc");
+			
+			pstmt = conn.prepareStatement(sql.toString());		
+			pstmt.setString(1, movieCdYoung);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+								
+				cnt = rs.getInt(1);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		
+		
+		return cnt;
+	}
+	
+	// 12
+	// <선택한 영화 리뷰 select> 메소드
+	// 무비홀릭 회원들의 리뷰
+	public List<BoardDto> selectReviewsByMovieCdYoung(String movieCdYoung, int startRow, int endRow) {
+
+		List<BoardDto> list = new ArrayList<BoardDto>();
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			conn = DBConnection.makeConnection();
+			StringBuffer sql = new StringBuffer();
+			sql.append("select * \n");
+			sql.append("from (select rownum r, b.seq, b.userid, b.postdate, b.content, b.starpoint \n");
+			sql.append("	  from (select seq, userid, to_char(postdate,'yyyy-mm-dd') postdate, content, starpoint \n");
+			sql.append("			from mh_board \n");
+			sql.append("			where to_char(moviecodeyoung) = ?||'||' \n");
+			sql.append("			and boardcode = 1 \n");
+			sql.append("			and enable = 1 \n");
+			sql.append("			order by postdate desc) b \n");
+			sql.append("	   order by r) \n");
+			sql.append("where r between ? and ?");
+ 
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1, movieCdYoung);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				BoardDto review = new BoardDto();
+				
+				review.setSeq(rs.getInt("seq"));
+				review.setUserId(rs.getString("userid"));
+				review.setPostDate(rs.getString("postdate"));
+				review.setContent(rs.getString("content"));
+				review.setStarPoint(rs.getInt("starpoint"));
+				
+				list.add(review);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		
+		return list;
+	}
+	
+	// 13
+	// <선택된 영화 위시리스트 등록 여부 select> 메소드
+	// 해당 회원의 위시리스트 등록 여부 확인
+	// 이미 등록됨 : 1
+	// 등록 안 되어 있음 : 0
+	public int selectIsWishedByMovieCdYoung(String movieCdYoung, String id) {
+
+		int isWished = 0;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			conn = DBConnection.makeConnection();
+			StringBuffer sql = new StringBuffer();
+			sql.append("select count(*) \n");
+			sql.append("from mh_wishlist \n");
+			sql.append("where userid = ? \n");
+			sql.append("and moviecodeyoung = ?");
+			
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1, id);
+			pstmt.setString(2, movieCdYoung);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				isWished = rs.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		
+		return isWished;
+	}
+	
+	// 14
+	// <선택된 영화 위시리스트 insert> 메소드
+	// 해당 회원의 위시리스트로 등록
+	public void insertWishList(String movieCdYoung, String movieCdNaver, String id) {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			
+			conn = DBConnection.makeConnection();
+			StringBuffer sql = new StringBuffer();
+			sql.append("insert into mh_wishlist(userid, code, moviecodenaver, moviecodeyoung, postdate) \n");
+			sql.append("values(?, 1, ?, ?, sysdate)");
+			
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1, id);
+			pstmt.setString(2, movieCdNaver);
+			pstmt.setString(3, movieCdYoung);
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt);
+		}
+		
+	}
+
 	
 }

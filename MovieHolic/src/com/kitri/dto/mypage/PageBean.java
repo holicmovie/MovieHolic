@@ -2,7 +2,7 @@ package com.kitri.dto.mypage;
 
 import java.util.List;
 
-import com.kitri.dto.SocialDto;
+import com.kitri.dto.*;
 
 /**
  * 페이지별 JAVA BEAN
@@ -15,6 +15,7 @@ public class PageBean {
 	private int startRow = 1;// 시작행
 	private int endRow = 1;// 끝행
 	private List<SocialDto> list;// 목록
+	private List<BoardDto> board;// 목록
 	private int totalPage=1;// 총 페이지 수
 	private int totalCnt;// 총 게시글 수
 	private int cntPerPageGroup;// 페이지그룹에 보여줄 페이지 수
@@ -22,7 +23,8 @@ public class PageBean {
 	private int endPage;// 페이지 그룹의 끝 페이지
 	private String url;// 페이지 링크 클릭시 요청할 url
 	private int currentPage;// 현재페이지
-
+	private List<WishlistDto> wlist;
+	
 	public PageBean() {
 	}
 
@@ -79,6 +81,14 @@ public class PageBean {
 		this.list = list;
 	}
 
+	public List<BoardDto> getBoard() {
+		return board;
+	}
+
+	public void setBoard(List<BoardDto> board) {
+		this.board = board;
+	}
+
 	public int getTotalPage() {
 		return totalPage;
 	}
@@ -131,8 +141,18 @@ public class PageBean {
 		return currentPage;
 	}
 
+	public List<WishlistDto> getWlist() {
+		return wlist;
+	}
+
+	public void setWlist(List<WishlistDto> wlist) {
+		this.wlist = wlist;
+	}
+
 	public void setCurrentPage(int currentPage) {
 		this.currentPage = currentPage;
 	}
+
+
 
 }

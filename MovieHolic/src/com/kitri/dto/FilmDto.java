@@ -15,6 +15,8 @@ public class FilmDto {
 		return movieNm;
 	}
 	
+	
+	
 	public void setMovieNm(String movieNm) {
 		this.movieNm = movieNm;
 	}

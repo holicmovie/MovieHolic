@@ -15,11 +15,11 @@
 				</li>
 				<li><a href="/MovieHolic/page/list/movielist.jsp">LISTS</a></li>
 				<li>
-					<a href="/MovieHolic/mypage?page=mypage">MY PAGE</a>
+					<a href="/MovieHolic/page/mypage/mypage.jsp">MY PAGE</a>
 					<ul>
-						<li><a href="/MovieHolic/mypage?page=mypage">MY PAGE</a></li>
+						<li><a href="/MovieHolic/page/mypage/mypage.jsp">MY PAGE</a></li>
 						<li><a href="/MovieHolic/mypage?page=preference">MY MOVIE CHART</a></li>
-						<li><a href="/MovieHolic/mypage?page=wishlist">WISH LIST</a></li>
+						<li><a href="/MovieHolic/page/mypage/wishlist.jsp">WISH LIST</a></li>
 						<li><a href="/MovieHolic/mypage?page=diary">DIARY</a></li>
 						<li><a href="/MovieHolic/page/mypage/social.jsp">SOCIAL</a></li>
 						<li><a href="/MovieHolic/mypage?page=setting">SETTING</a></li>

@@ -119,7 +119,7 @@ public class CallAPI {
 	 *
 	 * [return]
 	 * - 검색 결과 있을 경우 : 고화질 포스터 이미지 주소, 네이버 코드, 네이버 별점 (FilmDto 타입)
-	 * - 검색 결과 없는 경우 : null
+	 * - 검색 결과 없는 경우 : 기본 이미지 주소, 다른건 null (FilmDto 타입)
 	 */
 	public static FilmDto getPoster(String movieNm, String prdtYear) {
 
@@ -172,7 +172,7 @@ public class CallAPI {
 			        int beginIndex = movieImageUrl.lastIndexOf("=") + 1;
 			        String movieCdNaver = movieImageUrl.substring(beginIndex); // movieCdNaver = 영화코드(네이버)
 		
-			        HighImageUrl.setMovieCdNaver(movieCdNaver);	 								// 영화코드(네이버) set
+			        HighImageUrl.setMovieCdNaver(movieCdNaver);	 									// 영화코드(네이버) set
 			        HighImageUrl.setStarPointNaver(imageArrayItems.get("userRating").toString());	// 네이버 별점 set
 			        
 			        // 네이버 영화의 고화질 포스터 주소를 크롤링
@@ -193,8 +193,9 @@ public class CallAPI {
 				} // for문 end
 			
 			}else {
-				// 네이버 검색 결과가 없는 경우, null 리턴
-				return null;
+				// 네이버 검색 결과가 없는 경우, 기본 이미지 리턴
+				HighImageUrl.setMovieImage("/MovieHolic/images/noMovieImage.png");  // 기본 이미지 set
+				return HighImageUrl;
 			} // if else문 end
 			
 			} catch (IOException e) {

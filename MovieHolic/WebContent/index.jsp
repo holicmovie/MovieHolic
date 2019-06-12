@@ -36,13 +36,36 @@ font-size: 15px;
 .top_margin{
 margin-top: 100px;
 }
+
+/* 인기 영화 랭킹 스타일 */
+div.interated_network_movie_info_img{
+width:100%;
+float: none;
+display: table-cell;
+vertical-align: top;
+position: relative;
+}
+span.movie_ranking_number {
+position: absolute;
+vertical-align: top;
+    top: 0;
+    left: 0;
+    width: 38px;
+    padding: 6px 0 6px 0;
+    font-size: 20px;
+    background-color : #ff4e00;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    z-index: 1000;
+}
 </style>
 
 
 
 </head>
 <body class="homepage is-preload" style="background-color: black;">
-<!-- <script type="text/javascript">
+<script type="text/javascript">
 	$(function() {
 		var arr = $("div>div>nav.nav2>li>a");
 		$(arr).click(function() {
@@ -57,7 +80,7 @@ margin-top: 100px;
 			
 		});
 	});
-</script> -->
+</script>
 
 
 
@@ -72,13 +95,27 @@ String yesterday = f.format(c1.getTime()); 				// String으로 저장
 List<FilmDto> box = (List<FilmDto>)request.getAttribute("box");
 int rank=1;
 
-// 선호장르 추천 영화 목록 결과
-List<FilmDto> favoritefilm = (List<FilmDto>)request.getAttribute("favoritefilm");
+// ###################################### 로그인 세션 ###################################### 임시
 
-// 로그인 세션 ##### 임시
-String id = "abc123";
+//TODO : session에서 id 받기로 변경하기! @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+String id = "abc123"; // 로그인
+//String id = null; // 비로그인
 String name = "김무비";
 String genre = "액션"; // ##DB 게시판 table에서 select해야 함##
+
+// # 로그인
+// 선호장르 추천 영화 목록 결과
+// 선호장르 1
+List<FilmDto> favoritefilm = (List<FilmDto>)request.getAttribute("favoritefilm");
+// 선호장르 2
+List<FilmDto> favoritefilm2 = (List<FilmDto>)request.getAttribute("favoritefilm2");
+
+// # 비로그인
+// 최신 영화 목록 결과
+List<FilmDto> variousfilm = (List<FilmDto>)request.getAttribute("variousfilm");
+// 리뷰 높은 영화 목록 결과
+List<FilmDto> variousfilm2 = (List<FilmDto>)request.getAttribute("variousfilm2");
+
 %>
 
 
@@ -128,13 +165,15 @@ for(FilmDto dto : box){
 %>	
 
 				<article style="background-color: rgb(3, 39, 49);">
-					<span class="font_light_small"><%=rank++%>위</span><br>
-					<a href="/MovieHolic/page/film/moviedetail.jsp" class="image featured">
+			<div class="interated_network_movie_info_img">
+				<span class="movie_ranking_number" id="rankNum"><%=rank++%></span>
+					<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>&movieCdNaver=<%=dto.getMovieCdNaver()%>"  class="image featured">
 						<img style="height:320px;" src="<%=dto.getMovieImage()%>" alt="<%=dto.getMovieNm()%> 포스터" />
 					</a>
+			</div>
 					<header>
 						<h5>
-							<a href="/MovieHolic/page/film/moviedetail.jsp" class="film_title">
+							<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>&movieCdNaver=<%=dto.getMovieCdNaver()%>"  class="film_title">
 								<%=dto.getMovieNm()%>
 							</a>
 						</h5>
@@ -147,7 +186,12 @@ for(FilmDto dto : box){
 		</section>
 		<!-- 박스오피스 배너 end -->
 		
-		
+<%
+// ################## 비로그인 ##################
+if(id == null) {
+
+%>
+
 		<!---------------------------------------- ② 취향 저격 리스트 ---------------------------------------->
 		<!-- #로그인 회원 선호 장르 = 액션 이라고 가정!# -->
 		<section id="banner" style="padding: 2em 0 5px 0;">
@@ -157,28 +201,28 @@ for(FilmDto dto : box){
 				</h2>
 				<br><br>
 				<div class="mid_title" align="left">
-					<span style="color:rgb(240, 195, 15)"><%=name%></span>님이 좋아하는 <%=genre%> 영화
+					최신 개봉 영화
 				</div>
 			</header>
 			
 		</section>
 
-		<!-- ②-1. 회원 선호장르 영화 추천 start -->
+		<!-- ②-1. 회원 선호장르1 영화 추천 start -->
 		<div class="tab-content">
 			<div class="tab-pane active">
 				<section class="carousel" id="category">
 					<div class="reel" id="romance">
 
 <%
-for(FilmDto dto : favoritefilm){
+for(FilmDto dto : variousfilm){
 %>					
 						<article style="margin: ; height: 410px; background-color: rgb(3, 39, 49);">
-							<a href="#" class="image featured">
+							<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>&movieCdNaver=<%=dto.getMovieCdNaver()%>"  class="image featured">
 								<img style="height:320px;" src="<%=dto.getMovieImage()%>" alt="<%=dto.getMovieNm()%> 포스터" />
 							</a>
 							<header>
 								<h5>
-									<a href="/MovieHolic/page/film/moviedetail.jsp" class="film_title">
+									<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>&movieCdNaver=<%=dto.getMovieCdNaver()%>"  class="film_title">
 										<%=dto.getMovieNm()%>
 									</a>
 								</h5>
@@ -192,37 +236,149 @@ for(FilmDto dto : favoritefilm){
 				</section>
 			</div>
 		</div>
-		<!-- 회원 선호장르 영화 추천 end -->
+		<!-- 회원 선호장르1 영화 추천 end -->
+
+		<section id="banner" style="padding: 2em 0 5px 0;">
+			<header class="top_margin">
+				<div class="mid_title" align="left">
+					Movie Holic 추천 영화
+				</div>
+			</header>
+			
+		</section>
+
+		<!-- ②-2. 회원 선호장르2 영화 추천 start -->
+		<div class="tab-content">
+			<div class="tab-pane active">
+				<section class="carousel" id="category">
+					<div class="reel" id="romance">
+
+<%
+for(FilmDto dto : variousfilm2){
+%>					
+						<article style="margin: ; height: 410px; background-color: rgb(3, 39, 49);">
+							<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>&movieCdNaver=<%=dto.getMovieCdNaver()%>"  class="image featured">
+								<img style="height:320px;" src="<%=dto.getMovieImage()%>" alt="<%=dto.getMovieNm()%> 포스터" />
+							</a>
+							<header>
+								<h5>
+									<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>&movieCdNaver=<%=dto.getMovieCdNaver()%>"  class="film_title">
+										<%=dto.getMovieNm()%>
+									</a>
+								</h5>
+							</header>
+						</article>
+<%
+}
+%>
+	
+					</div>
+				</section>
+			</div>
+		</div>
+		<!-- 회원 선호장르2 영화 추천 end -->
 
 
-		<!-- ②-2. 또 뭐하지 start -->
-		<!-- Banner -->
-		<section id="banner" style="padding: 2em 0 2em 0;">
+
+<%
+}
+// ################## 로그인 ################## 
+else {
+%>
+
+		<!---------------------------------------- ② 취향 저격 리스트 ---------------------------------------->
+		<!-- #로그인 회원 선호 장르 = 액션 이라고 가정!# -->
+		<section id="banner" style="padding: 2em 0 5px 0;">
 			<header class="top_margin">
 				<h2 class="big_title">
-					<strong>랜덤 유저 위시리스트</strong>
+					<strong>취향 저격 리스트</strong>
 				</h2>
+				<br><br>
+				<div class="mid_title" align="left">
+					<span style="color:rgb(240, 195, 15)"><%=name%></span>님이 좋아하는 '<%=favoritefilm.get(0).getCategory()%>' 영화
+				</div>
 			</header>
+			
 		</section>
 
-		<!-- user movie list -->
-		<section class="carousel">
-			<div class="reel">
+		<!-- ②-1. 회원 선호장르1 영화 추천 start -->
+		<div class="tab-content">
+			<div class="tab-pane active">
+				<section class="carousel" id="category">
+					<div class="reel" id="romance">
 
-				<article style="background-color: rgb(3, 39, 49);">
-					<a href="#" class="image featured">
-						<img style="height:320px;" src="images/brother.jpg" alt="" />
-					</a>
-					<header>
-						<h5>
-							<a href="#">나의 특별한 형제</a>
-						</h5>
-					</header>
-					<p>머리 좀 쓰는 형 x 몸 좀 쓰는 동생! 세상엔 이런 형제도 있다!</p>
-				</article>
-
+<%
+for(FilmDto dto : favoritefilm){
+%>					
+						<article style="margin: ; height: 410px; background-color: rgb(3, 39, 49);">
+							<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>&movieCdNaver=<%=dto.getMovieCdNaver()%>"  class="image featured">
+								<img style="height:320px;" src="<%=dto.getMovieImage()%>" alt="<%=dto.getMovieNm()%> 포스터" />
+							</a>
+							<header>
+								<h5>
+									<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>&movieCdNaver=<%=dto.getMovieCdNaver()%>"  class="film_title">
+										<%=dto.getMovieNm()%>
+									</a>
+								</h5>
+							</header>
+						</article>
+<%
+}
+%>
+	
+					</div>
+				</section>
 			</div>
+		</div>
+		<!-- 회원 선호장르1 영화 추천 end -->
+
+		<section id="banner" style="padding: 2em 0 5px 0;">
+			<header class="top_margin">
+				<div class="mid_title" align="left">
+					<span style="color:rgb(240, 195, 15)"><%=name%></span>님이 좋아하는 '<%=favoritefilm2.get(0).getCategory()%>' 영화
+				</div>
+			</header>
+			
 		</section>
-		<!-- 또 뭐하지 end -->
+
+		<!-- ②-2. 회원 선호장르2 영화 추천 start -->
+		<div class="tab-content">
+			<div class="tab-pane active">
+				<section class="carousel" id="category">
+					<div class="reel" id="romance">
+
+<%
+for(FilmDto dto : favoritefilm2){
+%>					
+						<article style="margin: ; height: 410px; background-color: rgb(3, 39, 49);">
+							<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>&movieCdNaver=<%=dto.getMovieCdNaver()%>"  class="image featured">
+								<img style="height:320px;" src="<%=dto.getMovieImage()%>" alt="<%=dto.getMovieNm()%> 포스터" />
+							</a>
+							<header>
+								<h5>
+									<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>&movieCdNaver=<%=dto.getMovieCdNaver()%>"  class="film_title">
+										<%=dto.getMovieNm()%>
+									</a>
+								</h5>
+							</header>
+						</article>
+<%
+}
+%>
+	
+					</div>
+				</section>
+			</div>
+		</div>
+		<!-- 회원 선호장르2 영화 추천 end -->
+
+<%
+}
+%>	
+
+  
+ <section id="banner">
+ <br><br><br><br><br><br><br><br><br><br><br><br>
+</section>
 		
 		<%@ include file="/template/footer.jsp"%>
