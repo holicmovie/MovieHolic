@@ -1,3 +1,5 @@
+<%@page import="com.kitri.dto.mypage.PreferenceDto"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/template/header.jsp"%>
@@ -67,6 +69,27 @@ hr.line_light_g {
 }
 </style>
 
+<%
+//###################################### 로그인 세션 ###################################### 임시
+
+//TODO : session에서 id 받기로 변경하기! @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+String id = "a125@gmail.com"; // 로그인
+
+int test = 5;
+
+// 리뷰 수
+int reviewCnt = (int) request.getAttribute("reviewCnt");
+// 선호 장르
+List<PreferenceDto> userCategory = (List) request.getAttribute("userCategory");
+// 선호 배우
+List<PreferenceDto> userActors = (List) request.getAttribute("userActors");
+// 선호 감독
+List<PreferenceDto> userDirectors = (List) request.getAttribute("userDirectors");
+// 별점 분포
+List<Integer> userStars = (List) request.getAttribute("userStars");
+
+%>
+
 <link id="themecss" rel="stylesheet" type="text/css" href="//www.shieldui.com/shared/components/latest/css/light/all.min.css" />
 <script type="text/javascript" src="//www.shieldui.com/shared/components/latest/js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="//www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
@@ -89,26 +112,28 @@ am4core.useTheme(am4themes_animated);
 var chart = am4core.create("chartdiv", am4charts.PieChart);
 chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
 chart.data = [
-  {
-	  genre: "스릴러",
-    value: 26
-  },
-  {
-	  genre: "로맨스",
-    value: 23
-  },
-  {
-	  genre: "공포",
-    value: 20
-  },
-  {
-	  genre: "가족",
-    value: 16
-  },
-  {
-	  genre: "애니메이션",
-    value: 13
-  }
+<%
+if(userCategory != null){
+	for(int i = 0; i < userCategory.size(); i++) {
+%>
+
+		  {
+			  genre: "<%=userCategory.get(i).getCategory()%>",
+		    value: <%=userCategory.get(i).getPercent()%>
+		  }
+<%
+		if(userCategory.size()!=1 && i != userCategory.size()-1){
+%>
+		,
+		
+<%
+		}
+%>
+		  
+<%
+	}
+}
+%>
 ];
 var series = chart.series.push(new am4charts.PieSeries());
 series.dataFields.value = "value";
@@ -130,37 +155,31 @@ am4core.useTheme(am4themes_animated);
 // Themes end
 var chart = am4core.create("chartdiv2", am4charts.XYChart);
 chart.hiddenState.properties.opacity = 0; // this makes initial fade in effect
-chart.data = [ {
-  "country": "half",
-  "value": 4
-}, {
-  "country": "one",
-  "value": 12
-}, {
-  "country": "one-half",
-  "value": 8
-}, {
-  "country": "two",
-  "value": 11
-}, {
-  "country": "two-half",
-  "value": 14
-}, {
-  "country": "three",
-  "value": 28
-}, {
-  "country": "three-half",
-  "value": 19
-}, {
-  "country": "four",
-  "value": 18
-}, {
-  "country": "four-half",
-  "value": 15
-}, {
-  "country": "five",
-  "value": 10
-} ];
+chart.data = [ 
+<%
+if(userStars != null){
+	for(int i = 0; i < userStars.size(); i++){
+%>
+	{
+  "country": <%=(i+1)%>,
+  "value": <%=userStars.get(i)%>
+	}
+
+<%
+	if(userStars.size()!=1 && i != userStars.size()-1){
+%>
+	
+	,
+	
+<%
+	}
+%>
+	
+<%
+	}
+}
+%>
+ ];
 var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
 categoryAxis.renderer.grid.template.location = 0;
 categoryAxis.dataFields.category = "country";
@@ -217,7 +236,7 @@ series.columns.template.adapter.add("fill", (fill, target) => {
 			<div class = "col-lg-12 preference_bold_font" id = "review" style="font-size : 30px; border-bottom: thin solid gray;"><span>리뷰 수</span></div>
 		
 			<div class = "col-lg-1"><i class = "far fa-edit" style='font-size:40px; margin-top:9px;'></i></div>	
-			<div class = "col-lg-9 preference_bold_font" style="font-size:40px;"><span>250편</span></div>
+			<div class = "col-lg-9 preference_bold_font" style="font-size:40px;"><span><%=reviewCnt%> 개</span></div>
 			<div class = "col-lg-1"></div>
 		</div>
 			
@@ -244,7 +263,6 @@ series.columns.template.adapter.add("fill", (fill, target) => {
 			<div class = "col-lg-1"></div>
 			<div class = "col-lg-10">
 			<div class="list-group">
-			<button type="button" class="btn btn-light">previous</button>
 		  	<a href="#" class="list-group-item list-group-item-action list-group-item-dark" style="background-color: rgb(40,40,40)">
 			  <img src="/MovieHolic/images/song.jpg" alt="배우 사진" class="mr-3 mt-3 rounded-circle" style="width:60px;"/> 
 			 <font class = "font_light_small"> 송강호</font></a>
@@ -254,7 +272,6 @@ series.columns.template.adapter.add("fill", (fill, target) => {
 			  <a href="#" class="list-group-item list-group-item-action list-group-item-dark" style="background-color: rgb(40,40,40)">
 			 <img src="/MovieHolic/images/lee.jpg" alt="배우 사진" class="mr-3 mt-3 rounded-circle" style="width:60px;"/>  
 			 <font class = "font_light_small"> 이병헌</font></a>
-			  <button type="button" class="btn btn-light">next</button>
 			  </div>
 				</div>	
 				<div class = "col-lg-1"></div>
@@ -268,7 +285,6 @@ series.columns.template.adapter.add("fill", (fill, target) => {
 			<div class = "col-lg-1"></div>
 			<div class = "col-lg-10">
 			<div class="list-group">
-			<button type="button" class="btn btn-light">previous</button>
 			 
 			  <a href="#" class="list-group-item list-group-item-action " style="background-color: rgb(40,40,40)">
 			  <img src="/MovieHolic/images/nhj.jpg" alt="감독사진" class="mr-3 mt-3 rounded-circle" style="width:60px;"> 
@@ -280,7 +296,6 @@ series.columns.template.adapter.add("fill", (fill, target) => {
 			 <img src="/MovieHolic/images/john.jpg" alt="감독 사진" class="mr-3 mt-3 rounded-circle" style="width:60px;"/> 
 			  <font class = "font_light_small">존 카니</font></a>
 			  
-			<button type="button" class="btn btn-light">next</button> 
 			</div>
 			</div>
 			<div class = "col-lg-1"></div>
