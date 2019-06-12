@@ -109,10 +109,11 @@ public class ListService {
 	public BoardDto selBoardBySeq(String seq) {
 		BoardDto board= null;
 			
-		board = ListDao.getListDao().selBoardBySeq(seq, true);
-		if(board == null) {
+		List<BoardDto> boardList = ListDao.getListDao().selBoardBySeq(seq, true, null);
+		if(boardList == null) {
 			return null;
 		}
+		board = boardList.get(0);
 		return board;
 	}
 	
@@ -180,14 +181,14 @@ public class ListService {
 //	----------------------------------------------------------------------------------------- List 수정/삭제
 	
 //	#### 게시판 내용만 가져오기 ####
-	public BoardDto selListBySeq(String seq) {
-		BoardDto board = null;
+	public List<BoardDto> selListBySeq(String seq, String id) {
+		List<BoardDto> boardList = null;
 		
-		board = ListDao.getListDao().selBoardBySeq(seq, false);
-		if(board == null) {
+		boardList = ListDao.getListDao().selBoardBySeq(seq, false, id);
+		if(boardList == null) {
 			return null;
 		}
-		return board;
+		return boardList;
 	}
 	
 	
