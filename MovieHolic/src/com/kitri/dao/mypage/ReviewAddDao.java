@@ -67,7 +67,7 @@ public class ReviewAddDao {
 	}
 
 	// 리뷰목록
-	public List<BoardDto> reviewlist(int startRow, int endRow) {
+	public List<BoardDto> reviewlist(int startRow, int endRow, String userid) {
 		
 		List<BoardDto> list = new ArrayList<BoardDto>();
 		Connection conn = null;
@@ -77,17 +77,19 @@ public class ReviewAddDao {
 		try {
 			conn = DBConnection.makeConnection();
 			StringBuffer sql = new StringBuffer();
-			sql.append("select  * \n");
-			sql.append("from(select rownum, f.seq, f.userid, f.moviename, f.content, f.starpoint, f.d1, f.d2, f.d3, f.viewcount, f.enable \n");
-			sql.append("		from(select seq,userid, movieName,content,starPoint,postDate d1, to_char(postDate, 'YYYY') d2, to_char(postDate, 'MM-DD') d3 , viewcount,enable \n");
+			sql.append("select * \n");
+			sql.append("from (select rownum r, d.seq, d.userid, d.movieName, d.content, d.starPoint, d.d1,  d.d2,  d.d3 , d.viewcount, d.enable  \n");
+			sql.append("        from(select seq,userid, movieName,content,starPoint,postDate d1, to_char(postDate, 'YYYY') d2, to_char(postDate, 'MM-DD') d3 , viewcount,enable  \n");
 			sql.append("				from mh_board \n");
 			sql.append("				where boardCode = 1 \n");
-			sql.append("				order by postDate desc) f \n");
-			sql.append("		order by rownum) \n");
-			sql.append("where rownum between ? and ? \n");
+			sql.append("				and userid = ? \n");
+			sql.append("				order by postDate desc) d \n");
+			sql.append("		order by rownum ) \n");
+			sql.append("where r between ? and ? \n");
 			pstmt = conn.prepareStatement(sql.toString());
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
+			pstmt.setString(1, userid);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -95,9 +97,9 @@ public class ReviewAddDao {
 					
 				List<String> name = new ArrayList<String>();
 				String str = rs.getString("movieName");
-				String userid = rs.getString("userid");
+				String useid = rs.getString("userid");
 				StringTokenizer st = new StringTokenizer(str, "||");
-				StringTokenizer userid2 = new StringTokenizer(userid,"@");
+				StringTokenizer userid2 = new StringTokenizer(useid,"@");
 				String id = userid2.nextToken();
 				String a = st.nextToken();
 				
@@ -262,7 +264,7 @@ public List<BoardDto> listList(String content) {
 		return boardDto;
 	}
 	//리뷰 총갯수
-	public int selectTotalReview() {
+	public int selectTotalReview(String id) {
 		int cnt = 0;
 		
 		Connection conn = null;
@@ -276,10 +278,11 @@ public List<BoardDto> listList(String content) {
 			sql.append("select count(*) \n");
 			sql.append("from mh_board \n");
 			sql.append("where boardcode = 1 \n");
+			sql.append("and userid = ? \n");
 			sql.append("order by postdate desc \n");
 			
 			pstmt = conn.prepareStatement(sql.toString());
-			
+			pstmt.setString(1, id);
 			
 			rs = pstmt.executeQuery();
 			
@@ -298,6 +301,111 @@ public List<BoardDto> listList(String content) {
 		
 		
 		return cnt;
+	}
+	//리뷰검색select
+public List<BoardDto> searchReviewList(int startRow, int endRow, String search,String userid) {
+		
+		List<BoardDto> list = new ArrayList<BoardDto>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = DBConnection.makeConnection();
+			StringBuffer sql = new StringBuffer();
+			sql.append("select * \n");
+			sql.append("from (select rownum r, d.seq, d.userid, d.movieName, d.content, d.starPoint, d.d1,  d.d2,  d.d3 , d.viewcount, d.enable  \n");
+			sql.append("        from(select seq,userid, movieName,content,starPoint,postDate d1, to_char(postDate, 'YYYY') d2, to_char(postDate, 'MM-DD') d3 , viewcount,enable  \n");
+			sql.append("				from mh_board \n");
+			sql.append("				where boardCode = 1 \n");
+			sql.append("				and userid = ? \n");
+			sql.append("			and movieName like '%'||?||'%' \n");
+			sql.append("				order by postDate desc) d \n");
+			sql.append("		order by rownum ) \n");
+			sql.append("where r between ? and ? \n");
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1, userid);
+			pstmt.setString(2, search);
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				BoardDto boardDto = new BoardDto();
+					
+				List<String> name = new ArrayList<String>();
+				String str = rs.getString("movieName");
+				String useid = rs.getString("userid");
+				StringTokenizer st = new StringTokenizer(str, "||");
+				StringTokenizer userid2 = new StringTokenizer(useid,"@");
+				String id = userid2.nextToken();
+				String a = st.nextToken();
+				
+				name.add(a);
+				boardDto.setSeq(rs.getInt("seq"));
+				boardDto.setUserId(id);
+				boardDto.setViewCount(rs.getInt("viewcount"));
+				boardDto.setContent(rs.getString("content"));
+				boardDto.setStarPoint(rs.getInt("starPoint"));
+				boardDto.setMovieName(name);
+				boardDto.setPostDate(rs.getString("d1"));
+				boardDto.setPostDateY(rs.getString("d2"));
+				boardDto.setPostDateM(rs.getString("d3"));
+				boardDto.setEnable(rs.getInt("enable"));
+				
+				list.add(boardDto);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+
+		return list;
+	}
+	//리뷰검색페이징
+	public int selectReviewSearch(String search, String id) {
+
+		int cnt = 0;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			conn = DBConnection.makeConnection();
+			StringBuffer sql = new StringBuffer();
+			sql.append("select count(*) \n");
+			sql.append("from mh_board \n");
+			sql.append("where movieName like '%'||?||'%' \n");
+			sql.append("and boardcode = 1 \n");
+			sql.append("and userid = ? \n");
+			sql.append("order by postdate desc \n");
+			
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1, search);
+			pstmt.setString(2, id);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+								
+				cnt = rs.getInt(1);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		
+		
+		return cnt;
+		
 	}
 	public UserDto selectId(String userid) {
 		UserDto userDto =null;
@@ -342,7 +450,6 @@ public List<BoardDto> listList(String content) {
 	}
 	public static void main(String[] args) {
 		
-		System.out.println(getReviewAdd().reviewlist(1,1));
 		System.out.println(getReviewAdd().listList("content"));
 		System.out.println(getReviewAdd().reviewContent("seq"));
 		System.out.println(getReviewAdd().selectByNo("seq"));

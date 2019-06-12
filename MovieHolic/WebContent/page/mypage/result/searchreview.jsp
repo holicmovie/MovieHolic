@@ -1,79 +1,10 @@
-<%@page import="com.kitri.dto.mypage.PageBean"%>
 <%@page import="com.kitri.dto.BoardDto"%>
 <%@page import="java.util.List"%>
+<%@page import="com.kitri.dto.mypage.PageBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ include file="/template/header.jsp"%>
-<%@ include file="/template/nav_style.jsp"%>
-<%@ include file="/template/boot_431.jsp"%>
-
-<style>
-<%--
-체크박스 --%> .form-check-input {
-	-ms-transform: scale(2); /* IE */
-	-moz-transform: scale(2); /* FF */
-	-webkit-transform: scale(2); /* Safari and Chrome */
-	-o-transform: scale(2); /* Opera */
-	position: relative;
-	margin: 3em 2em 2em;
-}
-
-<%--
-영화제목 --%> .title {
-	font-size: 18px;
-}
-
-<%--
-별모양 --%> .fas {
-	font-style: normal;
-	font-family: FontAwesome;
-	font-size: 2.5em;
-}
-
-<%--
-모바일사이즈에서
-
- 
-
-이미지
-
-
-&
-별점
-
- 
-
-숨기기
-
- 
-
---%>
-@media screen and (max-width: 990px) {
-	.hide1 {
-		display: none;
-	}
-	.fas {
-		font-size: 1.8em;
-	}
-}
-
-@media screen and (max-width: 765px) {
-	.hide2 {
-		display: none;
-	}
-	s
-	
-	
-	
-
-}
-</style>
-
-
-</head>
-<body class="left-sidebar is-preload">
-<%
-		PageBean pb = (PageBean) request.getAttribute("reviewList");
+    pageEncoding="UTF-8"%>
+    <%
+		PageBean pb = (PageBean) request.getAttribute("reviewList2");
 		List<BoardDto> list = pb.getBoard();
 		int size = list.size(); //한 페이지 내에 보여줄 실제 행 개수
 
@@ -87,41 +18,7 @@
 	%>
 	<script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-	<script>
-	
-
-		$(document).on("click",".pageSelect",function(){
-			var conurl = $(this).attr("con-url");
-			if(conurl == "nosearch"){
-			var currentPage=$(this).attr("data-page");
-			alert(currentPage + "페이지입니다");
-			$.ajax({
-				url:'/MovieHolic/mypage?page=diarypage&currentPage=' + currentPage,
-				method:'get',
-				success:function(result){
-					$("#page-wrapper").html(result.trim());
-				}
-			});
-			}else if(conurl =="search"){
-				var currentPage=$(this).attr("data-page");
-				alert(currentPage + "페이지입니다");
-				$.ajax({
-					url:'/MovieHolic/mypage?page=diaryselect&currentPage=' + currentPage,
-					method:'get',
-					success:function(result){
-						$("#page-wrapper").html(result.trim());
-					}
-				});
-			}
-			return false;
-			
-		});
-		
-	</script>
-	<%--List<BoardDto> list = (List<BoardDto>)request.getAttribute("reviewList");--%>
-	
-	<div id="page-wrapper">
-		<%-- Header --%>
+<%-- Header --%>
 		<div id="header"
 			style="background-image: none; margin-bottom: 0px; padding-bottom: 0; height: 10px;">
 			<%@ include file="/template/nav.jsp"%>
@@ -220,7 +117,7 @@
 								if (startPage != 1) {
 							%>
 						<div style="float: left">
-							<button class="btn btn-success font_bold_small pageSelect" con-url="nosearch"
+							<button class="btn btn-success font_bold_small pageSelect" con-url="search"
 								data-page="<%=startPage - 1%>">이&nbsp;&nbsp;&nbsp;전</button>
 						</div>
 							<%
@@ -230,7 +127,7 @@
 								if (endPage != totalPage) {
 							%>
 						<div style="float: right;">
-							<button class="btn btn-success font_bold_small pageSelect" con-url="nosearch"
+							<button class="btn btn-success font_bold_small pageSelect" con-url="search"
 								data-page="<%=endPage + 1%>">다&nbsp;&nbsp;&nbsp;음</button>
 						</div>
 							<%
@@ -243,7 +140,7 @@
 									// 마지막 페이지에서, 
 									if (startPage + i <= totalPage) {
 							%>
-							<li class="page-item"><a con-url="nosearch" data-page="<%=startPage + i%>" class="page-link a pageSelect"
+							<li class="page-item"><a con-url="search" data-page="<%=startPage + i%>" class="page-link a pageSelect"
 								href="#"><%=startPage + i%></a></li>
 							<%
 								}
@@ -255,6 +152,3 @@
 					</div>
 				</div>
 			</div>
-		</div>
-
-		<%@ include file="/template/footer.jsp"%>

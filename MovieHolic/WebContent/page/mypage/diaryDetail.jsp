@@ -183,7 +183,7 @@ hr.line_light_g {
 						<!-- 작성자 프사, 아이디 -->
 						<div class="" style="float: right">
 							<a href="#">
-								<img class="profile_icon" alt="작성자 프로필 사진" src="/MovieHolic/images/user.jpg">
+								<img class="profile_icon" alt="작성자 프로필 사진" src="/MovieHolic/images/profile/user.jpg">
 							</a>
 							&nbsp;
 							<span class="font_light_small">by&nbsp;
