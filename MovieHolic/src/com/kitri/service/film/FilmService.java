@@ -105,6 +105,7 @@ public class FilmService {
 					    String movieImage = "";
 					    if(film != null) {
 					    	movieImage = film.getMovieImage();
+					    	filmDto.setMovieCdNaver(film.getMovieCdNaver());
 				    	} else {
 				    		movieImage = "/MovieHolic/images/noMovieImage.png";
 				    	}
@@ -129,22 +130,44 @@ public class FilmService {
 	
 
 		// 2
-		// <장르별 영화 추천 목록 10개 출력> 메소드
+		// <회원 선호 장르별 영화 추천 목록 10개 출력> 메소드
 		// : 장르별 추천 영화 10개  (네이버 별점순)
 		//   * select
 		//   * return List<FilmDto>
-		public List<FilmDto> getFavoriteFilm(String category) {
+		public List<FilmDto> getFavoriteFilm(String userId, int rank) {
 			
-			// #1 DAO 호출
+			// #1 선호 장르 얻기
+			String category = FilmDao.getFilmDao().selectFavoriteCategory(userId, rank);
+			// #2  장르별 추천영화 목록 얻기
 			return FilmDao.getFilmDao().selectFilmsByCategory(category);
 
+		}
+		
+		// 3
+		// <최신 영화 목록 10개 출력> 메소드
+		// *select
+		// *return List<FilmDto>
+		public List<FilmDto> getLatestFilm() {
+			
+			// #1 DAO 호출
+			return FilmDao.getFilmDao().selectLatestFilm();
+		}
+		
+		// 4
+		// <별점 높은 영화 목록 10개 출력> 메소드
+		// *select
+		// *return List<FilmDto>
+		public List<FilmDto> getBestStarFilm() {
+			
+			// #1 DAO 호출
+			return FilmDao.getFilmDao().selectBestStarFilm();
 		}
 		
 		
 		
 		// ------------------------------------------------------- [ moviefilm.jsp ] -------------------------------------------------------
 
-		// 3
+		// 5
 		// <주간 인기 영화 목록 출력> 메소드
 		// : 주간 인기 영화 목록 결과 (최근 일주일간 리뷰 개수 순)
 		//   * select
@@ -210,7 +233,7 @@ public class FilmService {
 		}
 		
 		
-		// 4
+		// 6
 		// <총 영화목록 개수 얻기> 메소드
 		// : 출력할 영화목록 총 개수
 		// *select
@@ -222,7 +245,7 @@ public class FilmService {
 		}
 					
 		
-		// 5
+		// 7
 		// <장르별 영화 목록 출력> 메소드
 		// : 선택한 장르별 영화 목록 결과 전체 (개봉연도 최신순 & 이름 오름차순)
 		//   * select
@@ -234,7 +257,7 @@ public class FilmService {
 		}	
 
 		
-		// 6
+		// 8
 		// <영화 검색 목록 출력> 메소드
 		// : 검색어로 검색한 영화 목록 결과 전체 (개봉연도 최신순 & 이름 오름차순)
 		//   * select
@@ -246,7 +269,7 @@ public class FilmService {
 		}
 		
 		
-		// 7
+		// 9
 		// <총 영화 검색 목록 개수 얻기> 메소드
 		// : 출력할 검색 목록 총 개수
 		// *select
@@ -261,7 +284,7 @@ public class FilmService {
 		
 		// ------------------------------------------------------- [ moviedetail.jsp ] -------------------------------------------------------
 
-		// 8
+		// 10
 		// <선택된 영화 상세정보 얻기> 메소드
 		// : 영진원 영화 상세정보 api + 네이버 검색 크롤링(인물사진)
 		public FilmDetailDto getFilmInfo(String movieCdYoung, String movieCdNaver) {
@@ -484,7 +507,7 @@ public class FilmService {
 			return result;
 		}
 		
-		// 8
+		// 11
 		// <선택된 영화 별점 얻기> 메소드
 		//  *select
 		//  *return int
@@ -494,7 +517,7 @@ public class FilmService {
 			return FilmDao.getFilmDao().selectByMovieCdYoung(movieCdYoung);
 		}
 		
-		// 9
+		// 12
 		// <선택된 영화 리뷰 개수 얻기> 메소드
 		// *select
 		// *return int
@@ -504,7 +527,7 @@ public class FilmService {
 			return FilmDao.getFilmDao().selectReviewCountByMovieCdYoung(movieCdYoung);
 		}
 				
-		// 10
+		// 13
 		// <선택된 영화 리뷰 얻기> 메소드
 		// *select
 		// *return BoardDto
@@ -514,7 +537,7 @@ public class FilmService {
 			return FilmDao.getFilmDao().selectReviewsByMovieCdYoung(movieCdYoung, startRow, endRow);
 		}
 		
-		// 11
+		// 14
 		// <선택된 영화 위시리스트 등록 여부 얻기> 메소드
 		// *select
 		// *return int
@@ -524,7 +547,7 @@ public class FilmService {
 			return FilmDao.getFilmDao().selectIsWishedByMovieCdYoung(movieCdYoung, id);
 		}
 		
-		// 12
+		// 15
 		// <위시리스트 등록> 메소드
 		// *insert
 		// *return String

@@ -2,165 +2,134 @@
 <%@page import="com.kitri.dto.WishlistDto"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ include file="/template/header.jsp"%>
 
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
 /* 구분선 굵은 것 */
 hr.line_bold {
 	background-color: white;
 	height: 2px;
-    position: static;
+	position: static;
 }
 </style>
 <%--JQUERY사용하기 위한 URL --%>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <%--연도 셀렉트 박스 값 컨트롤러로 보내기 --%>
-<% List<WishlistDto> list = (List)request.getAttribute("wishlist");
-	
+<%
+	List<WishlistDto> list = (List) request.getAttribute("wishlist");
 %>
 
 <script>
-/* 처음 로딩할때 위시리스트 보여주기 */
-$(function(){
+	/* 처음 로딩할때 위시리스트 보여주기 */
+$(function() {
 	$.ajax({
-		url:"/MovieHolic/mypage",
-		method:"GET",
-		data:"page=wishlist",
-		 success:function(result){
-				 $("#wishlistsection").html(result.trim());
+		url : "/MovieHolic/mypage",
+		method : "GET",
+		data : "page=wishlist",
+		success : function(result) {
+			$("#wishlistsection").html(result.trim());
 		/* 	alert("wishlist 잘넘어옴"); */
-		} 
-	
-	});
-		return false;
-});
-/* 위시리스트 제목으로 검색 */
-$(function(){
-	var searchmovie = $('#searchmovie');
-	$(searchmovie).keypress(function(event){
-		/* alert("검색시작!"); */
-	    if (event.which == 13 ) {
-			if(searchmovie.val() != "") {	<%-- 검색어가 공백이 아닌 경우 srchKey로 받아옴 --%>
-				var srchKey = searchmovie.val();
-				$.ajax({
-					url: "/MovieHolic/mypage?wishlist=search&srchKey=" + srchKey,  
-					method:'get', 
-					success:function(result){
-						$("#wishlistsection").html(result);
-						/* alert("검색 완료 !!!"); */
-					}
-				});
-			}
-	    return false;
-	    }
-	});
-});
+		}
 
-
-
-$('input:checkbox[name=wishlistdelete]').each(function() {
-
-    this.checked = true; //checked 처리
-
-    if(this.checked){//checked 처리된 항목의 값
-
-         alert(this.value); 
-
-    }
-
-});
-
-
-
-
-
-
-/* $(document).ready(function() {
-    $(window).endlessScroll({
-        inflowPixels: 300,
-        callback: function() {
-            var $img = $('#images li:nth-last-child(5)').clone();
-            $('#images').append($img);
-        }
-    });
-}); */
-
-/* $(function(){
-	
-	$("#wishlistgenre").click(function(){
-	var genre = $("#wishlistgenre option:selected").val();
-	alert(genre);
-	$.ajax({
-		url:"/MovieHolic/mypage",
-		method:"GET",
-		data:"choice=genre&genreno="+genre,
-		 success:function(result){
-			 $("section").html(result.trim()); 
-		} 
 	});
 	return false;
-	}); 
-	
-	$("#wishlistyear").click(function(){
-	var year = $("#wishlistyear option:selected").val();
-		alert(year);
+});
+	/* 위시리스트 제목으로 검색 */
+$(function() {
+	var searchmovie = $('#searchmovie');
+		$(searchmovie).keypress(function(event) {
+							/* alert("검색시작!"); */
+			if (event.which == 13) { 
+				if (searchmovie.val() != "") {
+		<%-- 검색어가 공백이 아닌 경우 srchKey로 받아옴 --%>
+			var srchKey = searchmovie.val();
 				$.ajax({
-					url:"/MovieHolic/mypage",
-					method:"GET",
-					data:"choice=year&time="+year,
-					 success:function(result){
-						 $("section").html(result.trim()); 
-					} 
-				});
-				return false;
-			}); 
-});   */
+				url : "/MovieHolic/mypage?wishlist=search&srchKey="+ srchKey,
+				method : 'get',
+				success : function(result) {
+				$("#wishlistsection").html(result);
+				/* alert("검색 완료 !!!"); */
+			}
+		});
+	} else {
+		alert("검색결과가 없습니다");
+		return;
+	}
+	return false;
+		}
+	});
+});
+	
+// checkbox로 삭제하기 
+$(function () {
+    $('#btndelete').click(function () {
+      // getter
+      var chkval = $('input[name="wishlistdelete"]:checked');
+      alert(chkval.length);
+      
+      $.ajax({
+			url: '/MovieHolic/mypage?page=wishlist',
+			method: 'post',
+			data: chkval,
+			success:function(result){
+				  location.href = '/MovieHolic/page/mypage/wishlist.jsp';   
+				alert("삭제 성공!!!"); 
+			}
+		});
+		return false;  
+   });
+   
+}); 
+	
 </script>
 </head>
 <body class="left-sidebar is-preload">
-<div id="page-wrapper">
+	<div id="page-wrapper">
 
-<!-- Header -->
-	<div id="header"  style="background-image: none; margin-bottom: 0px; padding-bottom:0; height: 10px;">
-<%@ include file="/template/nav.jsp"%>
-	</div>
+		<!-- Header -->
+		<div id="header"
+			style="background-image: none; margin-bottom: 0px; padding-bottom: 0; height: 10px;">
+			<%@ include file="/template/nav.jsp"%>
+		</div>
 		<!-- Main 시작-->
 		<div class="wrapper style1">
 
 			<div class="container">
 
-				<%-- 페이지 이동경로 --%>		
-					<div class="row" style="margin-bottom:30px;">
-						<div class="col-lg-12 col-12-mobile font_light_small">
-							<span>✱&nbsp;&nbsp;</span>
-							<a href="/MovieHolic/page/mypage/mypage.jsp" style="color:white;">My Page</a>
-							<span>&nbsp;&nbsp;>>&nbsp;&nbsp;</span>
-							<a href="/MovieHolic/page/mypage/wishlist.jsp" class="font_bold_small" >Wish List</a>
-						</div>
+				<%-- 페이지 이동경로 --%>
+				<div class="row" style="margin-bottom: 30px;">
+					<div class="col-lg-12 col-12-mobile font_light_small">
+						<span>✱&nbsp;&nbsp;</span> <a
+							href="/MovieHolic/page/mypage/mypage.jsp" style="color: white;">My
+							Page</a> <span>&nbsp;&nbsp;>>&nbsp;&nbsp;</span> <a
+							href="/MovieHolic/page/mypage/wishlist.jsp"
+							class="font_bold_small">Wish List</a>
 					</div>
+				</div>
 				<!-- **첫번째 행 시작 -->
 				<div class="row" style="margin-bottom: 5%">
-				
+
 					<div class="col-lg-12 col-12-mobile">
 						<h2>Wish List</h2>
 						<hr class="line_bold">
 					</div>
-				
+
 				</div>
 				<!-- **첫번째 행 끝 -->
 
 				<!-- **두번째 행 시작 -->
-				<div class="row" style="margin-bottom:5%;">
-				
+				<div class="row" style="margin-bottom: 5%;">
+
 					<!-- 조회 조건 -->
 					<div class="col-lg-6 col-12-moblile"></div>
-				
+
 					<div class="col-lg-3 col-4-moblile">
-							<!-- <select class="form-control form-control-sm" id = "wishlistyear">
+						<!-- <select class="form-control form-control-sm" id = "wishlistyear">
 								<option value = "all">기간별-전체</option>
 								<option value = "1">2015~2019</option>
 								<option value = "2">2010~2014</option>
@@ -171,10 +140,11 @@ $('input:checkbox[name=wishlistdelete]').each(function() {
 								<option value = "7">before1990s</option>
 							</select> -->
 					</div>
-					
-					<div class="col-lg-1 col-4-moblile" style ="float: right;clear : both;">
-					<button class="btn btn-success font_bold_small" id= "btndelete">삭제</button>
-							<!-- <select class="form-control form-control-sm" id = "wishlistgenre">
+
+					<div class="col-lg-1 col-4-moblile"
+						style="float: right; clear: both;">
+						<button class="btn btn-success font_bold_small" id="btndelete">삭제</button>
+						<!-- <select class="form-control form-control-sm" id = "wishlistgenre">
 								<option value = "all">전체</option>
 								<option value = "1">액션</option>
 								<option value = "2">어드벤처</option>
@@ -197,33 +167,36 @@ $('input:checkbox[name=wishlistdelete]').each(function() {
 								<option value = "19">공연</option>
 								<option value = "20">기타</option>		
 							</select> -->
-					</div> 
-					
-					<div class="col-lg-2 col-12-mobile" style = "float:right;">
-						<input type="text" class="form-control" id="searchmovie" style="background-image:/MovieHolic/images/searchb.png" placeholder="영화 제목으로 검색">
 					</div>
-					
+
+					<div class="col-lg-2 col-12-mobile" style="float: right;">
+						<input type="text" class="form-control" id="searchmovie"
+							style="background-image: /MovieHolic/images/searchb.png"
+							placeholder="영화 제목으로 검색">
+					</div>
+
 				</div>
 				<!-- **두번째 행 끝 -->
-				
-				<!-- **세번째 행 시작 -->
-				<section id = "wishlistsection">
-				
-				<!-- **세번째 행 끝 -->
 
-				
-				<!-- **네번째 행 끝 -->
-					</section>
+				<!-- **세번째 행 시작 -->
+				<section id="wishlistsection">
+
+					<!-- **세번째 행 끝 -->
+
+
+					<!-- **네번째 행 끝 -->
+				</section>
 			</div>
 
 		</div>
 		<!-- Main 끝-->
-		
-<!-- 커스텀 툴팁 추가위해 필요 -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<script>
-	$(document).ready(function() {
-	$('[data-toggle="tooltip"]').tooltip();
-	});
-</script>
-<%@ include file="/template/footer.jsp" %>
+
+		<!-- 커스텀 툴팁 추가위해 필요 -->
+		<script
+			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+		<script>
+			$(document).ready(function() {
+				$('[data-toggle="tooltip"]').tooltip();
+			});
+		</script>
+		<%@ include file="/template/footer.jsp"%>

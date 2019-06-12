@@ -21,6 +21,13 @@ public class MyPageFrontController extends HttpServlet {
 		String tab = request.getParameter("tab");
 		String path = "";
 		String wishlist = request.getParameter("wishlist");
+//		String wishlistdelete[] = request.getParameterValues("wishlistdelete");
+//		
+//		if(wishlistdelete != null) {
+//			for(int i = 0; i < wishlistdelete.length;i++) {
+//			System.out.println("FC 체크한 영화 코드 : " + wishlistdelete[i]);
+//			}
+//		}
 //----------------------------------[mypage]----------------------------------------
 		if ("mypage".equals(page)) {
 			path = MyPageController.getMyPageController().showMine(request, response);
@@ -31,7 +38,8 @@ public class MyPageFrontController extends HttpServlet {
 //--------------------------------[취향 분석]-----------------------------------------------
 			
 		} else if ("preference".equals(page)) {
-			MoveUrl.forward(request, response, "/page/mypage/preference.jsp");
+			path = PreferenceController.getPreferenceController().showPreference(request, response);
+			MoveUrl.forward(request, response, path);
 			
 			
 			
@@ -39,6 +47,7 @@ public class MyPageFrontController extends HttpServlet {
 //			-----------------------[wishlist]---------------------------------------
 		} else if ("wishlist".equals(page)) {
 			path = MyPageController.getMyPageController().showWishList(request, response);
+			MyPageController.getMyPageController().deleteWishList(request, response);
 			MoveUrl.forward(request, response, path);
 			
 			
@@ -46,17 +55,21 @@ public class MyPageFrontController extends HttpServlet {
 			path = MyPageController.getMyPageController().searchWishList(request, response);
 			MoveUrl.forward(request, response, path);
 			
-			
+
 			
 			
 			
 //			-----------------------[diary]---------------------------------------
 			
 		} else if ("diary".equals(page)) {
-			UserController.getUserController().ReviewList(request, response);
-			MoveUrl.forward(request, response, "/page/mypage/diary.jsp");
-			
-			
+			path  = UserController.getUserController().ReviewList(request, response);
+			MoveUrl.forward(request, response, path);
+		} else if("diarypage".equals(page)) {
+			path = UserController.getUserController().ReviewPage(request, response);
+			MoveUrl.forward(request, response, path);
+		}else if("diaryselect".equals(page)) {
+			path = UserController.getUserController().getSearchReview(request, response);
+			MoveUrl.forward(request, response, path);
 			
 //			-----------------------[social]---------------------------------------
 			
@@ -115,6 +128,10 @@ public class MyPageFrontController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		
+			
+					
 		doGet(request, response);
 	}
 

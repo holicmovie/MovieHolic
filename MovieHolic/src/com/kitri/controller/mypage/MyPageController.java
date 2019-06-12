@@ -82,23 +82,21 @@ public class MyPageController {
 		String followingid = request.getParameter("deletefollowing");
 		System.out.println(followingid);
 		MyPageService.getMyPageService().deleteFollowingId(followingid);
-			
+
 	}
-	
+
 	public void addFollower(HttpServletRequest request, HttpServletResponse response) {
-		String followid =request.getParameter("follow");
+		String followid = request.getParameter("follow");
 		System.out.println(followid);
 		MyPageService.getMyPageService().addFollowId(followid);
 	}
+
 	
 	
 	
-	
-	
-	
-	//----------------------------wishlist-----------------------------------------
+	// ----------------------------wishlist-----------------------------------------
 	public String showWishList(HttpServletRequest request, HttpServletResponse response) {
-		
+
 		String userid = "a125@gmail.com";
 		List<WishlistDto> list = MyPageService.getMyPageService().showWishlist(userid);
 //		System.out.println("c : " + list);
@@ -108,30 +106,51 @@ public class MyPageController {
 		String path = "/page/mypage/result/wishlistresult.jsp";
 		return path;
 	}
+
 	
-	
+	public void deleteWishList(HttpServletRequest request, HttpServletResponse response) {
+		String userid = "a125@gmail.com";
+		String wishlistdelete[] = request.getParameterValues("wishlistdelete");
+		MyPageService.getMyPageService().deleteWishList(userid, wishlistdelete);
+//		if (wishlistdelete != null) {
+//			for (int i = 0; i < wishlistdelete.length; i++) {
+//				System.out.println("C 체크한 영화 코드 : " + wishlistdelete[i]);
+//			}
+//		}
+	}
+
+
+
 	public String searchWishList(HttpServletRequest request, HttpServletResponse response) {
 		String path = "page/mypage/result/wishlistsearch.jsp";
-		
+
 		String srchKey = request.getParameter("srchKey");
 		String userid = "a125@gmail.com";
 		List<WishlistDto> list = MyPageService.getMyPageService().showSearchedWishlist(userid, srchKey);
-		System.out.println("C : " + list);
+//		System.out.println("C : " + list);
 		request.setAttribute("searchwishlist", list);
 		return path;
 	}
-	
-	
-	
+
 //----------------------------------mypage-------------------------------------------
-	
-	
+
 	public String showMine(HttpServletRequest request, HttpServletResponse response) {
 		String path = "/page/mypage/result/mine.jsp";
-		
+
 		return path;
 	}
 
-	
+	public String showWishListAfterDelete(HttpServletRequest request, HttpServletResponse response) {
+		
+			String userid = "a125@gmail.com";
+			List<WishlistDto> list = MyPageService.getMyPageService().showWishlist(userid);
+//			System.out.println("c : " + list);
+
+			request.setAttribute("wishlist", list);
+
+			String path = "/page/mypage/result/wishlistresult2.jsp";
+			return path;
+		
+	}
 
 }

@@ -1,79 +1,11 @@
-<%@page import="com.kitri.dto.mypage.PageBean"%>
 <%@page import="com.kitri.dto.BoardDto"%>
 <%@page import="java.util.List"%>
+<%@page import="com.kitri.dto.mypage.PageBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ include file="/template/header.jsp"%>
-<%@ include file="/template/nav_style.jsp"%>
-<%@ include file="/template/boot_431.jsp"%>
-
-<style>
-<%--
-체크박스 --%> .form-check-input {
-	-ms-transform: scale(2); /* IE */
-	-moz-transform: scale(2); /* FF */
-	-webkit-transform: scale(2); /* Safari and Chrome */
-	-o-transform: scale(2); /* Opera */
-	position: relative;
-	margin: 3em 2em 2em;
-}
-
-<%--
-영화제목 --%> .title {
-	font-size: 18px;
-}
-
-<%--
-별모양 --%> .fas {
-	font-style: normal;
-	font-family: FontAwesome;
-	font-size: 2.5em;
-}
-
-<%--
-모바일사이즈에서
-
- 
-
-이미지
-
-
-&
-별점
-
- 
-
-숨기기
-
- 
-
---%>
-@media screen and (max-width: 990px) {
-	.hide1 {
-		display: none;
-	}
-	.fas {
-		font-size: 1.8em;
-	}
-}
-
-@media screen and (max-width: 765px) {
-	.hide2 {
-		display: none;
-	}
-	s
-	
-	
-	
-
-}
-</style>
-
-
-</head>
-<body class="left-sidebar is-preload">
-<%
-		PageBean pb = (PageBean) request.getAttribute("reviewList");
+    pageEncoding="UTF-8"%>
+    <%
+    	String searchKey = (String)request.getAttribute("searchKey");
+		PageBean pb = (PageBean) request.getAttribute("reviewList3");
 		List<BoardDto> list = pb.getBoard();
 		int size = list.size(); //한 페이지 내에 보여줄 실제 행 개수
 
@@ -87,96 +19,8 @@
 	%>
 	<script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-	<script>
-	/* 리뷰 제목으로 검색 */
-	$(function() {
-		var searchmovie = $('.search2');
-			$(searchmovie).keypress(function(event) {
-								alert("검색시작!");
-					var inputsearch = $('.inputsearch');
-				if (event.which == 13) { 
-					if (inputsearch.val() != "") {
-			<%-- 검색어가 공백이 아닌 경우 srchKey로 받아옴 --%>
-				var srchKey = inputsearch.val();
-					$.ajax({
-					url : '/MovieHolic/mypage?page=diaryselect&srchKey='+ srchKey,
-					method : 'get',
-					success : function(result) {
-					$("#reviewpage").html(result);
-					alert("검색 완료 !!!");
-				}
-			});
-		}else{
-			alert("검색실패");
-		}
-		return false;
-			}
-		});
-	});
-
-		$(document).on("click",".pageSelect",function(){
-			var conurl = $(this).attr("con-url");
-			if(conurl == "nosearch"){
-			var currentPage=$(this).attr("data-page");
-			alert(currentPage + "페이지입니다");
-			$.ajax({
-				url:'/MovieHolic/mypage?page=diarypage&currentPage=' + currentPage,
-				method:'get',
-				success:function(result){
-					$("#reviewpage").html(result.trim());
-				}
-			});
-			}else if(conurl =="search"){
-				var currentPage=$(this).attr("data-page");
-				var srchKey = $(this).attr("searchKey");
-				alert(currentPage + "페이지입니다");
-				$.ajax({
-					url:'/MovieHolic/mypage?page=diaryselect&currentPage='+ currentPage,
-					method:'get',
-					success:function(result){
-						$("#reviewpage").html(result.trim());
-					}
-				});
-			}
-			return false;
-			
-		});
 		
-		// checkbox로 삭제하기 
-		$(function () {
-		    $('.btndelete').click(function () {
-		      // getter
-		      var chkval = $('input[name="reviewdelete"]:checked');
-		      alert(chkval.length);
-		      
-		      $.ajax({
-					url: '/MovieHolic/mypage?page=diary',
-					method: 'post',
-					data: chkval,
-					success:function(result){
-						  location.href = '/MovieHolic/mypage?page=diary';   
-						alert("삭제 성공!!!"); 
-					}
-				});
-				return false;  
-		   });
-		   
-		});
-	</script>
-	<%--List<BoardDto> list = (List<BoardDto>)request.getAttribute("reviewList");--%>
-	
-	<div id="page-wrapper">
-		<%-- Header --%>
-		<div id="header"
-			style="background-image: none; margin-bottom: 0px; padding-bottom: 0; height: 10px;">
-			<%@ include file="/template/nav.jsp"%>
-		</div>
-
-
-		<%-- Main --%>
-		<div class="wrapper style1">
-
-			<div class="container"  id="reviewpage">
+			<div class="container" id="reviewpage">
 
 				<%-- 페이지 이동경로 --%>
 				<div class="row" style="margin-bottom: 30px;">
@@ -203,11 +47,11 @@
 							<button class="btn btn-success font_bold_small btndelete">삭&nbsp;&nbsp;&nbsp;제</button>
 						</div>
 						<div style="float: right">
-							<button class="btn btn-success font_bold_small">검&nbsp;&nbsp;&nbsp;색</button>
+							<button class="btn btn-success font_bold_small search">검&nbsp;&nbsp;&nbsp;색</button>
 						</div>
 						<div style="float: right; width: 20px; height: 1px;"></div>
 						<div style="float: right">
-							<input name = "searchReview" type="text" class="form-control inputsearch search2">
+							<input type="text" class="form-control inputsearch search">
 						</div>
 						<%-- float clear용 빈 div --%>
 						<div style="clear: both;"></div>
@@ -229,7 +73,7 @@
 									for (int i = 0; i < size; i++) {
 								%>
 								<tr>
-									<td style="vertical-align: middle;"><input name="reviewdelete" type="checkbox"
+									<td style="vertical-align: middle;"><input type="checkbox"
 										class="form-check-input"></td>
 									<td class="hide1" style="vertical-align: middle;"><a
 										href="/MovieHolic/page/film/moviedetail.jsp"><img
@@ -265,7 +109,7 @@
 								if (startPage != 1) {
 							%>
 						<div style="float: left">
-							<button class="btn btn-success font_bold_small pageSelect" con-url="nosearch"
+							<button class="btn btn-success font_bold_small pageSelect" con-url="search" searchKey="<%=searchKey %>"
 								data-page="<%=startPage - 1%>">이&nbsp;&nbsp;&nbsp;전</button>
 						</div>
 							<%
@@ -275,7 +119,7 @@
 								if (endPage != totalPage) {
 							%>
 						<div style="float: right;">
-							<button class="btn btn-success font_bold_small pageSelect" con-url="nosearch"
+							<button class="btn btn-success font_bold_small pageSelect" con-url="search" searchKey="<%=searchKey %>"
 								data-page="<%=endPage + 1%>">다&nbsp;&nbsp;&nbsp;음</button>
 						</div>
 							<%
@@ -288,7 +132,7 @@
 									// 마지막 페이지에서, 
 									if (startPage + i <= totalPage) {
 							%>
-							<li class="page-item"><a con-url="nosearch" data-page="<%=startPage + i%>" class="page-link a pageSelect"
+							<li class="page-item"><a searchKey="<%=searchKey %>" con-url="search" data-page="<%=startPage + i%>" class="page-link a pageSelect"
 								href="#"><%=startPage + i%></a></li>
 							<%
 								}
@@ -300,6 +144,3 @@
 					</div>
 				</div>
 			</div>
-		</div>
-
-		<%@ include file="/template/footer.jsp"%>
