@@ -14,7 +14,6 @@ font-family: 'Noto Sans KR', sans-serif;
 font-weight: bold;
 font-size: 40px;
 }
-
 /* 중간 제목 */
 .mid_title{
 font-family: 'Noto Sans KR', sans-serif;
@@ -24,19 +23,16 @@ margin-top: 50px;
 margin-left: 30px;
 margin-bottom : 0px;
 }
-
 /* 영화명 */
 .film_title{
 font-family: 'Noto Sans KR', sans-serif;
 font-weight: bold;
 font-size: 15px;
 }
-
 /* 상단 마진 값 */
 .top_margin{
 margin-top: 100px;
 }
-
 /* 인기 영화 랭킹 스타일 */
 div.interated_network_movie_info_img{
 width:100%;
@@ -90,30 +86,24 @@ Calendar c1 = new GregorianCalendar();
 c1.add(Calendar.DATE, -1);							    // 어제날짜
 SimpleDateFormat f = new SimpleDateFormat("yyyy년 MM월 dd일"); 	// 날짜 포맷 
 String yesterday = f.format(c1.getTime()); 				// String으로 저장
-
 // 박스오피스 결과
 List<FilmDto> box = (List<FilmDto>)request.getAttribute("box");
 int rank=1;
-
 // ###################################### 로그인 세션 ###################################### 임시
-
 //TODO : session에서 id 받기로 변경하기! ok
 String id = (String)session.getAttribute("loginInfo");
 String name = (String) session.getAttribute("name");
-
 // # 로그인
 // 선호장르 추천 영화 목록 결과
 // 선호장르 1
 List<FilmDto> favoritefilm = (List<FilmDto>)request.getAttribute("favoritefilm");
 // 선호장르 2
 List<FilmDto> favoritefilm2 = (List<FilmDto>)request.getAttribute("favoritefilm2");
-
 // # 비로그인
 // 최신 영화 목록 결과
 List<FilmDto> variousfilm = (List<FilmDto>)request.getAttribute("variousfilm");
 // 리뷰 높은 영화 목록 결과
 List<FilmDto> variousfilm2 = (List<FilmDto>)request.getAttribute("variousfilm2");
-
 %>
 
 
@@ -187,7 +177,6 @@ for(FilmDto dto : box){
 <%
 // ################## 비로그인 ##################
 if(id == null) {
-
 %>
 
 		<!---------------------------------------- ② 취향 저격 리스트 ---------------------------------------->

@@ -24,48 +24,85 @@ public class ReviewAddDao {
 
 	}
 
-	// 리뷰쓰기
-	public int reviewAdd(BoardDto boardDto) {
-		int cnt = 0;
+	
 
+	
+	
+	// 리뷰writepage
+	public FilmDto reviewAdd(String moviecodeyoung) {
+		FilmDto filmDto = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-
+		ResultSet rs = null;
 		try {
 			conn = DBConnection.makeConnection();
 			StringBuffer sql = new StringBuffer();
-			sql.append("insert \n");
-			sql.append(
-					"	into mh_board (seq,userId,boardCode,subject,postDate, content,actor1,actor2, starPoint,movieName,movieCodeNaver,movieCodeYoung,category,enable) \n");
-			sql.append("	values(seq.nextval,?,1,?,sysdate,?,?,?,?,?,?,?,?,1 ) \n");
+			sql.append("select movieName, movieCodeYoung, movieCodeNaver,movieImage \n");
+			sql.append("from mh_films \n");
+			sql.append("where moviecodeyoung = ? \n");
 			pstmt = conn.prepareStatement(sql.toString());
-			int idx = 0;
-			pstmt.setInt(++idx, boardDto.getSeq());
-			pstmt.setString(++idx, boardDto.getUserId());
-			pstmt.setInt(++idx, boardDto.getBoardCode());
-			pstmt.setString(++idx, boardDto.getSubject());
-			pstmt.setString(++idx, boardDto.getPostDate());
-			pstmt.setString(++idx, boardDto.getContent());
-			pstmt.setInt(++idx, boardDto.getStarPoint());
-			pstmt.setString(++idx, boardDto.getActor1());
-			pstmt.setString(++idx, boardDto.getActor2());
-			pstmt.setString(++idx, boardDto.getMovieName().toString());
-			pstmt.setString(++idx, boardDto.getDirector().toString());
-			pstmt.setString(++idx, boardDto.getMovieCodeYoung().toString());
-			pstmt.setString(++idx, boardDto.getCategory());
-			pstmt.setInt(++idx, boardDto.getEnable());
-
-			cnt = pstmt.executeUpdate();
-
+			
+			pstmt.setString(1, moviecodeyoung);
+			rs = pstmt.executeQuery();
+			System.out.println("writepage ohm");
+			if(rs.next()) {
+				filmDto = new FilmDto();
+				filmDto.setMovieNm(rs.getString("moviename"));
+				filmDto.setMovieCdNaver(rs.getString("moviecodenaver"));
+				filmDto.setMovieCdYoung(rs.getString("moviecodeyoung"));
+				filmDto.setMovieImage(rs.getString("movieimage"));
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			DBClose.close(conn, pstmt);
 		}
 
-		return cnt;
+		return filmDto;
 	}
-
+	//registerbutton
+	public int registerReview(BoardDto boardDto) {
+			int cnt = 0;
+			Connection conn = null;
+			PreparedStatement pstmt = null;
+			try {
+				conn = DBConnection.makeConnection();
+				StringBuffer sql = new StringBuffer();
+				sql.append("insert  \n");
+				sql.append("	into mh_board (seq,userid,boardcode,subject,postdate,content,starpoint,moviename,director,actor1,actor2,category,moviecodeyoung,moviecodenaver,best,worst,notify,enable,viewcount) \n");
+				sql.append("	values(seq.nextbal,?,1,?,sysdate,?,?,?,?,?,?,?,?,?,null,null,null,?,null) \n");
+				pstmt = conn.prepareStatement(sql.toString());
+				int idx = 0;
+				pstmt.setInt(++idx, boardDto.getSeq());
+				pstmt.setString(++idx, boardDto.getUserId());
+				pstmt.setInt(++idx, boardDto.getBoardCode());
+				pstmt.setString(++idx, boardDto.getSubject());
+				pstmt.setString(++idx, boardDto.getPostDate());
+				pstmt.setString(++idx, boardDto.getContent());
+				pstmt.setInt(++idx, boardDto.getStarPoint());
+				pstmt.setString(++idx, boardDto.getMovieName().toString());
+				pstmt.setString(++idx, boardDto.getDirector().toString());
+				pstmt.setString(++idx, boardDto.getActor1());
+				pstmt.setString(++idx, boardDto.getActor2());
+				pstmt.setString(++idx, boardDto.getCategory());
+				pstmt.setString(++idx, boardDto.getMovieCodeYoung().toString());
+				pstmt.setString(++idx, boardDto.getMovieCodeNaver().toString());
+				pstmt.setInt(++idx, boardDto.getBest());
+				pstmt.setInt(++idx, boardDto.getWorst());
+				pstmt.setInt(++idx, boardDto.getNotify());
+				pstmt.setInt(++idx, boardDto.getEnable());
+				pstmt.setInt(++idx, boardDto.getViewCount());
+				
+				cnt = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				DBClose.close(conn, pstmt);
+			}
+			return cnt;
+		}
+	
 	// 리뷰목록
 	public List<BoardDto> reviewlist(int startRow, int endRow, String userid) {
 		

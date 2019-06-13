@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ include file="/template/header.jsp"%>
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
@@ -32,6 +33,15 @@
 	margin-bottom:20px;
 }
 </style>
+<script>
+$(function(){
+	$(document).on("click", '.table-hover tr', function() {		<%-- 동적으로 생성된 요소에 이벤트 주는 방법 --%>
+		var mvdetail = "/MovieHolic/film?act=viewfilmdetail&movieCdYoung=" + $(this).find('img').attr('data-movieCdYoung') + "&movieCdNaver=" + $(this).find('img').attr('data-movieCdNaver');
+		location.href=mvdetail;
+		return false;
+	})
+});
+</script>
 </head>
 <body class="left-sidebar is-preload">
 <div id="page-wrapper">
@@ -49,7 +59,7 @@
 	
 						
 		<%-- 영화 검색 결과 --%>
-		<div class="row">
+		<div class="row" style="padding-bottom: 10em;">
 			<div class="font_bold_mid" style="width:100%; border-bottom: 2.5px solid #fff; margin-bottom: 0; padding-bottom: 0.8em;">
 				<div style="float: left;">영화 검색 결과</div>
 			</div>
@@ -62,7 +72,21 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr class="font_bold_small">
+				<c:choose>
+					<c:when test="${fn:length(requestScope.list) > 0}">
+						<c:forEach var="mv" items="${requestScope.list}">
+						<tr class="font_bold_mid">
+							<td><img class="movieImg" src="${mv.movieImage}" alt="${mv.movieImage}" width="115vh" data-movieNm="${mv.movieNm}" data-movieCdYoung="${mv.movieCdYoung}" data-movieCdNaver="${mv.movieCdNaver}" data-prdtYear="${mv.prdtYear}"></td>
+							<td style="vertical-align: middle;">${mv.movieNm}</td>
+							<td style="vertical-align: middle; text-align: center;">${mv.prdtYear}</td>
+						</tr>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<tr><td>검색결과가 없습니다.</td></tr>
+					</c:otherwise>
+				</c:choose>
+					<!-- <tr class="font_bold_small">
 						<td style="vertical-align: middle;">
 							<img class="movieImg" width="100vh" src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)" />
 						</td>
@@ -72,65 +96,15 @@
 				        <td style="vertical-align: middle">
 				        	<h4 class="title font_bold_mid">2019.05.30.</h4>
 				        </td>
-					</tr>
-					<tr>
-						<td style="vertical-align: middle;">
-							<img class="movieImg" width="100vh" src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)" />
-						</td>
-				        <td style="vertical-align: middle">
-				        	<h4 class="title font_bold_mid">어벤져스:엔드게임</h4>
-				        </td>
-				        <td style="vertical-align: middle">
-				        	<h4 class="title font_bold_mid">2019.05.30.</h4>
-				        </td>
-					</tr>
-					<tr>
-						<td style="vertical-align: middle;">
-							<img class="movieImg" width="100vh" src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)" />
-						</td>
-				        <td style="vertical-align: middle">
-				        	<h4 class="title font_bold_mid">어벤져스:엔드게임</h4>
-				        </td>
-				        <td style="vertical-align: middle">
-				        	<h4 class="title font_bold_mid">2019.05.30.</h4>
-				        </td>
-					</tr>
-					<tr>
-						<td style="vertical-align: middle;">
-							<img class="movieImg" width="100vh" src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)" />
-						</td>
-				        <td style="vertical-align: middle">
-				        	<h4 class="title font_bold_mid">어벤져스:엔드게임</h4>
-				        </td>
-				        <td style="vertical-align: middle">
-				        	<h4 class="title font_bold_mid">2019.05.30.</h4>
-				        </td>
-					</tr>
+					</tr> -->
 				</tbody>
 			</table>
-			<div class="col-12">
-		  		<div style="float: left">
-					<button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button>
-				</div>
-		  		<div style="float: right;">
-					<button class="btn btn-success font_bold_small">다&nbsp;&nbsp;&nbsp;음</button>
-				</div>
-			  	<ul class="pagination justify-content-center">
-				    <li class="page-item"><a class="page-link a" href="javascript:void(0);">1</a></li>
-				    <li class="page-item"><a class="page-link a" href="javascript:void(0);">2</a></li>
-				    <li class="page-item"><a class="page-link a" href="javascript:void(0);">3</a></li>
-				    <li class="page-item"><a class="page-link a" href="javascript:void(0);">4</a></li>
-				    <li class="page-item"><a class="page-link a" href="javascript:void(0);">5</a></li>
-			 	 </ul>
-				<%-- float clear용 빈 div --%>
-				<div style="clear: both;"></div>
-		 	</div>
 		</div>
 		
 		
 		
 		<%-- 리스트 검색 결과 --%>
-		<div class="row" style="margin-top: 10em;">
+		<%-- <div class="row" style="margin-top: 10em;">
 			<div class="font_bold_mid" style="width:100%; border-bottom: 2.5px solid #fff; margin-bottom: 0; padding-bottom: 0.8em;">
 				<div style="float: left;">리스트 검색 결과</div>
 			</div>
@@ -207,79 +181,12 @@
 				    <li class="page-item"><a class="page-link a" href="javascript:void(0);">4</a></li>
 				    <li class="page-item"><a class="page-link a" href="javascript:void(0);">5</a></li>
 			 	 </ul>
-				<%-- float clear용 빈 div --%>
+				float clear용 빈 div
 				<div style="clear: both;"></div>
 		 	</div>
-		</div>
+		</div> --%>
 				
 						
-		<%-- 유저 검색 결과 --%>
-		<div class="row" style="margin-top: 10em;  margin-bottom: 10em;">
-			<div class="font_bold_mid" style="width:100%; border-bottom: 2.5px solid #fff; margin-bottom: 0; padding-bottom: 0.8em;">
-				<div style="float: left;">유저 검색 결과</div>
-			</div>
-			<table class="table table-hover col-lg-12 col-mobile-12" style="text-align:center; margin-top: 0;">
-				<thead>
-					<tr class="font_light_small">
-						<th style="width:15%;"></th>
-						<th style="width:40%;">아이디</th>
-						<th style="width:20%;">가입 일자</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr class="font_bold_small">
-						<td style="vertical-align: middle;">
-							<img class="profile_edit_icon" src="/MovieHolic/images/profile.jpg" />
-						</td>
-				        <td style="vertical-align: middle">
-				        	<h4 class="title font_bold_mid">aaa@gmail.com</h4>
-				        </td>
-				        <td style="vertical-align: middle">
-				        	<h4 class="title font_bold_mid">2019.05.30.</h4>
-				        </td>
-					</tr>
-					<tr class="font_bold_small">
-						<td style="vertical-align: middle;">
-							<img class="profile_edit_icon" src="/MovieHolic/images/profile.jpg" />
-						</td>
-				        <td style="vertical-align: middle">
-				        	<h4 class="title font_bold_mid">aaa@gmail.com</h4>
-				        </td>
-				        <td style="vertical-align: middle">
-				        	<h4 class="title font_bold_mid">2019.05.30.</h4>
-				        </td>
-					</tr>
-					<tr class="font_bold_small">
-						<td style="vertical-align: middle;">
-							<img class="profile_edit_icon" src="/MovieHolic/images/profile.jpg" />
-						</td>
-				        <td style="vertical-align: middle">
-				        	<h4 class="title font_bold_mid">aaa@gmail.com</h4>
-				        </td>
-				        <td style="vertical-align: middle">
-				        	<h4 class="title font_bold_mid">2019.05.30.</h4>
-				        </td>
-					</tr>
-				</tbody>
-			</table>
-			<div class="col-12">
-		  		<div style="float: left">
-					<button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button>
-				</div>
-		  		<div style="float: right;">
-					<button class="btn btn-success font_bold_small">다&nbsp;&nbsp;&nbsp;음</button>
-				</div>
-			  	<ul class="pagination justify-content-center">
-				    <li class="page-item"><a class="page-link a" href="javascript:void(0);">1</a></li>
-				    <li class="page-item"><a class="page-link a" href="javascript:void(0);">2</a></li>
-				    <li class="page-item"><a class="page-link a" href="javascript:void(0);">3</a></li>
-				    <li class="page-item"><a class="page-link a" href="javascript:void(0);">4</a></li>
-				    <li class="page-item"><a class="page-link a" href="javascript:void(0);">5</a></li>
-			 	 </ul>
-				<%-- float clear용 빈 div --%>
-				<div style="clear: both;"></div>
-		 	</div>
-		</div>		
 			
 	</div>
 

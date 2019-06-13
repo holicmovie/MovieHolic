@@ -14,7 +14,6 @@
 	font-family: FontAwesome;
 	font-size: 2.5em;
 }
-
 /* 구분선 굵은 것 */
 hr.line_bold {
 	background-color: white;
@@ -22,37 +21,31 @@ hr.line_bold {
 	position: static;
 	top: 1em;
 }
-
 /* 구분선 얇은 것 (흰색) */
 hr.line_light_w {
 	background-color: white;
 	position: static;
 	top: 1em;
 }
-
 /* 구분선 얇은 것 (회색) */
 hr.line_light_g {
 	background-color: gray;
 	position: static;
 	top: 1em;
 }
-
 /* 위의 공간 띄울 때 */
 .top_margin {
 	margin-top: 20px;
 }
-
 .top_margin_lg {
 	margin-top: 50px;
 }
-
 <%-- 별모양 --%>
 .fas {
 	font-style: normal;
 	font-family: FontAwesome;
 	font-size: 1.8em;
 }
-
 @media screen and (max-width: 990px) {
 	.hide1 {
 		display: none;
@@ -61,7 +54,6 @@ hr.line_light_g {
 		font-size: 1.8em;
 	}
 }
-
 @media screen and (max-width: 765px) {
 	.hide2 {
 		display: none;
@@ -84,7 +76,6 @@ String[] actorImages = filmInfo.getActorImages();
 	
 // 예고편 videoId
 String videoId = filmInfo.getVideoId();
-
 // [페이지에 맞는 리뷰 목록]
 PageBeanReview pb = (PageBeanReview) request.getAttribute("reviews");
 List<BoardDto> reviews = pb.getList();
@@ -92,22 +83,16 @@ List<BoardDto> reviews = pb.getList();
 int reviewTotalLen = pb.getTotalCnt();
 // 현재 페이지의 리뷰 수
 int reviewLen = reviews.size();
-
 int currentPage = pb.getCurrentPage();				 // 현재 페이지 index
 int startPage = pb.getStartPage();					 // 시작 페이지 index
 int endPage = pb.getEndPage();						 // 끝 페이지 index
-
 int cntPerPage = pb.getCntPerPage();				 // 한 페이지 내에 보여줄 최대 행 개수
 int totalPage = pb.getTotalPage();					 // 모든 페이지 개수
 int cntPerPageGroup = pb.getCntPerPageGroup();		 // 페이지 그룹 개수
-
 // [페이지 눌릴 시, 사용할 영화코드]
 String movieCdYoung = (String) request.getAttribute("movieCdYoung");
 String movieCdNaver = (String) request.getAttribute("movieCdNaver");
-
-
 //###################################### 로그인 세션 ###################################### 임시
-
 //TODO : session에서 id 받기로 변경하기! ok
 String id = (String)session.getAttribute("loginInfo");
 %>
@@ -131,12 +116,9 @@ $(function(){
 		return false;
 	});
 });
-
-
 $(function(){
 	<%-- 리뷰 클릭 이벤트 --%>
 	$(document).on("click", ".reviewitems", function(){
-
 		var seq = $(this).attr("seq");
 		
 		location.href = '/MovieHolic/mypage?page=reviewdetail&seq='+seq;
@@ -144,7 +126,6 @@ $(function(){
 	});
 		return false;
 });
-
  
 $(function() {
 		<%-- 위시리스트 추가 이벤트 --%>
@@ -166,11 +147,9 @@ $(function() {
 		return false;
 	});
 });
-
 $(function() {
 	
 	$("#writereview").click(function() {
-		alert("리뷰쓰기로 이동합니다.");
 		
 		var movieCdYoung = $(this).attr("movieCdYoung");
 		var movieCdNaver = $(this).attr("movieCdNaver");
@@ -179,32 +158,20 @@ $(function() {
 		var actor2 = $(this).attr("actor2");
 		var movieName = $(this).attr("movieName");
 		var category = $(this).attr("category");
-		
-		<%-- 리뷰쓰기 이벤트 --%>
-		$.ajax({
-			url: '/MovieHolic/mypage?page=writereview&movieCdYoung='+ movieCdYoung + '&movieCdNaver='+ movieCdNaver
-			+ '&director=' + director + '&actor1=' + actor1 + '&actor2=' + actor2
-			+ '&movieName=' + movieName + '&category=' + category,
-			method:'post',
-			success: function(json){
 				
-			},
-			error: function(error){
-				
-			}
-		});
+		location.href = '/MovieHolic/mypage?page=writereview&movieCdYoung='+ movieCdYoung + '&movieCdNaver='+ movieCdNaver
+				+ '&director=' + director + '&actor1=' + actor1 + '&actor2=' + actor2
+				+ '&movieName=' + movieName + '&category=' + category;
 		
 		return false;
 	});
 });
-
 <%-- 예고편 클릭 이벤트 --%>
 $(document).ready(function() {
 	$('#trailer').focusin(function() {
 		$('#trailerModal').modal();
 	});
 });
-
 /**
  * Youtube API 로드
  */
@@ -212,7 +179,6 @@ var tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
 /**
  * onYouTubeIframeAPIReady 함수는 필수로 구현해야 한다.
  * 플레이어 API에 대한 JavaScript 다운로드 완료 시 API가 이 함수 호출한다.
@@ -229,7 +195,6 @@ function onYouTubeIframeAPIReady() {
 }
 function onPlayerReady(event) {
     console.log('onPlayerReady 실행');
-
     // 플레이어 자동실행 (주의: 모바일에서는 자동실행되지 않음)
     event.target.playVideo();
 }
@@ -241,7 +206,6 @@ function onPlayerStateChange(event) {
             event.data == YT.PlayerState.BUFFERING ? '버퍼링 중' :
             event.data == YT.PlayerState.CUED ? '재생준비 완료됨' :
             event.data == -1 ? '시작되지 않음' : '예외';
-
     console.log('onPlayerStateChange 실행: ' + playerState);
 }
 </script>
@@ -445,7 +409,6 @@ for(int i = 0; i < actorLen; i++){
 					<table class="table table-hover col-lg-12 col-mobile-12" style="margin-top: 0; width:200px;">
 <%
 if(reviewLen>0){
-
 	for(int i = 0; i < reviewLen; i ++){
 		
 		/* --------------------------------------------------------------------------------------------------- */
@@ -482,7 +445,6 @@ if(reviewLen>0){
 						
 <%
 	}
-
 }
 %>
 						
@@ -500,7 +462,6 @@ if(startPage != 1) {
 						</div>
 <%		
 }
-
 if(endPage != totalPage){
 %>
 						<div style="float: right">

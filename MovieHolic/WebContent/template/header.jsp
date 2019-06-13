@@ -91,7 +91,7 @@ $(function(){
 	    if (event.which == 13 ) {
 			if(navSrc.val() != "") {	<%-- 검색어가 공백이 아닌 경우 srchKey로 받아옴 --%>
 				var srchKey = navSrc.val();
-				location.href = "/MovieHolic/page/searchresult.jsp"	<%-- 나중에 여기 고쳐서 srchKey 파라미터로 붙여서 FrontController로 이동시켜야 함 --%>
+				location.href = "/MovieHolic/list?act=navSrch&srchKey=" + srchKey	<%-- 나중에 여기 고쳐서 srchKey 파라미터로 붙여서 FrontController로 이동시켜야 함 --%>
 			}
 	    }
 	});
