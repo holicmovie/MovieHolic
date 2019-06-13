@@ -10,6 +10,8 @@ import org.jsoup.nodes.Element;
 
 import com.kitri.dao.mypage.SocialDao;
 import com.kitri.dto.BoardDto;
+import com.kitri.dto.FilmDetailDto;
+import com.kitri.dto.FilmDto;
 import com.kitri.dto.SocialDto;
 import com.kitri.dto.WishlistDto;
 import com.kitri.service.list.ListService;
@@ -122,63 +124,42 @@ public class MyPageService {
 			list.get(i).setUrl2(movieURL);
 		}
 		
-//		List<String> movieCdNaver;
-//		List<String> movieCdYoung;
-//		List<String> imgURL = new ArrayList<String>();
-//		int length = list.size();
-		
-//		for (int i = 0; i < length; i++) {
-//			movieCdNaver = list.get(i).getMovieCodeNaver();
-//			String mcn = "";
-//			String movieURL = "";
-//			for(int j=0;j<movieCdNaver.size();j++) {
-//			mcn = movieCdNaver.get(j).toString();
-////			System.out.println("영화코드 : " + mcn);
-//			movieURL = ListService.getListService().getImgURL(mcn);
-//			System.out.println(movieURL);
-//			}
-////			System.out.println(mcn);
-//			
-//			imgURL = new ArrayList<String>();
-//			imgURL.add(movieURL);
-//			list.get(i).setUrl(imgURL);
-////			System.out.println(movieCdNaver);
-//			
-//			System.out.println(list);
-//		}
-//		
-//		for (int i = 0; i < length; i++) {
-//			movieCdNaver = list.get(i).getMovieCodeNaver();
-//			movieCdYoung = list.get(i).getMovieCodeYoung();
-//			
-//			System.out.println(movieCdNaver);
-//			System.out.println(movieCdYoung);
-//		}
+
 		return list;
 	}
 
-	public List<String> getImgURL(List<String> movieCdNaver) {
-		List<String> list = new ArrayList<>();
-		String movieImage = null;
-
-		// 검색조건 : 이미지 링크 + 네이버 영화코드
-		// 검색결과 : 고화질 이미지 주소
-		try {
-			// 네이버 영화링크 URL 설정
-			String connUrl = "https://movie.naver.com/movie/bi/mi/photoViewPopup.nhn?movieCode=" + movieCdNaver;
-
-			// 크롤링
-			Document doc = Jsoup.connect(connUrl).get();
-			Element imgtag = doc.getElementById("targetImage"); // image 태그 받아옴
-
-			if (imgtag != null) {
-				movieImage = imgtag.attr("src").toString(); // 고화질 이미지 주소 get
-			} else {
-				movieImage = "/MovieHolic/images/noMovieImage.png"; // 네이버 제공 고화질 이미지 주소가 없는 경우, 기본 이미지로 나오게 함.
+	
+//	mypage-mine-list method
+	public List<BoardDto> showMineList(String userid) {
+		List<BoardDto> list = SocialDao.getSocialDao().selectMineList(userid);
+		int length = list.size();
+		
+		BoardDto board = list.get(0);
+		List<String> naverList = board.getMovieCodeNaver();
+		int len = naverList.size();
+		
+		
+//		System.out.println("navercode : " + naverList);
+		List<String> imgurl = new ArrayList<String>();
+		
+		for(int j = 0; j<length;j++) {
+			for(int i = 0; i<len; i++) {
+			String movieCdNaver = naverList.get(i);
+			String movieURL = ListService.getListService().getImgURL(movieCdNaver);
+//			System.out.println("naver 영화코드 : " + movieCdNaver);
+//			System.out.println("영화 url : " + movieURL);
+			imgurl.add(movieURL);
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
+			list.get(j).setMovieCodeNaver(imgurl);
 		}
+		System.out.println("imgurl : " + imgurl);
+		System.out.println("list : " + list);
+//		List<FilmDto> film = ListService.getListService().getMvImg(board);
+//		System.out.println("S list : " + list);
+//		System.out.println("S board : " + board);
+//		System.out.println("S film : " + film);
+//		System.out.println("S film : " +film);
+		
 		return list;
 	}
 

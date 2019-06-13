@@ -10,12 +10,16 @@
 List<WishlistDto> list = (List)request.getAttribute("minewishlist");
 //System.out.println("resultpage: "+ list);
 int len = list.size();
+%>
 
+<%
 List<BoardDto> reviewList = (List)request.getAttribute("mineReview");
-System.out.println("resultpage : "+ reviewList);
+//System.out.println("resultpage : "+ reviewList); 
 int len2 = reviewList.size();
 %>
-	
+
+
+
 					
 					
 					
@@ -49,6 +53,8 @@ int len2 = reviewList.size();
 							<div class="font_bold_mid" style="width:100%; border-bottom: 2.5px solid #fff; margin-bottom: 0; padding-bottom: 0.8em;">
 								<div style="float: left;">나의 최근 리뷰</div>
 							</div>
+							
+							
 							<div class = "col-lg-12" style = "overflow-y: auto; heigth: 500px;">
 							<table class="table table-hover col-lg-12 col-mobile-12" style="margin-top: 0;">
 								<col style="width:10%;">
@@ -88,64 +94,48 @@ int len2 = reviewList.size();
 							<div class="font_bold_mid" style="width:100%; border-bottom: 2.5px solid #fff; margin-bottom: 0; padding-bottom: 0.8em;">
 								<div style="float: left;">나의 최근 리스트</div>
 							</div>
+<%
+List<BoardDto> mineList = (List)request.getAttribute("mineList");
+System.out.println("result page : " + mineList );
+int len3 = mineList.size();
+BoardDto board = mineList.get(0);
+List<String> naverList = board.getUrl();
+int length = naverList.size();
+%>
+
+						<% 
+							for(int i = 0; i<len3; i++){						
+						%>
 							<table class="table table-hover col-lg-12 col-mobile-12" style="margin-top: 0;">
 								<col style="width:40%;">
 								<tr>
 									<td>
 										<div>
+											<%
+											for(int j = 0; j<length; j++){ 
+											%>
 											<img width="100vh" src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)"  style="position: absolute; z-index: 0;"/>
 											<img width="100vh" src="/MovieHolic/images/tempimg/frozen.jpg" title="엔드게임 (2019)" style="position: relative; left: 70px; z-index: 0;"/>
 											<img class="hide3" width="100vh" src="/MovieHolic/images/tempimg/coco.jpg" title="엔드게임 (2019)" style="position: relative; left: 40px; z-index: 0;"/>
 											<img class="hide2"  width="100vh" src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)" style="position: relative; left: 5px; z-index: 0;"/>
 											<img class="hide1"  width="100vh" src="/MovieHolic/images/tempimg/frozen.jpg" title="엔드게임 (2019)" style="position: relative; left: -30px; z-index: 0;"/>
+											<% 
+											}
+											%>
+										
 										</div>
 									</td>
 							        <td style="vertical-align: middle; padding-left: 2em;">
-							        	<h4 class="font_bold_small">우울할 때 보는 영화 10선</h4>
+							        	<h4 class="font_bold_small"><%=mineList.get(i).getSubject() %></h4>
 							        </td>
 								</tr>
-								<tr>
-									<td>
-										<div>
-											<img width="100vh" src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)"  style="position: absolute; z-index: 0;"/>
-											<img width="100vh" src="/MovieHolic/images/tempimg/frozen.jpg" title="엔드게임 (2019)" style="position: relative; left: 70px; z-index: 0;"/>
-											<img class="hide3" width="100vh" src="/MovieHolic/images/tempimg/coco.jpg" title="엔드게임 (2019)" style="position: relative; left: 40px; z-index: 0;"/>
-											<img class="hide2"  width="100vh" src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)" style="position: relative; left: 5px; z-index: 0;"/>
-											<img class="hide1"  width="100vh" src="/MovieHolic/images/tempimg/frozen.jpg" title="엔드게임 (2019)" style="position: relative; left: -30px; z-index: 0;"/>
-										</div>
-									</td>
-							        <td style="vertical-align: middle; padding-left: 2em;">
-							        	<h4 class="font_bold_small">우울할 때 보는 영화 10선</h4>
-							        </td>
-								</tr>
-								<tr>
-									<td>
-										<div>
-											<img width="100vh" src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)"  style="position: absolute; z-index: 0;"/>
-											<img width="100vh" src="/MovieHolic/images/tempimg/frozen.jpg" title="엔드게임 (2019)" style="position: relative; left: 70px; z-index: 0;"/>
-											<img class="hide3" width="100vh" src="/MovieHolic/images/tempimg/coco.jpg" title="엔드게임 (2019)" style="position: relative; left: 40px; z-index: 0;"/>
-											<img class="hide2"  width="100vh" src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)" style="position: relative; left: 5px; z-index: 0;"/>
-											<img class="hide1"  width="100vh" src="/MovieHolic/images/tempimg/frozen.jpg" title="엔드게임 (2019)" style="position: relative; left: -30px; z-index: 0;"/>
-										</div>
-									</td>
-							        <td style="vertical-align: middle; padding-left: 2em;">
-							        	<h4 class="font_bold_small">우울할 때 보는 영화 10선</h4>
-							        </td>
-								</tr>
-								<tr>
-									<td>
-										<div>
-											<img width="100vh" src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)"  style="position: absolute; z-index: 0;"/>
-											<img width="100vh" src="/MovieHolic/images/tempimg/frozen.jpg" title="엔드게임 (2019)" style="position: relative; left: 70px; z-index: 0;"/>
-											<img class="hide3" width="100vh" src="/MovieHolic/images/tempimg/coco.jpg" title="엔드게임 (2019)" style="position: relative; left: 40px; z-index: 0;"/>
-											<img class="hide2"  width="100vh" src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)" style="position: relative; left: 5px; z-index: 0;"/>
-											<img class="hide1"  width="100vh" src="/MovieHolic/images/tempimg/frozen.jpg" title="엔드게임 (2019)" style="position: relative; left: -30px; z-index: 0;"/>
-										</div>
-									</td>
-							        <td style="vertical-align: middle; padding-left: 2em;">
-							        	<h4 class="font_bold_small">우울할 때 보는 영화 10선</h4>
-							        </td>
-								</tr>
+								
+								<%
+							}
+								%>
+								
+								
+								
 							</table>
 				
 						</div>
