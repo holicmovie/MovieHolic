@@ -37,11 +37,13 @@ public class UsersController {
 	    
 	    HttpSession session = request.getSession();
 	    session.removeAttribute("loginInfo");
+	    session.removeAttribute("name");
 	    
 		if (usersDto.getPass().equals(pass)) { // 아이디 검사 안하는 이유는 dto 넣을때 그 아이디로 넣어줬기 때문
 			//System.out.println("성공");
 			result = 1;
 			session.setAttribute("loginInfo", userid);
+			session.setAttribute("name", usersDto.getName() );
 		}else {
 			//System.out.println("실패");
 			result = -1;
@@ -55,6 +57,7 @@ public class UsersController {
 		
 		HttpSession session = request.getSession();
 		session.removeAttribute("loginInfo");
+	    session.removeAttribute("name");
 		String path = "/film";
 		
 		return path;
