@@ -45,10 +45,11 @@ int len2 = reviewList.size();
 						</div>
 						
 						<%-- 나의 최근 리뷰 --%>
-						<div class="row" style="margin-top: 10em; overflow-y: auto;">
+						<div class="row" style="margin-top: 10em;">
 							<div class="font_bold_mid" style="width:100%; border-bottom: 2.5px solid #fff; margin-bottom: 0; padding-bottom: 0.8em;">
 								<div style="float: left;">나의 최근 리뷰</div>
 							</div>
+							<div class = "col-lg-12" style = "overflow-y: auto; heigth: 500px;">
 							<table class="table table-hover col-lg-12 col-mobile-12" style="margin-top: 0;">
 								<col style="width:10%;">
 								<col style="width:20%;">
@@ -56,19 +57,19 @@ int len2 = reviewList.size();
 								
 								
 								<%
-								for(BoardDto board : reviewList){ 
+								for(int i = 0 ; i < reviewList.size(); i++){ 
 								%>
 								
 								<tr>
 									<td style="vertical-align: middle;">
-										<a href="/MovieHolic/film?act=viewfilmdetail&movieCdYoung=<%=board.getMovieCodeYoung()%>&movieCdNaver=<%=board.getMovieCodeNaver()%>">
-										<img width="100vh" src="<%=board.getUrl() %>" title="<%=board.getMovieName()%> (2019)" /></a>
+										<a href="/MovieHolic/film?act=viewfilmdetail&movieCdYoung=<%=reviewList.get(i).getMovieCodeYoung2()%>&movieCdNaver=<%=reviewList.get(i).getMovieCodeNaver2()%>">
+										<img width="100vh" src="<%=reviewList.get(i).getUrl2() %>" title="<%=reviewList.get(i).getMovieName()%>" href="/MovieHolic/film?act=viewfilmdetail&movieCdYoung=<%=reviewList.get(i).getMovieCodeYoung2()%>&movieCdNaver=<%=reviewList.get(i).getMovieCodeNaver2()%>"/></a>
 									</td>
 							        <td style="vertical-align: middle">
-							        	<h4 class="title font_bold_mid"><a href="#"><%=board.getMovieName() %></a></h4>
+							        	<h4 class="title font_bold_mid"><a href="#"><%=reviewList.get(i).getMovieName2() %></a></h4>
 							        </td>
 							        <td style="vertical-align: middle; color: #fff;" class="font_light_small">
-							       <%=board.getContent() %>
+							       <%=reviewList.get(i).getContent() %>
 							        </td>
 								</tr>
 								<tr>
@@ -78,7 +79,7 @@ int len2 = reviewList.size();
 								%>								
 	
 							</table>
-							
+							</div>
 				
 						</div>
 						
