@@ -179,20 +179,10 @@ $(function() {
 		var actor2 = $(this).attr("actor2");
 		var movieName = $(this).attr("movieName");
 		var category = $(this).attr("category");
-		
-		<%-- 리뷰쓰기 이벤트 --%>
-		$.ajax({
-			url: '/MovieHolic/mypage?page=writereview&movieCdYoung='+ movieCdYoung + '&movieCdNaver='+ movieCdNaver
-			+ '&director=' + director + '&actor1=' + actor1 + '&actor2=' + actor2
-			+ '&movieName=' + movieName + '&category=' + category,
-			method:'post',
-			success: function(json){
 				
-			},
-			error: function(error){
-				
-			}
-		});
+		location.href = '/MovieHolic/mypage?page=writereview&movieCdYoung='+ movieCdYoung + '&movieCdNaver='+ movieCdNaver
+				+ '&director=' + director + '&actor1=' + actor1 + '&actor2=' + actor2
+				+ '&movieName=' + movieName + '&category=' + category;
 		
 		return false;
 	});
