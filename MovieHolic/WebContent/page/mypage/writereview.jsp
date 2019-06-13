@@ -1,3 +1,4 @@
+<%@page import="com.kitri.dto.FilmDto"%>
 <%@page import="com.kitri.dto.BoardDto"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -86,7 +87,7 @@ Set yellow color when star hover  --%> <%-- 체크박스 --%> .form-check-input
 			uiLibrary : 'bootstrap4'
 		});
 	});
-<%-- 저장 --%>
+<%-- 저장
 function register() {
 	if(document.getElementById("starRating").value ==""){
 		alert("별점 입력하세요!");
@@ -95,14 +96,35 @@ function register() {
 		alert("sodyddlqfur");
 		return;
 	}else{
-		document.getElementById("reviewsave").action = "<%=root%>mypage";
-		document.getElementById("reviewsave").submit();
+		document.getElementById("register").action = "<%=root%>/mypage";
+		document.getElementById("register").submit();
 	}
-}
+} --%>
+$(function() {
+	<%-- 위시리스트 추가 이벤트 --%>
+	$("#register").click(function(){
+	var movieCdYoung = $(this).attr("movieCdYoung");
+	var movieCdNaver = $(this).attr("movieCdNaver");
+	
+	$.ajax({
+		url: '/MovieHolic/mypage?page=register&movieCdYoung=' + movieCdYoung + '&movieCdNaver=' + movieCdNaver,
+		method:'get',
+		success: function(result){
+			alert("save save");
+		},
+		error: function(error){
+			alert(error);
+		}
+	});
+	
+	return false;
+});
+});
 </script>
 </head>
 <body class="left-sidebar is-preload">
-<% BoardDto dto = (BoardDto)request.getAttribute("writereview"); %>
+<% FilmDto dto = (FilmDto)request.getAttribute("writereview"); 
+	BoardDto save = (BoardDto)request.getAttribute("register");%>
 	<div id="page-wrapper">
 
 		<!-- Header -->
@@ -137,7 +159,7 @@ function register() {
 						<%-- 포스터, 별점 --%>
 						<div style="width: 100%; text-align: center;">
 							<img class="movieImg"
-								src="<%=dto.getUrl2() %>" alt = "<%=dto.getMovieName2()%>"width="235vh">
+								src="<%=dto.getMovieImage() %>" alt = "<%=dto.getMovieNm()%>"width="235vh">
 						</div>
 						
 						<div id="likeunlike" class="rounded-lg"
@@ -186,7 +208,7 @@ function register() {
 					style="margin-top: 40px; border-top: 2.5px solid #fff;">
 					<div class="col-12">
 						<div style="float: right;">
-							<button class="btn btn-success font_bold_small" id="reviewsave" onclick="javascript:register();">저&nbsp;&nbsp;&nbsp;장</button>
+							<button class="btn btn-success font_bold_small" id="register">저&nbsp;&nbsp;&nbsp;장</button>
 						</div>
 						<div style="float: right; margin-right: 20px;">
 							<button class="btn btn-success font_bold_small" id="reviewcancle">취&nbsp;&nbsp;&nbsp;소</button>

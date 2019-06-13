@@ -34,9 +34,8 @@ public class UserController {
 	
 	
 	public void ReviewRegister(HttpServletRequest request , HttpServletResponse response) {
-		String movieCdNaver = request.getParameter("movieCdNaver");
-		String movieCdYoung = request.getParameter("movieCdYoung");
-		BoardDto result = UserService.getUserService().writeReview(movieCdNaver, movieCdYoung);
+		String moviename = request.getParameter("movieCdYoung");
+		FilmDto result = UserService.getUserService().writeReview(moviename);
 		request.setAttribute("writereview", result);
 	}
 	
@@ -140,6 +139,24 @@ public class UserController {
 		String userid = "a125@gmail.com";
 		String reviewdelete[] = request.getParameterValues("reviewdelete");
 		UserService.getUserService().deleteReview(userid, reviewdelete);
+	}
+	public String registerReviewBtn(HttpServletRequest request, HttpServletResponse response) {
+		String path = "/page/film/moviedetail.jsp";
+		BoardDto boardDto = new BoardDto();
+		boardDto.setContent(request.getParameter("content"));
+		boardDto.setStarPoint(Integer.parseInt(request.getParameter("starPoint")));
+		boardDto.setEnable(Integer.parseInt(request.getParameter("enable")));
+		int cnt = UserService.getUserService().getregisterReview(boardDto);
+		request.setAttribute("register", cnt);
+		
+		if(cnt != 0 ) {
+			System.out.println("register sccuess");
+			path = "/page/mypage/diary.jsp";
+		}else {
+			System.out.println("register fail");
+			path = "/page/film/moviedetail.jsp";
+		}
+		return path;
 	}
 	public void ReviewComment(HttpServletRequest request, HttpServletResponse response) {
 		String seq = request.getParameter("seq");

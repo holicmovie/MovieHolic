@@ -105,7 +105,9 @@ public class MyPageFrontController extends HttpServlet {
 		} else if("writereview".equals(page)) {
 			UserController.getUserController().ReviewRegister(request, response);
 			MoveUrl.forward(request, response, "/page/mypage/writereview.jsp");
-			
+		}else if("register".equals(page)) {
+			path = UserController.getUserController().registerReviewBtn(request, response);
+			MoveUrl.forward(request, response, path);
 			
 			
 			

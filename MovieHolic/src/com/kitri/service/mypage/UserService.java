@@ -57,14 +57,18 @@ private static UserService userService; // 2번째 전역변수 만들기
 		public int getTotalpage(String id) {
 			return ReviewAddDao.getReviewAdd().selectTotalReview(id);
 		}
-	//리뷰쓰기
-		public BoardDto writeReview(String moviecodenaver, String moviecodeyoung) {
-			BoardDto list =ReviewAddDao.getReviewAdd().reviewAdd(moviecodenaver, moviecodeyoung);
+	//리뷰쓰기page
+		public FilmDto writeReview(String moviecodeyoung) {
+			FilmDto list =ReviewAddDao.getReviewAdd().reviewAdd(moviecodeyoung);
 			String movieCdNaver;
-			movieCdNaver = list.getMovieCodeNaver2();
+			movieCdNaver = list.getMovieCdNaver();
 			String movieURL = ListService.getListService().getImgURL(movieCdNaver);
-			list.setUrl2(movieURL);
+			list.setMovieImage(movieURL);
 			return list;
+		}
+	//reviewregisterbutton
+		public int getregisterReview(BoardDto boardDto) {
+			return ReviewAddDao.getReviewAdd().registerReview(boardDto);
 		}
 	//리뷰검색페이지
 		public int getSearchReview(String search, String id) {
