@@ -154,7 +154,7 @@
 					method: 'post',
 					data: chkval,
 					success:function(result){
-						  location.href = '/MovieHolic/mypage?page=diary';   
+						  location.href = '/MovieHolic/page/mypage/mypage.jsp';   
 						alert("삭제 성공!!!"); 
 					}
 				});
@@ -229,7 +229,7 @@
 									for (int i = 0; i < size; i++) {
 								%>
 								<tr>
-									<td style="vertical-align: middle;"><input name="reviewdelete" type="checkbox"
+									<td style="vertical-align: middle;"><input name="reviewdelete" value="<%=list.get(i).getSeq() %>" type="checkbox"
 										class="form-check-input"></td>
 									<td class="hide1" style="vertical-align: middle;"><a
 										href="/MovieHolic/page/film/moviedetail.jsp"><img

@@ -79,9 +79,10 @@ public class ReviewAddDao {
 			StringBuffer sql = new StringBuffer();
 			sql.append("select * \n");
 			sql.append("from (select rownum r, d.seq, d.userid, d.movieName, d.content, d.starPoint, d.d1,  d.d2,  d.d3 , d.viewcount, d.enable  \n");
-			sql.append("        from(select seq,userid, movieName,content,starPoint,postDate d1, to_char(postDate, 'YYYY') d2, to_char(postDate, 'MM-DD') d3 , viewcount,enable  \n");
-			sql.append("				from mh_board \n");
+			sql.append("        from(select b.seq, b.userid, b.movieName,b.content,b.starPoint,b.postDate d1, to_char(b.postDate, 'YYYY') d2, to_char(b.postDate, 'MM-DD') d3 , b.viewcount,b.enable  \n");
+			sql.append("				from mh_board b \n");
 			sql.append("				where boardCode = 1 \n");
+//			sql.append("				and b.moviecodenaver = f.moviecodenaver \n");
 			sql.append("				and userid = ? \n");
 			sql.append("				order by postDate desc) d \n");
 			sql.append("		order by rownum ) \n");
@@ -414,7 +415,7 @@ public List<BoardDto> searchReviewList(int startRow, int endRow, String search,S
 
 		try {
 			StringBuffer sql = new StringBuffer();
-			sql.append("delete mh_board where userid=? and moviename=?");
+			sql.append("delete mh_board where userid=? and content=?");
 			conn = DBConnection.makeConnection();
 			pstmt = conn.prepareStatement(sql.toString());
 			if(reviewdelete != null) {
@@ -425,6 +426,7 @@ public List<BoardDto> searchReviewList(int startRow, int endRow, String search,S
 					pstmt.executeUpdate();
 				}
 			}
+			System.out.println("삭제되니");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

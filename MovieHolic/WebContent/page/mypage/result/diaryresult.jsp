@@ -74,7 +74,7 @@
 									for (int i = 0; i < size; i++) {
 								%>
 								<tr>
-									<td style="vertical-align: middle;"><input type="checkbox"
+									<td style="vertical-align: middle;"><input type="checkbox" name="reviewdelete" value="<%=list.get(i).getSeq()%>"
 										class="form-check-input"></td>
 									<td class="hide1" style="vertical-align: middle;"><a
 										href="/MovieHolic/page/film/moviedetail.jsp"><img
