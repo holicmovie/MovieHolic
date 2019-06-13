@@ -146,7 +146,7 @@ public class UserController {
 		System.out.println(totalCnt);
 		System.out.println(search);
 		request.setAttribute("reviewList3", pb);
-		request.setAttribute("searchKey", search);
+		request.setAttribute("searchKey", list);
 		
 		return path;
 	}
