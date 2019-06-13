@@ -175,7 +175,7 @@ public class MyPageController {
 		public void mypageList(HttpServletRequest request, HttpServletResponse response) {
 			String userid = "a125@gmail.com";
 			List<BoardDto> list = MyPageService.getMyPageService().showMineList(userid);
-			System.out.println("C: "+ list);
+//			System.out.println("imgsrc넣은 C: "+ list);
 			request.setAttribute("mineList", list);
 		}
 	

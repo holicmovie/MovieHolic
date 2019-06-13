@@ -146,12 +146,12 @@ public class MyPageService {
 		for(int j = 0; j<length;j++) {
 			for(int i = 0; i<len; i++) {
 			String movieCdNaver = naverList.get(i);
-			System.out.println("naver 영화코드 : " + movieCdNaver);
+//			System.out.println("naver 영화코드 : " + movieCdNaver);
 			String movieURL = ListService.getListService().getImgURL(movieCdNaver);
-			System.out.println("영화 url : " + movieURL);
+//			System.out.println("영화 url : " + movieURL);
 			imgurl.add(movieURL);
 			}
-			list.get(j).setMovieCodeNaver(imgurl);
+			list.get(j).setUrl(imgurl);
 		}
 //		System.out.println("imgurl : " + imgurl);
 //		System.out.println("S list : " + list);
