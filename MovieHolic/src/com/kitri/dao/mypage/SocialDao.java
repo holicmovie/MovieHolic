@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.kitri.dto.BoardDto;
+import com.kitri.dto.LogDto;
 import com.kitri.dto.SocialDto;
 import com.kitri.dto.WishlistDto;
 import com.kitri.util.DBClose;
@@ -507,6 +508,49 @@ public class SocialDao {
 //		System.out.println("dao : " + list);
 		return list;
 		
+	}
+
+	public List<LogDto> selectLog(String userid) {
+		List<LogDto> list = new ArrayList<>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			StringBuffer SQL = new StringBuffer();
+			SQL.append("select * \n" + 
+					"from mh_log \n" + 
+					"where logid != ?\n" + 
+					"and userid = ? \n" + 
+					"order by logdate DESC");
+			conn = DBConnection.makeConnection();
+			pstmt = conn.prepareStatement(SQL.toString());
+			pstmt.setString(1, userid);
+			pstmt.setString(2, userid);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				//검색 결과를  RepBoard 객체에 대입
+				LogDto logDto= new LogDto();
+				
+				logDto.setLogCate(rs.getInt("logcate"));
+				logDto.setLogDate(rs.getString("logdate"));
+				logDto.setLogId(rs.getString("logid"));
+				logDto.setMovieCodeYoung(rs.getString("moviecodeyoung"));
+				logDto.setSeq(rs.getInt("seq"));
+				logDto.setSujbect(rs.getString("subject"));
+				logDto.setUserId(rs.getString("userid"));
+				logDto.setMovieCodeNaver("moviecodenaver");
+				list.add(logDto);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		
+		System.out.println("dao : " + list);
+		return list;
 	}
 
 

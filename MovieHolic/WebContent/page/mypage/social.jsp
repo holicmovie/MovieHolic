@@ -30,7 +30,6 @@ $(function(){
 
 /* followingID 페이지 */
 $(document).on("click", ".1", function(){
-		alert("눌렸다!");
 		 var currentpage=$(this).attr("href");
 		 $.ajax({
 			url:'/MovieHolic/mypage',
@@ -38,14 +37,12 @@ $(document).on("click", ".1", function(){
 			data:'page=social&followingpage=' + currentpage,
 			success:function(result){
 				$("section").html(result.trim());
-		alert(currentpage+"페이지를 보여줍니다.");
 			}
 		});
 		return false;
 	});  
 	
 $(document).on("click", ".btnmove", function(){
-	alert("눌렸다!");
 	 var currentpage=$(this).attr("href");
 	 $.ajax({
 		url:'/MovieHolic/mypage',
@@ -61,7 +58,6 @@ $(document).on("click", ".btnmove", function(){
 
 /* followerID page */
 $(document).on("click", ".2", function(){
-	alert("눌렸다!");
 	 var currentpage=$(this).attr("href");
 	 $.ajax({
 		url:'/MovieHolic/mypage',
@@ -76,7 +72,6 @@ $(document).on("click", ".2", function(){
 });  
 
 $(document).on("click", ".btnmove2", function(){
-	alert("눌렸다!");
 		 var currentpage=$(this).attr("href");
 		 $.ajax({
 			url:'/MovieHolic/mypage',
@@ -84,7 +79,6 @@ $(document).on("click", ".btnmove2", function(){
 			data:'tab=followers&followerpage=' + currentpage,
 			success:function(result){
 				$("section").html(result.trim());
-			alert(currentpage+"페이지를 보여줍니다.");
 			}
 	});
 	return false;
@@ -141,8 +135,7 @@ $(document).on('click', '.deletef', function(){
 			method: 'GET',
 			data:'page=social&deletefollowing=' + followingid,
 			success: function(result){
-				alert(followingid +"삭제");
-				location.reload();
+				location.href ="/MovieHolic/page/mypage/social.jsp";
 			 	/* location.href="/MovieHolic/mypage?page=social"  */
 			 	}
 			});
@@ -150,7 +143,6 @@ $(document).on('click', '.deletef', function(){
 }); 
 
 $(document).on('click', '.plusfollower', function(){
-		alert("눌렸다.");
 		var str = "";
 		    var tdArr = new Array();    // 배열 선언
 		    var checkBtn = $(this);
@@ -160,18 +152,23 @@ $(document).on('click', '.plusfollower', function(){
 		    /* var no = td.eq(0).text(); */
 		    var followerid = td.eq(1).text().trim();		
 		
-		alert(followerid);
+
 		$.ajax({
 			url:"/MovieHolic/mypage",
 			method: "GET",
 			data:"tab=followers&follow=" + followerid,
 			success: function(result){
-				alert(followerid +"추가성공");
+				location.href ="/MovieHolic/page/mypage/social.jsp";
+				alert("팔로우가 추가되었습니다!");
 			}
 	});
 	return false; 
 }); 
 </script>
+
+<%
+String id = (String)session.getAttribute("loginInfo");
+%>
 <style>
 <!-- 좋아요 둥근 버튼을 위해 필요 -->
 .btn-circle.btn-xl {

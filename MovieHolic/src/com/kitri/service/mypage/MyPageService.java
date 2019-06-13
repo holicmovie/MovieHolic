@@ -8,10 +8,12 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+import com.kitri.controller.mypage.MyPageController;
 import com.kitri.dao.mypage.SocialDao;
 import com.kitri.dto.BoardDto;
 import com.kitri.dto.FilmDetailDto;
 import com.kitri.dto.FilmDto;
+import com.kitri.dto.LogDto;
 import com.kitri.dto.SocialDto;
 import com.kitri.dto.WishlistDto;
 import com.kitri.service.list.ListService;
@@ -97,6 +99,9 @@ public class MyPageService {
 		SocialDao.getSocialDao().deleteWishList(userid, wishlistdelete);
 	}
 
+	
+	
+	
 //-----------------------------[mypage method]------------------------------	
 	// wishlist method
 	public List<WishlistDto> showMineWishList(String userid) {
@@ -157,6 +162,13 @@ public class MyPageService {
 //		System.out.println("S list : " + list);
 		
 		return list;
+	}
+
+	
+// 활동로그
+	public List<LogDto> showLog(String userid) {
+		
+		return SocialDao.getSocialDao().selectLog(userid);
 	}
 
 }

@@ -38,7 +38,6 @@ public class MyPageFrontController extends HttpServlet {
 //		following버튼 클릭시 보여주는 페이지	
 		}else if ("showfollowing".equals(page)) {
 			path = MyPageController.getMyPageController().mypageFollowing(request, response);
-			MyPageController.getMyPageController().mypageReview(request, response);
 			MoveUrl.forward(request, response, path);	
 			
 			
