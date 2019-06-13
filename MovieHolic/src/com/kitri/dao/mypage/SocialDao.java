@@ -553,5 +553,34 @@ public class SocialDao {
 		return list;
 	}
 
+	public int checkFollowid(String followid) {
+		int cnt = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		
+		try {
+			StringBuffer SQL = new StringBuffer();
+			SQL.append("select count(*) \n" + 
+					"from mh_social \n" + 
+					"where followingid = ?");
+			conn = DBConnection.makeConnection();
+			pstmt = conn.prepareStatement(SQL.toString());
+			pstmt.setString(1, followid);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				cnt = rs.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		return cnt;
+	}
+
 
 }
