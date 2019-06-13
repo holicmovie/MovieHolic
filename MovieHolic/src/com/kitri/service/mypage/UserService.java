@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kitri.dao.mypage.ReviewAddDao;
 import com.kitri.dto.*;
+import com.kitri.service.list.ListService;
 
 public class UserService {
 
@@ -21,8 +22,15 @@ private static UserService userService; // 2번째 전역변수 만들기
 	
 	// 리뷰목록
 		public List<BoardDto> reviewlist(int startRow, int endRow, String userid) {
-			
-			return ReviewAddDao.getReviewAdd().reviewlist(startRow, endRow,userid);
+			List<BoardDto> list = ReviewAddDao.getReviewAdd().reviewlist(startRow, endRow,userid);
+			String movieCdNaver;
+			int length = list.size();
+			for(int i = 0; i < length; i++) {
+				movieCdNaver = list.get(i).getMovieCodeNaver2();
+				String movieURL = ListService.getListService().getImgURL(movieCdNaver);
+				list.get(i).setUrl2(movieURL);
+			}
+			return list;
 		}
 	//리스트목록
 		public List<BoardDto> listList(String content){
@@ -30,7 +38,12 @@ private static UserService userService; // 2번째 전역변수 만들기
 		}
 	//리뷰정보
 		public BoardDto selectByNo(String seq) {
-			return ReviewAddDao.getReviewAdd().selectByNo(seq);
+			BoardDto list = ReviewAddDao.getReviewAdd().selectByNo(seq);
+			String movieCdNaver;
+			movieCdNaver = list.getMovieCodeNaver2();
+			String movieURL = ListService.getListService().getImgURL(movieCdNaver);
+			list.setUrl2(movieURL);
+			return list;
 		}
 	//코멘트
 		public List<CommentDto> findByCo(String seq){
@@ -44,9 +57,18 @@ private static UserService userService; // 2번째 전역변수 만들기
 		public int getTotalpage(String id) {
 			return ReviewAddDao.getReviewAdd().selectTotalReview(id);
 		}
-	//리뷰쓰기
-		public int writeReview(BoardDto boardDto) {
-			return ReviewAddDao.getReviewAdd().reviewAdd(boardDto);
+	//리뷰쓰기page
+		public FilmDto writeReview(String moviecodeyoung) {
+			FilmDto list =ReviewAddDao.getReviewAdd().reviewAdd(moviecodeyoung);
+			String movieCdNaver;
+			movieCdNaver = list.getMovieCdNaver();
+			String movieURL = ListService.getListService().getImgURL(movieCdNaver);
+			list.setMovieImage(movieURL);
+			return list;
+		}
+	//reviewregisterbutton
+		public int getregisterReview(BoardDto boardDto) {
+			return ReviewAddDao.getReviewAdd().registerReview(boardDto);
 		}
 	//리뷰검색페이지
 		public int getSearchReview(String search, String id) {

@@ -139,8 +139,8 @@ $(document).ready(function(){
 
 						<!-- 포스터 -->
 						<section class="movieImg-wrap">
-							<a href="#"><img class="movieImg" alt="어벤져스:엔드게임 포스터"
-								src="/MovieHolic/images/avengers4.jpg" border="solid 1px white"></a>
+							<a href="#"><img class="movieImg" alt="<%=dto.getMovieName2() %>"
+								src="<%= dto.getUrl2() %>" border="solid 1px white"></a>
 						</section>
 					</div>
 					<!-- 왼쪽 내용 end -->
@@ -150,7 +150,7 @@ $(document).ready(function(){
 						<!-- 영화명, 개봉연도, 조회수, 작성일 -->
 						<div class="title">
 							<div class="movietitle" style="float: left;">
-								<span class="font_bold_lg">${dto.movieName}</span> <span
+								<span class="font_bold_lg">${dto.movieName2}</span> <span
 									class="font_light_mid">&nbsp;${dto.postDateY}</span> &nbsp;&nbsp;
 									<c:choose>
 									<c:when test="${dto.enable==0}">

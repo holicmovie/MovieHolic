@@ -5,8 +5,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -36,8 +35,9 @@ public class PreferenceController {
 
 		String path = "/page/mypage/preference.jsp";
 
-		// TODO : session에서 id 받기로 변경하기! @@@@@@@@@@@@@@@@@@@@@@@@@@@
-		String userid = "a125@gmail.com";
+		// TODO : session에서 id 받기로 변경하기! ok
+		HttpSession session = request.getSession();
+		String userid = (String) session.getAttribute("loginInfo");
 		
 		// 회원 리뷰 수
 		int reviewCnt = PreferenceDao.getPreferenceDao().selectReviewCount(userid);

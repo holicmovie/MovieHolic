@@ -47,11 +47,11 @@
 							<button class="btn btn-success font_bold_small btndelete">삭&nbsp;&nbsp;&nbsp;제</button>
 						</div>
 						<div style="float: right">
-							<button class="btn btn-success font_bold_small search">검&nbsp;&nbsp;&nbsp;색</button>
+							<button class="btn btn-success font_bold_small clicksearch">검&nbsp;&nbsp;&nbsp;색</button>
 						</div>
 						<div style="float: right; width: 20px; height: 1px;"></div>
 						<div style="float: right">
-							<input type="text" class="form-control inputsearch search">
+							<input name = "searchReview" type="text" class="form-control inputsearch search2">
 						</div>
 						<%-- float clear용 빈 div --%>
 						<div style="clear: both;"></div>
@@ -73,12 +73,12 @@
 									for (int i = 0; i < size; i++) {
 								%>
 								<tr>
-									<td style="vertical-align: middle;"><input type="checkbox"
+									<td style="vertical-align: middle;"><input type="checkbox" name="reviewdelete" value="<%=list.get(i).getSeq()%>"
 										class="form-check-input"></td>
 									<td class="hide1" style="vertical-align: middle;"><a
 										href="/MovieHolic/page/film/moviedetail.jsp"><img
-											width="90vh" src="/MovieHolic/images/tempimg/coco.jpg"
-											title="코코 (2017)" /></a></td>
+											width="90vh" src="<%=list.get(i).getUrl2() %>"
+											title="<%=list.get(i).getMovieName2()%>" /></a></td>
 									<td style="vertical-align: middle;">
 										<div class="font_light_small"><%=list.get(i).getPostDateY()%></div>
 										<div class="font_bold_mid" style="font-size: 2em;"><%=list.get(i).getPostDateM()%></div>
@@ -96,7 +96,7 @@
 									</span></td>
 									<td class="font_bold_mid" style="vertical-align: middle;"><span
 										class="title"><a
-											href="/MovieHolic/mypage?page=reviewdetail&seq=<%=list.get(i).getSeq()%>"><%=list.get(i).getMovieName()%></a></span></td>
+											href="/MovieHolic/mypage?page=reviewdetail&seq=<%=list.get(i).getSeq()%>"><%=list.get(i).getMovieName2()%></a></span></td>
 								</tr>
 								<%
 									}

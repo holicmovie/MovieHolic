@@ -90,9 +90,17 @@ String yesterday = f.format(c1.getTime()); 				// String으로 저장
 List<FilmDto> box = (List<FilmDto>)request.getAttribute("box");
 int rank=1;
 // ###################################### 로그인 세션 ###################################### 임시
+<<<<<<< HEAD
 //TODO : session에서 id 받기로 변경하기! ok
 String id = (String)session.getAttribute("loginInfo");
 String name = (String) session.getAttribute("name");
+=======
+
+//TODO : session에서 id 받기로 변경하기! ok
+String id = (String)session.getAttribute("loginInfo");
+String name = (String) session.getAttribute("name");
+
+>>>>>>> branch 'master' of https://github.com/holicmovie/MovieHolic.git
 // # 로그인
 // 선호장르 추천 영화 목록 결과
 // 선호장르 1

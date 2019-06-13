@@ -5,11 +5,15 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.kitri.dto.BoardDto;
+import com.kitri.dto.FilmDto;
+import com.kitri.dto.LogDto;
 import com.kitri.dto.SocialDto;
 import com.kitri.dto.WishlistDto;
 import com.kitri.dto.mypage.PageBean;
+import com.kitri.service.list.ListService;
 import com.kitri.service.mypage.MyPageService;
 
 public class MyPageController {
@@ -96,7 +100,14 @@ public class MyPageController {
 	public void addFollower(HttpServletRequest request, HttpServletResponse response) {
 		String followid = request.getParameter("follow");
 //		System.out.println(followid);
-		MyPageService.getMyPageService().addFollowId(followid);
+		String checkedId = "이미 팔로우하고 있는 아이디입니다.";
+		int checkId = MyPageService.getMyPageService().checkFollowId(followid);
+		if(checkId ==0) {
+			MyPageService.getMyPageService().addFollowId(followid);
+			checkedId = followid+"님을 팔로우합니다.";
+		}
+		
+		request.setAttribute("checkedId", checkedId);
 	}
 
 	
@@ -104,8 +115,8 @@ public class MyPageController {
 	
 	// ----------------------------wishlist-----------------------------------------
 	public String showWishList(HttpServletRequest request, HttpServletResponse response) {
-
-		String userid = "a125@gmail.com";
+		HttpSession session = request.getSession();
+		String userid = (String) session.getAttribute("loginInfo");
 		List<WishlistDto> list = MyPageService.getMyPageService().showWishlist(userid);
 //		System.out.println("c : " + list);
 
@@ -117,7 +128,8 @@ public class MyPageController {
 
 	
 	public void deleteWishList(HttpServletRequest request, HttpServletResponse response) {
-		String userid = "a125@gmail.com";
+		HttpSession session = request.getSession();
+		String userid = (String) session.getAttribute("loginInfo");
 		String wishlistdelete[] = request.getParameterValues("wishlistdelete");
 		MyPageService.getMyPageService().deleteWishList(userid, wishlistdelete);
 //		if (wishlistdelete != null) {
@@ -130,10 +142,12 @@ public class MyPageController {
 
 
 	public String searchWishList(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		String userid = (String) session.getAttribute("loginInfo");
+		
 		String path = "page/mypage/result/wishlistsearch.jsp";
-
 		String srchKey = request.getParameter("srchKey");
-		String userid = "a125@gmail.com";
+		
 		List<WishlistDto> list = MyPageService.getMyPageService().showSearchedWishlist(userid, srchKey);
 //		System.out.println("C : " + list);
 		request.setAttribute("searchwishlist", list);
@@ -145,7 +159,8 @@ public class MyPageController {
 	//	wishlist 보여주기
 		public String showMine(HttpServletRequest request, HttpServletResponse response) {
 			String path = "/page/mypage/result/mine.jsp";
-			String userid = "a125@gmail.com";
+			HttpSession session = request.getSession();
+			String userid = (String) session.getAttribute("loginInfo");
 			List<WishlistDto> list = MyPageService.getMyPageService().showMineWishList(userid);
 			request.setAttribute("minewishlist", list);
 //			System.out.println("C : " + list);
@@ -154,7 +169,8 @@ public class MyPageController {
 		
 	//	review 보여주기 	
 		public void mypageReview(HttpServletRequest request, HttpServletResponse response) {
-			String userid = "a125@gmail.com";
+			HttpSession session = request.getSession();
+			String userid = (String) session.getAttribute("loginInfo");
 			List<BoardDto> list = MyPageService.getMyPageService().showMineReview(userid);
 			
 			
@@ -162,15 +178,27 @@ public class MyPageController {
 		}
 		
 		
-		public String mypageFollowing(HttpServletRequest request, HttpServletResponse response) {
-			String path = "/page/mypage/result/following.jsp";
-			
-			
-			
-			return path;
+
+		public void mypageList(HttpServletRequest request, HttpServletResponse response) {
+			HttpSession session = request.getSession();
+			String userid = (String) session.getAttribute("loginInfo");
+			List<BoardDto> list = MyPageService.getMyPageService().showMineList(userid);
+//			System.out.println("imgsrc넣은 C: "+ list);
+			request.setAttribute("mineList", list);
 		}
 	
 
+		
+//		활동로그
+		public String mypageFollowing(HttpServletRequest request, HttpServletResponse response) {
+			HttpSession session = request.getSession();
+			String userid = (String) session.getAttribute("loginInfo");
+			String path = "/page/mypage/result/mypagefollowing.jsp";
+			List<LogDto> list = MyPageService.getMyPageService().showLog(userid);
+			
+			request.setAttribute("followingLog", list);
+			return path;
+		}
 	
 
 }

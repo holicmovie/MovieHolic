@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.kitri.dto.BoardDto;
+import com.kitri.dto.LogDto;
 import com.kitri.dto.SocialDto;
 import com.kitri.dto.WishlistDto;
 import com.kitri.util.DBClose;
@@ -451,10 +452,134 @@ public class SocialDao {
 			DBClose.close(conn, pstmt, rs);
 		}
 		
-		System.out.println("dao : " + list);
+//		System.out.println("dao : " + list);
 		return list;
 		
 		
+	}
+//	mypage-mine-list method
+	public List<BoardDto> selectMineList(String userid) {
+		List<BoardDto> list = new ArrayList<>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			StringBuffer SQL = new StringBuffer();
+			SQL.append("select SEQ, SUBJECT, CONTENT, MOVIECODEYOUNG, MOVIECODENAVER\n" + 
+					"					from mh_board \n" + 
+					"					where boardcode = 2 \n" + 
+					"					and userid = ? \n" + 
+					"					and notify < 100 \n" + 
+					"					order by postdate DESC");
+			conn = DBConnection.makeConnection();
+			pstmt = conn.prepareStatement(SQL.toString());
+			pstmt.setString(1, userid);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				//검색 결과를  RepBoard 객체에 대입
+				BoardDto boardDto= new BoardDto();
+				
+				String[] young = rs.getString("moviecodeyoung").split("\\|\\|");
+				String[] naver = rs.getString("moviecodenaver").split("\\|\\|");
+				
+				List<String> movieCodeYoung = new ArrayList<String>();
+				List<String> movieCodeNaver = new ArrayList<String>();
+				
+				int len = young.length;
+				for(int i=0; i<len; i++) {
+					movieCodeYoung.add(young[i]);
+					movieCodeNaver.add(naver[i]);
+				}
+				boardDto.setSeq(rs.getInt("seq"));
+				boardDto.setSubject(rs.getString("subject"));
+				boardDto.setMovieCodeYoung(movieCodeYoung);
+				boardDto.setMovieCodeNaver(movieCodeNaver);
+				boardDto.setContent(rs.getString("content"));
+				list.add(boardDto);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		
+//		System.out.println("dao : " + list);
+		return list;
+		
+	}
+
+	public List<LogDto> selectLog(String userid) {
+		List<LogDto> list = new ArrayList<>();
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			StringBuffer SQL = new StringBuffer();
+			SQL.append("select * \n" + 
+					"from mh_log \n" + 
+					"where logid != ?\n" + 
+					"and userid = ? \n" + 
+					"order by logdate DESC");
+			conn = DBConnection.makeConnection();
+			pstmt = conn.prepareStatement(SQL.toString());
+			pstmt.setString(1, userid);
+			pstmt.setString(2, userid);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				//검색 결과를  RepBoard 객체에 대입
+				LogDto logDto= new LogDto();
+				
+				logDto.setLogCate(rs.getInt("logcate"));
+				logDto.setLogDate(rs.getString("logdate"));
+				logDto.setLogId(rs.getString("logid"));
+				logDto.setMovieCodeYoung(rs.getString("moviecodeyoung"));
+				logDto.setSeq(rs.getInt("seq"));
+				logDto.setSujbect(rs.getString("subject"));
+				logDto.setUserId(rs.getString("userid"));
+				logDto.setMovieCodeNaver("moviecodenaver");
+				list.add(logDto);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		
+		System.out.println("dao : " + list);
+		return list;
+	}
+
+	public int checkFollowid(String followid) {
+		int cnt = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		
+		try {
+			StringBuffer SQL = new StringBuffer();
+			SQL.append("select count(*) \n" + 
+					"from mh_social \n" + 
+					"where followingid = ?");
+			conn = DBConnection.makeConnection();
+			pstmt = conn.prepareStatement(SQL.toString());
+			pstmt.setString(1, followid);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				cnt = rs.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		return cnt;
 	}
 
 
