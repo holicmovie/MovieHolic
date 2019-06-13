@@ -14,7 +14,7 @@
 <script>
 
 /* 처음 로딩할 때 followingID출력 */
- 
+ <%String checkedId = (String)request.getAttribute("checkedId");%>
 
 $(function(){
 	$.ajax({

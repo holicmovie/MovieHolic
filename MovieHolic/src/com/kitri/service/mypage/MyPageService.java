@@ -171,4 +171,9 @@ public class MyPageService {
 		return SocialDao.getSocialDao().selectLog(userid);
 	}
 
+	public int checkFollowId(String followid) {
+		
+		return SocialDao.getSocialDao().checkFollowid(followid);
+	}
+
 }
