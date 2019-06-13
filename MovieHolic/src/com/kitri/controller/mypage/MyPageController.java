@@ -7,9 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kitri.dto.BoardDto;
+import com.kitri.dto.FilmDto;
 import com.kitri.dto.SocialDto;
 import com.kitri.dto.WishlistDto;
 import com.kitri.dto.mypage.PageBean;
+import com.kitri.service.list.ListService;
 import com.kitri.service.mypage.MyPageService;
 
 public class MyPageController {
@@ -168,6 +170,13 @@ public class MyPageController {
 			
 			
 			return path;
+		}
+
+		public void mypageList(HttpServletRequest request, HttpServletResponse response) {
+			String userid = "a125@gmail.com";
+			List<BoardDto> list = MyPageService.getMyPageService().showMineList(userid);
+//			System.out.println("imgsrc넣은 C: "+ list);
+			request.setAttribute("mineList", list);
 		}
 	
 
