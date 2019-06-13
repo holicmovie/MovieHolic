@@ -170,7 +170,6 @@ $(function() {
 $(function() {
 	
 	$("#writereview").click(function() {
-		alert("리뷰쓰기로 이동합니다.");
 		
 		var movieCdYoung = $(this).attr("movieCdYoung");
 		var movieCdNaver = $(this).attr("movieCdNaver");
