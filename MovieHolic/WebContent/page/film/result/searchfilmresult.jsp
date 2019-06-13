@@ -24,7 +24,15 @@ String root = request.getContextPath();
 
 <%
 if(size == 0){
-	
+%>
+	<div class="wrapper style1 col-lg-12 col-12-mobile">
+
+	<div class="container" style="text-align: center; margin-bottom: 10em; margin-top : 10em;">
+		<img src="/MovieHolic/images/error.png" height="200vh" style="margin-bottom: 5em;">
+		<h2 style="margin-bottom: 1em;">검색된 결과가 없습니다.</h2>
+	</div>
+</div>
+<%
 }
 
 for(int i = 0; i < size; i++) {
