@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,18 +109,19 @@ public class ListService {
 	public BoardDto selBoardBySeq(String seq) {
 		BoardDto board= null;
 			
-		board = ListDao.getListDao().selBoardBySeq(seq, true);
-		if(board == null) {
+		List<BoardDto> boardList = ListDao.getListDao().selBoardBySeq(seq, true, null);
+		if(boardList == null) {
 			return null;
 		}
+		board = boardList.get(0);
 		return board;
 	}
 	
 
 	
 //	#### 댓글 내용 가져오기 ####
-	public List<CommentDto> selCommentBySeq(String seq) {
-		List<CommentDto> comment = ListDao.getListDao().selCommentBySeq(seq);
+	public List<CommentDto> selCommentBySeq(String seq, boolean flag) {
+		List<CommentDto> comment = ListDao.getListDao().selCommentBySeq(seq, flag);
 		return comment;
 	}
 	
@@ -128,22 +130,27 @@ public class ListService {
 //	#### 프로필 사진 select ####
 	public List<UserDto> selProfileById(BoardDto board, List<CommentDto> comment) {
 		List<UserDto> user = new ArrayList<UserDto>();
+		UserDto temp = null;
 		
-//		1. list 작성자 프로필
-		UserDto temp = ListDao.getListDao().selProfileById(board.getUserId());
-		if(temp != null) {
-			user.add(temp);
-			
-//			2. 댓글 작성자 프로필
-			int len = comment.size();
-			for(int i=0; i<len; i++) {
-				String id = comment.get(i).getUserId();
-				temp = ListDao.getListDao().selProfileById(id);
-				if(temp != null) {
-					user.add(temp);
-				}
-			} // for문 종료
-		} // if문 종료
+		if(board != null) {
+//			1. list 작성자 프로필
+			temp = ListDao.getListDao().selProfileById(board.getUserId());
+			if(temp != null) {
+				user.add(temp);
+			} else {
+				return user;
+			}
+		}
+		
+//		2. 댓글 작성자 프로필
+		int len = comment.size();
+		for(int i=0; i<len; i++) {
+			String id = comment.get(i).getUserId();
+			temp = ListDao.getListDao().selProfileById(id);
+			if(temp != null) {
+				user.add(temp);
+			}
+		} // for문 종료
 		return user;
 	}
 	
@@ -170,17 +177,18 @@ public class ListService {
 	}
 
 	
+	
 //	----------------------------------------------------------------------------------------- List 수정/삭제
 	
 //	#### 게시판 내용만 가져오기 ####
-	public BoardDto selListBySeq(String seq) {
-		BoardDto board = null;
+	public List<BoardDto> selListBySeq(String seq, String id) {
+		List<BoardDto> boardList = null;
 		
-		board = ListDao.getListDao().selBoardBySeq(seq, false);
-		if(board == null) {
+		boardList = ListDao.getListDao().selBoardBySeq(seq, false, id);
+		if(boardList == null) {
 			return null;
 		}
-		return board;
+		return boardList;
 	}
 	
 	
@@ -191,7 +199,34 @@ public class ListService {
 		return result;
 	}
 	
+//	#### list 삭제 ####
+	public int deleteList(String seq, String postDate, int cnt, String id) {
+		return ListDao.getListDao().deleteList(seq, postDate, cnt, id);
+	}
 	
+	
+//	#### list 좋아요&싫어요 update ####
+	public int evaluate(String btnStr, String seq, String id) {
+		return ListDao.getListDao().evaluate(btnStr, seq, id);
+	}
+	
+	
+//	#### list 신고 ####
+	public int notify(String seq) {
+		return ListDao.getListDao().notify(seq);
+	}
+	
+	
+//	#### 댓글 저장 ####
+	public int saveComment(String id, String seq, String content, String subject, String writerId) {
+		return ListDao.getListDao().saveComment(id, seq, content, subject, writerId);
+	}
+	
+	
+//	#### 댓글 삭제 ####
+	public int delComment(String id, String postDate) {
+		return ListDao.getListDao().delComment(id, postDate);
+	}
 	
 //	----------------------------------------------------------------------------------------- Util
 	
@@ -422,13 +457,15 @@ public class ListService {
 	}
 	
 	
-//	#### list 삭제 ####
-	public int deleteList(String seq, String postDate, int cnt, String id) {
-		int result = 0;
-		result = ListDao.getListDao().deleteList(seq, postDate, cnt, id);
-		
-		return result;
+	
+//	#### 댓글 수정 ####
+	public String modCommment(String id, String postDate) {
+		return ListDao.getListDao().modCommment(id, postDate);
 	}
+	
+	
+	
+
 	
 	
 	

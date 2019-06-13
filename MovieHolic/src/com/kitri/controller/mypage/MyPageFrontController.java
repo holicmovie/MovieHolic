@@ -28,10 +28,24 @@ public class MyPageFrontController extends HttpServlet {
 //			System.out.println("FC 체크한 영화 코드 : " + wishlistdelete[i]);
 //			}
 //		}
+		
+		
+		
 //----------------------------------[mypage]----------------------------------------
+//		mypage클릭시 보여주는 페이지
 		if ("mypage".equals(page)) {
 			path = MyPageController.getMyPageController().showMine(request, response);
+			MyPageController.getMyPageController().mypageReview(request, response);
 			MoveUrl.forward(request, response, path);
+			
+			
+//		following버튼 클릭시 보여주는 페이지	
+		}else if ("showfollowing".equals(page)) {
+			path = MyPageController.getMyPageController().mypageFollowing(request, response);
+			MyPageController.getMyPageController().mypageReview(request, response);
+			MoveUrl.forward(request, response, path);	
+			
+			
 			
 			
 			

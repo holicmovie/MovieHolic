@@ -427,7 +427,7 @@ public class FilmService {
 					if(alen < 8) {
 						for(int i = 0; i < alen; i++) {
 							// 네이버 검색결과의 인물 사진 주소를 크롤링
-							String searchActorNm = URLEncoder.encode("배우" + actorArray[i], "UTF-8");
+							String searchActorNm = URLEncoder.encode("배우 " + actorArray[i], "UTF-8");
 					        String connUrl = "https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query="+searchActorNm;
 					        
 							Document doc = Jsoup.connect(connUrl).get();
@@ -443,7 +443,7 @@ public class FilmService {
 					} else {
 						for(int i = 0; i < 8; i ++) {
 							// 네이버 검색결과의 인물 사진 주소를 크롤링
-							String searchActorNm = URLEncoder.encode("배우" + actorArray[i], "UTF-8");
+							String searchActorNm = URLEncoder.encode("배우 " + actorArray[i], "UTF-8");
 					        String connUrl = "https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query="+searchActorNm;
 					        
 							Document doc = Jsoup.connect(connUrl).get();

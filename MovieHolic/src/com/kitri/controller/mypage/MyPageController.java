@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kitri.dto.BoardDto;
 import com.kitri.dto.SocialDto;
 import com.kitri.dto.WishlistDto;
 import com.kitri.dto.mypage.PageBean;
@@ -26,6 +27,13 @@ public class MyPageController {
 		return myPageController;
 	}
 
+
+	
+	
+	
+	
+	
+//-----------------------------[Social기능]----------------------
 	public String showFollowings(HttpServletRequest request, HttpServletResponse response) {
 		String cp = request.getParameter("followingpage");
 //		System.out.println("C : following , 페이지 : " + cp);
@@ -80,14 +88,14 @@ public class MyPageController {
 
 	public void deleteFollowings(HttpServletRequest request, HttpServletResponse response) {
 		String followingid = request.getParameter("deletefollowing");
-		System.out.println(followingid);
+//		System.out.println(followingid);
 		MyPageService.getMyPageService().deleteFollowingId(followingid);
 
 	}
 
 	public void addFollower(HttpServletRequest request, HttpServletResponse response) {
 		String followid = request.getParameter("follow");
-		System.out.println(followid);
+//		System.out.println(followid);
 		MyPageService.getMyPageService().addFollowId(followid);
 	}
 
@@ -132,25 +140,37 @@ public class MyPageController {
 		return path;
 	}
 
-//----------------------------------mypage-------------------------------------------
 
-	public String showMine(HttpServletRequest request, HttpServletResponse response) {
-		String path = "/page/mypage/result/mine.jsp";
-
-		return path;
-	}
-
-	public String showWishListAfterDelete(HttpServletRequest request, HttpServletResponse response) {
-		
+	//-----------------------[mypage기능]-----------------------------
+	//	wishlist 보여주기
+		public String showMine(HttpServletRequest request, HttpServletResponse response) {
+			String path = "/page/mypage/result/mine.jsp";
 			String userid = "a125@gmail.com";
-			List<WishlistDto> list = MyPageService.getMyPageService().showWishlist(userid);
-//			System.out.println("c : " + list);
-
-			request.setAttribute("wishlist", list);
-
-			String path = "/page/mypage/result/wishlistresult2.jsp";
+			List<WishlistDto> list = MyPageService.getMyPageService().showMineWishList(userid);
+			request.setAttribute("minewishlist", list);
+//			System.out.println("C : " + list);
 			return path;
+		}
 		
-	}
+	//	review 보여주기 	
+		public void mypageReview(HttpServletRequest request, HttpServletResponse response) {
+			String userid = "a125@gmail.com";
+			List<BoardDto> list = MyPageService.getMyPageService().showMineReview(userid);
+			
+			
+			request.setAttribute("mineReview", list);
+		}
+		
+		
+		public String mypageFollowing(HttpServletRequest request, HttpServletResponse response) {
+			String path = "/page/mypage/result/following.jsp";
+			
+			
+			
+			return path;
+		}
+	
+
+	
 
 }

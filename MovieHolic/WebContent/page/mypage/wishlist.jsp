@@ -83,7 +83,11 @@ $(function () {
 		});
 		return false;  
    });
-   
+    
+    $('#showall').click(function () {
+    	location.href = '/MovieHolic/page/mypage/wishlist.jsp'; 
+    	alert("전체보기!!!");
+    });
 }); 
 	
 </script>
@@ -128,7 +132,7 @@ $(function () {
 					<!-- 조회 조건 -->
 					<div class="col-lg-6 col-12-moblile"></div>
 
-					<div class="col-lg-3 col-4-moblile">
+					<div class="col-lg-2 col-4-moblile">
 						<!-- <select class="form-control form-control-sm" id = "wishlistyear">
 								<option value = "all">기간별-전체</option>
 								<option value = "1">2015~2019</option>
@@ -140,7 +144,10 @@ $(function () {
 								<option value = "7">before1990s</option>
 							</select> -->
 					</div>
-
+					<div class="col-lg-1 col-4-moblile"
+					style="float: right; clear: both;">
+						<button class="btn btn-success font_bold_small" id="showall">전체보기</button>
+					</div>
 					<div class="col-lg-1 col-4-moblile"
 						style="float: right; clear: both;">
 						<button class="btn btn-success font_bold_small" id="btndelete">삭제</button>

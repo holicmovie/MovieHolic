@@ -3,13 +3,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 		<%
-			List<WishlistDto> searchedlist = (List) request.getAttribute("searchwishlist");
-			System.out.println("resultpage : " + searchedlist);
+			List<WishlistDto> list = (List) request.getAttribute("searchwishlist");
+			System.out.println("resultpage : " + list);
 			
 		%>
 		<%
 			/* System.out.println(searchedlist); */
-			int length = searchedlist.size();
+			int length = list.size();
 		%>
 	
 		<!-- 영화 포스터 나열 -->
@@ -19,10 +19,10 @@
 <form>
 	<div class="row" style = "margin:0 0 20em 0; overflow-y :auto;">
 		<div class="col-lg-2 col-6-mobile">
-			<input type="checkbox" name = "wishlistcheckbox" value = "<%=searchedlist.get(i).getMovieCodeYoung() %>" class = "wishlistbox">
-			<a href=" /MovieHolic/film?act=viewfilmdetail&movieCdYoung=<%=searchedlist.get(i).getMovieCodeYoung() %>&movieCdNaver=<%=searchedlist.get(i).getMovieCodeNaver() %>" class="image featured"><img
-				src="<%=searchedlist.get(i).getMovieURL()%>" alt="lalaland poster"
-				data-toggle="tooltip" data-placement="top" title="<%=searchedlist.get(i).getMovieNm()%>(<%=searchedlist.get(i).getPrdtYear()%>)"/></a>
+			<input type="checkbox" name = "wishlistdelete" value = "<%=list.get(i).getMovieCodeYoung() %>" class = "wishlistbox">
+			<a href=" /MovieHolic/film?act=viewfilmdetail&movieCdYoung=<%=list.get(i).getMovieCodeYoung() %>&movieCdNaver=<%=list.get(i).getMovieCodeNaver() %>" class="image featured"><img
+				src="<%=list.get(i).getMovieURL()%>" alt="lalaland poster"
+				data-toggle="tooltip" data-placement="top" title="<%=list.get(i).getMovieNm()%>(<%=list.get(i).getPrdtYear()%>)"/></a>
 		</div>
 	</div>
 </form>

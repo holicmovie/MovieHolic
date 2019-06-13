@@ -9,12 +9,12 @@ public class PreferenceDto {
 	// [선호 배우 통계]
 	private String actor;
 	private int actorScore;
+	private String actorImage;
 	
 	// [선호 감독 통계]
 	private String director;
 	private int directorScore;
-	
-	
+	private String directorImage;
 	public String getCategory() {
 		return category;
 	}
@@ -39,6 +39,12 @@ public class PreferenceDto {
 	public void setActorScore(int actorScore) {
 		this.actorScore = actorScore;
 	}
+	public String getActorImage() {
+		return actorImage;
+	}
+	public void setActorImage(String actorImage) {
+		this.actorImage = actorImage;
+	}
 	public String getDirector() {
 		return director;
 	}
@@ -51,13 +57,18 @@ public class PreferenceDto {
 	public void setDirectorScore(int directorScore) {
 		this.directorScore = directorScore;
 	}
-
+	public String getDirectorImage() {
+		return directorImage;
+	}
+	public void setDirectorImage(String directorImage) {
+		this.directorImage = directorImage;
+	}
 	
 	@Override
 	public String toString() {
 		return "PreferenceDto [category=" + category + ", percent=" + percent + ", actor=" + actor + ", actorScore="
-				+ actorScore + ", director=" + director + ", directorScore=" + directorScore
-				+  "]";
+				+ actorScore + ", actorImage=" + actorImage + ", director=" + director + ", directorScore="
+				+ directorScore + ", directorImage=" + directorImage + "]";
 	}
 
 	
