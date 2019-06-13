@@ -18,7 +18,7 @@ public class ListFrontController extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String act = request.getParameter("act");
-		
+
 		if("srchMV".equals(act)) {		// #### makelist.jsp의 모달 : 영화 검색 ####
 			String path = ListController.getListController().srchMVbyName(request, response);
 			MoveUrl.forward(request, response, path);
@@ -71,10 +71,23 @@ public class ListFrontController extends HttpServlet {
 			response.setContentType("text/plain; charset=UTF-8"); 
 			PrintWriter out = response.getWriter();
 			out.print(result);
-		} else if("".equals(act)) {
-			
-		} else if("".equals(act)) {
-			
+		} else if("updateComment".equals(act)) {
+			int result = ListController.getListController().updateComment(request, response);
+			response.setContentType("text/plain; charset=UTF-8"); 
+			PrintWriter out = response.getWriter();
+			out.print(result);
+		} else if("sortList".equals(act)) {
+			String path = ListController.getListController().sortPopular(request, response);
+			MoveUrl.forward(request, response, path);
+		} else if("sortLatest".equals(act)) {
+			String path = ListController.getListController().sortLatest(request, response);
+			MoveUrl.forward(request, response, path);
+		} else if("srchList".equals(act)) {
+			String path = ListController.getListController().srchList(request, response);
+			MoveUrl.forward(request, response, path);
+		} else if("navSrch".equals(act)) {
+			String path = ListController.getListController().navSrchMVbyName(request, response);
+			MoveUrl.forward(request, response, path);
 		} else if("".equals(act)) {
 			
 		}

@@ -1,256 +1,371 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="com.kitri.dto.FilmDto, java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <%@ include file="/template/header.jsp"%>
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
-</head>
-<body class="left-sidebar is-preload" style="background-color: black;">
-<script type="text/javascript">
 
+<style>
+/* 큰 제목 */
+.big_title{
+font-family: 'Noto Sans KR', sans-serif;
+font-weight: bold;
+font-size: 40px;
+}
+/* 중간 제목 */
+.mid_title{
+font-family: 'Noto Sans KR', sans-serif;
+font-weight: bold;
+font-size: 32px;
+margin-top: 50px;
+margin-left: 30px;
+margin-bottom : 0px;
+}
+/* 영화명 */
+.film_title{
+font-family: 'Noto Sans KR', sans-serif;
+font-weight: bold;
+font-size: 15px;
+}
+/* 상단 마진 값 */
+.top_margin{
+margin-top: 100px;
+}
+/* 인기 영화 랭킹 스타일 */
+div.interated_network_movie_info_img{
+width:100%;
+float: none;
+display: table-cell;
+vertical-align: top;
+position: relative;
+}
+span.movie_ranking_number {
+position: absolute;
+vertical-align: top;
+    top: 0;
+    left: 0;
+    width: 38px;
+    padding: 6px 0 6px 0;
+    font-size: 20px;
+    background-color : #ff4e00;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    z-index: 1000;
+}
+</style>
+
+
+
+</head>
+<body class="homepage is-preload" style="background-color: black;">
+<script type="text/javascript">
+	$(function() {
+		var arr = $("div>div>nav.nav2>li>a");
+		$(arr).click(function() {
+		var vurl = $(this).attr("href");
+		$a.jax({
+			url : vurl,
+			method:'get',
+			success:function(result){
+				$("section#category").html(result);
+			}
+		});
+			
+		});
+	});
 </script>
+
+
+
+<%
+// 박스오피스 조회 날짜(어제)
+Calendar c1 = new GregorianCalendar();
+c1.add(Calendar.DATE, -1);							    // 어제날짜
+SimpleDateFormat f = new SimpleDateFormat("yyyy년 MM월 dd일"); 	// 날짜 포맷 
+String yesterday = f.format(c1.getTime()); 				// String으로 저장
+// 박스오피스 결과
+List<FilmDto> box = (List<FilmDto>)request.getAttribute("box");
+int rank=1;
+// ###################################### 로그인 세션 ###################################### 임시
+//TODO : session에서 id 받기로 변경하기! ok
+String id = (String)session.getAttribute("loginInfo");
+String name = (String) session.getAttribute("name");
+// # 로그인
+// 선호장르 추천 영화 목록 결과
+// 선호장르 1
+List<FilmDto> favoritefilm = (List<FilmDto>)request.getAttribute("favoritefilm");
+// 선호장르 2
+List<FilmDto> favoritefilm2 = (List<FilmDto>)request.getAttribute("favoritefilm2");
+// # 비로그인
+// 최신 영화 목록 결과
+List<FilmDto> variousfilm = (List<FilmDto>)request.getAttribute("variousfilm");
+// 리뷰 높은 영화 목록 결과
+List<FilmDto> variousfilm2 = (List<FilmDto>)request.getAttribute("variousfilm2");
+%>
+
+
+
+
 	<div id="page-wrapper">
 
 		<!-- Header -->
-		<div id="header" style="background-image: none; padding: 4em 0 0 0;">
+		<div id="header">
+
+			<!-- Inner -->
+			<div class="inner">
+				<header>
+					<h1>
+						<a href="/MovieHolic/index.html" id="logo">Movie Holic</a>
+					</h1>
+					<hr />
+					<p>Welcome Movie Holic</p>
+				</header>
+				<footer>
+					<a href="#banner" class="button circled scrolly">Start</a>
+				</footer>
+			</div>
+
 			<%@ include file="/template/nav.jsp"%>
 		</div>
-		<!-- boxoffice -->
 
-					
-			<div>		
-				<h2
-					style="text-align: center; border-top: 5px solid #fff; border-bottom: 5px solid #fff; padding: 10px 0 10px 0;">
-					<span><strong>주간 인기 리스트</strong></span>
+		<!---------------------------------------- ① 최신 박스오피스 순위 ---------------------------------------->
+		<section id="banner" style="padding: 2em 0 2em 0;">
+			<header class="top_margin">
+				<h2 class="big_title">
+					<strong>최신 박스오피스 순위</strong>
 				</h2>
-				</div>
 				<br>
-		<!-- good rank list -->
-		<section class="carousel"style="padding:1.5em 0 0 0;">
-			<div class="reel" id="romance" >
-				<article style="background-color: rgb(3, 39, 49);">
-					<a href="#" class="image featured"><img
-						src="/MovieHolic/images/brother.jpg" alt="" /></a>
-					<header>
-						<h6>
-							키트리추천영화<br> <a href="/MovieHolic/page/film/moviedetail.jsp">by
-								shz | 2019.05.12 |</a><br> 좋아요 : <a
-								href="/MovieHolic/page/film/moviedetail.jsp">216842 </a> 싫어요 : <a>3</a>
-						</h6>
-					</header>
-				</article>
-				<article style="background-color: rgb(3, 39, 49);">
-					<a href="#" class="image featured"><img
-						src="/MovieHolic/images/avengers4.jpg" alt="" /></a>
-					<header>
-						<h6>
-							키트리추천영화<br> <a href="/MovieHolic/page/film/moviedetail.jsp">by
-								shz | 2019.05.12 |</a><br> 좋아요 : <a
-								href="/MovieHolic/page/film/moviedetail.jsp">16842 </a> 싫어요 : <a>3</a>
-						</h6>
-					</header>
-				</article>
-
-				<article style="background-color: rgb(3, 39, 49);">
-					<a href="#" class="image featured"><img
-						src="/MovieHolic/images/capma.jpg" alt="" /></a>
-					<header>
-						<h6>
-							키트리추천영화<br> <a href="/MovieHolic/page/film/moviedetail.jsp">by
-								shz | 2019.05.12 |</a><br> 좋아요 : <a
-								href="/MovieHolic/page/film/moviedetail.jsp">6342 </a> 싫어요 : <a>3</a>
-						</h6>
-					</header>
-				</article>
-
-				<article style="background-color: rgb(3, 39, 49);">
-					<a href="#" class="image featured"><img
-						src="/MovieHolic/images/watching.jpg" alt="" /></a>
-					<header>
-						<h6>
-							키트리추천영화<br> <a href="/MovieHolic/page/film/moviedetail.jsp">by
-								shz | 2019.05.12 |</a><br> 좋아요 : <a
-								href="/MovieHolic/page/film/moviedetail.jsp">4842 </a> 싫어요 : <a>3</a>
-						</h6>
-					</header>
-				</article>
-
-				<article style="background-color: rgb(3, 39, 49);">
-					<a href="#" class="image featured"><img
-						src="/MovieHolic/images/money.jpg" alt="" /></a>
-					<header>
-						<h6>
-							키트리추천영화<br> <a href="/MovieHolic/page/film/moviedetail.jsp">by
-								shz | 2019.05.12 |</a><br> 좋아요 : <a
-								href="/MovieHolic/page/film/moviedetail.jsp">842 </a> 싫어요 : <a>3</a>
-						</h6>
-					</header>
-				</article>
-
-				<article style="background-color: rgb(3, 39, 49);">
-					<a href="#" class="image featured"><img
-						src="/MovieHolic/images/pic04.jpg" alt="" /></a>
-					<header>
-						<h6>
-							키트리추천영화<br> <a href="/MovieHolic/page/film/moviedetail.jsp">by
-								shz | 2019.05.12 |</a><br> 좋아요 : <a
-								href="/MovieHolic/page/film/moviedetail.jsp">42 </a> 싫어요 : <a>3</a>
-						</h6>
-					</header>
-				</article>
-
-
-			</div>
-		<div class="col-11 col-12-mobile"style="text-align:right; padding-right:4em;margin: 1em 0 10px 0;"><a href="/MovieHolic/page/list/makelist.jsp" class="btn-success" style="background:rgb(3, 39, 49); padding:5px 1em 5px 1em; border:1px solid #fff;">New List</a>
-		</div>
-
+				<h4 class="font_light_small">
+					(기준 날짜 : <%=yesterday%>)
+				</h4>
+			</header>
 		</section>
 
+		<!-- 박스오피스 배너 start -->
+		<section class="carousel">
+			<div class="reel">
 
-		<!-- 최신 유저 리스트 -->
+<%
+for(FilmDto dto : box){
+%>	
 
-		<!-- new list -->
-
-		<div class="row" style="margin: 0 14em 3em 14em;">
-			<div
-				style="width: 100%; border-bottom: 0.3em solid #fff; padding: 10px 0 10px 0; border-top: 0.3em solid #fff;">
-				<span style="font-size: 30px; padding: 10px 0 10px 0;"><strong>전체
-						리스트</strong></span> <span style="float: right;"><input type="text"
-					class="form-control"
-					style="height: 40px; width: 13em; background-image: /MovieHolic/images/searchb.png"
-					placeholder="제목"></span>
+				<article style="background-color: rgb(3, 39, 49);">
+			<div class="interated_network_movie_info_img">
+				<span class="movie_ranking_number" id="rankNum"><%=rank++%></span>
+					<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>&movieCdNaver=<%=dto.getMovieCdNaver()%>"  class="image featured">
+						<img style="height:320px;" src="<%=dto.getMovieImage()%>" alt="<%=dto.getMovieNm()%> 포스터" />
+					</a>
 			</div>
-			<div style="clear: both;"></div>
-			<table class="table table-hover col-lg-12 col-mobile-12"
-				style="margin-top: 2em;">
-				<col style="width: 40%;">
-				<tr style="border: 2px solid; border-color: white;">
-					<td style="text-align: center;">
-						<div>
-							<img width="100vh" src="/MovieHolic/images/tempimg/endgame.jpg"
-								title="엔드게임 (2019)" style="position: absolute; z-index: 0;" />
-							<img width="100vh" src="/MovieHolic/images/tempimg/frozen.jpg"
-								title="엔드게임 (2019)"
-								style="position: relative; left: 70px; z-index: 0;" /> <img
-								class="hide3" width="100vh"
-								src="/MovieHolic/images/tempimg/coco.jpg" title="엔드게임 (2019)"
-								style="position: relative; left: 40px; z-index: 0;" /> <img
-								class="hide2" width="100vh"
-								src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)"
-								style="position: relative; left: 5px; z-index: 0;" /> <img
-								class="hide1" width="100vh"
-								src="/MovieHolic/images/tempimg/frozen.jpg" title="엔드게임 (2019)"
-								style="position: relative; left: -30px; z-index: 0;" />
-						</div>
-					</td>
-					<td style="vertical-align: middle; color: white;">
-						<div>
-							<h4>스트레스 풀고 싶을때 추천하고 싶은 영화</h4>
-							<p>by damm | 2019.04.15 | &#9829;16584 | &#128148;55</p>
-						</div>
-					</td>
-				</tr>
-				<tr style="border: 2px solid; border-color: white;">
-					<td style="text-align: center;">
-						<div>
-							<img width="100vh" src="/MovieHolic/images/tempimg/endgame.jpg"
-								title="엔드게임 (2019)" style="position: absolute; z-index: 0;" />
-							<img width="100vh" src="/MovieHolic/images/tempimg/frozen.jpg"
-								title="엔드게임 (2019)"
-								style="position: relative; left: 70px; z-index: 0;" /> <img
-								class="hide3" width="100vh"
-								src="/MovieHolic/images/tempimg/coco.jpg" title="엔드게임 (2019)"
-								style="position: relative; left: 40px; z-index: 0;" /> <img
-								class="hide2" width="100vh"
-								src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)"
-								style="position: relative; left: 5px; z-index: 0;" /> <img
-								class="hide1" width="100vh"
-								src="/MovieHolic/images/tempimg/frozen.jpg" title="엔드게임 (2019)"
-								style="position: relative; left: -30px; z-index: 0;" />
-						</div>
-					</td>
-					<td style="vertical-align: middle; color: white;">
-						<h4>스트레스 풀고 싶을때 추천하고 싶은 영화</h4>
-						<p>by damm | 2019.04.15 | &#9829;16584 | &#128148;55</p>
-					</td>
-				</tr>
-				<tr style="border: 2px solid; border-color: white;">
-					<td style="text-align: center;">
-						<div>
-							<img width="100vh" src="/MovieHolic/images/tempimg/endgame.jpg"
-								title="엔드게임 (2019)" style="position: absolute; z-index: 0;" />
-							<img width="100vh" src="/MovieHolic/images/tempimg/frozen.jpg"
-								title="엔드게임 (2019)"
-								style="position: relative; left: 70px; z-index: 0;" /> <img
-								class="hide3" width="100vh"
-								src="/MovieHolic/images/tempimg/coco.jpg" title="엔드게임 (2019)"
-								style="position: relative; left: 40px; z-index: 0;" /> <img
-								class="hide2" width="100vh"
-								src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)"
-								style="position: relative; left: 5px; z-index: 0;" /> <img
-								class="hide1" width="100vh"
-								src="/MovieHolic/images/tempimg/frozen.jpg" title="엔드게임 (2019)"
-								style="position: relative; left: -30px; z-index: 0;" />
-						</div>
-					</td>
-					<td style="vertical-align: middle; color: white;">
-						<h4>스트레스 풀고 싶을때 추천하고 싶은 영화</h4>
-						<p>by damm | 2019.04.15 | &#9829;16584 | &#128148;55</p>
-					</td>
-				</tr>
-				<tr style="border: 2px solid; border-color: white;">
-					<td style="text-align: center;">
-						<div>
-							<img width="100vh" src="/MovieHolic/images/tempimg/endgame.jpg"
-								title="엔드게임 (2019)" style="position: absolute; z-index: 0;" />
-							<img width="100vh" src="/MovieHolic/images/tempimg/frozen.jpg"
-								title="엔드게임 (2019)"
-								style="position: relative; left: 70px; z-index: 0;" /> <img
-								class="hide3" width="100vh"
-								src="/MovieHolic/images/tempimg/coco.jpg" title="엔드게임 (2019)"
-								style="position: relative; left: 40px; z-index: 0;" /> <img
-								class="hide2" width="100vh"
-								src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)"
-								style="position: relative; left: 5px; z-index: 0;" /> <img
-								class="hide1" width="100vh"
-								src="/MovieHolic/images/tempimg/frozen.jpg" title="엔드게임 (2019)"
-								style="position: relative; left: -30px; z-index: 0;" />
-						</div>
-					</td>
-					<td style="vertical-align: middle; color: white;">
-						<h4>스트레스 풀고 싶을때 추천하고 싶은 영화</h4>
-						<p>by damm | 2019.04.15 | &#9829;16584 | &#128148;55</p>
-					</td>
-				</tr>
+					<header>
+						<h5>
+							<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>&movieCdNaver=<%=dto.getMovieCdNaver()%>"  class="film_title">
+								<%=dto.getMovieNm()%>
+							</a>
+						</h5>
+					</header>
+				</article>
+<%
+}
+%> 
+			</div>
+		</section>
+		<!-- 박스오피스 배너 end -->
+		
+<%
+// ################## 비로그인 ##################
+if(id == null) {
+%>
 
-			</table>
-			<div class="col-lg-12" style="padding: 0 0 0 0;">
-				<div style="float: left">
-					<button class="btn btn-success font_bold_small">이&nbsp;&nbsp;&nbsp;전</button>
+		<!---------------------------------------- ② 취향 저격 리스트 ---------------------------------------->
+		<!-- #로그인 회원 선호 장르 = 액션 이라고 가정!# -->
+		<section id="banner" style="padding: 2em 0 5px 0;">
+			<header class="top_margin">
+				<h2 class="big_title">
+					<strong>취향 저격 리스트</strong>
+				</h2>
+				<br><br>
+				<div class="mid_title" align="left">
+					최신 개봉 영화
 				</div>
+			</header>
+			
+		</section>
 
-				<div style="float: right">
-					<button class="btn btn-success font_bold_small">다&nbsp;&nbsp;&nbsp;음</button>
-				</div>
+		<!-- ②-1. 회원 선호장르1 영화 추천 start -->
+		<div class="tab-content">
+			<div class="tab-pane active">
+				<section class="carousel" id="category">
+					<div class="reel" id="romance">
 
-				<ul class="pagination justify-content-center">
-					<li class="page-item"><a class="page-link a"
-						href="javascript:void(0);">1</a></li>
-					<li class="page-item"><a class="page-link a"
-						href="javascript:void(0);">2</a></li>
-					<li class="page-item"><a class="page-link a"
-						href="javascript:void(0);">3</a></li>
-					<li class="page-item"><a class="page-link a"
-						href="javascript:void(0);">4</a></li>
-					<li class="page-item"><a class="page-link a"
-						href="javascript:void(0);">5</a></li>
-				</ul>
-				<%-- float clear용 빈 div --%>
-				<div style="clear: both;"></div>
+<%
+for(FilmDto dto : variousfilm){
+%>					
+						<article style="margin: ; height: 410px; background-color: rgb(3, 39, 49);">
+							<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>&movieCdNaver=<%=dto.getMovieCdNaver()%>"  class="image featured">
+								<img style="height:320px;" src="<%=dto.getMovieImage()%>" alt="<%=dto.getMovieNm()%> 포스터" />
+							</a>
+							<header>
+								<h5>
+									<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>&movieCdNaver=<%=dto.getMovieCdNaver()%>"  class="film_title">
+										<%=dto.getMovieNm()%>
+									</a>
+								</h5>
+							</header>
+						</article>
+<%
+}
+%>
+	
+					</div>
+				</section>
 			</div>
 		</div>
+		<!-- 회원 선호장르1 영화 추천 end -->
 
-	</div>
+		<section id="banner" style="padding: 2em 0 5px 0;">
+			<header class="top_margin">
+				<div class="mid_title" align="left">
+					Movie Holic 추천 영화
+				</div>
+			</header>
+			
+		</section>
 
-	<hr />
-	<div class="row"></div>
-	<%@ include file="/template/footer.jsp"%>
+		<!-- ②-2. 회원 선호장르2 영화 추천 start -->
+		<div class="tab-content">
+			<div class="tab-pane active">
+				<section class="carousel" id="category">
+					<div class="reel" id="romance">
+
+<%
+for(FilmDto dto : variousfilm2){
+%>					
+						<article style="margin: ; height: 410px; background-color: rgb(3, 39, 49);">
+							<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>&movieCdNaver=<%=dto.getMovieCdNaver()%>"  class="image featured">
+								<img style="height:320px;" src="<%=dto.getMovieImage()%>" alt="<%=dto.getMovieNm()%> 포스터" />
+							</a>
+							<header>
+								<h5>
+									<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>&movieCdNaver=<%=dto.getMovieCdNaver()%>"  class="film_title">
+										<%=dto.getMovieNm()%>
+									</a>
+								</h5>
+							</header>
+						</article>
+<%
+}
+%>
+	
+					</div>
+				</section>
+			</div>
+		</div>
+		<!-- 회원 선호장르2 영화 추천 end -->
+
+
+
+<%
+}
+// ################## 로그인 ################## 
+else {
+%>
+
+		<!---------------------------------------- ② 취향 저격 리스트 ---------------------------------------->
+		<!-- #로그인 회원 선호 장르 = 액션 이라고 가정!# -->
+		<section id="banner" style="padding: 2em 0 5px 0;">
+			<header class="top_margin">
+				<h2 class="big_title">
+					<strong>취향 저격 리스트</strong>
+				</h2>
+				<br><br>
+				<div class="mid_title" align="left">
+					<span style="color:rgb(240, 195, 15)"><%=name%></span>님이 좋아하는 '<%=favoritefilm.get(0).getCategory()%>' 영화
+				</div>
+			</header>
+			
+		</section>
+
+		<!-- ②-1. 회원 선호장르1 영화 추천 start -->
+		<div class="tab-content">
+			<div class="tab-pane active">
+				<section class="carousel" id="category">
+					<div class="reel" id="romance">
+
+<%
+for(FilmDto dto : favoritefilm){
+%>					
+						<article style="margin: ; height: 410px; background-color: rgb(3, 39, 49);">
+							<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>&movieCdNaver=<%=dto.getMovieCdNaver()%>"  class="image featured">
+								<img style="height:320px;" src="<%=dto.getMovieImage()%>" alt="<%=dto.getMovieNm()%> 포스터" />
+							</a>
+							<header>
+								<h5>
+									<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>&movieCdNaver=<%=dto.getMovieCdNaver()%>"  class="film_title">
+										<%=dto.getMovieNm()%>
+									</a>
+								</h5>
+							</header>
+						</article>
+<%
+}
+%>
+	
+					</div>
+				</section>
+			</div>
+		</div>
+		<!-- 회원 선호장르1 영화 추천 end -->
+
+		<section id="banner" style="padding: 2em 0 5px 0;">
+			<header class="top_margin">
+				<div class="mid_title" align="left">
+					<span style="color:rgb(240, 195, 15)"><%=name%></span>님이 좋아하는 '<%=favoritefilm2.get(0).getCategory()%>' 영화
+				</div>
+			</header>
+			
+		</section>
+
+		<!-- ②-2. 회원 선호장르2 영화 추천 start -->
+		<div class="tab-content">
+			<div class="tab-pane active">
+				<section class="carousel" id="category">
+					<div class="reel" id="romance">
+
+<%
+for(FilmDto dto : favoritefilm2){
+%>					
+						<article style="margin: ; height: 410px; background-color: rgb(3, 39, 49);">
+							<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>&movieCdNaver=<%=dto.getMovieCdNaver()%>"  class="image featured">
+								<img style="height:320px;" src="<%=dto.getMovieImage()%>" alt="<%=dto.getMovieNm()%> 포스터" />
+							</a>
+							<header>
+								<h5>
+									<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=dto.getMovieCdYoung()%>&movieCdNaver=<%=dto.getMovieCdNaver()%>"  class="film_title">
+										<%=dto.getMovieNm()%>
+									</a>
+								</h5>
+							</header>
+						</article>
+<%
+}
+%>
+	
+					</div>
+				</section>
+			</div>
+		</div>
+		<!-- 회원 선호장르2 영화 추천 end -->
+
+<%
+}
+%>	
+
+  
+ <section id="banner">
+ <br><br><br><br><br><br><br><br><br><br><br><br>
+</section>
+		
+		<%@ include file="/template/footer.jsp"%>

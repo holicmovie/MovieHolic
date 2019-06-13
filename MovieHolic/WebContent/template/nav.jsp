@@ -13,7 +13,7 @@
 				<li><a href="/MovieHolic/film">HOME</a></li>
 				<li><a href="/MovieHolic/page/film/moviefilm.jsp">FILMS</a>
 				</li>
-				<li><a href="/MovieHolic/page/list/movielist.jsp">LISTS</a></li>
+				<li><a href="/MovieHolic/list?act=sortList">LISTS</a></li>
 				<li>
 					<a href="/MovieHolic/page/mypage/mypage.jsp">MY PAGE</a>
 					<ul>
