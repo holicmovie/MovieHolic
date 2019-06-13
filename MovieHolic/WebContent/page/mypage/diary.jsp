@@ -72,7 +72,8 @@
 
 </head>
 <body class="left-sidebar is-preload">
-<%
+<%		
+		String searchKey = (String)request.getAttribute("searchKey");
 		PageBean pb = (PageBean) request.getAttribute("reviewList");
 		List<BoardDto> list = pb.getBoard();
 		int size = list.size(); //한 페이지 내에 보여줄 실제 행 개수
@@ -90,10 +91,10 @@
 	<script>
 	/* 리뷰 제목으로 검색 */
 	$(function() {
-		var searchmovie = $('.search2');
-			$(searchmovie).keypress(function(event) {
+		var searchmovie = $('.clicksearch');
+			$(searchmovie).click(function(event) {
 								alert("검색시작!");
-					var inputsearch = $('.inputsearch');
+					var inputsearch = $('input[name="searchReview"]');
 				if (event.which == 13) { 
 					if (inputsearch.val() != "") {
 			<%-- 검색어가 공백이 아닌 경우 srchKey로 받아옴 --%>
@@ -131,7 +132,7 @@
 				var srchKey = $(this).attr("searchKey");
 				alert(currentPage + "페이지입니다");
 				$.ajax({
-					url:'/MovieHolic/mypage?page=diaryselect&currentPage='+ currentPage,
+					url:'/MovieHolic/mypage?page=diaryselect&srchKey' + srchKey +'&currentPage='+ currentPage,
 					method:'get',
 					success:function(result){
 						$("#reviewpage").html(result.trim());
@@ -154,7 +155,7 @@
 					method: 'post',
 					data: chkval,
 					success:function(result){
-						  location.href = '/MovieHolic/page/mypage/mypage.jsp';   
+						  location.href = '/MovieHolic/mypage?page=diary';   
 						alert("삭제 성공!!!"); 
 					}
 				});
@@ -203,7 +204,7 @@
 							<button class="btn btn-success font_bold_small btndelete">삭&nbsp;&nbsp;&nbsp;제</button>
 						</div>
 						<div style="float: right">
-							<button class="btn btn-success font_bold_small">검&nbsp;&nbsp;&nbsp;색</button>
+							<button class="btn btn-success font_bold_small clicksearch">검&nbsp;&nbsp;&nbsp;색</button>
 						</div>
 						<div style="float: right; width: 20px; height: 1px;"></div>
 						<div style="float: right">
@@ -232,9 +233,9 @@
 									<td style="vertical-align: middle;"><input name="reviewdelete" value="<%=list.get(i).getSeq() %>" type="checkbox"
 										class="form-check-input"></td>
 									<td class="hide1" style="vertical-align: middle;"><a
-										href="/MovieHolic/page/film/moviedetail.jsp"><img
-											width="90vh" src="/MovieHolic/images/tempimg/coco.jpg"
-											title="코코 (2017)" /></a></td>
+										href="/MovieHolic/film?act=viewfilmdetail&movieCdYoung=<%=list.get(i).getMovieCodeYoung2()%>&movieCdNaver=<%=list.get(i).getMovieCodeNaver2()%>"><img
+											width="90vh" src="<%=list.get(i).getUrl2() %>"
+											title="<%=list.get(i).getMovieName2()%>" /></a></td>
 									<td style="vertical-align: middle;">
 										<div class="font_light_small"><%=list.get(i).getPostDateY()%></div>
 										<div class="font_bold_mid" style="font-size: 2em;"><%=list.get(i).getPostDateM()%></div>
@@ -252,7 +253,7 @@
 									</span></td>
 									<td class="font_bold_mid" style="vertical-align: middle;"><span
 										class="title"><a
-											href="/MovieHolic/mypage?page=reviewdetail&seq=<%=list.get(i).getSeq()%>"><%=list.get(i).getMovieName()%></a></span></td>
+											href="/MovieHolic/mypage?page=reviewdetail&seq=<%=list.get(i).getSeq()%>"><%=list.get(i).getMovieName2()%></a></span></td>
 								</tr>
 								<%
 									}
