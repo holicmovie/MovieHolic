@@ -424,19 +424,23 @@ public class SocialDao {
 				String[] name = rs.getString("moviename").split("\\|\\|");
 				String[] young = rs.getString("moviecodeyoung").split("\\|\\|");
 				String[] naver = rs.getString("moviecodenaver").split("\\|\\|");
-				List<String> movieName = new ArrayList<String>();
-				List<String> movieCodeYoung = new ArrayList<String>();
-				List<String> movieCodeNaver = new ArrayList<String>();
+				String movieName = name[0];
+				String movieCodeYoung = young[0];
+				String movieCodeNaver = naver[0];
 				
-				int len = name.length;
-				for(int i=0; i<len; i++) {
-					movieName.add(name[i]);
-					movieCodeYoung.add(young[i]);
-					movieCodeNaver.add(naver[i]);
-				}
-				boardDto.setMovieName(movieName);
-				boardDto.setMovieCodeYoung(movieCodeYoung);
-				boardDto.setMovieCodeNaver(movieCodeNaver);
+//				List<String> movieName = new ArrayList<String>();
+//				List<String> movieCodeYoung = new ArrayList<String>();
+//				List<String> movieCodeNaver = new ArrayList<String>();
+				
+//				int len = name.length;
+//				for(int i=0; i<len; i++) {
+//					movieName.add(name[i]);
+//					movieCodeYoung.add(young[i]);
+//					movieCodeNaver.add(naver[i]);
+//				}
+				boardDto.setMovieName2(movieName);
+				boardDto.setMovieCodeYoung2(movieCodeYoung);
+				boardDto.setMovieCodeNaver2(movieCodeNaver);
 				boardDto.setContent(rs.getString("content"));
 				list.add(boardDto);
 			}
