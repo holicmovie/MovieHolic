@@ -33,34 +33,11 @@ public class UserController {
 	}
 	
 	
-	public String ReviewRegister(HttpServletRequest request , HttpServletResponse response) {
-		List<String> name = new ArrayList<String>();
-		String str = request.getParameter("moviename");
-		StringTokenizer st = new StringTokenizer(str, "||");
-		String a = st.nextToken();
-		name.add(a);
-		String path = "/page/mypage/writereview.jsp";
-		BoardDto boardDto = new BoardDto();
-		
-		boardDto.setUserId(request.getParameter("userid"));
-		boardDto.setSeq(Integer.parseInt(request.getParameter("seq")));
-		boardDto.setBoardCode(Integer.parseInt(request.getParameter("boardcode")));
-		boardDto.setSubject(request.getParameter("subject"));
-		boardDto.setPostDate(request.getParameter("postdate"));
-		boardDto.setContent(request.getParameter("content"));
-		boardDto.setStarPoint(Integer.parseInt(request.getParameter("starpoint")));
-		boardDto.setMovieName(name);
-		boardDto.setEnable(Integer.parseInt(request.getParameter("enable")));
-		
-		int cnt = UserService.getUserService().writeReview(boardDto);
-		if(cnt != 0) {
-			request.setAttribute("writereview", boardDto);
-			path = "/page/mypage/diary.jsp";
-		}else {
-			path = "/page/mypage/writereview.jsp";
-		}
-		return path;
-		
+	public void ReviewRegister(HttpServletRequest request , HttpServletResponse response) {
+		String movieCdNaver = request.getParameter("movieCdNaver");
+		String movieCdYoung = request.getParameter("movieCdYoung");
+		BoardDto result = UserService.getUserService().writeReview(movieCdNaver, movieCdYoung);
+		request.setAttribute("writereview", result);
 	}
 	
 	public String ReviewList(HttpServletRequest request, HttpServletResponse response) {

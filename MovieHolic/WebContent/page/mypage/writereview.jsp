@@ -74,12 +74,12 @@ Set yellow color when star hover  --%> <%-- 체크박스 --%> .form-check-input
 	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <script>
 	
-<%-- 영화검색 모달 띄우기 --%>
+<%-- 영화검색 모달 띄우기 
 	$(function() {
 		$('#srchMovie').focusin(function() {
 			$('#movieModal').modal();
 		});
-	});
+	});--%>
 <%-- datepicker --%>
 	$(function() {
 		$('#datepicker').datepicker({
@@ -92,7 +92,7 @@ function register() {
 		alert("별점 입력하세요!");
 		return;
 	}else if(document.getElementById("reviewContent").value == ""){
-		alert("id 입력");
+		alert("sodyddlqfur");
 		return;
 	}else{
 		document.getElementById("reviewsave").action = "<%=root%>mypage";
@@ -102,6 +102,7 @@ function register() {
 </script>
 </head>
 <body class="left-sidebar is-preload">
+<% BoardDto dto = (BoardDto)request.getAttribute("writereview"); %>
 	<div id="page-wrapper">
 
 		<!-- Header -->
@@ -135,8 +136,8 @@ function register() {
 
 						<%-- 포스터, 별점 --%>
 						<div style="width: 100%; text-align: center;">
-							<a href="#" id="srchMovie"><img class="movieImg"
-								src="/MovieHolic/images/getposter.png" width="235vh"></a>
+							<img class="movieImg"
+								src="<%=dto.getUrl2() %>" alt = "<%=dto.getMovieName2()%>"width="235vh">
 						</div>
 						
 						<div id="likeunlike" class="rounded-lg"
