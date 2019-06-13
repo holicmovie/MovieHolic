@@ -5,7 +5,7 @@ import java.util.List;
 
 public class AdminPageDto {
 	
-	private int cntPerPage = 5; 	// 페이지별 보여줄 목록수
+	private int cntPerPage = 7; 	// 페이지별 보여줄 목록수
 	private int startRow = 1; 		// 시작행
 	private int endRow = 1; 		// 끝행
 	private List<AdminDto> list; 	// 목록

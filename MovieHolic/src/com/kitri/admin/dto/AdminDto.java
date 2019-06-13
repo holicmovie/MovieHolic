@@ -8,6 +8,8 @@ public class AdminDto {
 	
 	
 	int cnt; // 탈퇴시 성공
+	private String text; // 검색어 값(꼼수)
+	private String index; // 검색어 종류(꼼수)
 	private String userId;
 	private String name;
 	private String pass;
@@ -42,7 +44,24 @@ public class AdminDto {
 
 
 
+	
 
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public String getIndex() {
+		return index;
+	}
+
+	public void setIndex(String index) {
+		this.index = index;
+	}
 
 	public int getCnt() {
 		return cnt;

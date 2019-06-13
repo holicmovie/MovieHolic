@@ -23,15 +23,22 @@ public class AdminFrontController extends HttpServlet {
 		String notify = request.getParameter("notify");
 		String path = "/page/admin/management.jsp";
 		
-		
-		
-		
-		
 
-		if ("notify".equals(notify) && "alllist".equals(act)) { // 다른 페이지에서 management 들어올때.
+		if ("alllist".equals(act) && "notify".equals(notify) ) { // 다른 페이지에서 management 들어올때.
 			
 			int cnt = 1; 
 			path = AdminController.getAdminController().NFandAll(request, response,cnt);
+			MoveUrl.forward(request, response, path);
+			
+		} else if ("inactive".equals(act) && "notify".equals(notify)) { // 휴면 화면에서 휴면처리후 페이징처리
+			
+			int cnt = 2; 
+			path = AdminController.getAdminController().inactivePage(request, response, cnt);
+			MoveUrl.forward(request, response, path);
+			
+		} else if ("search".equals(act) && "notify".equals(notify) ) { // 검색화면에서 검색처리 후 페이징처리
+			
+			path = AdminController.getAdminController().searchPage(request, response);
 			MoveUrl.forward(request, response, path);
 			
 		} else if ("notify".equals(notify)) { // 신고 게시판
@@ -62,19 +69,32 @@ public class AdminFrontController extends HttpServlet {
 			path = AdminController.getAdminController().deletUser(request, response);
 			MoveUrl.forward(request, response, path);
 			
-		} else if ("np_delete".equals(act)) {
+		} else if ("np_delete".equals(act)) { // 신고게시판 행 삭제
+			
 			path = AdminController.getAdminController().deleteBoard(request, response);
 			MoveUrl.forward(request, response, path);
 			
-		} 
-//		else if ("") {
-//			
-//		} else if () {
-//			
-//		} else if () {
-//			
-//		} 
-		else { // 이상하게 들어왔을때.
+		} else if ("enable".equals(act)) { // 전체페이지 휴면 변경
+			
+			path = AdminController.getAdminController().dormancy(request, response);
+			MoveUrl.forward(request, response, path);
+			
+		} else if ("search".equals(act)) { // 회원 게시물 검색 and 페이징처리
+			
+			path = AdminController.getAdminController().search(request, response);
+			MoveUrl.forward(request, response, path);
+			
+		} else if ("enableinactive".equals(act)) { // 휴면화면에서 휴면설정
+			
+			path = AdminController.getAdminController().dormancyinactive(request, response);
+			MoveUrl.forward(request, response, path);
+			
+		} else if ("enablesearch".equals(act)) { // 검색화면에서 휴면설정
+			
+			path = AdminController.getAdminController().dormancysearch(request, response);
+			MoveUrl.forward(request, response, path);
+			
+		} else { // 이상하게 들어왔을때.
 			
 			int cnt = 4;
 			path = AdminController.getAdminController().selectByUserList(request, response, cnt);

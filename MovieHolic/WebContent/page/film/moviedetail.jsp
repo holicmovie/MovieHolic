@@ -108,7 +108,7 @@ String movieCdNaver = (String) request.getAttribute("movieCdNaver");
 
 //###################################### 로그인 세션 ###################################### 임시
 
-//TODO : session에서 id 받기로 변경하기! @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//TODO : session에서 id 받기로 변경하기! ok
 //String id = "abc123"; // 로그인
 String id = null; // 비로그인
 

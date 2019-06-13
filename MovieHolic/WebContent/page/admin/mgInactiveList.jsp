@@ -8,41 +8,13 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 
-
 <script>
-	$(function() {
-		
-		$(".page>a").click(function() {
-			var currentPage = $(this).attr("href");
-			$.ajax({
-				url : '/MovieHolic/admin?act=inactiveList&' + 'currentPage=' + currentPage ,
-				method : 'get',
-				/* data : 'alllist=' + alllist,  */
-				success : function(result) {
-					$("div.wrapper>div.container>div.member_search_result").html(result.trim());
-				}
-			});
-			return false;
-		});
-		
-	});
-	
-	
-//$(document).on("click", "#check-all", function() {
-$("#check-all").click(function() { // 전체 선택 버튼 클릭시
 
-	$(":input[name=chk]").prop("checked", true)
-		/* if ($(":input[name=chk]").prop("checked", true)) {
-			$(":input[name=chk]").prop("checked", false);
-		} else if ($(":input[name=chk]").prop("checked", false)) {
-			$(":input[name=chk]").prop("checked", true);
-		} */
-
-	return false;
-
-});
-	
 </script>
+
+<!-- 휴면후 탈퇴 적용시키기 위해 사용 -->
+<input type="hidden" class="mgInactiveList" name="mgInactiveList" value="mgInactiveList">
+<input type="hidden" class="searchresult" name="searchresult" value="no">
 
 
 <table class="table" style="border-bottom: 0.2em solid #fff;">
@@ -50,9 +22,8 @@ $("#check-all").click(function() { // 전체 선택 버튼 클릭시
 	<thead>
 		<tr>
 			<th>
-				<div>
-					<button type="submit" class="btn btn-success" style="z-index: 0;">전체선택</button>
-				</div>
+				<span class="allcheckbox"><button type="button"
+						class="btn btn-success" style="z-index: 0;">전체선택</button></span>
 			</th>
 			<th>회원ID</th>
 			<th>이름</th>
@@ -92,10 +63,12 @@ $("#check-all").click(function() { // 전체 선택 버튼 클릭시
 
 
 						<div class="dropdown-menu">
-							<a class="dropdown-item" href="#"> <c:if
-									test="${ap.enable == 1}">활동</c:if> <c:if
-									test="${ap.enable == 0}">휴면</c:if>
-							</a>
+							<span class="enableinactive">
+								<a class="dropdown-item" href="/MovieHolic/admin?act=enableinactive&ap_userId=${ap.userId}">
+									<c:if test="${ap.enable == 1}">활동</c:if> 
+									<c:if test="${ap.enable == 0}">휴면</c:if>
+								</a>
+							</span>
 						</div>
 					</div>
 				</td>
@@ -114,7 +87,7 @@ $("#check-all").click(function() { // 전체 선택 버튼 클릭시
 
 		<c:if test="${ap.startPage > 1 }">
 			
-				<span class="page">
+				<span class="page_inactive">
 					<a href="${ap.startPage - 1}"><button class="btn btn-success">이전</button></a>
 				</span>
 			
@@ -138,7 +111,7 @@ $("#check-all").click(function() { // 전체 선택 버튼 클릭시
 					</c:when>
 
 					<c:otherwise>
-						<li class="page-item"><span class="page"><a class="page-link"
+						<li class="page-item"><span class="page_inactive"><a class="page-link"
 								href="${i}">${i}</a></span></li>
 					</c:otherwise>
 
@@ -160,7 +133,7 @@ $("#check-all").click(function() { // 전체 선택 버튼 클릭시
 
 		<c:if test="${ap.totalPage > ap.endPage }">
 			
-				<span class="page">
+				<span class="page_inactive">
 					<a href="${ap.endPage+1}"><button class="btn btn-success">다음</button></a>
 				</span>
 			
