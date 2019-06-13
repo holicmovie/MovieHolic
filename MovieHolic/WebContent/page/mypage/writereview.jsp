@@ -1,3 +1,4 @@
+<%@page import="com.kitri.dto.FilmDto"%>
 <%@page import="com.kitri.dto.BoardDto"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -74,34 +75,56 @@ Set yellow color when star hover  --%> <%-- 체크박스 --%> .form-check-input
 	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <script>
 	
-<%-- 영화검색 모달 띄우기 --%>
+<%-- 영화검색 모달 띄우기 
 	$(function() {
 		$('#srchMovie').focusin(function() {
 			$('#movieModal').modal();
 		});
-	});
+	});--%>
 <%-- datepicker --%>
 	$(function() {
 		$('#datepicker').datepicker({
 			uiLibrary : 'bootstrap4'
 		});
 	});
-<%-- 저장 --%>
+<%-- 저장
 function register() {
 	if(document.getElementById("starRating").value ==""){
 		alert("별점 입력하세요!");
 		return;
 	}else if(document.getElementById("reviewContent").value == ""){
-		alert("id 입력");
+		alert("sodyddlqfur");
 		return;
 	}else{
-		document.getElementById("reviewsave").action = "<%=root%>mypage";
-		document.getElementById("reviewsave").submit();
+		document.getElementById("register").action = "<%=root%>/mypage";
+		document.getElementById("register").submit();
 	}
-}
+} --%>
+$(function() {
+	<%-- 위시리스트 추가 이벤트 --%>
+	$("#register").click(function(){
+	var movieCdYoung = $(this).attr("movieCdYoung");
+	var movieCdNaver = $(this).attr("movieCdNaver");
+	
+	$.ajax({
+		url: '/MovieHolic/mypage?page=register&movieCdYoung=' + movieCdYoung + '&movieCdNaver=' + movieCdNaver,
+		method:'get',
+		success: function(result){
+			alert("save save");
+		},
+		error: function(error){
+			alert(error);
+		}
+	});
+	
+	return false;
+});
+});
 </script>
 </head>
 <body class="left-sidebar is-preload">
+<% FilmDto dto = (FilmDto)request.getAttribute("writereview"); 
+	BoardDto save = (BoardDto)request.getAttribute("register");%>
 	<div id="page-wrapper">
 
 		<!-- Header -->
@@ -135,8 +158,8 @@ function register() {
 
 						<%-- 포스터, 별점 --%>
 						<div style="width: 100%; text-align: center;">
-							<a href="#" id="srchMovie"><img class="movieImg"
-								src="/MovieHolic/images/getposter.png" width="235vh"></a>
+							<img class="movieImg"
+								src="<%=dto.getMovieImage() %>" alt = "<%=dto.getMovieNm()%>"width="235vh">
 						</div>
 						
 						<div id="likeunlike" class="rounded-lg"
@@ -185,7 +208,7 @@ function register() {
 					style="margin-top: 40px; border-top: 2.5px solid #fff;">
 					<div class="col-12">
 						<div style="float: right;">
-							<button class="btn btn-success font_bold_small" id="reviewsave" onclick="javascript:register();">저&nbsp;&nbsp;&nbsp;장</button>
+							<button class="btn btn-success font_bold_small" id="register">저&nbsp;&nbsp;&nbsp;장</button>
 						</div>
 						<div style="float: right; margin-right: 20px;">
 							<button class="btn btn-success font_bold_small" id="reviewcancle">취&nbsp;&nbsp;&nbsp;소</button>

@@ -6,14 +6,17 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-<form>
-	<div class="row" style = "margin:0 0 20em 0; overflow-y :auto;">
 		<%
 			List<WishlistDto> list = (List) request.getAttribute("wishlist");
+		int length = list.size();
+		if(length != 0){
+		
 		%>
-		<%
-			int length = list.size();
-		%>
+
+
+<form>
+	<div class="row" style = "margin:0 0 20em 0; overflow-y :auto;">
+		
 	
 	
 		<!-- 영화 포스터 나열 -->
@@ -31,4 +34,19 @@
 		%>
 	
 	</div>
+	
+	<%
+		} else {
+	%>
+	<div class="wrapper style1">
+
+	<div class="container" style="text-align: center; margin-bottom: 10em;">
+		<img src="/MovieHolic/images/error.png" height="200vh" style="margin-bottom: 5em;">
+		<h2 style="margin-bottom: 1em;">WishList에 담긴 영화가 없습니다.</h2>
+	</div>
+</div>
+	
+	<%
+	} 
+	%>
 </form>

@@ -9,8 +9,18 @@ public class LogDto { // 활동기록
 	private int seq; // 글번호
 	private String userId; // 작성자ID
 	private String movieCodeYoung; // 영화코드(영진원)
-
+	private String movieCodeNaver;
 	///// 생성자 /////
+
+	public String getMovieCodeNaver() {
+		return movieCodeNaver;
+	}
+
+
+	public void setMovieCodeNaver(String movieCodeNaver) {
+		this.movieCodeNaver = movieCodeNaver;
+	}
+
 
 	public LogDto() {
 		super();
@@ -75,10 +85,13 @@ public class LogDto { // 활동기록
 		this.movieCodeYoung = movieCodeYoung;
 	}
 
+
 	@Override
 	public String toString() {
 		return "LogDto [logDate=" + logDate + ", logCate=" + logCate + ", logId=" + logId + ", sujbect=" + sujbect
-				+ ", seq=" + seq + ", userId=" + userId + ", movieCodeYoung=" + movieCodeYoung + "]";
+				+ ", seq=" + seq + ", userId=" + userId + ", movieCodeYoung=" + movieCodeYoung + ", movieCodeNaver="
+				+ movieCodeNaver + "]";
 	}
+
 
 }

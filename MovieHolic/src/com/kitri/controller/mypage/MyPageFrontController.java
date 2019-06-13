@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kitri.controller.list.ListController;
 import com.kitri.util.MoveUrl;
 
 @WebServlet("/mypage")
@@ -21,13 +22,7 @@ public class MyPageFrontController extends HttpServlet {
 		String tab = request.getParameter("tab");
 		String path = "";
 		String wishlist = request.getParameter("wishlist");
-//		String wishlistdelete[] = request.getParameterValues("wishlistdelete");
-//		
-//		if(wishlistdelete != null) {
-//			for(int i = 0; i < wishlistdelete.length;i++) {
-//			System.out.println("FC 체크한 영화 코드 : " + wishlistdelete[i]);
-//			}
-//		}
+
 		
 		
 		
@@ -36,13 +31,13 @@ public class MyPageFrontController extends HttpServlet {
 		if ("mypage".equals(page)) {
 			path = MyPageController.getMyPageController().showMine(request, response);
 			MyPageController.getMyPageController().mypageReview(request, response);
+			MyPageController.getMyPageController().mypageList(request,response);
 			MoveUrl.forward(request, response, path);
 			
 			
 //		following버튼 클릭시 보여주는 페이지	
 		}else if ("showfollowing".equals(page)) {
 			path = MyPageController.getMyPageController().mypageFollowing(request, response);
-			MyPageController.getMyPageController().mypageReview(request, response);
 			MoveUrl.forward(request, response, path);	
 			
 			
@@ -109,7 +104,9 @@ public class MyPageFrontController extends HttpServlet {
 		} else if("writereview".equals(page)) {
 			UserController.getUserController().ReviewRegister(request, response);
 			MoveUrl.forward(request, response, "/page/mypage/writereview.jsp");
-			
+		}else if("register".equals(page)) {
+			path = UserController.getUserController().registerReviewBtn(request, response);
+			MoveUrl.forward(request, response, path);
 			
 			
 			
