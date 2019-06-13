@@ -68,10 +68,29 @@ public class AdminService {
 	}
 	
 	
-	//신고 게시물 본글 삭제
+	// 신고 게시물 본글 삭제
 	public void deleteBoard(HttpServletRequest request, HttpServletResponse response) {
 		AdminDao.getAdminDao().deleteBoard(request, response);
 	}
+	
+	
+	// 휴면 설정.
+	public void dormancy(HttpServletRequest request, HttpServletResponse response) {
+		AdminDao.getAdminDao().dormancy(request, response);
+	}
+	
+	
+	// 검색 totalcnt
+	public int searchTotal(HttpServletRequest request, HttpServletResponse response) {
+		return AdminDao.getAdminDao().searchTotal(request,response);
+	}
+
+	
+	// 회원 게시판 검색 찾기.
+	public List<AdminDto> search(HttpServletRequest request, HttpServletResponse response, int startRow, int endRow) {
+		return AdminDao.getAdminDao().search(request,response,startRow,endRow);
+	}
+	
 	
 	
 	
