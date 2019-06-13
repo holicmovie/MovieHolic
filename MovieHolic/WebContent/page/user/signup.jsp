@@ -4,7 +4,7 @@
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<script type="text/javascript" src="/MovieHolic/js/httpRequest.js"></script>
 
 
 
@@ -43,22 +43,23 @@
 <script type="text/javascript">
 
 
-/* var resultView;
 var idcount = 1;
+var resultView;
 
-// 누를때마다 이벤트 생성하기 키보드 누를때마다 중복확인.  var는 자바스크립트에서 모든 변수로 사용 가능한 변수.*/
 function idcheck() {
 	
 	resultView = document.getElementById("idresult");
 	var searchId = document.getElementById("id").value;
-	console.log(searchId); //콘솔에서 확인
+	var emaildomain = document.getElementById("emaildomain").value;
 	
-	if (searchId.length < 5 || searchId.length > 16) {
-		resultView.innerHTML = '<font color = "gray">아이디는 5자 이상 16자리 이하입니다.</font>';
+	if (searchId.length < 4 || searchId.length > 16) {
+		resultView.innerHTML = '<font color = "white">아이디는 4자 이상 16자리 이하입니다.</font>';
 	} else {
-		var params = "act=idcheck&sid=" + searchId;
-		sendRequest("/MovieHolic/user", params, idcheckResult, "GET"); // 함수호출 3번째 collback은 갔다가 돌아올대 함수.
-		resultView.innerHTML = ''
+		//resultView.innerHTML = '<font color = "white"></font>';
+		var params = "act=idcheck&sid=" + searchId + "&emaildomain="+emaildomain;
+		sendRequest("/MovieHolic/UsersFrontController", params, idcheckResult, "GET"); // 함수호출 3번째 collback은 갔다가 돌아올대 함수.
+		resultView.innerHTML = '';
+		
 	}
 	
 }
@@ -85,64 +86,114 @@ function idcheckResult() {
 	} else {
 		//로딩중 아이디 중복검사는 안함.
 	}
-} 
+}
+
 
 function register() {
 	if(document.getElementById("name").value == "") {
-		alert("이름 입력!!!!");
+		alert("이름을 입력하세요");
 		return;
+	 
 	} else if(idcount != 0) {
-		alert("아이디 중복 검사를  하세요!!!");
-		return;
+		alert("아이디 중복 검사를  확인하세요");
+		return; 
 	} else if(document.getElementById("pass").value == "") {
-		alert("비밀번호 입력!!!!");
+		alert("비밀번호를 입력하세요");
 		return;
 	} else if(document.getElementById("pass").value != document.getElementById("passcheck").value) {
-		alert("비밀번호 확인!!!!");
+		alert("비밀번호를 확인하세요");
 		return;
 	} else {
-		document.getElementById("signupform").action = "/MovieHolic/user";
-		//<input type="hidden" name="act" value="register"> 개발자가 안보이게 넘길때.
+		document.getElementById("signupform").action = "/MovieHolic/UsersFrontController";
 		document.getElementById("signupform").submit();
+		//<input type="hidden" name="act" value="register"> 개발자가 안보이게 넘길때.
 	}
 }
 </script>
 
 <div class="container" align="center">
 	<div class="col-lg-6" align="center">
-		<h2>회원가입</h2>
-		<form id="signupform" method="post">
+		<h2>회원가입</h2><br><br><br>
+		
+		
+		<form id=signupform method="post" action="">
 			<input type="hidden" name="act" value="register">
+			
+			
+			<div align="left">
+			<label for="email" >아이디</label>
+			</div>
+			<div class="form-group" align="left">
+				<div id="email" class="row">
+					
+					
+					
+					<div class="col-lg-6-inline"  style="padding:10; margin-left: 0; margin-top: 20;">
+						<input type="text" class="form-control" id="id" name="id" placeholder="4자이상 16자 이하" onkeyup="javascript:idcheck();"> 
+					</div>
+					
+					
+					
+					<div class="col-lg-1-inline" style="padding:10; margin: 0; padding-left:5; padding-right:5; margin-top: 20;">@</div>
+					<div class="col-lg-5-inline" style="padding:10; margin: 0; margin-top: 20;">
+						<select class="form-control" id="emaildomain" name="emaildomain" onkeyup="javascript:idcheck();">
+							<option value="naver.com">naver.com</option>
+							<option value="google.com">google.com</option>
+							<option value="daum.net">daum.net</option>
+							<option value="nate.com">nate.com</option>
+							<option value="hanmail.net">hanmail.net</option>
+							<option value="gmail.com">gmail.com</option>
+						</select>
+					</div>
+					
+					
+					
+				</div>
+			</div>
+			<div id="idresult"></div>
+			
+			
+			
 			<div class="form-group" align="left">
 				<label for="name">이름</label>
 				<input type="text" class="form-control" id="name" name="name" placeholder="이름입력">
 			</div>
-			<div class="form-group" align="left">
-				<label for="">아이디</label>
-				<input type="text" class="form-control" id="id" name="id" placeholder="4자이상 16자 이하" onkeyup="javascript:idcheck();">
-				<div id="idresult"></div>
-			</div>
+			
+			
+			
+			
 			<div class="form-group" align="left">
 				<label for="">비밀번호</label>
 				<input type="password" class="form-control" id="pass" name="pass" placeholder="">
 			</div>
+			
+			
+			
 			<div class="form-group" align="left">
 				<label for="">비밀번호재입력</label>
 				<input type="password" class="form-control" id="passcheck" name="passcheck" placeholder="">
 			</div>
+			
+			
 			<div class="form-group" align="left">
-				<label for="email">이메일</label><br>
-				<div id="email" class="custom-control-inline">
-				<input type="text" class="form-control" id="emailid" name="emailid" placeholder="" size="25"> @
-				<select class="form-control" id="emaildomain" name="emaildomain">
-					<option value="naver.com">naver.com</option>
-					<option value="google.com">google.com</option>
-					<option value="daum.net">daum.net</option>
-					<option value="nate.com">nate.com</option>
-					<option value="hanmail.net">hanmail.net</option>
-				</select>
+				<label for="">생년월일</label>
+				<input type="text" class="form-control" id="birth" name="birth" placeholder="">
+			</div>
+			
+			
+			<div class="form-group" align="left">
+				<div class="form-check">
+					<label class="form-check-label" for="radio1">
+					<input type="radio" class="form-check-input" id="man" name="gender" value="man" checked>남</label>
+				</div>
+				<div class="form-check">
+					<label class="form-check-label" for="radio2">
+					<input type="radio" class="form-check-input" id="woman" name="gender" value="woman">여</label>
 				</div>
 			</div>
+			
+			
+			
 			<div class="form-group" align="left">
 				<label for="tel">전화번호</label>
 				<div id="tel" class="custom-control-inline">
@@ -159,6 +210,9 @@ function register() {
 				<input type="text" class="form-control" id="tel3" name="tel3" placeholder="5678">
 				</div>
 			</div>
+			
+			
+			
 			<div class="form-group" align="center">
 				<button type="button" class="btn btn-primary" id="registerBtn" onclick="javascript:register();">회원가입</button>
 				<button type="reset" class="btn btn-warning">초기화</button>

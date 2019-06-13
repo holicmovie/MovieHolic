@@ -21,12 +21,17 @@ public class UsersService {
 	
 	
 	public UsersDto login(String userid) {
-		
 		return UsersDao.getUsersDao().selectById(userid);
 	}
 	
 	
+	public int registerMember(UsersDto usersDto) {
+		return UsersDao.getUsersDao().registerMember(usersDto);
+	}
 	
+	public int idCheck(String id) {
+		return UsersDao.getUsersDao().idCheck(id);
+	}
 	
 	
 	

@@ -37,13 +37,31 @@ public class UsersFrontController extends HttpServlet {
 			
 		} else if ("register".equals(act)) {
 			
-//			String path = AdminChartController.getAdminChartController().ageGroup(request, response);
-//			MoveUrl.forward(request, response, path);
 			
-		} else if ("".equals(act)) {
+			UsersController.getUsersController().register(request,response);
+			//MoveUrl.forwared(request, response, path);
+
 			
-//			String path = AdminChartController.getAdminChartController().ageGroup(request, response);
-//			MoveUrl.forward(request, response, path);
+		} else if ("idcheck".equals(act)) {
+			
+			System.out.println("유저 프론트 들어옴.");
+			
+			String sidR = request.getParameter("sid");
+			String emaildomain = request.getParameter("emaildomain");
+			StringBuffer sid = new StringBuffer();
+			sid.append(sidR);
+			sid.append("@");
+			sid.append(emaildomain);
+			System.out.println("검색아이디 : " + sid);
+			
+			
+			String resultXML = UsersController.getUsersController().idCheck(request, response, sid.toString());
+			
+			System.out.println(resultXML);
+			
+			response.setContentType("text/xml;charset=UTF-8"); // text로 보내지만 xml로 인식해라.
+			PrintWriter out = response.getWriter();
+			out.print(resultXML);
 			
 		}
 		

@@ -69,10 +69,10 @@ $(document).ready(function(){
 				success:function(result){ 
 					if (result == 1) {
 						alert("로그인 되었습니다.");
+						location.href = "/MovieHolic/film";
 					} else {
 						alert("로그인이 실패되었습니다.")
 					}
-					location.href = "/MovieHolic/film";
 				}
 			});
 		return false;
