@@ -256,8 +256,18 @@ public class ListController {
 		String postDate = request.getParameter("postDate");
 		HttpSession session = request.getSession();
 		String id = session.getAttribute("userID").toString(); 
-		
 		return ListService.getListService().modCommment(id, postDate);
+	}
+	
+	
+//	#### 댓글 수정 완료 ####
+	public int updateComment(HttpServletRequest request, HttpServletResponse response) {
+		String content = request.getParameter("content");
+		String postDate = request.getParameter("postDate");
+		HttpSession session = request.getSession();
+		String id = session.getAttribute("userID").toString();
+		
+		return ListService.getListService().updateComment(content, postDate, id);
 	}
 	
 	

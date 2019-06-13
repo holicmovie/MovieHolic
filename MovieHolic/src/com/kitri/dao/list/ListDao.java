@@ -121,7 +121,6 @@ public class ListDao {
 				pstmt.setInt(++idx, Integer.parseInt(seq));
 				
 				result = pstmt.executeUpdate();
-				System.out.println("log테이블에 저장 완료");
 				if(result != 0) {
 					conn.commit();
 					conn.setAutoCommit(true);
@@ -359,13 +358,41 @@ public class ListDao {
 		int result = 0;
 		try {
 			conn = DBConnection.makeConnection();
-			System.out.println(seq);
 			result = ListDao.getListDao().updateCount("MH_BOARD", "NOTIFY = NOTIFY + 1", "SEQ = " + seq);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			DBClose.close(conn, pstmt);
 		}
+		return result;
+	}
+	
+	
+//	#### 댓글 수정 완료 ####
+	public int updateComment(String content, String postDate, String id) {
+		int result = 0;
+		
+		try {
+			conn = DBConnection.makeConnection();
+			
+			StringBuffer sql = new StringBuffer();
+			sql.append("UPDATE MH_COMMENT \n");
+			sql.append("SET CONTENT = ? \n");
+			sql.append("WHERE to_char(POSTDATE, 'YYYY.MM.DD HH24:MI:SS') = ? and USERID = ? \n");
+			pstmt = conn.prepareStatement(sql.toString());
+
+			pstmt.setString(1, content);
+			pstmt.setString(2, postDate);
+			pstmt.setString(3, id);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		
 		return result;
 	}
 	
@@ -511,20 +538,12 @@ public class ListDao {
 			
 			// 댓글 테이블의 데이터 삭제
 			result = delete("MH_COMMENT", "to_char(POSTDATE, 'YYYY.MM.DD HH24:MI:SS') = '" + postDate + "' and USERID = '" + id + "'");
-			System.out.println("dao 1단계 통과");
-			System.out.println("result :" + result);
 			if(result != 0) {
 				
-				System.out.println("dao 2단계 통과");
-				System.out.println("result :" + result);
 				// 로그 테이블의 데이터 삭제
 				result = delete("MH_LOG", "to_char(LOGDATE, 'YYYY.MM.DD HH24:MI:SS') = '" + postDate + "' and LOGID = '" + id + "'");
 				
-				System.out.println("dao 3단계 통과");
-				System.out.println("result :" + result);
 				if(result != 0) {
-					System.out.println("dao 4단계 통과");
-					System.out.println("result :" + result);
 					conn.commit();
 					conn.setAutoCommit(true);
 				}
@@ -549,7 +568,6 @@ public class ListDao {
 //	#### 댓글 수정 ####
 	public String modCommment(String id, String postDate) {
 		String result = null;
-		
 		try {
 			conn = DBConnection.makeConnection();
 			conn.setAutoCommit(false);
@@ -557,13 +575,17 @@ public class ListDao {
 			StringBuffer sql = new StringBuffer();
 			sql.append("SELECT CONTENT \n");
 			sql.append("FROM MH_COMMENT \n");
-			sql.append("WHERE POSTDATE = " + postDate + " and USERID = ? \n");
+			sql.append("WHERE to_char(POSTDATE, 'YYYY.MM.DD HH24:MI:SS') = ? and USERID = ? \n");
 			
 			pstmt = conn.prepareStatement(sql.toString());
 			
-			pstmt.setString(1, id);
+			pstmt.setString(1, postDate);
+			pstmt.setString(2, id);
 			
 			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getString(1);
+			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -727,7 +749,6 @@ public class ListDao {
 			sql.append("SET LIST_COUNT = LIST_COUNT + 1 \n");
 			sql.append("WHERE USERID = ? \n");
 			pstmt = conn.prepareStatement(sql.toString());
-			System.out.println("dao 690] userId :" + board.getUserId());
 			pstmt.setString(1, board.getUserId());
 			
 			result = pstmt.executeUpdate();
@@ -789,6 +810,10 @@ public class ListDao {
 		
 		return result;
 	}
+	
+	
+	
+
 
 	
 	

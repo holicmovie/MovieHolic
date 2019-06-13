@@ -2,10 +2,10 @@
 <c:set var="user" value="${requestScope.user}"/>
 <c:set var="comment" value="${requestScope.comment}"/>
 <c:set var="cnt" value="${fn:length(comment)}"/>
-<input type="hidden" id="commenCnt" data-cnt=${cnt}>
+<input type="hidden" id="commentCnt" data-cnt="${cnt}">
 <c:if test="${fn:length(comment) > 0}">
 	<c:forEach begin="0" end="${cnt-1}" var="i">
-	<tr>
+	<tr data-date="${comment[i].postDate}">
 		<td style="text-align: center">
 			<a href="#"><img class="profile_icon" src="/MovieHolic/images/profile/${user[i].profile}"></a>
 		</td>

@@ -192,7 +192,7 @@ public class ListService {
 	}
 	
 	
-//	#### 리스트 수정 ####
+//	#### list 수정 ####
 	public int modifyList(BoardDto board) {
 		int result = 0;
 		result = ListDao.getListDao().modifyList(board);
@@ -203,6 +203,12 @@ public class ListService {
 	public int deleteList(String seq, String postDate, int cnt, String id) {
 		return ListDao.getListDao().deleteList(seq, postDate, cnt, id);
 	}
+	
+	
+	
+//-----------------------------------------------------------------------------------------------List 부가기능
+	
+	
 	
 	
 //	#### list 좋아요&싫어요 update ####
@@ -217,6 +223,11 @@ public class ListService {
 	}
 	
 	
+	
+	
+//------------------------------------------------------------------------------------------------------------------------------------- Comment
+	
+	
 //	#### 댓글 저장 ####
 	public int saveComment(String id, String seq, String content, String subject, String writerId) {
 		return ListDao.getListDao().saveComment(id, seq, content, subject, writerId);
@@ -226,6 +237,19 @@ public class ListService {
 //	#### 댓글 삭제 ####
 	public int delComment(String id, String postDate) {
 		return ListDao.getListDao().delComment(id, postDate);
+	}
+	
+	
+//	#### 댓글 수정 ####
+	public String modCommment(String id, String postDate) {
+		return ListDao.getListDao().modCommment(id, postDate);
+	}
+	
+	
+	
+//	#### 댓글 수정  완료 ####
+	public int updateComment(String content, String postDate, String id) {
+		return ListDao.getListDao().updateComment(content, postDate, id);
 	}
 	
 //	----------------------------------------------------------------------------------------- Util
@@ -458,10 +482,7 @@ public class ListService {
 	
 	
 	
-//	#### 댓글 수정 ####
-	public String modCommment(String id, String postDate) {
-		return ListDao.getListDao().modCommment(id, postDate);
-	}
+
 	
 	
 	
