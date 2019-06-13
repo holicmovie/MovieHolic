@@ -20,7 +20,7 @@ public class UsersService {
 	
 	
 	
-	public UsersDto login(String userid, String pass) {
+	public UsersDto login(String userid) {
 		
 		return UsersDao.getUsersDao().selectById(userid);
 	}

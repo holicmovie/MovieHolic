@@ -27,32 +27,40 @@ public class UsersController {
 	
 	
 	
-	public String login(HttpServletRequest request, HttpServletResponse response) {
+	public int login(HttpServletRequest request, HttpServletResponse response) {
 		
 		String userid = request.getParameter("userid");
 	    String pass = request.getParameter("pass");
-	    int i = 0;
+	    int result = 0;
 	    
-	    UsersDto usersDto = UsersService.getUsersService().login(userid, pass);
+	    UsersDto usersDto = UsersService.getUsersService().login(userid);
 	    
 	    HttpSession session = request.getSession();
 	    session.removeAttribute("loginInfo");
 	    
 		if (usersDto.getPass().equals(pass)) { // 아이디 검사 안하는 이유는 dto 넣을때 그 아이디로 넣어줬기 때문
-			System.out.println("성공");
+			//System.out.println("성공");
+			result = 1;
 			session.setAttribute("loginInfo", userid);
 		}else {
-			System.out.println("실패");
+			//System.out.println("실패");
+			result = -1;
 		}
 	    
-	    
-		String path = "/page/admin/management.jsp";
+		return result;
+		
+	}
+	
+	public String logout(HttpServletRequest request, HttpServletResponse response) {
+		
+		HttpSession session = request.getSession();
+		session.removeAttribute("loginInfo");
+		String path = "/film";
 		
 		return path;
 		
 	}
-	
-	
+
 	
 	
 	

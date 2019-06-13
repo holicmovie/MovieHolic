@@ -61,18 +61,25 @@
 }); */
 
 $(document).ready(function(){
-	$("#loginform").submit(function(){	
+	$("#loginform").submit(function(){	 
 			$.ajax({
 				url:'/MovieHolic/UsersFrontController?act=login',
 				method:'post',
 				data:$('form').serialize(), // jqery만 사용하는 메소드
 				success:function(result){ 
-					alert("성공이다");
+					if (result == 1) {
+						alert("로그인 되었습니다.");
+					} else {
+						alert("로그인이 실패되었습니다.")
+					}
+					location.href = "/MovieHolic/film";
 				}
 			});
 		return false;
 	});
-});	
+});
+
+
 
 </script>
 

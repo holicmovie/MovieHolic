@@ -55,7 +55,6 @@ public class UsersDao {
 				ud.setUserId(userid);
 				ud.setPass(rs.getString("pass"));
 				ud.setName(rs.getString("name"));
-				System.out.println(ud.getUserId() + " " + ud.getPass());
 			}
 			
 			
