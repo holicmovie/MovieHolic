@@ -137,7 +137,7 @@
 						success:function(result){
 							if(result != 0) {
 								alert("저장 되었습니다.");
-								location.href = "/MovieHolic/page/list/movielist.jsp";
+								location.href = "/MovieHolic/list?act=sortList";
 								$('input[name="title"]').val('');
 								$('textarea[name="content"]').val('');
 								$('.chMovie').remove();

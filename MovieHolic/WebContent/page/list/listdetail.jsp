@@ -212,13 +212,11 @@ $(function(){
 });
 </script>
 <script>	<%-- util --%>
-<% session.setAttribute("userID", "a124@gmail.com"); %>
-<%-- <% session.removeAttribute("userID");%> --%>
 $(function(){
 	seq = $('#back').attr('data-seq');
 <%-- 로그인 상태인지 확인 함수--%>
 	$.ckID = function() {
-		var userID = "${sessionScope.userID}";
+		var userID = "${sessionScope.loginInfo}";
 		if(userID == "") {
 			if(confirm("로그인이 필요한 서비스입니다. 로그인하시겠습니까?")) {
 				location.href="#";
@@ -314,8 +312,8 @@ $(function(){
 		
 		<%-- 리스트 제목 및 작성자 정보 --%>
 		<div class="font_bold_mid" style="width:100%; margin-bottom: 2em;">
-			<c:if test="${sessionScope.userID != null }">
-				<c:if test="${sessionScope.userID == board.userId}">
+			<c:if test="${sessionScope.loginInfo != null }">
+				<c:if test="${sessionScope.loginInfo == board.userId}">
 			<button class="btn btn-success font_bold_small" style="float: right;" id="del" >삭&nbsp;&nbsp;&nbsp;제</button>
 			<button class="btn btn-success font_bold_small" style="float: right; margin-right: 10px;" id="modify" >수&nbsp;&nbsp;&nbsp;정</button>
 				</c:if>
@@ -351,7 +349,9 @@ $(function(){
 				<div class="font_bold_mid" style="width:100%; padding: 1em 1.1em 3em 1.1em;">
 					<c:forEach var="film" items="${requestScope.film}">
 					<tr>
-						<a id="movie" href="img=${film.movieImage}&movieCdYoung=${film.movieCdYoung}&movieCdNaver="${film.movieCdNaver}"><img class="movieImg" src="${film.movieImage}" ></a>
+						<a id="movie" href="/MovieHolic/film?act=viewfilmdetail&movieCdYoung=${film.movieCdYoung}&movieCdNaver=${film.movieCdNaver}">
+							<img class="movieImg" src="${film.movieImage}" >
+						</a>
 					</tr>
 					</c:forEach>
 				</div>
@@ -408,8 +408,8 @@ $(function(){
 							</td>
 							<td class="font_bold_small" style="vertical-align: middle;">${comment[i].content}</td>
 							<td style="vertical-align: middle;">
-							<c:if test="${sessionScope.userID != null }">
-								<c:if test="${sessionScope.userID == comment[i].userId}">
+							<c:if test="${sessionScope.loginInfo != null }">
+								<c:if test="${sessionScope.loginInfo == comment[i].userId}">
 							<a id="modCommment" href="#" class="font-light-small" style="color: white;">수정&nbsp;&#124;</a>
 							<a id="delCommment" href="#" class="font-light-small" style="color: white;">삭제</a>
 								</c:if>

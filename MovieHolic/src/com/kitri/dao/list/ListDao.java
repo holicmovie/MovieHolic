@@ -187,7 +187,7 @@ public class ListDao {
 //	seq == null && flag == false && id != null	: 아이디로 검색하여 최신순으로 정렬 하고 여러건 반환
 //	seq != null && flag == true && id == null	: 리스트 조회수 올리고 글번호로 검색하여 1건 반환
 //	seq != null && flag == false && id == null	: 글번호로 검색하여 1건 반환
-	public List<BoardDto> selBoardBySeq(String seq, boolean flag, String id) {
+	public List<BoardDto> selBoardBySeq(String seq, boolean flag, String id, String srchStr) {
 		List<BoardDto> boardList = null;
 		BoardDto board = null;
 		
@@ -210,12 +210,24 @@ public class ListDao {
 				sql.append("MOVIENAME, MOVIECODEYOUNG, MOVIECODENAVER, BEST, WORST, VIEWCOUNT \n");
 				sql.append("FROM MH_BOARD \n");
 				
-				// id가 있는 경우 >> id로 검색  ||  id없는 경우 >> seq로 검색
+				// id가 있는 경우 >> id로 검색  ||  id가 *인 경우 >> 전체 sel하여 최신순으로 정렬	||	id가 **인 경우 	>> 전체 sel하여 인기순으로 정렬||	id가 ***인 경우 	>> 검색하여 최신순 정렬
+				// id없고 seq는 있는 경우 >> seq로 검색
 				if(id != null) {
-					sql.append("WHERE USERID = " + id + " \n");
-					sql.append("ORDER BY SEQ DESC \n");
+					if("*".equals(id)) {
+						sql.append("WHERE BOARDCODE = 2 \n");
+						sql.append("ORDER BY SEQ DESC \n");
+					} else if("**".equals(id)) {
+						sql.append("WHERE BOARDCODE = 2 \n");
+						sql.append("ORDER BY BEST DESC, NOTIFY ASC, WORST ASC, VIEWCOUNT DESC \n");
+					} else if("***".equals(id)) {
+						sql.append("WHERE BOARDCODE = 2 and SUBJECT like '%" + srchStr + "%' \n");
+						sql.append("ORDER BY SEQ DESC \n");
+					} else {
+						sql.append("WHERE USERID = " + id + " and BOARDCODE = 2 \n");
+						sql.append("ORDER BY SEQ DESC \n");
+					}
 				} else {
-					sql.append("WHERE SEQ = " + seq + " \n");
+					sql.append("WHERE SEQ = " + seq + " and BOARDCODE = 2 \n");
 				}
 				pstmt = conn.prepareStatement(sql.toString());
 				
@@ -245,6 +257,7 @@ public class ListDao {
 					board.setUserId(rs.getString("USERID"));
 					board.setSubject(rs.getString("SUBJECT"));
 					board.setPostDate(rs.getString(4));
+					board.setPostDateY(rs.getString(4).substring(0, 11));
 					board.setContent(rs.getString("CONTENT"));
 					board.setMovieName(movieName);
 					board.setMovieCodeYoung(movieCodeYoung);

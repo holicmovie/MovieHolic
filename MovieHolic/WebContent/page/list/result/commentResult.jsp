@@ -15,8 +15,8 @@
 		</td>
 		<td class="font_bold_small" style="vertical-align: middle;">${comment[i].content}</td>
 		<td style="vertical-align: middle;">
-		<c:if test="${sessionScope.userID != null }">
-			<c:if test="${sessionScope.userID == comment[i].userId}">
+		<c:if test="${sessionScope.loginInfo != null }">
+			<c:if test="${sessionScope.loginInfo == comment[i].userId}">
 		<a href="#" id="modCommment" class="font-light-small" style="color: white;">수정&nbsp;&#124;</a>
 		<a href="#" id="delCommment" class="font-light-small" style="color: white;">삭제</a>
 			</c:if>
