@@ -29,8 +29,7 @@ public class MyPageService {
 
 		return myPageService;
 	}
-	
-	
+
 //---------------------------------[social.jsp]----------------------------
 	// social.jsp following페이지
 	public static List<SocialDto> findByRows(int startRow, int endRow) {
@@ -60,11 +59,7 @@ public class MyPageService {
 	public void addFollowId(String followid) {
 		SocialDao.getSocialDao().addFollow(followid);
 	}
-	
-	
-	
-	
-	
+
 // ----------------------------wishlist 필요 메소드----------------------------
 
 	public List<WishlistDto> showWishlist(String userid) {
@@ -80,10 +75,10 @@ public class MyPageService {
 //		System.out.println("service : " + list);
 		return list;
 	}
-	
+
 //		wishlist 검색 기능
 	public List<WishlistDto> showSearchedWishlist(String userid, String srchKey) {
-		
+
 		List<WishlistDto> list = SocialDao.getSocialDao().selectSearchedWishlist(userid, srchKey);
 		String movieCdNaver;
 		int length = list.size();
@@ -94,20 +89,14 @@ public class MyPageService {
 		}
 		return list;
 	}
-	
+
 // 	wishlist 삭제 기능 
 	public void deleteWishList(String userid, String[] wishlistdelete) {
 		SocialDao.getSocialDao().deleteWishList(userid, wishlistdelete);
 	}
 
-	
-	
-	
-	
-	
-	
 //-----------------------------[mypage method]------------------------------	
-	//wishlist method
+	// wishlist method
 	public List<WishlistDto> showMineWishList(String userid) {
 		List<WishlistDto> list = SocialDao.getSocialDao().selectMineWishList(userid);
 		String movieCdNaver;
@@ -121,23 +110,43 @@ public class MyPageService {
 		return list;
 	}
 
-	
-	//review method
+	// review method
 	public List<BoardDto> showMineReview(String userid) {
 		List<BoardDto> list = SocialDao.getSocialDao().selectMineReview(userid);
-		List<String> movieCdNaver;
-		List<String> movieCdYoung;
-		int length = list.size();
 		
+		String movieCdNaver;
+		int length = list.size();
 		for (int i = 0; i < length; i++) {
-			movieCdNaver = list.get(i).getMovieCodeNaver();
-			
-			String mcn = movieCdNaver.get(0).getBytes().toString();
-			String movieURL = ListService.getListService().getImgURL(mcn);
-			list.get(i).setUrl(movieURL);
-			System.out.println(mcn);
+			movieCdNaver = list.get(i).getMovieCodeNaver2();
+			String movieURL = ListService.getListService().getImgURL(movieCdNaver);
+			list.get(i).setUrl2(movieURL);
 		}
 		
+//		List<String> movieCdNaver;
+//		List<String> movieCdYoung;
+//		List<String> imgURL = new ArrayList<String>();
+//		int length = list.size();
+		
+//		for (int i = 0; i < length; i++) {
+//			movieCdNaver = list.get(i).getMovieCodeNaver();
+//			String mcn = "";
+//			String movieURL = "";
+//			for(int j=0;j<movieCdNaver.size();j++) {
+//			mcn = movieCdNaver.get(j).toString();
+////			System.out.println("영화코드 : " + mcn);
+//			movieURL = ListService.getListService().getImgURL(mcn);
+//			System.out.println(movieURL);
+//			}
+////			System.out.println(mcn);
+//			
+//			imgURL = new ArrayList<String>();
+//			imgURL.add(movieURL);
+//			list.get(i).setUrl(imgURL);
+////			System.out.println(movieCdNaver);
+//			
+//			System.out.println(list);
+//		}
+//		
 //		for (int i = 0; i < length; i++) {
 //			movieCdNaver = list.get(i).getMovieCodeNaver();
 //			movieCdYoung = list.get(i).getMovieCodeYoung();
@@ -147,34 +156,30 @@ public class MyPageService {
 //		}
 		return list;
 	}
-	
-	
-	
+
 	public List<String> getImgURL(List<String> movieCdNaver) {
-		List<String>list = new ArrayList<>();
+		List<String> list = new ArrayList<>();
 		String movieImage = null;
-		
+
 		// 검색조건 : 이미지 링크 + 네이버 영화코드
 		// 검색결과 : 고화질 이미지 주소
 		try {
 			// 네이버 영화링크 URL 설정
 			String connUrl = "https://movie.naver.com/movie/bi/mi/photoViewPopup.nhn?movieCode=" + movieCdNaver;
-			
+
 			// 크롤링
 			Document doc = Jsoup.connect(connUrl).get();
-			Element imgtag = doc.getElementById("targetImage");	// image 태그 받아옴
-			
-			if(imgtag != null) {
-				movieImage = imgtag.attr("src").toString();	// 고화질 이미지 주소 get
+			Element imgtag = doc.getElementById("targetImage"); // image 태그 받아옴
+
+			if (imgtag != null) {
+				movieImage = imgtag.attr("src").toString(); // 고화질 이미지 주소 get
 			} else {
-				movieImage = "/MovieHolic/images/noMovieImage.png";  // 네이버 제공 고화질 이미지 주소가 없는 경우, 기본 이미지로 나오게 함.
+				movieImage = "/MovieHolic/images/noMovieImage.png"; // 네이버 제공 고화질 이미지 주소가 없는 경우, 기본 이미지로 나오게 함.
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return list;
 	}
-	
-	
 
 }
