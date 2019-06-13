@@ -31,11 +31,11 @@ public class UsersFrontController extends HttpServlet {
 		} else if ("logout".equals(act)) {
 			
 			String path = UsersController.getUsersController().logout(request,response);
-			//MoveUrl.redirect(request, response, path);
+			MoveUrl.redirect(request, response, path);
 			//MoveUrl.forward(request, response, path);
 			//System.out.println("유저니아러니ㅏㅇ러ㅣㅏ");
 			
-		} else if ("".equals(act)) {
+		} else if ("register".equals(act)) {
 			
 //			String path = AdminChartController.getAdminChartController().ageGroup(request, response);
 //			MoveUrl.forward(request, response, path);
