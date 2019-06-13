@@ -70,26 +70,29 @@ $(function () {
     $('#btndelete').click(function () {
       // getter
       var chkval = $('input[name="wishlistdelete"]:checked');
-      alert(chkval.length);
-      
+      var flag = confirm("정말 삭제하시겠습니까?");	
+		if(flag == true){     
+
       $.ajax({
 			url: '/MovieHolic/mypage?page=wishlist',
 			method: 'post',
 			data: chkval,
 			success:function(result){
 				  location.href = '/MovieHolic/page/mypage/wishlist.jsp';   
-				alert("삭제 성공!!!"); 
+			 alert("삭제되었습니다!");
 			}
 		});
 		return false;  
-   });
-    
+   }else{
+	   return;
+   }
+   	});
     $('#showall').click(function () {
     	location.href = '/MovieHolic/page/mypage/wishlist.jsp'; 
-    	alert("전체보기!!!");
+    	
     });
 }); 
-	
+<%String id = (String)session.getAttribute("loginInfo");%>
 </script>
 </head>
 <body class="left-sidebar is-preload">
