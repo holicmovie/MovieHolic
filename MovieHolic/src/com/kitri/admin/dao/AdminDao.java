@@ -1,7 +1,5 @@
 package com.kitri.admin.dao;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,10 +30,10 @@ public class AdminDao  {
 	
 	
 	
-//	페이징 처리 -----------------------------------------------------------
+//  -----------------------------------------------------------
 	
 	
-	// 목록 불러오기.
+	// 목록 불러오기.(페이징 처리)
 	public List<AdminDto> selectByRows(int startRow, int endRow, int cnt){
 		
 		List<AdminDto> list = new ArrayList<AdminDto>();
@@ -109,13 +107,8 @@ public class AdminDao  {
 	}
 	
 
+	
 
-	
-	
-	
-	
-//	--------------------------------------------	
-	
 	// 토탈수
 	public int selectTotalCnt(int cnt) {
 		
@@ -165,13 +158,7 @@ public class AdminDao  {
 	
 	
 	
-	
-	
-
-	
-	
-	
-	// 목록 불러오기.
+	// 목록 불러오기.(신고게시물)
 	public List<NotifyDto> NFselectByRows(int startRow, int endRow){
 			
 		List<NotifyDto> list = new ArrayList<NotifyDto>();
@@ -235,8 +222,9 @@ public class AdminDao  {
 	
 	
 	
+
 	
-	// 토탈수
+	// 신고게시물 토탈수
 	public int NFselectTotalCnt() {
 			
 		Connection conn = null;
@@ -274,8 +262,6 @@ public class AdminDao  {
 
 		return totalCnt;
 	}
-	
-	
 	
 	
 	
@@ -327,32 +313,87 @@ public class AdminDao  {
 	
 	
 	
-	// 휴면 설정
-	// 휴면 값 0일땐 활동 1일땐 휴면
-	// 1. 휴면값이 0으로 들어오면 1로 들어오면 0으로 바꿔줘야뎀.
-	// 휴면 설정
-	public void dormancy() {
-		
-		int cnt = 0;
+	// 휴면 아이디로 enable 찾기.
+	public void findUserEnable(String ap_userId, AdminDto adminDto) {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-			
-		StringBuffer sql = new StringBuffer();
+		ResultSet rs = null;
 		
-		if (cnt == 0) {
-			sql.append(" UPDATE mh_user"); 
-			sql.append(" SET outdate = sysdate");
-			sql.append(" WHERE userid = ?");
-		} else if (cnt == 1) {
+		StringBuffer sql = new StringBuffer();
+		sql.append(" select enable");
+		sql.append(" from mh_user");
+		sql.append(" where userid = ?");
+		
+		try {
+				
+			conn = DBConnection.makeConnection();
+			pstmt = conn.prepareStatement(sql.toString());			
 			
-		} else {
-			// 실패
+			pstmt.setString(1, ap_userId);
+			
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				
+				adminDto.setEnable(rs.getInt("enable"));
+
+			}
+				
+					
+		} catch (SQLException e) {
+					
+			e.printStackTrace();
+				
+		} finally {
+			DBClose.close(conn, pstmt, rs);
 		}
+			
+	}
+		
+
+	
+	
+	// 휴면 설정
+	// 0일땐 활동 1일땐 휴면
+	public void dormancy(HttpServletRequest request, HttpServletResponse response) {
+		
+		AdminDto adminDto = new AdminDto(); // adminDto를 new로 생성 안하기 위해서 메소드를 불러오고 넣어줌.
+		String ap_userId = request.getParameter("ap_userId"); // request를 안보내주고 ap_userId를 보내줌.
+
+		findUserEnable(ap_userId, adminDto);
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		
+		StringBuffer sql = new StringBuffer();
+		sql.append(" UPDATE mh_user"); 
+		
+		if (adminDto.getEnable() == 0) {
+			sql.append(" SET enable = 1");
+		} else if(adminDto.getEnable() == 1){
+			sql.append(" SET enable = 0");
+		}
+		
+		sql.append(" WHERE userid = ?");
+		
+		try {
+			
+			conn = DBConnection.makeConnection();
+			pstmt = conn.prepareStatement(sql.toString());
+			
+			pstmt.setString(1 , ap_userId);
+			pstmt.executeUpdate();
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt);
+		}
+		
 	
 	}
-	
-	
 	
 	
 	
@@ -365,7 +406,7 @@ public class AdminDao  {
 		
 		StringBuffer sql = new StringBuffer();
 		
-		sql.append(" delete from mh_board"); 
+		sql.append(" delete from mh_comment"); 
 		sql.append(" where seq = ?");
 		
 		String checkArr[] = request.getParameterValues("np_checkbox");
@@ -400,48 +441,175 @@ public class AdminDao  {
 	
 	
 	
-	
-		// 신고 게시물 삭제
-		// 이름을 가지고 해당 게시물을 null or 0으로 변환해주기.
-		// 게시물의 분류로 뭐가 들어가는지 쓸때 삽입시 어떤것이 들어가는지 물어보기.
-		public void deleteBoard(HttpServletRequest request, HttpServletResponse response) {
+	// 신고 게시물 삭제
+	// 이름을 가지고 해당 게시물을 null or 0으로 변환해주기.
+	// 게시물의 분류로 뭐가 들어가는지 쓸때 삽입시 어떤것이 들어가는지 물어보기.
+	public void deleteBoard(HttpServletRequest request, HttpServletResponse response) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		StringBuffer sql = new StringBuffer();
+		
+		sql.append(" delete from mh_board"); 
+		sql.append(" where seq = ?");
 			
-			Connection conn = null;
-			PreparedStatement pstmt = null;
-			
-			StringBuffer sql = new StringBuffer();
-			
-			sql.append(" delete from mh_comment"); 
-			sql.append(" where seq = ?");
-			
-			String checkArr[] = request.getParameterValues("np_checkbox");
-			int len = checkArr.length;
+		String checkArr[] = request.getParameterValues("np_checkbox");
+		int len = checkArr.length;
 			
 			
-			try {
-			
-				conn = DBConnection.makeConnection();
-				pstmt = conn.prepareStatement(sql.toString());
+		try {
+		
+			conn = DBConnection.makeConnection();
+			pstmt = conn.prepareStatement(sql.toString());
 
 				
-				if(checkArr != null) {
+			if(checkArr != null) {
 					
-					for(int i=0; i<len; i++) {
-						String result = checkArr[i].toString();
-						pstmt.setString( 1 , result);
-						pstmt.executeUpdate();
+				for(int i=0; i<len; i++) {
+					String result = checkArr[i].toString();
+					pstmt.setString( 1 , result);
+					pstmt.executeUpdate();
 						
-					}
+				}
 					
-				}		
+			}		
 				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				DBClose.close(conn, pstmt);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt);
+		}
+			
+	}
+	
+	
+	
+	
+	// 회원 게시판 검색 찾기.
+	// 검색 : 이름 - 0 아이디 - 1
+	public List<AdminDto> search(HttpServletRequest request, HttpServletResponse response, int startRow, int endRow) {
+		
+		List<AdminDto> list = new ArrayList<AdminDto>();
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+			
+		String index = request.getParameter("index");
+		String text = request.getParameter("text");
+		
+//		System.out.println(index);
+//		System.out.println(text);
+		
+		
+		StringBuffer sql = new StringBuffer();
+		sql.append(" select");
+		sql.append(" r, userid, name, birth, phoneFirst, phoneMid, phoneLast, gender, joinDate, outDate, enable");
+		sql.append(" from");
+		sql.append(" (select rownum r, userid, name, birth, phoneFirst, phoneMid, phoneLast, gender, joinDate, outDate, enable");
+		sql.append(" from mh_user");
+		if ("0".equals(index)) {
+			sql.append(" where name like '%"+text+"%')");
+		} else if ("1".equals(index)) {
+			sql.append(" where userid like '%"+text+"%')");
+		}
+		sql.append(" where r between ? and ?");
+			
+			
+		try {
+					
+			conn = DBConnection.makeConnection();
+			pstmt = conn.prepareStatement(sql.toString());			
+				
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+				
+			rs = pstmt.executeQuery();
+				
+			
+			
+			
+			while (rs.next()) {
+					
+				AdminDto adminDto = new AdminDto();
+				
+				adminDto.setUserId(rs.getString("userId"));
+				adminDto.setName(rs.getString("name"));
+				adminDto.setBirth(rs.getString("birth"));
+				adminDto.setPhoneFirst(rs.getString("phoneFirst"));
+				adminDto.setPhoneMid(rs.getString("phoneMid"));
+				adminDto.setPhoneLast(rs.getString("phoneLast"));
+				adminDto.setGender(rs.getString("gender"));
+				adminDto.setJoinDate(rs.getDate("joinDate"));
+				adminDto.setOutdate(rs.getDate("outDate"));
+				adminDto.setEnable(rs.getInt("enable"));
+				
+				adminDto.setIndex(index);
+				adminDto.setText(text);
+
+				list.add(adminDto);
+
+			}
+					
+						
+		} catch (SQLException e) {
+						
+			e.printStackTrace();
+					
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+			
+		return list;
+		
+	}
+		
+	
+	
+	
+	//회원게시판 검색 총합 찾기
+	public int searchTotal(HttpServletRequest request, HttpServletResponse response) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String text = request.getParameter("text");
+		
+		StringBuffer sql = new StringBuffer();
+		sql.append(" select COUNT(*)");
+		sql.append(" from");
+		sql.append(" (select userid from mh_user");
+		sql.append(" where userid like '%"+text+"%')");
+
+		
+		int totalCnt = -1;
+		
+		try {
+			
+			conn = DBConnection.makeConnection();
+			pstmt = conn.prepareStatement(sql.toString());			
+			
+			rs = pstmt.executeQuery();
+			
+			
+			if(rs.next()) {
+				totalCnt = rs.getInt(1);
 			}
 			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			
+		} finally {
+			DBClose.close(conn, pstmt, rs);
 		}
+		
+
+		return totalCnt;
+	}
+	
 	
 	
 	

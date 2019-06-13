@@ -465,7 +465,7 @@ public class SocialDao {
 		
 		try {
 			StringBuffer SQL = new StringBuffer();
-			SQL.append("select SUBJECT, CONTENT, MOVIECODENAVER, MOVIECODEYOUNG\n" + 
+			SQL.append("select SEQ, SUBJECT, CONTENT, MOVIECODEYOUNG, MOVIECODENAVER\n" + 
 					"					from mh_board \n" + 
 					"					where boardcode = 2 \n" + 
 					"					and userid = ? \n" + 
@@ -490,7 +490,7 @@ public class SocialDao {
 					movieCodeYoung.add(young[i]);
 					movieCodeNaver.add(naver[i]);
 				}
-				
+				boardDto.setSeq(rs.getInt("seq"));
 				boardDto.setSubject(rs.getString("subject"));
 				boardDto.setMovieCodeYoung(movieCodeYoung);
 				boardDto.setMovieCodeNaver(movieCodeNaver);

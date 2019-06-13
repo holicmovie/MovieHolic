@@ -97,42 +97,43 @@ int len2 = reviewList.size();
 <%
 List<BoardDto> mineList = (List)request.getAttribute("mineList");
 System.out.println("result page : " + mineList );
-int len3 = mineList.size();
-BoardDto board = mineList.get(0);
-List<String> naverList = board.getUrl();
+int len3 = mineList.size();//dto가 들어갈 전체 list 
+BoardDto board = mineList.get(0);//list에 들어간 dto 하나의 크기
+List<String> naverList = board.getUrl();//
 int length = naverList.size();
 %>
 
-						<% 
+						 <% 
 							for(int i = 0; i<len3; i++){						
-						%>
+						%> 
 							<table class="table table-hover col-lg-12 col-mobile-12" style="margin-top: 0;">
 								<col style="width:40%;">
 								<tr>
 									<td>
 										<div>
 											<%
-											for(int j = 0; j<length; j++){ 
+											for(int j = 0; j<5; j++){ 
+												naverList.get(j);
 											%>
-											<img width="100vh" src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)"  style="position: absolute; z-index: 0;"/>
-											<img width="100vh" src="/MovieHolic/images/tempimg/frozen.jpg" title="엔드게임 (2019)" style="position: relative; left: 70px; z-index: 0;"/>
-											<img class="hide3" width="100vh" src="/MovieHolic/images/tempimg/coco.jpg" title="엔드게임 (2019)" style="position: relative; left: 40px; z-index: 0;"/>
-											<img class="hide2"  width="100vh" src="/MovieHolic/images/tempimg/endgame.jpg" title="엔드게임 (2019)" style="position: relative; left: 5px; z-index: 0;"/>
-											<img class="hide1"  width="100vh" src="/MovieHolic/images/tempimg/frozen.jpg" title="엔드게임 (2019)" style="position: relative; left: -30px; z-index: 0;"/>
+											<img width="100vh" src="<%=naverList.get(j)%>"  style="position: relative; z-index: 0;"/>
+											<img width="100vh" src="/MovieHolic/images/tempimg/frozen.jpg" style="position: relative; left: 70px; z-index: 0;"/>
+											<img class="hide3" width="100vh" src="/MovieHolic/images/tempimg/coco.jpg"  style="position: relative; left: 40px; z-index: 0;"/>
+											<img class="hide2"  width="100vh" src="/MovieHolic/images/tempimg/endgame.jpg"  style="position: relative; left: 5px; z-index: 0;"/>
+											<img class="hide1"  width="100vh" src="/MovieHolic/images/tempimg/frozen.jpg"  style="position: relative; left: -30px; z-index: 0;"/>
 											<% 
 											}
-											%>
+											%> 
 										
 										</div>
 									</td>
 							        <td style="vertical-align: middle; padding-left: 2em;">
-							        	<h4 class="font_bold_small"><%=mineList.get(i).getSubject() %></h4>
+							        	<h4 class="font_bold_small"><%-- <%=mineList.get(i).getSubject() %> --%></h4>
 							        </td>
 								</tr>
 								
 								<%
 							}
-								%>
+								%> 
 								
 								
 								

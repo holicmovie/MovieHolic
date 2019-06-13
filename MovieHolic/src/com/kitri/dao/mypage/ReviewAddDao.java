@@ -78,12 +78,12 @@ public class ReviewAddDao {
 			conn = DBConnection.makeConnection();
 			StringBuffer sql = new StringBuffer();
 			sql.append("select * \n");
-			sql.append("from (select rownum r, d.seq, d.userid, d.movieName, d.content, d.starPoint, d.d1,  d.d2,  d.d3 , d.viewcount, d.enable  \n");
-			sql.append("        from(select seq,userid, movieName,content,starPoint,postDate d1, to_char(postDate, 'YYYY') d2, to_char(postDate, 'MM-DD') d3 , viewcount,enable  \n");
-			sql.append("				from mh_board \n");
-			sql.append("				where boardCode = 1 \n");
-			sql.append("				and userid = ? \n");
-			sql.append("				order by postDate desc) d \n");
+			sql.append("from (select rownum r, d.seq, d.userid, d.movieName, d.content, d.starPoint, d.d1,  d.d2,  d.d3 , d.viewcount, d.enable, d.moviecodeyoung, d.moviecodenaver  \n");
+			sql.append("        from(select b.seq, b.userid, b.movieName,b.content,b.starPoint,b.postDate d1, to_char(b.postDate, 'YYYY') d2, to_char(b.postDate, 'MM-DD') d3 , b.viewcount,b.enable,b.moviecodeyoung, b.moviecodenaver \n");
+			sql.append("				from mh_board b \n");
+			sql.append("				where b.boardCode = 1 \n");
+			sql.append("				and b.userid = ? \n");
+			sql.append("				order by b.postDate desc) d \n");
 			sql.append("		order by rownum ) \n");
 			sql.append("where r between ? and ? \n");
 			pstmt = conn.prepareStatement(sql.toString());
@@ -95,21 +95,23 @@ public class ReviewAddDao {
 			while (rs.next()) {
 				BoardDto boardDto = new BoardDto();
 					
-				List<String> name = new ArrayList<String>();
-				String str = rs.getString("movieName");
 				String useid = rs.getString("userid");
-				StringTokenizer st = new StringTokenizer(str, "||");
 				StringTokenizer userid2 = new StringTokenizer(useid,"@");
 				String id = userid2.nextToken();
-				String a = st.nextToken();
-				
-				name.add(a);
+				String[] name = rs.getString("moviename").split("\\|\\|");
+				String[] young = rs.getString("moviecodeyoung").split("\\|\\|");
+				String[] naver = rs.getString("moviecodenaver").split("\\|\\|");
+				String movieName = name[0];
+				String movieCodeYoung = young[0];
+				String movieCodeNaver = naver[0];
 				boardDto.setSeq(rs.getInt("seq"));
 				boardDto.setUserId(id);
 				boardDto.setViewCount(rs.getInt("viewcount"));
 				boardDto.setContent(rs.getString("content"));
 				boardDto.setStarPoint(rs.getInt("starPoint"));
-				boardDto.setMovieName(name);
+				boardDto.setMovieName2(movieName);
+				boardDto.setMovieCodeNaver2(movieCodeNaver);
+				boardDto.setMovieCodeYoung2(movieCodeYoung);
 				boardDto.setPostDate(rs.getString("d1"));
 				boardDto.setPostDateY(rs.getString("d2"));
 				boardDto.setPostDateM(rs.getString("d3"));
@@ -214,7 +216,7 @@ public List<BoardDto> listList(String content) {
 		try {
 			conn = DBConnection.makeConnection();
 			StringBuffer sql = new StringBuffer();
-			sql.append("select mb.seq,mf.movieimage, mb.movieName,mb.starPoint, mb.postdate,mc.postdate, to_char(mb.postdate, 'YYYY') d1, mb.content,mc.content, mb.userid,mc.userid , mb.viewcount, mb.enable \n");
+			sql.append("select mb.seq,mf.movieimage, mb.movieName,mb.starPoint, mb.postdate,mc.postdate, to_char(mb.postdate, 'YYYY') d1, mb.content,mc.content, mb.userid,mc.userid , mb.viewcount, mb.enable,mb.moviecodenaver, mb.moviecodeyoung \n");
 			sql.append("from mh_board mb, mh_comment mc , mh_films mf \n");
 			sql.append("where mb.boardcode = 1 \n");
 			sql.append("and mb.seq = ?");
@@ -229,21 +231,23 @@ public List<BoardDto> listList(String content) {
 			
 			if(rs.next()) {
 				boardDto = new BoardDto();
-				List<String> mbmovie = new ArrayList<String>();
 //				commentDto = new CommentDto();
 				String mbid = rs.getString("userid");
-				String name = rs.getString("movieName");
 				StringTokenizer mb = new StringTokenizer(mbid, "@");
-				StringTokenizer mbname = new StringTokenizer(name, "||");
 				String mbid2 = mb.nextToken();
-				String moviename = mbname.nextToken();
-				mbmovie.add(moviename);
-				
+				String[] name = rs.getString("moviename").split("\\|\\|");
+				String[] young = rs.getString("moviecodeyoung").split("\\|\\|");
+				String[] naver = rs.getString("moviecodenaver").split("\\|\\|");
+				String movieName = name[0];
+				String movieCodeYoung = young[0];
+				String movieCodeNaver = naver[0];
 				boardDto.setSeq(rs.getInt("seq"));
-				boardDto.setMovieName(mbmovie);
+				boardDto.setMovieName2(movieName);
 				boardDto.setPostDate(rs.getString("postdate"));
 				boardDto.setPostDateY(rs.getString("d1"));
 				boardDto.setContent(rs.getString("content"));
+				boardDto.setMovieCodeNaver2(movieCodeNaver);
+				boardDto.setMovieCodeYoung2(movieCodeYoung);
 				boardDto.setUserId(mbid2);
 				boardDto.setViewCount(rs.getInt("viewcount"));
 				boardDto.setStarPoint(rs.getInt("starpoint"));
@@ -414,7 +418,7 @@ public List<BoardDto> searchReviewList(int startRow, int endRow, String search,S
 
 		try {
 			StringBuffer sql = new StringBuffer();
-			sql.append("delete mh_board where userid=? and moviename=?");
+			sql.append("delete mh_board where userid=? and moviecodeyoung=?");
 			conn = DBConnection.makeConnection();
 			pstmt = conn.prepareStatement(sql.toString());
 			if(reviewdelete != null) {
@@ -425,6 +429,7 @@ public List<BoardDto> searchReviewList(int startRow, int endRow, String search,S
 					pstmt.executeUpdate();
 				}
 			}
+			System.out.println("삭제되니");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

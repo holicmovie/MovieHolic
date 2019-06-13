@@ -22,13 +22,7 @@ public class MyPageFrontController extends HttpServlet {
 		String tab = request.getParameter("tab");
 		String path = "";
 		String wishlist = request.getParameter("wishlist");
-//		String wishlistdelete[] = request.getParameterValues("wishlistdelete");
-//		
-//		if(wishlistdelete != null) {
-//			for(int i = 0; i < wishlistdelete.length;i++) {
-//			System.out.println("FC 체크한 영화 코드 : " + wishlistdelete[i]);
-//			}
-//		}
+
 		
 		
 		

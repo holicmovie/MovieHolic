@@ -72,8 +72,11 @@ hr.line_light_g {
 <%
 //###################################### 로그인 세션 ###################################### 임시
 
-//TODO : session에서 id 받기로 변경하기! @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-String id = "a125@gmail.com"; // 로그인
+//TODO : session에서 id 받기로 변경하기! ok
+//String id = "a125@gmail.com"; // 로그인
+
+String id = (String)session.getAttribute("loginInfo");
+String name = (String)session.getAttribute("name");
 
 int test = 5;
 
@@ -229,7 +232,7 @@ series.columns.template.adapter.add("fill", (fill, target) => {
 <div class="wrapper style1" id = "main-container">
 	<div class="container">
 	<%--Header 제목 --%>
-	<div class="preference_title" align="center"><h1>[ <span class="preference_title_name" id="username">박광규</span> ] 님의 취향분석</h1></div><br><br>
+	<div class="preference_title" align="center"><h1>[ <span class="preference_title_name" id="username"><%=name%></span> ] 님의 취향분석</h1></div><br><br>
 		
 			<%--리뷰수 --%>
 		<div class="row">

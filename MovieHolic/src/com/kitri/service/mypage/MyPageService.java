@@ -137,6 +137,7 @@ public class MyPageService {
 		BoardDto board = list.get(0);
 		List<String> naverList = board.getMovieCodeNaver();
 		int len = naverList.size();
+//		System.out.println("S board : " + board);
 		
 		
 //		System.out.println("navercode : " + naverList);
@@ -145,20 +146,15 @@ public class MyPageService {
 		for(int j = 0; j<length;j++) {
 			for(int i = 0; i<len; i++) {
 			String movieCdNaver = naverList.get(i);
+			System.out.println("naver 영화코드 : " + movieCdNaver);
 			String movieURL = ListService.getListService().getImgURL(movieCdNaver);
-//			System.out.println("naver 영화코드 : " + movieCdNaver);
-//			System.out.println("영화 url : " + movieURL);
+			System.out.println("영화 url : " + movieURL);
 			imgurl.add(movieURL);
 			}
 			list.get(j).setMovieCodeNaver(imgurl);
 		}
-		System.out.println("imgurl : " + imgurl);
-		System.out.println("list : " + list);
-//		List<FilmDto> film = ListService.getListService().getMvImg(board);
+//		System.out.println("imgurl : " + imgurl);
 //		System.out.println("S list : " + list);
-//		System.out.println("S board : " + board);
-//		System.out.println("S film : " + film);
-//		System.out.println("S film : " +film);
 		
 		return list;
 	}

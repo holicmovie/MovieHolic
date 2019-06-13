@@ -175,9 +175,6 @@ public class MyPageController {
 		public void mypageList(HttpServletRequest request, HttpServletResponse response) {
 			String userid = "a125@gmail.com";
 			List<BoardDto> list = MyPageService.getMyPageService().showMineList(userid);
-//			List<BoardDto> boardList = ListService.getListService().selListBySeq(id, null);
-//			BoardDto board = boardList.get(0);
-//			List<FilmDto> film = ListService.getListService().getMvImg(board);
 			System.out.println("C: "+ list);
 			request.setAttribute("mineList", list);
 		}

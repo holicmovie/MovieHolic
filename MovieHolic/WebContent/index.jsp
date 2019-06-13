@@ -97,11 +97,9 @@ int rank=1;
 
 // ###################################### 로그인 세션 ###################################### 임시
 
-//TODO : session에서 id 받기로 변경하기! @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-String id = "abc123"; // 로그인
-//String id = null; // 비로그인
-String name = "김무비";
-String genre = "액션"; // ##DB 게시판 table에서 select해야 함##
+//TODO : session에서 id 받기로 변경하기! ok
+String id = (String)session.getAttribute("loginInfo");
+String name = (String) session.getAttribute("name");
 
 // # 로그인
 // 선호장르 추천 영화 목록 결과
