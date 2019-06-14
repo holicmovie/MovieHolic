@@ -228,6 +228,7 @@ public class ListDao {
 					}
 				} else {
 					sql.append("WHERE SEQ = " + seq + " and BOARDCODE = 2 \n");
+					System.out.println(seq);
 				}
 				pstmt = conn.prepareStatement(sql.toString());
 				
