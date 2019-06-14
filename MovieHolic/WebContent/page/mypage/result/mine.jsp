@@ -90,7 +90,7 @@ if(board.getMovieCodeNaver().size()<=4){
 								<div style="float: left;">나의 최근 리뷰</div>
 							</div>
 
-						<div class = "col-lg-12" style="overflow: auto; height: 600px;clear:both;">
+						<div class = "col-lg-12" style="overflow-y: auto; height: 600px;clear:both;">
 							<table class="table table-hover col-lg-12 col-mobile-12" style="margin-top: 0;">
 								<col style="width:10%;">
 								<col style="width:20%;">
@@ -138,7 +138,7 @@ if(board.getMovieCodeNaver().size()<=4){
 								<div style="float: left;">나의 최근 리스트</div>
 							</div>
 
-						<div class = "col-lg-12" style="overflow: auto; height: 600px;clear:both;">
+						<div class = "col-lg-12" style="overflow-y: auto; height: 600px;clear:both;">
 							<table class="table table-hover col-lg-12 col-mobile-12" style="margin-top: 0;">
 								<col style="width:40%;">
 												
