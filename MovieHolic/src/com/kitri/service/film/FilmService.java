@@ -476,7 +476,10 @@ public class FilmService {
 					
 					// 예고편용 videoId set
 					String searchMovieNm = URLEncoder.encode(movieNm+" 예고편", "UTF-8");
-					String Vurl = "https://www.googleapis.com/youtube/v3/search?part=id&q=" + searchMovieNm + "&key=AIzaSyCzuMQplzlYo-nYc_Yicoay5qY6eNdCTZA&maxResults=1";
+					// 키1
+					//String Vurl = "https://www.googleapis.com/youtube/v3/search?part=id&q=" + searchMovieNm + "&key=AIzaSyCzuMQplzlYo-nYc_Yicoay5qY6eNdCTZA&maxResults=1";
+					// 키2
+					String Vurl = "https://www.googleapis.com/youtube/v3/search?part=id&q=" + searchMovieNm + "&key=AIzaSyBUHR8OuV61Cl8iEk02sDEyjKJ_YsHmaSc&maxResults=1";
 					String responseYoutube = CallAPI.APIHttpGet(Vurl, false);
 					if(responseYoutube!=null) {
 						JSONObject jsonObject2 = (JSONObject) jsonParser.parse(responseYoutube.toString());

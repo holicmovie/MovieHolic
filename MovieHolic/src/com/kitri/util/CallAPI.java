@@ -60,9 +60,14 @@ public class CallAPI {
 				 * con.setRequestProperty(key, value); // Request 헤더 설정 }
 				 */
 				
+				// 키 1
 				con.setRequestProperty("X-Naver-Client-Id", "Fc4lGVGl3zDMtizzcZbx");
 				con.setRequestProperty("X-Naver-Client-Secret", "q3OgVCUh0y");
 				
+				// 키 2
+				//con.setRequestProperty("X-Naver-Client-Id", "7gPtnnvOfjjfbAeqLtA4");
+				//con.setRequestProperty("X-Naver-Client-Secret", "BjEuHbXFg5");
+
 				Sleep(100); //네이버 API일 경우, 0.1초 쉬었다 가기
 			}
 

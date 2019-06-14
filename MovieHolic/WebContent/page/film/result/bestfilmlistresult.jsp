@@ -6,12 +6,11 @@
 List<FilmDto> bestfilm = (List<FilmDto>) request.getAttribute("bestfilmlist");
 String root = request.getContextPath();
 %>
+
 <%
 for(int i = 0; i < bestfilm.size(); i++){
 %>
-
-
-				<article style="background-color: rgb(3, 39, 49); color: white;">
+	<article style="background-color: rgb(3, 39, 49);">
 	<div class="interated_network_movie_info_img">
 		<span class="movie_ranking_number" id="rankNum"><%=(i+1)%></span>
 					<a href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=bestfilm.get(i).getMovieCdYoung()%>&movieCdNaver=<%=bestfilm.get(i).getMovieCdNaver()%>" class="image featured">
@@ -29,3 +28,4 @@ for(int i = 0; i < bestfilm.size(); i++){
 <%
 }
 %>
+	
