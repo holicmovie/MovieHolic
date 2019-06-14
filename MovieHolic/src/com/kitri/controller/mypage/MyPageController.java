@@ -97,9 +97,10 @@ public class MyPageController {
 
 	}
 
-	public void addFollower(HttpServletRequest request, HttpServletResponse response) {
+	public String addFollower(HttpServletRequest request, HttpServletResponse response) {
 		String followid = request.getParameter("follow");
 //		System.out.println(followid);
+		String path = "/page/mypage/result/followresult.jsp";
 		String checkedId = "이미 팔로우하고 있는 아이디입니다.";
 		int checkId = MyPageService.getMyPageService().checkFollowId(followid);
 		if(checkId ==0) {
@@ -108,6 +109,7 @@ public class MyPageController {
 		}
 		
 		request.setAttribute("checkedId", checkedId);
+		return path;
 	}
 
 	
