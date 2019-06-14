@@ -220,10 +220,10 @@ public class ListDao {
 						sql.append("WHERE BOARDCODE = 2 \n");
 						sql.append("ORDER BY BEST DESC, NOTIFY ASC, WORST ASC, VIEWCOUNT DESC \n");
 					} else if("***".equals(id)) {
-						sql.append("WHERE BOARDCODE = 2 and SUBJECT like '%" + srchStr + "%' \n");
+						sql.append("WHERE BOARDCODE = 2 and (SUBJECT like '%" + srchStr + "%' or CONTENT like '%" + srchStr + "%' or MOVIENAME like '%" + srchStr + "%')\n");
 						sql.append("ORDER BY SEQ DESC \n");
 					} else {
-						sql.append("WHERE USERID = " + id + " and BOARDCODE = 2 \n");
+						sql.append("WHERE USERID = '" + id + "' and BOARDCODE = 2 \n");
 						sql.append("ORDER BY SEQ DESC \n");
 					}
 				} else {

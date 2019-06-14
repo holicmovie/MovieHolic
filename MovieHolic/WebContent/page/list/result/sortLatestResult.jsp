@@ -8,6 +8,7 @@
 	<c:set var="filmCnt" value="${fn:length(boardList[i].movieCodeNaver)}"/>
 <tr style="border: 2px solid; border-color: white;">
 	<td style="text-align: center;">
+		<input type="hidden" value="list?act=listDetail&seq=${boardList[i].seq}">
 		<div class="interated_network_movie_info_img">
 			<span class="movie_ranking_number" id="rankNum">${filmCnt}</span>
 			<img width="100vh" src="${filmList[0].movieImage}" style="position: absolute; z-index: 0;" >
