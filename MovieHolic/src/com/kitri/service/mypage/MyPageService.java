@@ -60,8 +60,8 @@ public class MyPageService {
 	}
 
 	// social.jsp 맞팔로우 페이지
-	public void addFollowId(String followid) {
-		SocialDao.getSocialDao().addFollow(followid);
+	public void addFollowId(String userid, String followid) {
+		SocialDao.getSocialDao().addFollow(userid, followid);
 	}
 
 // ----------------------------wishlist 필요 메소드----------------------------
