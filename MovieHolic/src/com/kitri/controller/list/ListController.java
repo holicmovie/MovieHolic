@@ -46,6 +46,23 @@ public class ListController {
 	}
 	
 	
+//	#### 제목으로 영화 검색 ####
+	public String navSrchMVbyName(HttpServletRequest request, HttpServletResponse response) {
+		
+		// 1. request에서 검색어 받아옴
+		String title = request.getParameter("srchKey").trim();
+		String path = "/page/searchresult.jsp";
+		
+		// 2. service에서 검색 결과를 MovieDto타입의 List로 받아옴
+		List<FilmDetailDto> list = ListService.getListService().srchMVbyName(title);
+		if(list != null) {
+			request.setAttribute("list", list);
+		}
+		
+		return path;
+	}
+	
+	
 //	#### 작성한 List DB에 insert #### 
 	public int saveList(HttpServletRequest request, HttpServletResponse response) {
 		
@@ -53,7 +70,7 @@ public class ListController {
 		BoardDto board = new BoardDto();
 		
 //		1. request에서 ID, 글제목, 글내용, 선택한 영화정보 받아옴
-		board.setUserId(request.getSession().getAttribute("userID").toString());
+		board.setUserId(request.getSession().getAttribute("loginInfo").toString());
 		board.setSubject(request.getParameter("title"));
 		board.setContent(request.getParameter("content"));
 		
@@ -113,8 +130,10 @@ public class ListController {
 	public String selListBySeq(HttpServletRequest request, HttpServletResponse response) {
 		String path = "/error.jsp";
 		String seq = request.getParameter("seq");
+		
+		
 		// DB에서 select해서 BoardDto로 받아옴
-		List<BoardDto> boardList = ListService.getListService().selListBySeq(seq, null);
+		List<BoardDto> boardList = ListService.getListService().selListBySeq(seq, null, null);
 		BoardDto board = boardList.get(0);
 		
 		
@@ -123,6 +142,7 @@ public class ListController {
 			List<FilmDto> film = ListService.getListService().getMvImg(board);
 			
 			if(film != null) {
+				// 이미지 정보와 리스트 정보를 각각 받아와야 하기에 controller에서 처리함
 				request.setAttribute("film", film);
 				request.setAttribute("board", board);
 				path = "/page/list/modifylist.jsp";
@@ -139,7 +159,7 @@ public class ListController {
 		BoardDto board = new BoardDto();
 		
 //		1. request에서 ID, 글제목, 글내용, 선택한 영화정보 받아옴
-		board.setUserId(request.getSession().getAttribute("userID").toString());
+		board.setUserId(request.getSession().getAttribute("loginInfo").toString());
 		board.setSubject(request.getParameter("title"));
 		board.setContent(request.getParameter("content"));
 		board.setSeq(Integer.parseInt(request.getParameter("seq")));
@@ -171,7 +191,7 @@ public class ListController {
 		String postDate = request.getParameter("postDate");
 		int cnt = Integer.parseInt(request.getParameter("cnt"));
 		HttpSession session = request.getSession();
-		String id = (String) session.getAttribute("userID");
+		String id = (String) session.getAttribute("loginInfo");
 		result = ListService.getListService().deleteList(seq, postDate, cnt, id);
 		
 		return result;
@@ -184,7 +204,7 @@ public class ListController {
 		String btnStr = request.getParameter("btnStr");
 		String seq = request.getParameter("seq");
 		HttpSession session = request.getSession();
-		String id = session.getAttribute("userID").toString();
+		String id = session.getAttribute("loginInfo").toString();
 		
 		result = ListService.getListService().evaluate(btnStr, seq, id);
 		
@@ -208,7 +228,7 @@ public class ListController {
 		String subject = request.getParameter("subject");
 		String writerId = request.getParameter("writerId");
 		HttpSession session = request.getSession();
-		String id = session.getAttribute("userID").toString();
+		String id = session.getAttribute("loginInfo").toString();
 		
 		return ListService.getListService().saveComment(id, seq, content, subject, writerId);
 	}
@@ -245,7 +265,7 @@ public class ListController {
 	public int delComment(HttpServletRequest request, HttpServletResponse response) {
 		String postDate = request.getParameter("postDate");
 		HttpSession session = request.getSession();
-		String id = session.getAttribute("userID").toString(); 
+		String id = session.getAttribute("loginInfo").toString(); 
 		
 		return ListService.getListService().delComment(id, postDate);
 	}
@@ -255,9 +275,119 @@ public class ListController {
 	public String modCommment(HttpServletRequest request, HttpServletResponse response) {
 		String postDate = request.getParameter("postDate");
 		HttpSession session = request.getSession();
-		String id = session.getAttribute("userID").toString(); 
-		
+		String id = session.getAttribute("loginInfo").toString(); 
 		return ListService.getListService().modCommment(id, postDate);
+	}
+	
+	
+//	#### 댓글 수정 완료 ####
+	public int updateComment(HttpServletRequest request, HttpServletResponse response) {
+		String content = request.getParameter("content");
+		String postDate = request.getParameter("postDate");
+		HttpSession session = request.getSession();
+		String id = session.getAttribute("loginInfo").toString();
+		
+		return ListService.getListService().updateComment(content, postDate, id);
+	}
+	
+	
+	
+//	#### list 최신순 정렬 ####
+	public String sortLatest(HttpServletRequest request, HttpServletResponse response) {
+		String path = "/error.jsp";
+		List<List<FilmDto>> flList = null;
+		
+		// DB에서 select해서 BoardDto로 받아옴
+		List<BoardDto> boardList = ListService.getListService().selListBySeq(null, "*", null);
+		
+		if(boardList != null) {
+			flList = new ArrayList<List<FilmDto>>();
+			int len = boardList.size();
+			for(int i=0; i<len; i++) {	// 리스트 개수만큼 반복
+				// 영화 이미지 가져오기
+				BoardDto board = boardList.get(i);	// i번째 리스트
+				int cnt = board.getMovieCodeNaver().size();	// i번째 리스트의 영화목록이 4개가 넘는경우, 이미지는 4개만 가져옴
+				if(cnt > 4) {
+					cnt = 4;
+				}
+				List<FilmDto> filmList = ListService.getListService().getMvImg(board, cnt);	//i번째 리스트에 포함된 영화목록의 각 이미지
+				
+				flList.add(filmList);
+			}
+			if(flList != null) {
+				// 이미지 정보와 리스트 정보를 각각 받아와야 하기에 controller에서 처리함
+				request.setAttribute("flList", flList);
+				request.setAttribute("boardList", boardList);
+				path = "/page/list/result/sortLatestResult.jsp";
+			}
+		}
+		
+		return path;
+	}
+	
+	
+//	#### list 인기순 정렬 ####	
+	public String sortPopular(HttpServletRequest request, HttpServletResponse response) {
+		String path = "/error.jsp";
+		List<List<FilmDto>> flList = null;
+		
+		// DB에서 select해서 BoardDto로 받아옴
+		List<BoardDto> boardList = ListService.getListService().selListBySeq(null, "**", null);
+		
+		if(boardList != null) {
+			flList = new ArrayList<List<FilmDto>>();
+			int len = boardList.size();
+			for(int i=0; i<len; i++) {	// 리스트 개수만큼 반복
+				// 영화 이미지 가져오기
+				BoardDto board = boardList.get(i);	//i번째 리스트
+				List<FilmDto> filmList = ListService.getListService().getMvImg(board, 1);	//i번째 리스트에 포함된 영화목록의 각 이미지
+				
+				flList.add(filmList);
+			}
+			if(flList != null) {
+				// 이미지 정보와 리스트 정보를 각각 받아와야 하기에 controller에서 처리함
+				request.setAttribute("flListP", flList);
+				request.setAttribute("boardListP", boardList);
+				path = "/page/list/movielist.jsp";
+			}
+		}
+		
+		return path;
+	}
+	
+	
+//	#### 리스트 검색 ####
+	public String srchList(HttpServletRequest request, HttpServletResponse response) {
+		String path = "";
+		String srchList = request.getParameter("srchList");
+		List<List<FilmDto>> flList = null;
+		
+		// DB에서 select해서 BoardDto로 받아옴
+		List<BoardDto> boardList = ListService.getListService().selListBySeq(null, "***", srchList);
+		
+		if(boardList != null) {
+			flList = new ArrayList<List<FilmDto>>();
+			int len = boardList.size();
+			for(int i=0; i<len; i++) {	// 리스트 개수만큼 반복
+				// 영화 이미지 가져오기
+				BoardDto board = boardList.get(i);	// i번째 리스트
+				int cnt = board.getMovieCodeNaver().size();	// i번째 리스트의 영화목록이 4개가 넘는경우, 이미지는 4개만 가져옴
+				if(cnt > 4) {
+					cnt = 4;
+				}
+				List<FilmDto> filmList = ListService.getListService().getMvImg(board, cnt);	//i번째 리스트에 포함된 영화목록의 각 이미지
+				
+				flList.add(filmList);
+			}
+			if(flList != null) {
+				// 이미지 정보와 리스트 정보를 각각 받아와야 하기에 controller에서 처리함
+				request.setAttribute("flList", flList);
+				request.setAttribute("boardList", boardList);
+				path = "/page/list/result/sortLatestResult.jsp";
+			}
+		}
+		
+		return path;
 	}
 	
 	

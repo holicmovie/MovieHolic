@@ -2,8 +2,7 @@ package com.kitri.controller.film;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 
 import com.kitri.dto.*;
 import com.kitri.dto.film.PageBean;
@@ -51,8 +50,9 @@ public class FilmController {
 	public void getFavoriteFilm(HttpServletRequest request, HttpServletResponse response) {
 		
 		
-		// TODO : session에서 id 받기로 변경하기! @@@@@@@@@@@@@@@@@@@@@@@@@@@
-		String userId = "a125@gmail.com";
+		// TODO : session에서 id 받기로 변경하기! ok
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("loginInfo");
 		
 		// 선호 장르 영화 목록 get
 		List<FilmDto> list = FilmService.getFilmService().getFavoriteFilm(userId, 1);   // 회원의 선호 장르 1위 영화목록 get
@@ -288,8 +288,9 @@ public class FilmController {
 		String movieCdYoung = request.getParameter("movieCdYoung");
 		String movieCdNaver = request.getParameter("movieCdNaver");
 			
-		// TODO : session에서 id 받기로 변경하기!  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-		String id = "a125@gmail.com";
+		// TODO : session에서 id 받기로 변경하기!  ok
+		HttpSession session = request.getSession();
+		String id = (String) session.getAttribute("loginInfo");
 			
 		// 위시리스트 추가 여부 확인
 		int isWishedBefore = FilmService.getFilmService().isWished(movieCdYoung, id);

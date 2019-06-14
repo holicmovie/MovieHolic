@@ -8,31 +8,14 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 
 
-<script>
-
-	//$(document).on("click", "#check-all", function() {
-	$("#check-all").click(function() { // 전체 선택 버튼 클릭시
-		$(":input[name=chk]").prop("checked", true)
-		/* if ($(":input[name=chk]").prop("checked", true)) {
-			$(":input[name=chk]").prop("checked", false);
-		} else if ($(":input[name=chk]").prop("checked", false)) {
-			$(":input[name=chk]").prop("checked", true);
-		} */
-		return false;
-	});
-</script>
-
-
 <table id="table1" class="table"
 	style="border-bottom: 0.2em solid #fff;">
 	<br>
 	<thead>
 		<tr>
 			<th>
-				<div id="check-all">
-					<span class="allcheckbox"><button type="button"
-							class="btn btn-success" style="z-index: 0;">전체선택</button></span>
-				</div>
+				<span class="allcheckbox"><button type="button"
+						class="btn btn-success" style="z-index: 0;">전체선택</button></span>
 			</th>
 			<th>회원ID</th>
 			<th>이름</th>
@@ -48,11 +31,10 @@
 
 		<c:forEach var="ap" items='${ap.list}'>
 			<tr>
-				<td>
-					<c:if test="${ap.outdate == null}">
-						<input type="checkbox" class="ap_checkbox" name="ap_checkbox" value="${ap.userId}"/>
-					</c:if>
-				</td>
+				<td><c:if test="${ap.outdate == null}">
+						<input type="checkbox" class="ap_checkbox" name="ap_checkbox"
+							value="${ap.userId}" />
+					</c:if></td>
 				<td>${ap.userId}</td>
 				<td>${ap.name }</td>
 				<td>${ap.birth }</td>
@@ -63,20 +45,32 @@
 				<td>
 
 
+
+
+
 					<div>
-						<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+
+						<button type="button" class="btn btn-success dropdown-toggle"
+							data-toggle="dropdown">
 							<c:if test="${ap.enable == 1}">휴면</c:if>
 							<c:if test="${ap.enable == 0}">활동</c:if>
 						</button>
-					
-					
+
+
 						<div class="dropdown-menu">
-							<a class="dropdown-item" href="#"> 
-								<c:if test="${ap.enable == 1}">활동</c:if> 
-								<c:if test="${ap.enable == 0}">휴면</c:if>
+							<span class="enable"> <a class="dropdown-item"
+								href="/MovieHolic/admin?act=enable&ap_userId=${ap.userId}">
+									<c:if test="${ap.enable == 1}">활동</c:if> <c:if
+										test="${ap.enable == 0}">휴면</c:if>
 							</a>
+							</span>
 						</div>
+
 					</div>
+
+
+
+
 
 				</td>
 			</tr>

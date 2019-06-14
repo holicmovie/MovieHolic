@@ -258,18 +258,20 @@ public class FilmDao {
 			conn = DBConnection.makeConnection();
 			
 			StringBuffer sql = new StringBuffer();
-			sql.append("select distinct mboard.mname, best.mcodeyoung \n");
+			sql.append("select * \n");
+			sql.append("from (select rownum r, g.mn, g.mc \n");
+			sql.append("from (select distinct mboard.mname mn, best.mcodeyoung mc \n");
 			sql.append("from (select TO_CHAR(moviename) mname, TO_CHAR(moviecodeyoung) mcodeyoung \n");
-			sql.append("		from mh_board) mboard , \n");
-			sql.append(" 		(select TO_CHAR(moviecodeyoung) mcodeyoung, count(*) mreviewcnt \n");
-			sql.append("		 from mh_board \n");
-			sql.append(" 		 where boardcode = 1 \n");
-			sql.append("		 and postdate between (sysdate - 7) and sysdate \n");
-			sql.append("		 and rownum < 11 \n");
-			sql.append("		 group by TO_CHAR(moviecodeyoung) \n");
-			sql.append("		 order by count(*) desc) best \n");
-			sql.append("where mboard.mcodeyoung = best.mcodeyoung");
-			      
+			sql.append("from mh_board) mboard , \n");
+			sql.append("(select TO_CHAR(moviecodeyoung) mcodeyoung, count(*) mreviewcnt \n");
+			sql.append("from mh_board \n");
+			sql.append("where boardcode = 1 \n");
+			sql.append("and postdate between sysdate - 7 and sysdate \n");
+			sql.append("group by TO_CHAR(moviecodeyoung) \n");
+			sql.append("order by count(*) desc) best \n");
+			sql.append("where mboard.mcodeyoung = best.mcodeyoung)g) \n");
+			sql.append("where r < 11");
+
 			pstmt = conn.prepareStatement(sql.toString());
 			
 			rs = pstmt.executeQuery();
@@ -278,8 +280,10 @@ public class FilmDao {
 				
 				FilmDto film = new FilmDto();
 				
-				film.setMovieNm(rs.getString(1));				// 영화명
-				film.setMovieCdYoung(rs.getString(2));			// 영화코드(영진원)
+				System.out.println("디비 영화명 : " + rs.getString("MN"));
+				System.out.println("디비 영화코드 영진원 : " + rs.getString("MC"));
+				film.setMovieNm(rs.getString("MN"));				// 영화명
+				film.setMovieCdYoung(rs.getString("MC"));			// 영화코드(영진원)
 				
 				list.add(film);
 			}

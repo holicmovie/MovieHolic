@@ -109,7 +109,7 @@ public class ListService {
 	public BoardDto selBoardBySeq(String seq) {
 		BoardDto board= null;
 			
-		List<BoardDto> boardList = ListDao.getListDao().selBoardBySeq(seq, true, null);
+		List<BoardDto> boardList = ListDao.getListDao().selBoardBySeq(seq, true, null, null);
 		if(boardList == null) {
 			return null;
 		}
@@ -155,9 +155,9 @@ public class ListService {
 	}
 	
 	
-//	#### 영화 이미지 가져오기 ####
+//	#### 영화 이미지 가져오기 (영화 갯수만큼)####
 	public List<FilmDto> getMvImg(BoardDto board) {
-		List<FilmDto> film = new ArrayList<FilmDto>();
+		List<FilmDto> filmList = new ArrayList<FilmDto>();
 		
 		List<String> naverList = board.getMovieCodeNaver();
 		int len = naverList.size();
@@ -170,10 +170,31 @@ public class ListService {
 			temp.setMovieCdYoung(board.getMovieCodeYoung().get(i));
 			temp.setMovieNm(board.getMovieName().get(i));
 			
-			film.add(temp);
+			filmList.add(temp);
 		}
 		
-		return film;
+		return filmList;
+	}
+	
+	
+//	#### 영화 이미지 가져오기 (cnt 만큼)####
+	public List<FilmDto> getMvImg(BoardDto board, int cnt) {
+		List<FilmDto> filmList = new ArrayList<FilmDto>();
+		
+		List<String> naverList = board.getMovieCodeNaver();
+		for(int i=0; i<cnt; i++) {
+			FilmDto temp = new FilmDetailDto();
+			
+			String naver = naverList.get(i);
+			temp.setMovieImage(ListService.getListService().getImgURL(naver));
+			temp.setMovieCdNaver(naver);
+			temp.setMovieCdYoung(board.getMovieCodeYoung().get(i));
+			temp.setMovieNm(board.getMovieName().get(i));
+			
+			filmList.add(temp);
+		}
+		
+		return filmList;
 	}
 
 	
@@ -181,18 +202,12 @@ public class ListService {
 //	----------------------------------------------------------------------------------------- List 수정/삭제
 	
 //	#### 게시판 내용만 가져오기 ####
-	public List<BoardDto> selListBySeq(String seq, String id) {
-		List<BoardDto> boardList = null;
-		
-		boardList = ListDao.getListDao().selBoardBySeq(seq, false, id);
-		if(boardList == null) {
-			return null;
-		}
-		return boardList;
+	public List<BoardDto> selListBySeq(String seq, String id, String srchStr) {
+		return ListDao.getListDao().selBoardBySeq(seq, false, id, srchStr);
 	}
 	
 	
-//	#### 리스트 수정 ####
+//	#### list 수정 ####
 	public int modifyList(BoardDto board) {
 		int result = 0;
 		result = ListDao.getListDao().modifyList(board);
@@ -203,6 +218,12 @@ public class ListService {
 	public int deleteList(String seq, String postDate, int cnt, String id) {
 		return ListDao.getListDao().deleteList(seq, postDate, cnt, id);
 	}
+	
+	
+	
+//-----------------------------------------------------------------------------------------------List 부가기능
+	
+	
 	
 	
 //	#### list 좋아요&싫어요 update ####
@@ -217,6 +238,11 @@ public class ListService {
 	}
 	
 	
+	
+	
+//------------------------------------------------------------------------------------------------------------------------------------- Comment
+	
+	
 //	#### 댓글 저장 ####
 	public int saveComment(String id, String seq, String content, String subject, String writerId) {
 		return ListDao.getListDao().saveComment(id, seq, content, subject, writerId);
@@ -226,6 +252,19 @@ public class ListService {
 //	#### 댓글 삭제 ####
 	public int delComment(String id, String postDate) {
 		return ListDao.getListDao().delComment(id, postDate);
+	}
+	
+	
+//	#### 댓글 수정 ####
+	public String modCommment(String id, String postDate) {
+		return ListDao.getListDao().modCommment(id, postDate);
+	}
+	
+	
+	
+//	#### 댓글 수정  완료 ####
+	public int updateComment(String content, String postDate, String id) {
+		return ListDao.getListDao().updateComment(content, postDate, id);
 	}
 	
 //	----------------------------------------------------------------------------------------- Util
@@ -363,8 +402,8 @@ public class ListService {
 			con.setRequestMethod("GET"); // 전송방식 설정 (GET)
 			con.setConnectTimeout(30000); // 연결 제한시간 30초
 			con.setReadTimeout(10000); // 컨텐츠 조회 제한시간 10초
-			con.setRequestProperty("X-Naver-Client-Id", "Fc4lGVGl3zDMtizzcZbx");
-			con.setRequestProperty("X-Naver-Client-Secret", "q3OgVCUh0y");
+			con.setRequestProperty("X-Naver-Client-Id", "0qOm2YBoW9dYCgbB0yK3");
+			con.setRequestProperty("X-Naver-Client-Secret", "LuWmTQWn1o");
 			
 			int responseCode = con.getResponseCode(); // response의 status 코드 얻어옴
 			
@@ -458,10 +497,7 @@ public class ListService {
 	
 	
 	
-//	#### 댓글 수정 ####
-	public String modCommment(String id, String postDate) {
-		return ListDao.getListDao().modCommment(id, postDate);
-	}
+
 	
 	
 	
