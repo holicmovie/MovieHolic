@@ -93,17 +93,21 @@ $(function(){
 		});
 		return false;
 	});
-	$("#srchStr").keypress(function(e){
-		$.ajax({
-			url: "<%= request.getContextPath()%>/list",
-			data: "act=srchList&srchStr=" + $('#srchStr').val().trim(),
-			method: 'post',
-			success:function(result){
-				$('tbody').empty();
-				$('tbody').html(result);
-				$('#srchStr').val('');
+	$("#srchStr").keyup(function(e){
+		if (event.which == 13 ) {
+			if($('#srchStr').val() != "") {	<%-- 검색어가 공백이 아닌 경우 srchKey로 받아옴 --%>
+				$.ajax({
+					url: "<%= request.getContextPath()%>/list",
+					data: "act=srchList&srchStr=" + $('#srchStr').val().trim(),
+					method: 'post',
+					success:function(result){
+						$('tbody').empty();
+						$('tbody').html(result);
+						$('#srchStr').val('');
+					}
+				});
 			}
-		});
+		}
 		return false;
 	});
 });
