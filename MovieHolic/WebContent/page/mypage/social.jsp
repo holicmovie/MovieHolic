@@ -14,7 +14,8 @@
 <script>
 
 /* 처음 로딩할 때 followingID출력 */
- <%String checkedId = (String)request.getAttribute("checkedId");%>
+
+
 
 $(function(){
 	$.ajax({
@@ -129,7 +130,7 @@ $(document).on('click', '.deletef', function(){
     /* var name = td.eq(2).text();
     var lists = td.eq(3).text();
 	var likes = td.eq(4).text(); */
-	
+	if (followingid != null){
 		$.ajax({
 			url:'/MovieHolic/mypage',
 			method: 'GET',
@@ -139,7 +140,8 @@ $(document).on('click', '.deletef', function(){
 			 	/* location.href="/MovieHolic/mypage?page=social"  */
 			 	}
 			});
-	return false;   
+	return false;  
+	}
 }); 
 
 $(document).on('click', '.plusfollower', function(){
@@ -151,18 +153,19 @@ $(document).on('click', '.plusfollower', function(){
 
 		    /* var no = td.eq(0).text(); */
 		    var followerid = td.eq(1).text().trim();		
-		
+		if(followerid !=null){
 
 		$.ajax({
 			url:"/MovieHolic/mypage",
 			method: "GET",
-			data:"tab=followers&follow=" + followerid,
+			data:"page=check&follow=" + followerid,
 			success: function(result){
-				location.href ="/MovieHolic/page/mypage/social.jsp";
-				alert("팔로우가 추가되었습니다!");
+				alert(result);
+				
 			}
 	});
 	return false; 
+	}
 }); 
 </script>
 

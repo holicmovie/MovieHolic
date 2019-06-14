@@ -13,6 +13,7 @@
 							<div class="font_bold_mid" style="width:100%; border-bottom: 2.5px solid #fff; margin-bottom: 0; padding-bottom: 0.8em;">
 								<div style="float: left;">Activity Log</div>
 							</div>
+							<div class = "col-lg-12" style = "overflow-y: auto; height: 600px;">
 							<table class="table table-hover col-lg-12 col-mobile-12" style="border-top: 0px thin;">
 								<col style="width:10%;">
 								<col style="width:80%;">
@@ -31,7 +32,6 @@
 							        	<h5 class="font_light_small"><a class="font_bold_small"><%=list.get(i).getLogId() %></a>님이 '<a class="font_bold_small">'<%=list.get(i).getSujbect() %></a>'리스트를 작성했습니다</h5>
 							        </td>
 							        <td style="vertical-align: middle;">
-							        	<h5 class="time font_light_small" style="color: gray;">2시간 전</h5>
 							        </td>
 								</tr>
 								
@@ -92,5 +92,6 @@
 								%>
 							
 							</table>
+							</div>
 						</div>
 					</div>
