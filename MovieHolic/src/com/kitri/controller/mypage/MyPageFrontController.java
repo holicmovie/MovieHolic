@@ -93,7 +93,7 @@ public class MyPageFrontController extends HttpServlet {
 //			-----------------------[setting]---------------------------------------
 		} else if ("setting".equals(page)) {
 			UserController.getUserController().settingUser(request, response);
-			UserController.getUserController().settingProfile(request, response);
+//			UserController.getUserController().settingProfile(request, response);
 			MoveUrl.forward(request, response, "/page/mypage/setting.jsp");
 			
 			
@@ -105,6 +105,7 @@ public class MyPageFrontController extends HttpServlet {
 			UserController.getUserController().ReviewRegister(request, response);
 			MoveUrl.forward(request, response, "/page/mypage/writereview.jsp");
 		}else if("register".equals(page)) {
+			System.out.println("등록하러오나");
 			path = UserController.getUserController().registerReviewBtn(request, response);
 			MoveUrl.forward(request, response, path);
 			

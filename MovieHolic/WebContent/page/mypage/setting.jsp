@@ -121,7 +121,7 @@ String gender = dto.getGender();%>
 						<div class="col-lg-2 col-12-mobile" id="content">
 						
 							<div align="center">
-								<img id="profile"src="/MovieHolic/images/profile/<%=dto.getProfile()%>" class="profile_edit_icon" alt="user icon"></img>
+								<img id="profile"src="/MovieHolic/images/profile/user.jpg" class="profile_edit_icon" alt="user icon"></img>
 							
 								
 							<br>

@@ -30,6 +30,7 @@ public class BoardDto { // 게시판
 	private String movieCodeYoung2;
 	private String movieCodeNaver2;
 	private String movieName2;
+	private String director2;
 	private String url2;
 	public int getSeq() {
 		return seq;
@@ -187,6 +188,12 @@ public class BoardDto { // 게시판
 	public void setMovieName2(String movieName2) {
 		this.movieName2 = movieName2;
 	}
+	public String getDirector2() {
+		return director2;
+	}
+	public void setDirector2(String director2) {
+		this.director2 = director2;
+	}
 	public String getUrl2() {
 		return url2;
 	}
@@ -202,8 +209,9 @@ public class BoardDto { // 게시판
 				+ movieName + ", starPoint=" + starPoint + ", category=" + category + ", best=" + best + ", worst="
 				+ worst + ", viewCount=" + viewCount + ", enable=" + enable + ", notify=" + notify + ", url=" + url
 				+ ", movieCodeYoung2=" + movieCodeYoung2 + ", movieCodeNaver2=" + movieCodeNaver2 + ", movieName2="
-				+ movieName2 + ", url2=" + url2 + "]";
+				+ movieName2 + ", director2=" + director2 + ", url2=" + url2 + "]";
 	}
+	
 
 	
 

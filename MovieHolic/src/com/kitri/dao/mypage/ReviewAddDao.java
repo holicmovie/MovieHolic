@@ -70,7 +70,7 @@ public class ReviewAddDao {
 				StringBuffer sql = new StringBuffer();
 				sql.append("insert  \n");
 				sql.append("	into mh_board (seq,userid,boardcode,subject,postdate,content,starpoint,moviename,director,actor1,actor2,category,moviecodeyoung,moviecodenaver,best,worst,notify,enable,viewcount) \n");
-				sql.append("	values(seq.nextbal,?,1,?,sysdate,?,?,?,?,?,?,?,?,?,null,null,null,?,null) \n");
+				sql.append("	values(seq.nextval,?,1,?,sysdate,?,?,?,?,?,?,?,?,?,0,0,0,?,0) \n");
 				pstmt = conn.prepareStatement(sql.toString());
 				int idx = 0;
 				pstmt.setInt(++idx, boardDto.getSeq());
@@ -80,13 +80,13 @@ public class ReviewAddDao {
 				pstmt.setString(++idx, boardDto.getPostDate());
 				pstmt.setString(++idx, boardDto.getContent());
 				pstmt.setInt(++idx, boardDto.getStarPoint());
-				pstmt.setString(++idx, boardDto.getMovieName().toString());
-				pstmt.setString(++idx, boardDto.getDirector().toString());
+				pstmt.setString(++idx, boardDto.getMovieName2());
+				pstmt.setString(++idx, boardDto.getDirector2());
 				pstmt.setString(++idx, boardDto.getActor1());
 				pstmt.setString(++idx, boardDto.getActor2());
 				pstmt.setString(++idx, boardDto.getCategory());
-				pstmt.setString(++idx, boardDto.getMovieCodeYoung().toString());
-				pstmt.setString(++idx, boardDto.getMovieCodeNaver().toString());
+				pstmt.setString(++idx, boardDto.getMovieCodeYoung2());
+				pstmt.setString(++idx, boardDto.getMovieCodeNaver2());
 				pstmt.setInt(++idx, boardDto.getBest());
 				pstmt.setInt(++idx, boardDto.getWorst());
 				pstmt.setInt(++idx, boardDto.getNotify());
