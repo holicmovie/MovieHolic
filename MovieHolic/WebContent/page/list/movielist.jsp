@@ -81,13 +81,11 @@ $(function(){
 <%-- 리스트 검색 버튼 이벤트 --%>
 $(function(){
 	$('#srchList').click(function(){
-		alert($('#srchStr').text());
 		$.ajax({
 			url: "<%= request.getContextPath()%>/list",
-			data: "act=srchList&srchStr=" + $('#srchStr').text().trim(),
+			data: "act=srchList&srchStr=" + $('#srchStr').val().trim(),
 			method: 'post',
 			success:function(result){
-				alert("검색결과");
 				$('tbody').empty();
 				$('tbody').html(result);
 				$('#srchStr').val('');
@@ -95,7 +93,34 @@ $(function(){
 		});
 		return false;
 	});
+	$("#srchStr").keyup(function(e){
+		if (event.which == 13 ) {
+			if($('#srchStr').val() != "") {	<%-- 검색어가 공백이 아닌 경우 srchKey로 받아옴 --%>
+				$.ajax({
+					url: "<%= request.getContextPath()%>/list",
+					data: "act=srchList&srchStr=" + $('#srchStr').val().trim(),
+					method: 'post',
+					success:function(result){
+						$('tbody').empty();
+						$('tbody').html(result);
+						$('#srchStr').val('');
+					}
+				});
+			}
+		}
+		return false;
+	});
 });
+
+<%-- 최신순 정렬 리스트의 tr 이벤트 --%>
+$(function(){
+	$(document).on("click", '.table-hover tr', function() {		<%-- 동적으로 생성된 요소에 이벤트 주는 방법 --%>
+		var mvdetail = $(this).find('input').val();
+		location.href=mvdetail;
+		return false;
+	})
+});
+
 </script>
 </head>
 <body class="left-sidebar is-preload" style="background-color: black;">
@@ -150,9 +175,9 @@ $(function(){
 			</h2>
 		</div>
 		<div class="col-12" style="text-align:right; margin: 1em 0 2em 0; padding: 1em 0 1em 0;">
-			<button class="btn btn-success font_bold_small" style="float: left; width: 8em;" id="writeList">리스트 작성</button>
+			<button class="btn btn-success font_bold_small" style="float: left; width: 8em;" id="writeList">리스트&nbsp;작성</button>
 			<button class="btn btn-success font_bold_small" style="float: right;" id="srchList">검&nbsp;&nbsp;&nbsp;색</button>
-			<input type="text" id="srchStr" class="form-control" style="height: 40px; width: 13em; float: right; margin-right: 1em;" placeholder="리스트 제목으로 검색">
+			<input type="text" id="srchStr" class="form-control" style="height: 40px; width: 13em; float: right; margin-right: 1em;" placeholder="리스트 검색">
 			<div style="clear: both;"></div>
 		</div>
 		

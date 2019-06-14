@@ -69,7 +69,7 @@ public class UsersController {
 	public String register(HttpServletRequest request, HttpServletResponse response) {
 		// post로 왔는데 doGet(request, response); 있어서 돌아옴 그래서 한번 들렸다 오니 글자가 깨지므로  post에서 인코딩 해줘야뎀.
 		
-			String path = "/MovieHolic/film";
+			String path = "/film";
 			
 			
 

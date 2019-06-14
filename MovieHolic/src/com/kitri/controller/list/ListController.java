@@ -359,7 +359,7 @@ public class ListController {
 //	#### 리스트 검색 ####
 	public String srchList(HttpServletRequest request, HttpServletResponse response) {
 		String path = "";
-		String srchList = request.getParameter("srchList");
+		String srchList = request.getParameter("srchStr");
 		List<List<FilmDto>> flList = null;
 		
 		// DB에서 select해서 BoardDto로 받아옴

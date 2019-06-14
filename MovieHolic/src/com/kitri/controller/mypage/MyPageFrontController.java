@@ -22,7 +22,7 @@ public class MyPageFrontController extends HttpServlet {
 		String tab = request.getParameter("tab");
 		String path = "";
 		String wishlist = request.getParameter("wishlist");
-
+		
 		
 		
 		
@@ -133,8 +133,12 @@ public class MyPageFrontController extends HttpServlet {
 //			-----------------------[소셜-follower기능]---------------------------------------
 		} else if ("followers".equals(tab)) {
 			path = MyPageController.getMyPageController().showFollowers(request, response);
-			MyPageController.getMyPageController().addFollower(request, response);
 			MoveUrl.forward(request, response, path);
+			
+		} else if ("check".equals(page)) {
+			path = MyPageController.getMyPageController().addFollower(request, response);
+			MoveUrl.forward(request, response, path);
+			
 		}
 	}
 
