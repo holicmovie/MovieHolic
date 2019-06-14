@@ -39,6 +39,9 @@ public class MyPageController {
 	
 //-----------------------------[Social기능]----------------------
 	public String showFollowings(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		String userid = (String) session.getAttribute("loginInfo");
+		
 		String cp = request.getParameter("followingpage");
 //		System.out.println("C : following , 페이지 : " + cp);
 		int currentPage = 1; // 보여줄 현재페이지
@@ -53,7 +56,7 @@ public class MyPageController {
 
 		PageBean pb = new PageBean(currentPage, cntPerPage, cntPerPageGroup, totalCnt, url);
 
-		List<SocialDto> list = MyPageService.findByRows(pb.getStartRow(), pb.getEndRow());
+		List<SocialDto> list = MyPageService.findByRows(userid, pb.getStartRow(), pb.getEndRow());
 		pb.setList(list);
 		request.setAttribute("pb", pb);
 
@@ -66,6 +69,9 @@ public class MyPageController {
 
 	public String showFollowers(HttpServletRequest request, HttpServletResponse response) {
 		String cp = request.getParameter("followerpage");
+		
+		HttpSession session = request.getSession();
+		String userid = (String) session.getAttribute("loginInfo");
 //		System.out.println("C : followers , 페이지 : " + cp);
 		int currentPage = 1; // 보여줄 현재페이지
 		if (cp != null) {
@@ -73,14 +79,14 @@ public class MyPageController {
 
 		}
 		int cntPerPage = 5;// 페이지별 보여줄 목록수
-		int totalCnt = MyPageService.getTotalCnt2();
+		int totalCnt = MyPageService.getTotalCnt2(userid);
 //		System.out.println("팔로워 수 : " + totalCnt);
 		int cntPerPageGroup = 5;// 페이지 그룹에 보여 줄 페이지수
 		String url = "/MovieHolic/mypage?tab=followers&followingpage=";
 
 		PageBean pbf = new PageBean(currentPage, cntPerPage, cntPerPageGroup, totalCnt, url);
 
-		List<SocialDto> list = MyPageService.findByRows2(pbf.getStartRow(), pbf.getEndRow());
+		List<SocialDto> list = MyPageService.findByRows2(userid, pbf.getStartRow(), pbf.getEndRow());
 		pbf.setList(list);
 		request.setAttribute("pbf", pbf);
 		String test = "follower";
