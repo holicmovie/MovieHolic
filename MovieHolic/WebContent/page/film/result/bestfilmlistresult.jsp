@@ -10,7 +10,7 @@ String root = request.getContextPath();
 for(int i = 0; i < bestfilm.size(); i++){
 %>
 
-
+			
 				<article style="background-color: rgb(3, 39, 49); color: white;">
 	<div class="interated_network_movie_info_img">
 		<span class="movie_ranking_number" id="rankNum"><%=(i+1)%></span>

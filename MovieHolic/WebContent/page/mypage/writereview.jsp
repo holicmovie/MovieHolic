@@ -74,13 +74,25 @@ Set yellow color when star hover  --%> <%-- 체크박스 --%> .form-check-input
 </style>
 	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <script>
-	
-<%-- 영화검색 모달 띄우기 
-	$(function() {
-		$('#srchMovie').focusin(function() {
-			$('#movieModal').modal();
+$(function () {
+    $('.btndelete').click(function () {
+      // getter
+      var chkval = $('input[name="reviewdelete"]:checked');
+      alert(chkval.length);
+      
+      $.ajax({
+			url: '/MovieHolic/mypage?page=diary',
+			method: 'post',
+			data: chkval,
+			success:function(result){
+				  location.href = '/MovieHolic/mypage?page=diary';   
+				alert("삭제 성공!!!"); 
+			}
 		});
-	});--%>
+		return false;  
+   });
+   
+});	
 <%-- datepicker --%>
 	$(function() {
 		$('#datepicker').datepicker({
@@ -101,14 +113,22 @@ function register() {
 	}
 } --%>
 $(function() {
-	<%-- 위시리스트 추가 이벤트 --%>
+	<%-- 리뷰 저장 이벤트 --%>
 	$("#register").click(function(){
-	var movieCdYoung = $(this).attr("movieCdYoung");
-	var movieCdNaver = $(this).attr("movieCdNaver");
-	
+		var movieCdYoung = $(this).attr("movieCdYoung");
+		var movieCdNaver = $(this).attr("movieCdNaver");
+		var director = $(this).attr("director");
+		var actor1 = $(this).attr("actor1");
+		var actor2 = $(this).attr("actor2");
+		var movieName = $(this).attr("movieName");
+		var category = $(this).attr("category");
+	 var chkval = $('input[name="reviewdelete"]:checked');
+     alert(chkval.length);
 	$.ajax({
-		url: '/MovieHolic/mypage?page=register&movieCdYoung=' + movieCdYoung + '&movieCdNaver=' + movieCdNaver,
-		method:'get',
+		url: '/MovieHolic/mypage?page=register&&movieCdYoung='+ movieCdYoung + '&movieCdNaver='+ movieCdNaver
+		+ '&director=' + director + '&actor1=' + actor1 + '&actor2=' + actor2
+		+ '&movieName=' + movieName + '&category=' + category,
+		method:'post',
 		success: function(result){
 			alert("save save");
 		},
@@ -124,7 +144,7 @@ $(function() {
 </head>
 <body class="left-sidebar is-preload">
 <% FilmDto dto = (FilmDto)request.getAttribute("writereview"); 
-	BoardDto save = (BoardDto)request.getAttribute("register");%>
+	BoardDto save = (BoardDto)request.getAttribute("register");	%>
 	<div id="page-wrapper">
 
 		<!-- Header -->
@@ -208,7 +228,7 @@ $(function() {
 					style="margin-top: 40px; border-top: 2.5px solid #fff;">
 					<div class="col-12">
 						<div style="float: right;">
-							<button class="btn btn-success font_bold_small" id="register">저&nbsp;&nbsp;&nbsp;장</button>
+							<button class="btn btn-success font_bold_small" movieCdYoung="<%=request.getParameter("movieCdYoung")%>" movieCdNaver="<%=request.getParameter("movieCdNaver")%>" movieName="<%=request.getParameter("movieName")%>" director="<%=request.getParameter("director")%>" actor1="<%=request.getParameter("actor1") %>" actor2="<%=request.getParameter("actor2") %>" category="<%=request.getParameter("category") %>" id="register">저&nbsp;&nbsp;&nbsp;장</button>
 						</div>
 						<div style="float: right; margin-right: 20px;">
 							<button class="btn btn-success font_bold_small" id="reviewcancle">취&nbsp;&nbsp;&nbsp;소</button>

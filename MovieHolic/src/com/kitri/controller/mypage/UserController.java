@@ -141,11 +141,16 @@ public class UserController {
 		UserService.getUserService().deleteReview(userid, reviewdelete);
 	}
 	public String registerReviewBtn(HttpServletRequest request, HttpServletResponse response) {
-		String path = "/page/film/moviedetail.jsp";
+		String path = "/page/mypage/writereview.jsp";
 		BoardDto boardDto = new BoardDto();
 		boardDto.setContent(request.getParameter("content"));
-		boardDto.setStarPoint(Integer.parseInt(request.getParameter("starPoint")));
-		boardDto.setEnable(Integer.parseInt(request.getParameter("enable")));
+		boardDto.setMovieCodeYoung2(request.getParameter("movieCdYoung"));
+		boardDto.setMovieCodeNaver2(request.getParameter("movieCdNaver"));
+		boardDto.setMovieName2(request.getParameter("movieName"));
+		boardDto.setActor1(request.getParameter("actor1"));
+		boardDto.setActor2(request.getParameter("actor2"));
+		boardDto.setDirector2(request.getParameter("director"));
+		boardDto.setCategory(request.getParameter("category"));
 		int cnt = UserService.getUserService().getregisterReview(boardDto);
 		request.setAttribute("register", cnt);
 		
