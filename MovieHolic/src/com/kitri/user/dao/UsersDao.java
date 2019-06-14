@@ -107,9 +107,9 @@ public class UsersDao {
 			conn = DBConnection.makeConnection();
 			StringBuffer sql = new StringBuffer();
 			sql.append(" insert into mh_user");
-			sql.append(" (userid, name, pass, phoneFirst, phoneMid, phoneLast, gender) ");
+			sql.append(" (userid, name, pass, birth, phoneFirst, phoneMid, phoneLast, gender) ");
 			sql.append(" values\n");
-			sql.append(" ( ?, ?, ?, ?, ?, ?, ?)\n");
+			sql.append(" ( ?, ?, ?, ?, ?, ?, ?, ?)\n");
 			pstmt = conn.prepareStatement(sql.toString());
 			
 			int idx = 0;
@@ -117,6 +117,7 @@ public class UsersDao {
 			pstmt.setString(++idx, usersDto.getUserId());
 			pstmt.setString(++idx, usersDto.getName());
 			pstmt.setString(++idx, usersDto.getPass());
+			pstmt.setString(++idx, usersDto.getBirth());
 			pstmt.setString(++idx, usersDto.getPhoneFirst());
 			pstmt.setString(++idx, usersDto.getPhoneMid());
 			pstmt.setString(++idx, usersDto.getPhoneLast());

@@ -45,6 +45,7 @@
 
 var idcount = 1;
 var resultView;
+var birthresultView;
 
 function idcheck() {
 	
@@ -62,7 +63,22 @@ function idcheck() {
 		
 	}
 	
+};
+
+function birthcheck(){
+	
+	birthresultView = document.getElementById("birthresult");
+	var birth = document.getElementById("birth").value;
+
+	if (birth.length == 10) {
+		birthresultView.innerHTML = '<font color = "steelblue">확인</font>';
+	} else{
+		birthresultView.innerHTML = '<font color = "white">생년 월일을 8자리로 입력해 주세요.</font>';
+	}
+	
 }
+
+
 
 function idcheckResult() {
 	if (httpRequest.readyState == 4) { // 데이터 정상으로 넘어왔다. 하지만 이상한 데이터(에러)로 넘어올 수 있음.
@@ -90,6 +106,8 @@ function idcheckResult() {
 
 
 function register() {
+	
+	
 	if(document.getElementById("name").value == "") {
 		alert("이름을 입력하세요");
 		return;
@@ -100,8 +118,20 @@ function register() {
 	} else if(document.getElementById("pass").value == "") {
 		alert("비밀번호를 입력하세요");
 		return;
+	} else if(document.getElementById("pass").value.length < 4) {
+		alert("비밀번호를 4자리 이상 입력하세요");
+		return;
 	} else if(document.getElementById("pass").value != document.getElementById("passcheck").value) {
 		alert("비밀번호를 확인하세요");
+		return;
+	} else if(document.getElementById("birth").value.length < 8 ) {
+		alert("생일을 확인해 주세요");
+		return;
+	} else if(document.getElementById("tel2").value.length == 4 ) {
+		alert("휴대폰 번호를 확인해주세요");
+		return;
+	} else if(document.getElementById("tel3").value.length == 4 ) {
+		alert("휴대폰 번호를 확인해주세요");
 		return;
 	} else {
 		document.getElementById("signupform").action = "/MovieHolic/UsersFrontController";
@@ -121,12 +151,12 @@ function register() {
 			
 			
 			<div align="left">
-			<label for="email" >아이디</label>
+			<label for="email" >아이디&nbsp;&nbsp;&nbsp;&nbsp;<span id="idresult"></span></label>
 			</div>
 			<div class="form-group" align="left">
 				<div id="email" class="row">
 					
-					
+																							
 					
 					<div class="col-lg-6-inline"  style="padding:10; margin-left: 0; margin-top: 20;">
 						<input type="text" class="form-control" id="id" name="id" placeholder="4자이상 16자 이하" onkeyup="javascript:idcheck();"> 
@@ -136,7 +166,7 @@ function register() {
 					
 					<div class="col-lg-1-inline" style="padding:10; margin: 0; padding-left:5; padding-right:5; margin-top: 20;">@</div>
 					<div class="col-lg-5-inline" style="padding:10; margin: 0; margin-top: 20;">
-						<select class="form-control" id="emaildomain" name="emaildomain" onkeyup="javascript:idcheck();">
+						<select class="form-control" id="emaildomain" name="emaildomain" >
 							<option value="naver.com">naver.com</option>
 							<option value="google.com">google.com</option>
 							<option value="daum.net">daum.net</option>
@@ -150,7 +180,7 @@ function register() {
 					
 				</div>
 			</div>
-			<div id="idresult"></div>
+			
 			
 			
 			
@@ -176,10 +206,9 @@ function register() {
 			
 			
 			<div class="form-group" align="left">
-				<label for="">생년월일</label>
-				<input type="text" class="form-control" id="birth" name="birth" placeholder="">
+				<label for="">생년월일 &nbsp;&nbsp;&nbsp;&nbsp;<span id="birthresult" ></span> </label>
+				<input type="text" class="form-control" id="birth" name="birth" placeholder="2000-01-01" onkeyup="javascript:birthcheck();">
 			</div>
-			
 			
 			<div class="form-group" align="left">
 				<div class="form-check">
