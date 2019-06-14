@@ -50,6 +50,7 @@ $(function(){
 		method:'get', 
 		success:function(result){
 			$("#weeklybest").html(result.trim());
+			document.reload();
 		}
 	});
 	
@@ -156,14 +157,12 @@ $(function(){
 			</section>
 		</div>
 		
-		<section class="carousel top_margin_lg" style="background-color: rgb(3, 39, 49); padding: 1.5em 0 0 0;">
-				<div id="weeklybest" class="reel">
-
+	<section class="carousel top_margin_lg" style="background-color: rgb(3, 39, 49); padding: 1.5em 0 0 0;">
+					<div id="weeklybest" class="reel">
+	
 			<!-- ####################### 동적 공간 (bestfilmlistresult.jsp) ###################### -->
-				
-				</div>
-
-		</section>
+					</div>
+	</section>
 		
 		<hr style="top:1em; border-top: 3px solid white;">
 		
