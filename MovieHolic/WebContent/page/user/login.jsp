@@ -98,7 +98,7 @@ $(document).ready(function(){
 		</form>
 		<div align="center">
 			<button class="btn btn-warning" form="loginform" id="loginBtn" >로그인</button> <!-- onclick="javascript:login();" -->
-			<button class="btn btn-primary" id="moveRegisterBtn">회원가입</button>
+			<a href="/MovieHolic/page/user/signup.jsp"><button class="btn btn-primary" id="moveRegisterBtn">회원가입</button></a>
 		</div>
 	</div>
 </div>

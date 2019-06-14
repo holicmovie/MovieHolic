@@ -107,9 +107,9 @@ public class UsersDao {
 			conn = DBConnection.makeConnection();
 			StringBuffer sql = new StringBuffer();
 			sql.append(" insert into mh_user");
-			sql.append(" (userid, name, pass, birth, phoneFirst, phoneMid, phoneLast, gender) ");
+			sql.append(" (userid, name, pass, birth, phoneFirst, phoneMid, phoneLast, gender, joindate) ");
 			sql.append(" values\n");
-			sql.append(" ( ?, ?, ?, ?, ?, ?, ?, ?)\n");
+			sql.append(" ( ?, ?, ?, ?, ?, ?, ?, ?, sysdate)\n");
 			pstmt = conn.prepareStatement(sql.toString());
 			
 			int idx = 0;

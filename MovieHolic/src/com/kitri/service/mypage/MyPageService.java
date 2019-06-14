@@ -36,8 +36,8 @@ public class MyPageService {
 
 //---------------------------------[social.jsp]----------------------------
 	// social.jsp following페이지
-	public static List<SocialDto> findByRows(int startRow, int endRow) {
-		return SocialDao.selectByRows(startRow, endRow);
+	public static List<SocialDto> findByRows(String userid, int startRow, int endRow) {
+		return SocialDao.selectByRows(userid, startRow, endRow);
 	}
 
 	public static int getTotalCnt() {
@@ -45,12 +45,12 @@ public class MyPageService {
 	}
 
 	// social.jsp follower 페이지
-	public static List<SocialDto> findByRows2(int startRow, int endRow) {
-		return SocialDao.selectByRows2(startRow, endRow);
+	public static List<SocialDto> findByRows2(String userid, int startRow, int endRow) {
+		return SocialDao.selectByRows2(userid, startRow, endRow);
 	}
 
-	public static int getTotalCnt2() {
-		return SocialDao.selectTotalCnt2();
+	public static int getTotalCnt2(String userid) {
+		return SocialDao.selectTotalCnt2(userid);
 	}
 
 	// social.jsp following 삭제 페이지

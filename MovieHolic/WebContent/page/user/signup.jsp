@@ -127,10 +127,10 @@ function register() {
 	} else if(document.getElementById("birth").value.length < 8 ) {
 		alert("생일을 확인해 주세요");
 		return;
-	} else if(document.getElementById("tel2").value.length == 4 ) {
+	} else if(document.getElementById("tel2").value.length != 4) {
 		alert("휴대폰 번호를 확인해주세요");
 		return;
-	} else if(document.getElementById("tel3").value.length == 4 ) {
+	} else if(document.getElementById("tel3").value.length != 4 ) {
 		alert("휴대폰 번호를 확인해주세요");
 		return;
 	} else {
