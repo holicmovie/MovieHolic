@@ -190,7 +190,7 @@ public class SocialDao {
 
 	}
 
-	public void addFollow(String followid) {
+	public void addFollow(String userid, String followid) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
@@ -199,7 +199,7 @@ public class SocialDao {
 			String sql = "insert into mh_social values(?,?,sysdate)";
 			conn = DBConnection.makeConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, "a196@gmail.com");
+			pstmt.setString(1, userid);
 			pstmt.setString(2, followid);
 			pstmt.executeQuery();
 

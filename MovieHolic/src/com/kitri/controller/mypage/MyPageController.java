@@ -98,13 +98,16 @@ public class MyPageController {
 	}
 
 	public String addFollower(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		String userid = (String) session.getAttribute("loginInfo");
 		String followid = request.getParameter("follow");
 //		System.out.println(followid);
+		
 		String path = "/page/mypage/result/followresult.jsp";
 		String checkedId = "이미 팔로우하고 있는 아이디입니다.";
 		int checkId = MyPageService.getMyPageService().checkFollowId(followid);
 		if(checkId ==0) {
-			MyPageService.getMyPageService().addFollowId(followid);
+			MyPageService.getMyPageService().addFollowId(userid, followid);
 			checkedId = followid+"님을 팔로우합니다.";
 		}
 		
