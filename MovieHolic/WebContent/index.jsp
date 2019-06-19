@@ -7,6 +7,8 @@
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
 
+
+
 <style>
 /* 큰 제목 */
 .big_title{
