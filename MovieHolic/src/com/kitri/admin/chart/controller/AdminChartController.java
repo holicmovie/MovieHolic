@@ -1,5 +1,7 @@
 package com.kitri.admin.chart.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +34,9 @@ public class AdminChartController {
 	
 	// 막대그래프 인원 그래프
 	public String ageGroup(HttpServletRequest request, HttpServletResponse response) {
+		
+		String barnewlyyear = request.getParameter("barnewlyyear");
+		System.out.println(barnewlyyear);
 
 		List<AdminChartDto> listteen = ageGroupTeens(request, response);
 		List<AdminChartDto> listtwenties = ageGroupTwenties(request, response);
@@ -59,6 +64,15 @@ public class AdminChartController {
 		
 		//acdfi.setList(listteen);
 		request.setAttribute("acdfi", listfifties);
+		
+		//acdfi.setList(listteen);
+		request.setAttribute("barnewlyyear", barnewlyyear);
+		
+		// 현재날짜
+		SimpleDateFormat format = new SimpleDateFormat ( "yyyy");
+		Calendar time = Calendar.getInstance();
+		String format_time = format.format(time.getTime());
+		request.setAttribute("sysdate", format_time);        
 		
 		String path = "/page/adminchart/statistics.jsp";
 		

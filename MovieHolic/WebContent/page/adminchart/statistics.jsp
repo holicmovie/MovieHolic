@@ -17,11 +17,11 @@
 <script type="text/javascript" src="//www.shieldui.com/shared/components/latest/js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="//www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
 
-<c:set var="acdte" value="${requestScope.acdte}" />
+<%-- <c:set var="acdte" value="${requestScope.acdte}" />
 <c:set var="acdtw" value="${requestScope.acdtw}" />
 <c:set var="acdth" value="${requestScope.acdth}" />
 <c:set var="acdfo" value="${requestScope.acdfo}" />
-<c:set var="acdfi" value="${requestScope.acdfi}" />
+<c:set var="acdfi" value="${requestScope.acdfi}" /> --%>
 
 
 <script type="text/javascript"
@@ -62,97 +62,6 @@ hr.line_light_w {
 
 
 
-	
-<%-- 남녀 가입 비율 현황 --%>
-<script type="text/javascript">
-	$(function() {
-		$("#piechart").shieldChart({
-			theme : "light",
-			seriesSettings : {
-				pie : {
-					enablePointSelection : true,
-					addToLegend : true,
-					dataPointText : {
-						enabled : true,
-						borderRadius : 4,
-						borderWidth : 2,
-						borderColor : "red"
-					}
-				}
-			},
-			chartLegend : {
-				align : "center",
-				borderRadius : 2,
-				borderWidth : 2,
-				verticalAlign : "top"
-			},
-			tooltipSettings : {
-				customPointText : "{point.collectionAlias}: {point.y}"
-			},
-			exportOptions : {
-				image : false,
-				print : false
-			},
-			primaryHeader : {
-				text : "남여 성비율"
-			},
-			dataSeries : [ {
-				seriesType : "pie",
-				collectionAlias : "Usage",
-				data : [ [ "남", 55.2 ], [ "여", 44.8 ] ]
-			} ]
-		});
-	});
-</script>
-
-
-
-
-
-
-<%-- 리뷰 수 순위 --%>
-
-<script type="text/javascript">
-	$(document).ready(function reviewChart() {
-		$("#onebargraph").shieldChart({
-			theme : "light",
-			primaryHeader : {
-				text : "Budget overview"
-			},
-			exportOptions : {
-				image : false,
-				print : false
-			},
-			axisX : {
-				categoricalValues :  
-			  [ "2000", "2001", "2002", 
-				"2003", "2004", "2005",
-				"2006", "2007", "2008", 
-				"2009", "2010", "2011", 
-				"2012", "2013", "2014" ]
-			},
-			tooltipSettings : {
-				chartBound : true,
-				axisMarkers : {
-				enabled : true,
-				mode : 'xy'
-				}
-			},
-			dataSeries : [{
-				seriesType : 'area',
-				collectionAlias : "Budget in Thousands",
-				data : [ 100, 320, 453, 234,
-				553, 665, 345, 123,
-				432, 545, 654, 345,
-				332, 456, 234 ]
-				}]
-		});
-	});
-</script>
-
-
-
-
 <%-- ajax --%>
 <script type="text/javascript">
 
@@ -169,26 +78,8 @@ $(document).on("click", ".barsearch>button", function(){
 		return false;
 	}
 	
-	$("div.uservariance").empty();
+	location.href='/MovieHolic/chart?act=chart&barnewlyyear='+barnewlyyear+'&baroldyear='+baroldyear;
 	
-	// 리절트 페이지 만들어서 거기다가 차트 넣어주기.
-	// 처음 들어왔을때 차트 어떻게 뿌려줄건지 생각해보기. 년도부터 고르라고 하던지
-	// 년도별 보내서 디비딴에서 처리.
-	//var currentPage = $(this).attr("href");
-	//$("div.uservariance").empty();
-	$.ajax({
-		url : '/MovieHolic/chart?act=chart&barnewlyyear='+barnewlyyear+'&baroldyear='+baroldyear,
-		method : 'get',
-		success : function(result) {
-			//$("div.uservariance").html(result.trim());
-			//var checkArr = checkArr.push($("input.a").val());
-			//checkArr = $("input.a").val();
-			//alert(checkArr[0]);
-			//console.log(checkArr[0]);
-			
-		}
-	});
-	return false; 
 });
 
 
@@ -205,17 +96,12 @@ $(document).on("click", ".barsearch>button", function(){
 
 
 
+<c:set var="acdte" value="${requestScope.acdte}" />
+<c:set var="acdtw" value="${requestScope.acdtw}" />
+<c:set var="acdth" value="${requestScope.acdth}" />
+<c:set var="acdfo" value="${requestScope.acdfo}" />
+<c:set var="acdfi" value="${requestScope.acdfi}" />
 
-
-
-<%-- 값 빼오기 --%>
-<c:forEach var="ac" items="${acdtw}">
-	<input type="hidden" class="a" name="a" value="${ac.twenties}">
-</c:forEach> 
-<%-- 값 빼오기 --%>
-<script type="text/javascript">
-	
-</script>
 
 
 
@@ -252,26 +138,11 @@ $(document).on("click", ".barsearch>button", function(){
 					<div class="col-lg-2" style="margin-right: 0em; ">
 						<span class="barnewlyyear">
 							<select style="overflow:scroll;" class="form-control">
-								<option>2019</option>
-								<option>2018</option>
-								<option>2017</option>
-								<option>2016</option>
-								<option>2015</option>
-								<option>2014</option>
-								<option>2013</option>
-								<option>2012</option>
-								<option>2011</option>
-								<option>2010</option>
-								<!-- <option>2009</option>
-								<option>2008</option>
-								<option>2007</option>
-								<option>2006</option>
-								<option>2005</option>
-								<option>2004</option>
-								<option>2003</option>
-								<option>2002</option>
-								<option>2001</option>
-								<option>2000</option> -->
+								
+								<c:forEach begin="0" end="7" varStatus="status">
+									<option>${sysdate - status.count + 1}</option>
+								</c:forEach>
+								
 							</select>
 						</span>
 					</div>
@@ -285,26 +156,11 @@ $(document).on("click", ".barsearch>button", function(){
 					<div class="col-lg-2" style="margin-right: 0em;">
 						<span class="baroldyear">	
 							<select class="form-control">
-								<option>2019</option>
-								<option>2018</option>
-								<option>2017</option>
-								<option>2016</option>
-								<option>2015</option>
-								<option>2014</option>
-								<option>2013</option>
-								<option>2012</option>
-								<option>2011</option>
-								<option>2010</option>
-								<!-- <option>2009</option>
-								<option>2008</option>
-								<option>2007</option>
-								<option>2006</option>
-								<option>2005</option>
-								<option>2004</option>
-								<option>2003</option>
-								<option>2002</option>
-								<option>2001</option>
-								<option>2000</option> -->
+								
+							<c:forEach begin="0" end="7" varStatus="status">
+								<option>${sysdate - status.count + 1}</option>
+							</c:forEach>
+
 							</select>
 						</span>
 					</div>
@@ -322,64 +178,115 @@ $(document).on("click", ".barsearch>button", function(){
 				<hr class="line_light_w">
 				
 
+
+
 				<div class="card">
 					<div align="center">
 						
 						<canvas id="myChart" width="300" height="500"></canvas>
 						
 						<script>
+						
+						// 10~50대 데이터 넣기
+						var acdte = [];
+						var acdtebcolor = [];
+						var acdtecolor = [];
+						<c:forEach var="ac" items="${acdte}">
+							acdte.push("${ac.teens }");
+							acdtebcolor.push('rgba(255, 99, 132, 0.2)');
+							acdtecolor.push('rgba(255, 99, 132, 1)');
+						</c:forEach>
+						
+						var acdtw = [];
+						var acdtwbcolor = [];
+						var acdtwcolor = [];
+						<c:forEach var="ac" items="${acdtw}">
+							acdtw.push("${ac.twenties }");
+							acdtwbcolor.push('rgba(54, 162, 235, 0.2)');
+							acdtwcolor.push('rgba(54, 162, 235, 1)');
+						</c:forEach>
+						
+						var acdth = [];
+						var acdthbcolor = [];
+						var acdthcolor = [];
+						<c:forEach var="ac" items="${acdth}">
+							acdth.push("${ac.thirties }");
+							acdthbcolor.push('rgba(255, 206, 86, 0.2)');
+							acdthcolor.push('rgba(255, 206, 86, 1)');
+						</c:forEach>
+						
+						var acdfo = [];
+						var acdfobcolor = [];
+						var acdfocolor = [];
+						<c:forEach var="ac" items="${acdfo}">
+							acdfo.push("${ac.fourties }");
+							acdfobcolor.push('rgba(75, 192, 192, 0.2)');
+							acdfocolor.push('rgba(75, 192, 192, 1)');
+						</c:forEach>
+						
+						var acdfi = [];
+						var acdfibcolor = [];
+						var acdficolor = [];
+						<c:forEach var="ac" items="${acdfi}">
+							acdfi.push("${ac.fifties }");
+							acdfibcolor.push('rgba(153, 102, 255, 0.2)');
+							acdficolor.push('rgba(153, 102, 255, 1)');
+						</c:forEach>
+						
+						// 날짜 가져오기 acdte를 이용해 몇번 돌려주는지 적용
+						var date = [];
+						<c:forEach var="ac" varStatus="status" items="${acdte}">
+						date.push("${barnewlyyear - status.count + 1}");
+						</c:forEach>
+						
+						
 						var ctx = document.getElementById('myChart');
 						
 						var myChart = new Chart(ctx, {
 						    type: 'bar',
 						    data: {
-						        labels: ['2019', '2018', '2017', '2016', '2015', '2014'],
-						        datasets: [{
+						        
+						    	labels: date,
+						        
+						    	datasets: [{
 						            label: '10대',
-						            data: [12, 19, 3, 5, 2, 3],
+						            data: acdte,
 						            
-						            backgroundColor: [
-						                'rgba(255, 99, 132, 0.2)',
-						                'rgba(255, 99, 132, 0.2)'
-						                /* 'rgba(54, 162, 235, 0.2)',
-						                'rgba(255, 206, 86, 0.2)',
-						                'rgba(75, 192, 192, 0.2)',
-						                'rgba(153, 102, 255, 0.2)',
-						                'rgba(255, 159, 64, 0.2)' */
-						            ],
-						            borderColor: [
-						                'rgba(255, 99, 132, 1)',
-						                'rgba(255, 99, 132, 1)',
-						                'rgba(255, 99, 132, 1)',
-						                'rgba(255, 99, 132, 1)',
-						                'rgba(255, 99, 132, 1)'
-						                /* 'rgba(54, 162, 235, 1)',
-						                'rgba(255, 206, 86, 1)',
-						                'rgba(75, 192, 192, 1)',
-						                'rgba(153, 102, 255, 1)',
-						                'rgba(255, 159, 64, 1)' */
-						            ],
+						            backgroundColor: acdtebcolor,
+						            borderColor: acdtecolor,
 						            borderWidth: 2
 						            
 						        },
 						        {
-						            label: '20대',
-						            data: [12, 19, 3, 5, 2, 3],
+						        	label: '20대',
+						            data: acdtw,
+						            backgroundColor: acdtwbcolor ,
+						            borderColor: acdtwcolor ,
+						            borderWidth: 2
 						        	
 						        },
 						        {
 						            label: '30대',
-						            data: [12, 19, 3, 5, 2, 3],
+						            data: acdth,
+						            backgroundColor: acdthbcolor ,
+						            borderColor: acdthcolor ,
+						            borderWidth: 2
 						        	
 						        },
 						        {
 						            label: '40대',
-						            data: [12, 19, 3, 5, 2, 3],
+						            data: acdfo,
+						            backgroundColor: acdfobcolor ,
+						            borderColor: acdfocolor ,
+						            borderWidth: 2
 						        	
 						        },
 						        {
 						            label: '50대',
-						            data: [12, 19, 3, 5, 2, 3],
+						            data: acdfi,
+						            backgroundColor: acdfibcolor ,
+						            borderColor: acdficolor ,
+						            borderWidth: 2
 						        	
 						        }]
 						    },
@@ -395,104 +302,22 @@ $(document).on("click", ".barsearch>button", function(){
 						        }
 						    }
 						});
+						
+						
 						</script>
 						
-						<!-- <div id="bargraph" style="width: 58vw; height: 28vw;"
-							align="center"></div> -->
 					</div>
 				</div>
 			</div>
 			
 
-		</div><!-- Ajax - uservariance  -->
+		</div><!-- uservariance -->
 
 
 
 
 
-
-			<!-- 리뷰 수 순위 -->
-			<div class="container" style="margin-bottom: 10em">
-				<div class="row">
-					<div class="col-lg-4">
-						<h2 style="color: white;">리뷰 수 순위</h2>
-					</div>
-
-					<div class="col-lg-2"></div>
-
-
-					<div class="col-lg-2" style="margin-right: 0em;">
-						<select class="form-control">
-							<option>2019</option>
-							<option>2018</option>
-							<option>2017</option>
-							<option>2016</option>
-							<option>2015</option>
-						</select>
-					</div>
-
-					<h3 style="padding-left: 0em">~</h3>
-
-					<div class="col-lg-2">
-						<div class="input-group mb-3" style="margin-right: 0em;">
-							<select class="form-control">
-								<option>2019</option>
-								<option>2018</option>
-								<option>2017</option>
-								<option>2016</option>
-								<option>2015</option>
-							</select>
-						</div>
-					</div>
-
-					<div class="col-lg-1">
-						<div>
-							<button type="submit" class="btn btn-success"
-								style="z-index: 0; margin-right: 0em;">검색</button>
-						</div>
-					</div>
-
-
-				</div>
-
-				<hr class="line_light_w">
-
-
-				<div class="card">
-					<div align="center">
-						<div id="onebargraph" style="width: 58vw; height: 28vw;"></div>
-					</div>
-				</div>
-
-
-			</div>
-
-
-
-
-
-			<!-- 남녀 성별 비율 그래프 -->
-			<div class="container" style="margin-bottom: 10em">
-				<div class="row">
-					<div class="col-lg-4">
-						<h2 style="color: white;">남녀 성별 비율</h2>
-					</div>
-
-					<div class="col-lg-8"></div>
-
-				</div>
-
-				<hr class="line_light_w">
-
-
-				<div class="card">
-					<div align="center">
-						<div id="piechart" style="width: 58vw; height: 28vw;"></div>
-					</div>
-				</div>
-
-
-			</div>
+		
 
 
 
