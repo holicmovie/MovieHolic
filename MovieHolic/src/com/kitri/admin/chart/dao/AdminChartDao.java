@@ -96,8 +96,8 @@ public class AdminChartDao {
 
 					AdminChartDto adminChartDto = new AdminChartDto(); // 안에있어야뎀. 할때마다 생성해야지 아니면 덮어쓰게됨.
 					
-					pstmt.setString(1, Integer.toString(baroldyear+i));
-					pstmt.setString(2, Integer.toString(baroldyear+i));
+					pstmt.setString(1, Integer.toString(barnewlyyear-i));
+					pstmt.setString(2, Integer.toString(barnewlyyear-i));
 					rs = pstmt.executeQuery();
 					
 					if (rs.next()) {
