@@ -33,22 +33,24 @@ public class SocialDao {
 	
 //-----------------------------[social.jsp]-----------------------
 //	게시해야하는 TotalCnt 구하는 메소드
-	public static int selectTotalCnt() {
+	public static int selectTotalCnt(String userid) {
 		String selectTotalCntSQL = "select count(*)\r\n"
 				+ "from (select rownum no, social.followingid, social.name, social.list_count, social.best_count\r\n"
 				+ "        from(select ms.followingid, mu.name, mu.list_count, mu.best_count\r\n"
-				+ "        from mh_social ms, mh_user mu\r\n" + "        where ms.userid = 'a196@gmail.com'\r\n"
+				+ "        from mh_social ms, mh_user mu\r\n" + "        where ms.userid = ?\r\n"
 				+ "        and mu.enable = 1\r\n" + "        and ms.followingid = mu.userid\r\n"
 				+ "        order by best_count DESC) social)";
 		int totalCnt = -1;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		
 		ResultSet rs = null;
 
 		try {
 			conn = DBConnection.makeConnection();
 			pstmt = conn.prepareStatement(selectTotalCntSQL);
 			rs = pstmt.executeQuery();
+			pstmt.setString(1, userid);
 			rs.next();
 			totalCnt = rs.getInt(1);
 		} catch (SQLException e) {
@@ -183,7 +185,6 @@ public class SocialDao {
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println(followingid + " 삭제를 실패했습니다.");
 		} finally {
@@ -207,7 +208,6 @@ public class SocialDao {
 			pstmt.executeQuery();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println(followid + " 추가를 실패했습니다.");
 		} finally {
@@ -339,7 +339,6 @@ public class SocialDao {
 				}
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("삭제를 실패했습니다.");
 		} finally {
