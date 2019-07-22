@@ -135,6 +135,13 @@ if(userCategory != null){
 		  
 <%
 	}
+}else {
+%>
+	{
+		genre: "없음",
+	    value: "0"
+	 }
+<%
 }
 %>
 ];
@@ -160,7 +167,7 @@ var chart = am4core.create("chartdiv2", am4charts.XYChart);
 chart.hiddenState.properties.opacity = 0; // this makes initial fade in effect
 chart.data = [ 
 <%
-if(userStars != null){
+if(userStars.size() != 0){
 	for(int i = 0; i < userStars.size(); i++){
 %>
 	{
@@ -180,6 +187,13 @@ if(userStars != null){
 	
 <%
 	}
+}else{
+%>
+{
+	  "country": "별점",
+	  "value": 0
+}
+<%
 }
 %>
  ];
@@ -247,8 +261,10 @@ series.columns.template.adapter.add("fill", (fill, target) => {
 			<%--선호장르 --%>
 		<div class="row">
 			<div class = "col-lg-12 top_margin preference_bold_font" style="font-size : 30px; border-bottom: thin solid gray;"><h3>선호 장르</h3></div>
-			
-			<div class = "col-lg-12">
+<%
+if(userCategory.size() != 0){
+%>
+	<div class = "col-lg-12">
 <%
 	if(userCategory.size() == 1){
 %>
@@ -268,13 +284,27 @@ series.columns.template.adapter.add("fill", (fill, target) => {
 		<span><i class='fas fa-medal preference_bold_font' style="font-size:28px;"> <%=userCategory.get(i).getCategory()%>&nbsp;&nbsp;&nbsp;</i></span>
 
 <%
+		}
 	}
+%>
+</div>
+
+			<div class = "col-lg-12" id="chartdiv"></div>
+
+<%
+}else {
+%>
+			<div class = "col-lg-12">
+	<div class="container" style="text-align: center; margin-bottom: 10em;">
+	<br><br><br><br><br>
+			<img src="/MovieHolic/images/error.png" height="200vh" style="margin-bottom: 5em;">
+			<h2 style="margin-bottom: 1em;">통계에 필요한 데이터가 충분하지 않습니다. 영화 후기를 작성해주세요!</h2>
+	</div>
+</div>
+<%
 }
 %>
 				
-			</div>
-
-			<div class = "col-lg-12" id="chartdiv"></div>
 		</div>	
 				
 		<%--선호 배우  --%>
@@ -285,13 +315,23 @@ series.columns.template.adapter.add("fill", (fill, target) => {
 			<div class = "col-lg-10">
 			<div class="list-group">
 <%
-for(int i = 0; i < userActors.size(); i ++){
+if(userActors.size() != 0){
+	for(int i = 0; i < userActors.size(); i ++){
 %>
 
 	<a class="list-group-item list-group-item-action list-group-item-dark" style="background-color: rgb(40,40,40)">
 			  <img src="<%=userActors.get(i).getActorImage()%>" alt="배우 사진" class="mr-3 mt-3 rounded-circle" style="width:60px;"/> 
 			 <font class = "font_light_small"> <%=userActors.get(i).getActor()%></font></a>
 
+<%
+	}
+}else {
+%>
+	<div class="container" style="text-align: center; margin-bottom: 10em;">
+	<br><br><br><br><br>
+			<img src="/MovieHolic/images/error.png" height="200vh" style="margin-bottom: 5em;">
+			<h2 style="margin-bottom: 1em;">통계에 필요한 데이터가 충분하지 않습니다. 영화 후기를 작성해주세요!</h2>
+	</div>
 <%
 }
 %>
@@ -311,13 +351,23 @@ for(int i = 0; i < userActors.size(); i ++){
 			<div class="list-group">
 			
 <%
-for(int i = 0; i < userDirectors.size(); i ++){
+if(userDirectors.size() != 0){
+	for(int i = 0; i < userDirectors.size(); i ++){
 %> 
 
 			  <a href="#" class="list-group-item list-group-item-action " style="background-color: rgb(40,40,40)">
 			  <img src="<%=userDirectors.get(i).getDirectorImage()%>" alt="감독사진" class="mr-3 mt-3 rounded-circle" style="width:60px;"> 
 			  <font class = "font_light_small"><%=userDirectors.get(i).getDirector()%></font></a>
 
+<%
+	}
+}else {
+%>
+	<div class="container" style="text-align: center; margin-bottom: 10em;">
+	<br><br><br><br><br>
+			<img src="/MovieHolic/images/error.png" height="200vh" style="margin-bottom: 5em;">
+			<h2 style="margin-bottom: 1em;">통계에 필요한 데이터가 충분하지 않습니다. 영화 후기를 작성해주세요!</h2>
+	</div>
 <%
 }
 %>
@@ -332,9 +382,21 @@ for(int i = 0; i < userDirectors.size(); i ++){
 			<%-- 별점 분포 --%>
 		<div class="row">
 			<div class = "col-lg-12 top_margin preference_bold_font" style="font-size : 30px; border-bottom: thin solid gray;"><span>별점 분포</span></div>
-			
+<%
+if(userStars.size() != 0){
+%>
 			<div class = "col-lg-12" id="chartdiv2"></div>
-			
+<%
+}else {
+%>
+	<div class="container" style="text-align: center; margin-bottom: 10em;">
+	<br><br><br><br><br>
+			<img src="/MovieHolic/images/error.png" height="200vh" style="margin-bottom: 5em;">
+			<h2 style="margin-bottom: 1em;">통계에 필요한 데이터가 충분하지 않습니다. 영화 후기를 작성해주세요!</h2>
+	</div>
+<%
+}
+%>			
 		</div>
 		
 		</div>

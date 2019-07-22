@@ -23,8 +23,8 @@
 						<li><a href="/MovieHolic/page/mypage/wishlist.jsp">WISH LIST</a></li>
 						<li><a href="/MovieHolic/mypage?page=diary">DIARY</a></li>
 						<li><a href="/MovieHolic/page/mypage/social.jsp">SOCIAL</a></li>
-						<li><a href="/MovieHolic/mypage?page=setting">SETTING</a></li>
-					</ul>
+<!-- 						<li><a href="/MovieHolic/mypage?page=setting">SETTING</a></li>
+ -->					</ul>
 				</li>
 				<% } %>
 				
