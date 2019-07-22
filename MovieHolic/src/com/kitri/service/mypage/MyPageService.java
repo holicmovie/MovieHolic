@@ -40,8 +40,8 @@ public class MyPageService {
 		return SocialDao.selectByRows(userid, startRow, endRow);
 	}
 
-	public static int getTotalCnt() {
-		return SocialDao.selectTotalCnt();
+	public static int getTotalCnt(String userid) {
+		return SocialDao.selectTotalCnt(userid);
 	}
 
 	// social.jsp follower 페이지
