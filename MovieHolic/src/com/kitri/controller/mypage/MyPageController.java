@@ -50,7 +50,7 @@ public class MyPageController {
 
 		}
 		int cntPerPage = 5;// 페이지별 보여줄 목록수
-		int totalCnt = MyPageService.getTotalCnt();
+		int totalCnt = MyPageService.getTotalCnt(userid);
 		int cntPerPageGroup = 5;// 페이지 그룹에 보여 줄 페이지수
 		String url = "/MovieHolic/mypage?page=social&followingpage=";
 
