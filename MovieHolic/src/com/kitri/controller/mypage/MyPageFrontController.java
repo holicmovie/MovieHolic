@@ -79,6 +79,11 @@ public class MyPageFrontController extends HttpServlet {
 		}else if("diaryselect".equals(page)) {
 			path = UserController.getUserController().getSearchReview(request, response);
 			MoveUrl.forward(request, response, path);
+		}else if("reviewDelete".equals(page)) {
+			System.out.println("리뷰삭제오나");
+			UserController.getUserController().deleteReview(request, response);
+			System.out.println("리뷰삭제오나2");
+			MoveUrl.forward(request, response, "/page/mypage/diary.jsp");
 			
 //			-----------------------[social]---------------------------------------
 			

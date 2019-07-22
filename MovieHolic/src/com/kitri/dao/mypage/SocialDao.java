@@ -49,8 +49,8 @@ public class SocialDao {
 		try {
 			conn = DBConnection.makeConnection();
 			pstmt = conn.prepareStatement(selectTotalCntSQL);
-			rs = pstmt.executeQuery();
 			pstmt.setString(1, userid);
+			rs = pstmt.executeQuery();
 			rs.next();
 			totalCnt = rs.getInt(1);
 		} catch (SQLException e) {

@@ -62,7 +62,6 @@ public class UserController {
 		List<BoardDto> list =UserService.getUserService().reviewlist(pb.getStartRow(), pb.getEndRow(), id);
 		
 		pb.setBoard(list);
-		System.out.println(totalCnt);
 		request.setAttribute("reviewList", pb);
 		
 		return path;
@@ -137,11 +136,15 @@ public class UserController {
 	}
 	public void deleteReview(HttpServletRequest request, HttpServletResponse response) {
 		String userid = "a125@gmail.com";
-		String reviewdelete[] = request.getParameterValues("reviewdelete");
+		System.out.println("컨트롤러 오니");
+		String reviewdelete[] = request.getParameterValues("movieCdYoung");
+		System.out.println(reviewdelete);
 		UserService.getUserService().deleteReview(userid, reviewdelete);
+		request.setAttribute("reviewDelete", reviewdelete);
 	}
 	public String registerReviewBtn(HttpServletRequest request, HttpServletResponse response) {
 		String path = "/page/mypage/writereview.jsp";
+		
 		BoardDto boardDto = new BoardDto();
 		boardDto.setContent(request.getParameter("content"));
 		boardDto.setMovieCodeYoung2(request.getParameter("movieCdYoung"));
@@ -151,6 +154,7 @@ public class UserController {
 		boardDto.setActor2(request.getParameter("actor2"));
 		boardDto.setDirector2(request.getParameter("director"));
 		boardDto.setCategory(request.getParameter("category"));
+		System.out.println(boardDto);
 		int cnt = UserService.getUserService().getregisterReview(boardDto);
 		request.setAttribute("register", cnt);
 		

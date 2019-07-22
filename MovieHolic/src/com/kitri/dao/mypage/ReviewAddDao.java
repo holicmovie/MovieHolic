@@ -62,6 +62,7 @@ public class ReviewAddDao {
 	}
 	//registerbutton
 	public int registerReview(BoardDto boardDto) {
+		System.out.println(boardDto);
 			int cnt = 0;
 			Connection conn = null;
 			PreparedStatement pstmt = null;
@@ -85,8 +86,8 @@ public class ReviewAddDao {
 				pstmt.setString(++idx, boardDto.getActor1());
 				pstmt.setString(++idx, boardDto.getActor2());
 				pstmt.setString(++idx, boardDto.getCategory());
-				pstmt.setString(++idx, boardDto.getMovieCodeYoung2());
-				pstmt.setString(++idx, boardDto.getMovieCodeNaver2());
+				pstmt.setString(++idx, boardDto.getMovieCodeYoung2().toString());
+				pstmt.setString(++idx, boardDto.getMovieCodeNaver2().toString());
 				pstmt.setInt(++idx, boardDto.getBest());
 				pstmt.setInt(++idx, boardDto.getWorst());
 				pstmt.setInt(++idx, boardDto.getNotify());
@@ -455,7 +456,7 @@ public List<BoardDto> searchReviewList(int startRow, int endRow, String search,S
 
 		try {
 			StringBuffer sql = new StringBuffer();
-			sql.append("delete mh_board where userid=? and moviecodeyoung=?");
+			sql.append("delete mh_board where userid=? and moviecodeyoung like ?|| '%'");
 			conn = DBConnection.makeConnection();
 			pstmt = conn.prepareStatement(sql.toString());
 			if(reviewdelete != null) {
