@@ -44,6 +44,7 @@ vertical-align: top;
 <%-- 페이지 로딩 후 바로 --%>
 $(function(){
 
+	
 	<%-- 주간 인기 영화 목록 출력 --%>
 	$.ajax({
 		url: '/MovieHolic/film?act=viewbestfilmlist', 
@@ -125,6 +126,7 @@ $(function(){
 	    if (event.which == 13 ) {
 			if(searchFilm.val() != "") {	<%-- 검색어가 공백이 아닌 경우 srchKey로 받아옴 --%>
 				var srchKey = searchFilm.val();
+				searchFilm.val(''); // 검색란 비우기
 				$.ajax({
 					url: "/MovieHolic/film?act=searchfilm&srchKey=" + srchKey,  
 					method:'get', 

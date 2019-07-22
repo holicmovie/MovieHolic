@@ -139,7 +139,11 @@ public class MyPageService {
 		List<BoardDto> list = SocialDao.getSocialDao().selectMineList(userid);
 		int length = list.size();
 		
-		BoardDto board = list.get(0);
+		BoardDto board = null;
+		
+		if(length!=0) {
+			board = list.get(0);
+		}
 		List<String> naverList = board.getMovieCodeNaver();
 		int len = naverList.size();
 //		System.out.println("S board : " + board);

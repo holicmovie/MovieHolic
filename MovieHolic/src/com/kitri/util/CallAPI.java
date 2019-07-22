@@ -164,6 +164,7 @@ public class CallAPI {
 	
 			JSONArray imageArray = (JSONArray) jsonObject.get("items");
 			
+			
 			// 2. 네이버 영화 포스터 url 크롤링
 			int len = imageArray.size();
 			if(len != 0) {
@@ -173,7 +174,7 @@ public class CallAPI {
 					
 					// movieImageUrl = 검색결과의 이미지 주소
 					String movieImageUrl = (String) imageArrayItems.get("link");
-	
+						
 			        int beginIndex = movieImageUrl.lastIndexOf("=") + 1;
 			        String movieCdNaver = movieImageUrl.substring(beginIndex); // movieCdNaver = 영화코드(네이버)
 		
