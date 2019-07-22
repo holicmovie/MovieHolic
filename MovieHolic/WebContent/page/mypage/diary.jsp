@@ -6,7 +6,84 @@
 <%@ include file="/template/header.jsp"%>
 <%@ include file="/template/nav_style.jsp"%>
 <%@ include file="/template/boot_431.jsp"%>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+	<script>
+	/* 리뷰 제목으로 검색 */
+	$(function() {
+		var searchmovie = $('.clicksearch');
+			$(searchmovie).click(function(event) {
+								alert("검색시작!");
+					var inputsearch = $('input[name="searchReview"]');
+				if (event.which == 13) { 
+					if (inputsearch.val() != "") {
+			<%-- 검색어가 공백이 아닌 경우 srchKey로 받아옴 --%>
+				var srchKey = inputsearch.val();
+					$.ajax({
+					url : '/MovieHolic/mypage?page=diaryselect&srchKey='+ srchKey,
+					method : 'get',
+					success : function(result) {
+					$("#reviewpage").html(result);
+					alert("검색 완료 !!!");
+				}
+			});
+		}else{
+			alert("검색실패");
+		}
+		return false;
+			}
+		});
+	});
 
+		$(document).on("click",".pageSelect",function(){
+			var conurl = $(this).attr("con-url");
+			if(conurl == "nosearch"){
+			var currentPage=$(this).attr("data-page");
+			alert(currentPage + "페이지입니다");
+			$.ajax({
+				url:'/MovieHolic/mypage?page=diarypage&currentPage=' + currentPage,
+				method:'get',
+				success:function(result){
+					$("#reviewpage").html(result.trim());
+				}
+			});
+			}else if(conurl =="search"){
+				var currentPage=$(this).attr("data-page");
+				var srchKey = $(this).attr("searchKey");
+				alert(currentPage + "페이지입니다");
+				$.ajax({
+					url:'/MovieHolic/mypage?page=diaryselect&srchKey' + srchKey +'&currentPage='+ currentPage,
+					method:'get',
+					success:function(result){
+						$("#reviewpage").html(result.trim());
+					}
+				});
+			}
+			return false;
+			
+		});
+		
+		// checkbox로 삭제하기 
+		$(function () {
+		    $('.btndelete').click(function () {
+		      // getter
+		      var chkval = $('input[name="reviewdelete"]:checked');
+		      alert(chkval.length);
+		      
+		      $.ajax({
+					url: '/MovieHolic/mypage?page=reviewDelete',
+					method: 'post',
+					data: chkval,
+					success:function(result){
+						  location.href = '/MovieHolic/mypage?page=diary';   
+						alert("삭제 성공!!!"); 
+					}
+				});
+				return false;  
+		   });
+		   
+		});
+	</script>
 <style>
 <%--
 체크박스 --%> .form-check-input {
@@ -86,84 +163,7 @@
 		int totalPage = pb.getTotalPage(); // 모든 페이지 개수
 		int cntPerPageGroup = pb.getCntPerPageGroup(); // 페이지 그룹 개수
 	%>
-	<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-	<script>
-	/* 리뷰 제목으로 검색 */
-	$(function() {
-		var searchmovie = $('.clicksearch');
-			$(searchmovie).click(function(event) {
-								alert("검색시작!");
-					var inputsearch = $('input[name="searchReview"]');
-				if (event.which == 13) { 
-					if (inputsearch.val() != "") {
-			<%-- 검색어가 공백이 아닌 경우 srchKey로 받아옴 --%>
-				var srchKey = inputsearch.val();
-					$.ajax({
-					url : '/MovieHolic/mypage?page=diaryselect&srchKey='+ srchKey,
-					method : 'get',
-					success : function(result) {
-					$("#reviewpage").html(result);
-					alert("검색 완료 !!!");
-				}
-			});
-		}else{
-			alert("검색실패");
-		}
-		return false;
-			}
-		});
-	});
-
-		$(document).on("click",".pageSelect",function(){
-			var conurl = $(this).attr("con-url");
-			if(conurl == "nosearch"){
-			var currentPage=$(this).attr("data-page");
-			alert(currentPage + "페이지입니다");
-			$.ajax({
-				url:'/MovieHolic/mypage?page=diarypage&currentPage=' + currentPage,
-				method:'get',
-				success:function(result){
-					$("#reviewpage").html(result.trim());
-				}
-			});
-			}else if(conurl =="search"){
-				var currentPage=$(this).attr("data-page");
-				var srchKey = $(this).attr("searchKey");
-				alert(currentPage + "페이지입니다");
-				$.ajax({
-					url:'/MovieHolic/mypage?page=diaryselect&srchKey' + srchKey +'&currentPage='+ currentPage,
-					method:'get',
-					success:function(result){
-						$("#reviewpage").html(result.trim());
-					}
-				});
-			}
-			return false;
-			
-		});
-		
-		// checkbox로 삭제하기 
-		$(function () {
-		    $('.btndelete').click(function () {
-		      // getter
-		      var chkval = $('input[name="reviewdelete"]:checked');
-		      alert(chkval.length);
-		      
-		      $.ajax({
-					url: '/MovieHolic/mypage?page=diary',
-					method: 'post',
-					data: chkval,
-					success:function(result){
-						  location.href = '/MovieHolic/mypage?page=diary';   
-						alert("삭제 성공!!!"); 
-					}
-				});
-				return false;  
-		   });
-		   
-		});
-	</script>
+	
 	<%--List<BoardDto> list = (List<BoardDto>)request.getAttribute("reviewList");--%>
 	
 	<div id="page-wrapper">
