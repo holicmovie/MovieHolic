@@ -1,7 +1,9 @@
 package com.kitri.admin.chart.dao;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,16 +35,22 @@ public class AdminChartDao {
 	// 년도별로 나이대 인원 구하기
 	public List<AdminChartDto> ageGroup(HttpServletRequest request, HttpServletResponse response, int age) {
 		
+		// 현재 날짜로 3년전까지 아무것도 선택 안했을 때 보여주기.
+		SimpleDateFormat format = new SimpleDateFormat ( "yyyy");
+		Calendar time = Calendar.getInstance();
+		int sysdate = Integer.parseInt(format.format(time.getTime()));
 		
 		String barnewlyyearS = request.getParameter("barnewlyyear");
 		String baroldyearS = request.getParameter("baroldyear");
-		int barnewlyyear = 0; // for문에서 계속 생성되니 밖에 빼줘야뎀.
-		int baroldyear = 0;
+		int barnewlyyear = sysdate; // for문에서 계속 생성되니 밖에 빼줘야뎀.
+		int baroldyear = sysdate - 2;
 		
 		//for (int age = 1; age <= 5; age++) { // 10~50대 구분하기 위해 사용 아니면 메소드 5개 만들어야뎀. 결론 꼬임 안됌. 못씀 젠장
 		
+		if (barnewlyyearS != null || baroldyearS != null) {
 			barnewlyyear = Integer.parseInt(barnewlyyearS);
 			baroldyear = Integer.parseInt(baroldyearS);
+		}
 			
 			Connection conn = null;
 			PreparedStatement pstmt = null;
@@ -139,12 +147,27 @@ public class AdminChartDao {
 	
 	
 	
-	public static void main(String[] args) {
+	public int totalPeople(int cnt) {
+		
+		int people = 0;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		
 		
 		
+		StringBuffer sql = new StringBuffer();
+		sql.append("select count(*)");
+		sql.append("from mh_user");
+		if (cnt == 1) {
+			sql.append("where gender = '남'");
+		}else if (cnt == 2) {
+			sql.append("where gender = '여'");
+		}
+		
+		return people;
 	}
-	
 	
 	
 	

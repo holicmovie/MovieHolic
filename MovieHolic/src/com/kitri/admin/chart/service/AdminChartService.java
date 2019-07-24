@@ -33,7 +33,13 @@ public class AdminChartService {
 	}
 	
 	
-	
+	public int totalPeople(int cnt) {
+		
+		int people = 0;
+		people = AdminChartDao.getChartDao().totalPeople(cnt);
+		
+		return people;
+	}
 	
 	
 	

@@ -66,8 +66,6 @@ hr.line_light_w {
 <script type="text/javascript">
 
 
-
-
 // 막대 그래프 (년도)
 $(document).on("click", ".barsearch>button", function(){
 	var barnewlyyear = $(".barnewlyyear>select").val();
@@ -235,9 +233,20 @@ $(document).on("click", ".barsearch>button", function(){
 						
 						// 날짜 가져오기 acdte를 이용해 몇번 돌려주는지 적용
 						var date = [];
-						<c:forEach var="ac" varStatus="status" items="${acdte}">
-						date.push("${barnewlyyear - status.count + 1}");
-						</c:forEach>
+						if (${barnewlyyear != null}) {
+							
+							<c:forEach var="ac" varStatus="status" items="${acdte}">
+							date.push("${barnewlyyear - status.count + 1}"); 
+							</c:forEach>
+							
+						}else{
+							
+							<c:forEach var="ac" varStatus="status" items="${acdte}">
+							date.push("${sysdate - status.count + 1}");
+							</c:forEach>
+						
+						}
+						
 						
 						
 						var ctx = document.getElementById('myChart');
@@ -317,6 +326,78 @@ $(document).on("click", ".barsearch>button", function(){
 
 
 
+		
+		
+		<%-- 남녀 가입 비율 현황 --%>
+		<script type="text/javascript">
+			$(function() {
+				$("#piechart").shieldChart({
+					theme : "light",
+					seriesSettings : {
+						pie : {
+							enablePointSelection : true,
+							addToLegend : true,
+							dataPointText : {
+								enabled : true,
+								borderRadius : 4,
+								borderWidth : 2,
+								borderColor : "red"
+							}
+						}
+					},
+					chartLegend : {
+						align : "center",
+						borderRadius : 2,
+						borderWidth : 2,
+						verticalAlign : "top"
+					},
+					tooltipSettings : {
+						customPointText : "{point.collectionAlias}: {point.y}"
+					},
+					exportOptions : {
+						image : false,
+						print : false
+					},
+					primaryHeader : {
+						text : "남여 성비율"
+					},
+					dataSeries : [ {
+						seriesType : "pie",
+						collectionAlias : "Usage",
+						data : [ [ "남", 55.2 ], [ "여", 44.8 ] ]
+					} ]
+				});
+			});
+		</script>
+		
+		
+		<!-- 남녀 성별 비율 그래프 -->
+		<div class="container" style="margin-bottom: 10em">
+			<div class="row">
+				<div class="col-lg-4">
+					<h2 style="color: white;">남녀 성별 비율</h2>
+				</div>
+
+				<div class="col-lg-8"></div>
+
+			</div>
+
+			<hr class="line_light_w">
+
+
+			<div class="card">
+				<div align="center">
+					<div id="piechart" style="width: 58vw; height: 28vw;"></div>
+				</div>
+			</div>
+
+
+		</div>
+		
+		
+		
+		
+		
 		
 
 

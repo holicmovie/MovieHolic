@@ -58,14 +58,18 @@ vertical-align: top;
     z-index: 1000;
 }
 </style>
-
-
-
 </head>
-<body class="homepage is-preload" style="background-color: black;">
+
+
+
 <script type="text/javascript">
 $(function() {
 		
+	
+		if(${Recursion != 1}){
+			location.href='/MovieHolic/film';
+		}
+	
 		var arr = $("div>div>nav.nav2>li>a");
 		$(arr).click(function() {
 		var vurl = $(this).attr("href");
@@ -80,6 +84,12 @@ $(function() {
 		});
 });
 </script>
+<%
+if((Integer)request.getAttribute("Recursion") != null){
+	int Recursion = (Integer)request.getAttribute("Recursion");
+	if(Recursion == 1 ){ %>
+
+<body class="homepage is-preload" style="background-color: black;">
 
 
 
@@ -375,10 +385,22 @@ if(favoritefilm2!=null){
 <%
 }
 %>	
-
-  
- <section id="banner">
- <br><br><br><br><br><br><br><br><br><br><br><br>
+ 
+ 
+<section id="banner">
+<br><br><br><br><br><br><br><br><br><br><br><br>
 </section>
 		
 		<%@ include file="/template/footer.jsp"%>
+		
+<%
+	}
+}else{%>
+
+<img style="display: block; margin: 250px auto; " alt="로딩중" src="/MovieHolic/images/loding.gif">
+	
+<%
+}
+%>
+
+  

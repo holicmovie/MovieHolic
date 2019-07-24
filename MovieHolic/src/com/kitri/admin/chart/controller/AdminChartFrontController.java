@@ -20,7 +20,6 @@ public class AdminChartFrontController extends HttpServlet {
 		String act = request.getParameter("act");
 		
 		
-		
 		if ("chart".equals(act)) {
 			
 			String path = AdminChartController.getAdminChartController().ageGroup(request, response);

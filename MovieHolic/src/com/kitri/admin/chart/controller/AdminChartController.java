@@ -71,8 +71,8 @@ public class AdminChartController {
 		// 현재날짜
 		SimpleDateFormat format = new SimpleDateFormat ( "yyyy");
 		Calendar time = Calendar.getInstance();
-		String format_time = format.format(time.getTime());
-		request.setAttribute("sysdate", format_time);        
+		String sysdate = format.format(time.getTime());
+		request.setAttribute("sysdate", sysdate);        
 		
 		String path = "/page/adminchart/statistics.jsp";
 		
@@ -103,9 +103,10 @@ public class AdminChartController {
 		}
 		
 		
-		
-		
-		
+		int cnt = 1;
+		int man = AdminChartService.getAdminChartService().totalPeople(cnt);
+		cnt = 2;
+		int woman = AdminChartService.getAdminChartService().totalPeople(cnt);
 		
 		return path;
 		

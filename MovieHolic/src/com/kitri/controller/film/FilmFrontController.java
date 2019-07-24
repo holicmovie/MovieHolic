@@ -26,6 +26,9 @@ public class FilmFrontController extends HttpServlet {
 		String act = request.getParameter("act"); 			// [ 파라미터 변수 ]
 		String path = "/index.jsp"; 			  					// [ 기본 경로 ]
 
+		//재귀 막음
+		request.setAttribute("Recursion", 1);
+		
 		// [ act에 따른 경로 이동 ]
 		
 		// #1
@@ -38,7 +41,6 @@ public class FilmFrontController extends HttpServlet {
 			path = FilmController.getUserController().getBoxOffice(request, response);	// attr1    : box
 			FilmController.getUserController().getFavoriteFilm(request, response);		// attr2, 3 : favoritefilm, favoritefilm2 (로그인)
 			FilmController.getUserController().getVariousFilm(request, response);		// attr4, 5 : variousfilm, variousfilm2   (비로그인)
-			
 			
 			MoveUrl.forward(request, response, path);
 		}
