@@ -158,13 +158,31 @@ public class AdminChartDao {
 		
 		
 		StringBuffer sql = new StringBuffer();
-		sql.append("select count(*)");
-		sql.append("from mh_user");
+		sql.append(" select count(*)");
+		sql.append(" from mh_user");
 		if (cnt == 1) {
-			sql.append("where gender = '남'");
+			sql.append(" where gender = '남'");
 		}else if (cnt == 2) {
-			sql.append("where gender = '여'");
+			sql.append(" where gender = '여'");
 		}
+		
+		try {
+
+			conn = DBConnection.makeConnection();
+			pstmt = conn.prepareStatement(sql.toString());
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				people = rs.getInt(1);
+			}
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, pstmt, rs);
+		}
+		
+		
 		
 		return people;
 	}

@@ -36,7 +36,7 @@ public class AdminChartController {
 	public String ageGroup(HttpServletRequest request, HttpServletResponse response) {
 		
 		String barnewlyyear = request.getParameter("barnewlyyear");
-		System.out.println(barnewlyyear);
+		//System.out.println(barnewlyyear);
 
 		List<AdminChartDto> listteen = ageGroupTeens(request, response);
 		List<AdminChartDto> listtwenties = ageGroupTwenties(request, response);
@@ -78,27 +78,27 @@ public class AdminChartController {
 		
 		if (listteen.size() != 0) {
 			for (int i = 0; i < listteen.size(); i++) {
-				System.out.println("listteen = " + listteen.get(i));
+				//System.out.println("listteen = " + listteen.get(i));
 			}
 		}
 		if (listtwenties.size() != 0) {
 			for (int i = 0; i < listtwenties.size(); i++) {
-				System.out.println("listtwenties = " + listtwenties.get(i));
+				//System.out.println("listtwenties = " + listtwenties.get(i));
 			}
 		}
 		if (listthirties.size() != 0) {
 			for (int i = 0; i < listthirties.size(); i++) {
-				System.out.println("listthirties = " + listthirties.get(i));
+				//System.out.println("listthirties = " + listthirties.get(i));
 			}
 		}
 		if (listfourties.size() != 0) {
 			for (int i = 0; i < listfourties.size(); i++) {
-				System.out.println("listfourties = " + listfourties.get(i));
+				//System.out.println("listfourties = " + listfourties.get(i));
 			}
 		}
 		if (listfifties.size() != 0) {
 			for (int i = 0; i < listfifties.size(); i++) {
-				System.out.println("listfifties = " + listfifties.get(i));
+				//System.out.println("listfifties = " + listfifties.get(i));
 			}
 		}
 		
@@ -107,6 +107,14 @@ public class AdminChartController {
 		int man = AdminChartService.getAdminChartService().totalPeople(cnt);
 		cnt = 2;
 		int woman = AdminChartService.getAdminChartService().totalPeople(cnt);
+		
+		// 백분율
+		int total = man + woman;
+		double mant = Math.round((double)man / (double)total * 100);
+		double womant = Math.round((double)woman / (double)total * 100);
+
+		request.setAttribute("man", mant);
+		request.setAttribute("woman", womant);
 		
 		return path;
 		

@@ -364,7 +364,7 @@ $(document).on("click", ".barsearch>button", function(){
 					dataSeries : [ {
 						seriesType : "pie",
 						collectionAlias : "Usage",
-						data : [ [ "남", 55.2 ], [ "여", 44.8 ] ]
+						data : [ [ "남", ${man} ], [ "여", ${woman} ] ]
 					} ]
 				});
 			});

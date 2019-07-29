@@ -213,11 +213,11 @@ function register() {
 			<div class="form-group" align="left">
 				<div class="form-check">
 					<label class="form-check-label" for="radio1">
-					<input type="radio" class="form-check-input" id="man" name="gender" value="man" checked>남</label>
+					<input type="radio" class="form-check-input" id="man" name="gender" value="남" checked>남</label>
 				</div>
 				<div class="form-check">
 					<label class="form-check-label" for="radio2">
-					<input type="radio" class="form-check-input" id="woman" name="gender" value="woman">여</label>
+					<input type="radio" class="form-check-input" id="woman" name="gender" value="여">여</label>
 				</div>
 			</div>
 			
