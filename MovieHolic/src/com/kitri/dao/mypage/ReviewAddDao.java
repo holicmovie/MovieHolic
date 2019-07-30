@@ -86,8 +86,8 @@ public class ReviewAddDao {
 				pstmt.setString(++idx, boardDto.getActor1());
 				pstmt.setString(++idx, boardDto.getActor2());
 				pstmt.setString(++idx, boardDto.getCategory());
-				pstmt.setString(++idx, boardDto.getMovieCodeYoung2().toString());
-				pstmt.setString(++idx, boardDto.getMovieCodeNaver2().toString());
+				pstmt.setString(++idx, boardDto.getMovieCodeYoung2());
+				pstmt.setString(++idx, boardDto.getMovieCodeNaver2());
 				pstmt.setInt(++idx, boardDto.getBest());
 				pstmt.setInt(++idx, boardDto.getWorst());
 				pstmt.setInt(++idx, boardDto.getNotify());
@@ -138,10 +138,13 @@ public class ReviewAddDao {
 				String id = userid2.nextToken();
 				String[] name = rs.getString("moviename").split("\\|\\|");
 				String[] young = rs.getString("moviecodeyoung").split("\\|\\|");
-				String[] naver = rs.getString("moviecodenaver").split("\\|\\|");
+				String[] naver = {""};
+				if(rs.getString("moviecodenaver") !=null) {
+					naver =	rs.getString("moviecodenaver").split("\\|\\|");
+				}
+				String movieCodeNaver = naver[0];
 				String movieName = name[0];
 				String movieCodeYoung = young[0];
-				String movieCodeNaver = naver[0];
 				boardDto.setSeq(rs.getInt("seq"));
 				boardDto.setUserId(id);
 				boardDto.setViewCount(rs.getInt("viewcount"));
