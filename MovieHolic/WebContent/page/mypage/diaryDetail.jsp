@@ -87,6 +87,12 @@ $(document).ready(function(){
 				window.history.back();
 			});
 		});
+		$(function() {
+		$(".remodify").click(function() {
+			location.href = '/MovieHolic/mypage?page=writereview';
+		});
+			
+		});
 </script>
 <body class="left-sidebar is-preload">
 <c:set var ="dto" value="${requestScope.reviewdetail}"/>
@@ -125,7 +131,7 @@ $(document).ready(function(){
 						</div>
 						<div style="float: right; width: 20px; height: 1px;"></div>
 						<div style="float: right">
-							<button class="btn btn-success font_bold_small">수&nbsp;&nbsp;&nbsp;정</button>
+							<button class="btn btn-success font_bold_small remodify">수&nbsp;&nbsp;&nbsp;정</button>
 						</div>
 						<!-- float clear용 빈 div -->
 						<div style="clear: both;"></div>

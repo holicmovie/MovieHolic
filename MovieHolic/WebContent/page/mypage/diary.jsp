@@ -39,7 +39,6 @@
 			var conurl = $(this).attr("con-url");
 			if(conurl == "nosearch"){
 			var currentPage=$(this).attr("data-page");
-			alert(currentPage + "페이지입니다");
 			$.ajax({
 				url:'/MovieHolic/mypage?page=diarypage&currentPage=' + currentPage,
 				method:'get',
@@ -50,7 +49,6 @@
 			}else if(conurl =="search"){
 				var currentPage=$(this).attr("data-page");
 				var srchKey = $(this).attr("searchKey");
-				alert(currentPage + "페이지입니다");
 				$.ajax({
 					url:'/MovieHolic/mypage?page=diaryselect&srchKey' + srchKey +'&currentPage='+ currentPage,
 					method:'get',
@@ -233,7 +231,7 @@
 									<td style="vertical-align: middle;"><input name="reviewdelete" value="<%=list.get(i).getSeq() %>" type="checkbox"
 										class="form-check-input"></td>
 									<td class="hide1" style="vertical-align: middle;"><a
-										href="/MovieHolic/film?act=viewfilmdetail&movieCdYoung=<%=list.get(i).getMovieCodeYoung2()%>&movieCdNaver=<%=list.get(i).getMovieCodeNaver2()%>"><img
+										href="<%=root%>/film?act=viewfilmdetail&movieCdYoung=<%=list.get(i).getMovieCodeYoung2()%>&movieCdNaver=<%=list.get(i).getMovieCodeNaver2()%>"><img
 											width="90vh" src="<%=list.get(i).getUrl2() %>"
 											title="<%=list.get(i).getMovieName2()%>" /></a></td>
 									<td style="vertical-align: middle;">
